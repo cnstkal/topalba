@@ -16,6 +16,8 @@ export const APPS = {
   clock: { label: '시계', bg: '#000' },
   music: { label: '음악', bg: 'linear-gradient(#ff6b81,#fa233b)' },
   appstore: { label: 'App Store', bg: 'linear-gradient(#3fb9fc,#1578f5)' },
+  weather: { label: '날씨', bg: 'linear-gradient(#58b8ff,#2874e8)' },
+  someone: { label: '썸원', bg: 'linear-gradient(#ff9aab,#f35b82)' },
 }
 
 export function Glyph({ id }) {
@@ -99,6 +101,10 @@ export function Glyph({ id }) {
           <path d="M40 14v22.500a6 6 0 1 1-3-5.200V21l-14 3.500V40a6 6 0 1 1-3-5.200V19z" fill="#fff" />
         </svg>
       )
+    case 'weather':
+      return <svg viewBox="0 0 60 60" width="60" height="60"><circle cx="39" cy="20" r="9" fill="#ffd85a" /><path d="M14 39c0-6 5-10 11-9 2-8 14-10 19-3 7 0 10 5 10 11 0 5-4 8-9 8H23c-5 0-9-3-9-7z" fill="#fff" /></svg>
+    case 'someone':
+      return <svg viewBox="0 0 60 60" width="60" height="60"><path d="M30 48S8 35 8 21c0-10 13-14 22-3 9-11 22-7 22 3 0 14-22 27-22 27z" fill="#fff" /></svg>
     case 'appstore':
       return (
         <svg viewBox="0 0 60 60" width="60" height="60">
