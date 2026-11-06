@@ -123,7 +123,7 @@ export function AppIcon({ id, size = 60, badge = 0, noLabel, onClick, innerRef }
   const today = new Date()
   const scale = size / 60
   return (
-    <button className="app-icon" onClick={onClick} ref={innerRef} style={{ width: size }}>
+    <button className="app-icon" data-app={id} onClick={onClick} ref={innerRef} style={{ width: size }}>
       <div className="app-icon-art" style={{ width: size, height: size, background: a.bg, borderRadius: size * 0.225 }}>
         <div style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: 60, height: 60 }}>
           {id === 'calendar' ? (

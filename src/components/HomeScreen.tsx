@@ -3,7 +3,7 @@ import { AppIcon } from './icons'
 import { useGame, unreadCount } from '../engine/store'
 import { DAYS } from '../utils'
 
-const GRID = ['sns', 'mail', 'photos', 'calendar', 'notes', 'settings', 'clock', 'appstore', 'weather', 'someone', 'reminders', 'moabank', 'dating', 'netflix', 'kakao']
+const GRID = ['sns', 'mail', 'photos', 'calendar', 'notes', 'settings', 'clock', 'appstore', 'weather', 'someone', 'reminders', 'moabank', 'dating', 'netflix', 'kakao', 'maps']
 const DOCK = ['phone', 'messages', 'safari', 'music']
 
 export default function HomeScreen({ openApp, dimmed }) {

@@ -5,9 +5,18 @@ export const EXTRA_APPS = {
   dating: { label: '결', bg: 'linear-gradient(150deg,#2b2a4c,#6a4cff 70%,#ff7a59)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
+  maps: { label: '길벗', bg: 'linear-gradient(160deg,#5fd18a,#1fa45a)' },
 }
 
 export const EXTRA_GLYPHS = {
+  maps: (
+    <svg viewBox="0 0 60 60" width="60" height="60">
+      <path d="M8 18l14-5 16 6 14-5v30l-14 5-16-6-14 5z" fill="#fff" opacity=".95" />
+      <path d="M22 13v30M38 19v30" stroke="#bfe8cf" strokeWidth="2" />
+      <path d="M30 40c-6-6-8-9-8-13a8 8 0 0 1 16 0c0 4-2 7-8 13z" fill="#ff4d4d" />
+      <circle cx="30" cy="27" r="3" fill="#fff" />
+    </svg>
+  ),
   reminders: (
     <svg viewBox="0 0 60 60" width="60" height="60">
       {[['#ff9500', 16], ['#34c759', 30], ['#007aff', 44]].map(([c, y]) => (
