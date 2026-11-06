@@ -15,6 +15,8 @@ import Settings from './apps/Settings'
 import Clock from './apps/Clock'
 import Music from './apps/Music'
 import AppStore from './apps/AppStore'
+import Weather from './apps/Weather'
+import Someone from './apps/Someone'
 
 const COMPONENTS = {
   messages: Messages,
@@ -29,6 +31,8 @@ const COMPONENTS = {
   clock: Clock,
   music: Music,
   appstore: AppStore,
+  weather: Weather,
+  someone: Someone,
 }
 
 function Phone() {
