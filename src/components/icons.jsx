@@ -1,4 +1,5 @@
 import { DAYS } from '../utils'
+import { EXTRA_APPS, EXTRA_GLYPHS } from './extraIcons'
 
 const S = { fill: 'none', stroke: '#fff', strokeWidth: 2.4, strokeLinecap: 'round', strokeLinejoin: 'round' }
 
@@ -18,6 +19,7 @@ export const APPS = {
   appstore: { label: 'App Store', bg: 'linear-gradient(#3fb9fc,#1578f5)' },
   weather: { label: '날씨', bg: 'linear-gradient(#58b8ff,#2874e8)' },
   someone: { label: '썸원', bg: 'linear-gradient(#ff9aab,#f35b82)' },
+  ...EXTRA_APPS,
 }
 
 export function Glyph({ id }) {
@@ -112,7 +114,7 @@ export function Glyph({ id }) {
         </svg>
       )
     default:
-      return null
+      return EXTRA_GLYPHS[id] || null
   }
 }
 
