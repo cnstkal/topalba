@@ -1,0 +1,12 @@
+/* 전화 */
+.seg { display: flex; background: rgba(118,118,128,.12); border-radius: 9px; padding: 2px; }
+.seg button { padding: 4px 14px; border-radius: 7px; font-size: 13px; color: #000; }
+.seg button.on { background: #fff; font-weight: 600; }
+.call-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px 16px; border-bottom: .5px solid var(--sep); }
+.call-row b { display: block; font-weight: 600; font-size: 17px; }
+.call-row span { font-size: 13px; color: var(--gray); }
+.call-row em { font-style: normal; color: var(--gray); font-size: 15px; }
+.keypad-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 30px; }
+.keys-out { height: 44px; font-size: 32px; letter-spacing: 1px; }
+.keys { display: grid; grid-template-columns: repeat(3, 76px); gap: 14px 22px; margin-top: 18px; }
+.keys button { width: 76px; height: 76px; border-radius: 50%; background: #e9e9eb; font-size: 32px; text-align: center; }

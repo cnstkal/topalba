@@ -1,0 +1,106 @@
+import { useEffect, useRef, useState } from 'react'
+import { GameProvider, useGame } from './engine/store'
+import StatusBar from './components/StatusBar'
+import HomeScreen from './components/HomeScreen'
+import { LockScreen, Banner, IncomingCall, EndingScreen } from './components/Overlays'
+import Messages from './apps/Messages'
+import Sns from './apps/Sns'
+import Mail from './apps/Mail'
+import Photos from './apps/Photos'
+import Calendar from './apps/Calendar'
+import Notes from './apps/Notes'
+import Safari from './apps/Safari'
+import PhoneApp from './apps/PhoneApp'
+import Settings from './apps/Settings'
+import Clock from './apps/Clock'
+import Music from './apps/Music'
+import AppStore from './apps/AppStore'
+
+const COMPONENTS = {
+  messages: Messages,
+  sns: Sns,
+  mail: Mail,
+  photos: Photos,
+  calendar: Calendar,
+  notes: Notes,
+  safari: Safari,
+  phone: PhoneApp,
+  settings: Settings,
+  clock: Clock,
+  music: Music,
+  appstore: AppStore,
+}
+
+function Phone() {
+  const { state, actions } = useGame()
+  const phoneRef = useRef(null)
+  const [cur, setCur] = useState(null) // { id, origin, params, closing }
+  const [leaving, setLeaving] = useState(false)
+
+  const openApp = (id, rect, params) => {
+    const p = phoneRef.current.getBoundingClientRect()
+    const sc = p.width / phoneRef.current.offsetWidth || 1
+    const origin = rect ? `${(rect.left + rect.width / 2 - p.left) / sc}px ${(rect.top + rect.height / 2 - p.top) / sc}px` : '50% 90%'
+    setCur({ id, origin, params, closing: false, key: Date.now() })
+    actions.appSeen(id)
+  }
+
+  const closeApp = () => {
+    if (!cur || cur.closing) return
+    setCur({ ...cur, closing: true })
+    setTimeout(() => setCur(null), 320)
+  }
+
+  const unlock = () => {
+    setLeaving(true)
+    setTimeout(() => actions.unlockPhone(), 350)
+  }
+
+  const App = cur ? COMPONENTS[cur.id] : null
+
+  return (
+    <div className="phone" ref={phoneRef}>
+      <HomeScreen openApp={openApp} dimmed={!!cur} />
+
+      {cur && (
+        <div key={cur.key} className={`app ${cur.closing ? 'app-closing' : ''}`} style={{ transformOrigin: cur.origin }}>
+          <div className="app-inner">
+            <App params={cur.params} close={closeApp} />
+          </div>
+        </div>
+      )}
+
+      <StatusBar />
+      <Banner onOpen={(id, params) => openApp(id, null, params)} />
+      <IncomingCall />
+      {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} />}
+      <EndingScreen />
+      <div className="home-bar-zone" onClick={closeApp}>
+        <div className="home-bar" />
+      </div>
+    </div>
+  )
+}
+
+export default function App() {
+  const [scale, setScale] = useState(1)
+  useEffect(() => {
+    const fit = () => {
+      if (window.innerWidth <= 500) return setScale(1)
+      setScale(Math.min(1, (window.innerHeight - 32) / 852))
+    }
+    fit()
+    window.addEventListener('resize', fit)
+    return () => window.removeEventListener('resize', fit)
+  }, [])
+
+  return (
+    <GameProvider>
+      <div className="stage">
+        <div className="scaler" style={{ transform: `scale(${scale})` }}>
+          <Phone />
+        </div>
+      </div>
+    </GameProvider>
+  )
+}

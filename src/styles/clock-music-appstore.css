@@ -1,0 +1,29 @@
+/* 시계 / 음악 / 앱스토어 */
+.clock-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: .5px solid var(--sep); }
+.clock-row span { display: block; font-size: 13px; color: var(--gray); }
+.clock-row b { font-size: 22px; font-weight: 400; }
+.clock-row em { font-style: normal; font-size: 48px; font-weight: 200; }
+.clock-row small { font-size: 22px; margin-left: 4px; }
+.sw { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 50px; }
+.sw-time { font-size: 80px; font-weight: 200; font-variant-numeric: tabular-nums; }
+.sw-btns { display: flex; gap: 140px; }
+.sw-btns button { width: 80px; height: 80px; border-radius: 50%; background: #e9e9eb; text-align: center; font-size: 17px; }
+.sw-btns .start { background: #d8f5df; color: #1a9d3f; }
+.sw-btns .stop { background: #ffdedc; color: var(--red); }
+.song { display: flex; gap: 12px; align-items: center; width: 100%; padding: 8px 16px; border-bottom: .5px solid var(--sep); }
+.song b { display: block; font-weight: 500; font-size: 17px; }
+.song span { font-size: 13px; color: var(--gray); }
+.song-art { width: 48px; height: 48px; border-radius: 8px; flex: none; }
+.mini-player { position: absolute; left: 10px; right: 10px; bottom: 34px; height: 58px; border-radius: 14px; background: rgba(245,245,247,.96); border: .5px solid var(--sep); display: flex; align-items: center; gap: 10px; padding: 0 12px; }
+.mini-player .song-art { width: 40px; height: 40px; }
+.mini-player b { flex: 1; font-weight: 500; }
+.mini-player button { font-size: 16px; padding: 8px; }
+.feature { margin: 8px 16px 16px; height: 190px; border-radius: 20px; background: linear-gradient(135deg, #cfe3ff, #f3dcff); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+.feature span { font-size: 13px; font-weight: 600; color: #6c6c70; }
+.feature b { font-size: 26px; line-height: 1.2; }
+.store-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
+.store-row > div:nth-child(2) { flex: 1; }
+.store-row b { display: block; font-weight: 600; }
+.store-row span { font-size: 13px; color: var(--gray); }
+.store-row button { background: #e9e9eb; color: var(--blue); border-radius: 15px; padding: 5px 18px; font-weight: 700; font-size: 15px; }
+.store-row button.got { color: var(--blue); }

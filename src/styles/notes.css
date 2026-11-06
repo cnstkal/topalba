@@ -1,0 +1,9 @@
+/* 메모 */
+.note-row { display: flex; flex-direction: column; gap: 2px; width: 100%; padding: 10px 16px; border-bottom: .5px solid var(--sep); }
+.note-row b { font-weight: 600; font-size: 16px; }
+.note-row span { font-size: 13px; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.page .group:has(.note-row) { background: #fff; border: .5px solid var(--sep); }
+.note-edit { flex: 1; display: flex; flex-direction: column; padding: 8px 16px 34px; }
+.note-edit input { border: 0; outline: 0; font-size: 26px; font-weight: 700; padding: 6px 0; }
+.note-edit textarea { flex: 1; border: 0; outline: 0; resize: none; font-size: 17px; line-height: 1.5; }
+.toolbar .compose { margin-left: auto; }
