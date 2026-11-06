@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Back from '../components/Back'
 import { usePersist } from '../engine/persist'
-import '../styles/reminders.css'
 
 const pad = (n) => String(n).padStart(2, '0')
 const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` }
