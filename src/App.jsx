@@ -17,6 +17,9 @@ import Music from './apps/Music'
 import AppStore from './apps/AppStore'
 import Weather from './apps/Weather'
 import Someone from './apps/Someone'
+import Maps from './apps/Maps'
+import Reminders from './apps/Reminders'
+import Stub from './apps/Stub'
 
 const COMPONENTS = {
   messages: Messages,
@@ -33,6 +36,12 @@ const COMPONENTS = {
   appstore: AppStore,
   weather: Weather,
   someone: Someone,
+  maps: Maps,
+  reminders: Reminders,
+  moabank: Stub,
+  dating: Stub,
+  netflix: Stub,
+  kakao: Stub,
 }
 
 function Phone() {
