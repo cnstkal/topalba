@@ -1,3 +1,4 @@
+@import './styles/maps.css';
 @import './styles/common.css';
 @import './styles/sns.css';
 @import './styles/mail.css';
@@ -9,3 +10,11 @@
 @import './styles/settings.css';
 @import './styles/clock-music-appstore.css';
 @import './styles/reminders.css';
+
+/* ── 홈 화면 아이콘 공통 폴리싱 (개별 아이콘 수정 없이 일괄 적용) ── */
+.home .app-icon-art { box-shadow: 0 5px 12px rgba(30,40,80,.2), 0 1px 2px rgba(30,40,80,.14), inset 0 0 0 .5px rgba(0,0,0,.08), inset 0 1.5px 0 rgba(255,255,255,.55); opacity: 1; }
+.home .app-icon-art::after { background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 48%, rgba(0,0,0,.07)); }
+.home .app-icon-art svg { filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.16)); shape-rendering: geometricPrecision; }
+.home .app-icon[data-app="photos"] .app-icon-art, .home .app-icon[data-app="calendar"] .app-icon-art, .home .app-icon[data-app="safari"] .app-icon-art, .home .app-icon[data-app="reminders"] .app-icon-art { background: linear-gradient(180deg, #fff, #eef0f5) !important; }
+.home .app-icon-art:active { transform: scale(.94); transition: transform .12s; }
+.home .app-label { font-weight: 500; letter-spacing: -.2px; }

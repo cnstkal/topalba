@@ -19,6 +19,7 @@ import Weather from './apps/Weather'
 import Someone from './apps/Someone'
 import Stub from './apps/Stub'
 import Reminders from './apps/Reminders'
+import Maps from './apps/Maps'
 
 const COMPONENTS = {
   messages: Messages,
@@ -36,6 +37,7 @@ const COMPONENTS = {
   weather: Weather,
   someone: Someone,
   reminders: Reminders,
+  maps: Maps,
   moabank: Stub,
   dating: Stub,
   netflix: Stub,
