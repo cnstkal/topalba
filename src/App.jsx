@@ -91,7 +91,7 @@ export default function App() {
   useEffect(() => {
     const fit = () => {
       if (window.innerWidth <= 500) return setScale(1)
-      setScale(Math.min(1, (window.innerHeight - 32) / 852))
+      setScale(Math.min(1, (window.innerHeight - 48) / 900))
     }
     fit()
     window.addEventListener('resize', fit)
