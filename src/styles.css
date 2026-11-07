@@ -581,3 +581,29 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .dm-compose { display: flex; cursor: pointer; }
 .dm-search { margin: 8px 16px; height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; background: #efefef; color: #8e8e93; font-size: 15px; }
 .sns-tabs > span { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+
+/* 실제 인스타 캡처 기준 보강: 상단 플로팅 버튼, 하단 플로팅 탭, 액션 카운트, 캡션 더보기, 스토리 헤더/입력 */
+.sns .scroll { padding-bottom: 96px; }
+.ig-top { flex: none; height: 56px; padding: 0 14px; display: flex; align-items: center; justify-content: space-between; background: #fff; position: relative; z-index: 2; }
+.ig-wordmark { font-size: 22px; font-weight: 600; letter-spacing: -.4px; }
+.glass-btn { position: relative; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.92); box-shadow: 0 1px 6px rgba(0,0,0,.16), inset 0 0 0 .5px rgba(0,0,0,.06); }
+.dot { position: absolute; top: 7px; right: 7px; width: 9px; height: 9px; border-radius: 50%; background: #ff3040; border: 1.5px solid #fff; }
+.ig-tabs { position: absolute; left: 14px; right: 14px; bottom: 16px; height: 58px; border-radius: 30px; display: flex; align-items: center; justify-content: space-around; background: rgba(245,245,247,.92); box-shadow: 0 4px 16px rgba(0,0,0,.14), inset 0 0 0 .5px rgba(0,0,0,.08); z-index: 5; }
+.ig-tabs button { position: relative; width: 52px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 23px; }
+.ig-tabs button.on { background: rgba(0,0,0,.08); }
+.ig-tabs .dot { top: 8px; right: 10px; }
+.act { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.act span { font-size: 15px; font-weight: 500; }
+.post-actions { gap: 16px; padding: 10px 12px 2px; }
+.post-cap.clip { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.post-more-txt { display: block; padding: 2px 12px 0; font-size: 14px; color: var(--gray); }
+.post-time { font-size: 12px; color: var(--gray); padding: 6px 12px 0; }
+.post-head-r { display: flex; align-items: center; gap: 4px; }
+.story-name { display: flex; flex-direction: column; line-height: 1.2; }
+.story-name b { font-size: 14px; font-weight: 600; }
+.story-name span { font-size: 12px; opacity: .75; }
+.story-head-r { display: flex; align-items: center; gap: 14px; }
+.story-reply input { background: rgba(255,255,255,.12); border: .5px solid rgba(255,255,255,.6); }
+.story-foot { gap: 14px; }
+.story-foot .story-like { padding: 0; }
+

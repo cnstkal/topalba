@@ -34,6 +34,10 @@ const HOME = 'M3 10.5L12 3l9 7.5V21h-6v-7H9v7H3z'
 const GRID = 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z'
 const CAMERA = 'M3 7h4l2-3h6l2 3h4v13H3zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'
 const CLOSE = 'M18 6L6 18M6 6l12 12'
+const PLUS = 'M12 5v14M5 12h14'
+const MENU = 'M4 9h16M4 15h16'
+const REELS = 'M4 4h16v16H4zM10 8.5v7l6-3.5z'
+const fmtCount = (n) => (n >= 10000 ? `${(n / 10000).toFixed(1).replace(/\.0$/, '')}만` : n.toLocaleString())
 
 const Dots = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="#262626">
@@ -114,12 +118,17 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
     <div className="story-head">
       <div className="story-who">
         <AccountAvatar id={owner} size={32} />
-        <b>{title}</b>
-        {when && <span>{when}</span>}
+        <div className="story-name">
+          <b>{title}</b>
+          {when && <span>{when}</span>}
+        </div>
       </div>
-      <button className="story-x" onClick={onClose} aria-label="닫기">
-        <Ico d={CLOSE} size={22} stroke="#fff" sw={2.2} />
-      </button>
+      <div className="story-head-r">
+        <Ico d={MENU} size={22} stroke="#fff" sw={2} />
+        <button className="story-x" onClick={onClose} aria-label="닫기">
+          <Ico d={CLOSE} size={22} stroke="#fff" sw={2.2} />
+        </button>
+      </div>
     </div>
   )
 
@@ -178,11 +187,9 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
             onChange={(e) => setReply(e.target.value)}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
-            placeholder={`${title}님에게 답장 보내기`}
+            placeholder="메시지 보내기..."
           />
         </form>
-        <button className="story-emo" onClick={() => react('😂')} aria-label="웃음 반응">😂</button>
-        <button className="story-emo" onClick={() => react('👏')} aria-label="박수 반응">👏</button>
         <button
           className="story-like"
           onClick={() => {
@@ -191,7 +198,10 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
           }}
           aria-label="좋아요"
         >
-          <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#fff'} size={26} />
+          <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#fff'} size={28} />
+        </button>
+        <button className="story-like" onClick={() => onToast(`${title}님에게 공유했습니다`)} aria-label="공유">
+          <Ico d={SEND} stroke="#fff" size={28} />
         </button>
       </div>
     </div>
@@ -203,6 +213,7 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
   const liked = !!state.liked[post.id]
   const saved = !!state.saved[post.id]
   const [pop, setPop] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   const timer = useRef(null)
   useEffect(() => () => clearTimeout(timer.current), [])
 
@@ -212,8 +223,9 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
     clearTimeout(timer.current)
     timer.current = setTimeout(() => setPop(false), 700)
   }
-  const count = post.likes + (liked ? 1 : 0)
+  const likes = post.likes + (liked ? 1 : 0)
   const when = post.ts ? fmtTime(post.ts) : post.ago
+  const longCaption = post.text.length > 26
 
   return (
     <article className="post">
@@ -227,10 +239,12 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
         </button>
         <span className="post-head-r">
           {post.user !== ME_ID && !state.follows[post.user] && (
-            <button className="post-follow" onClick={() => actions.follow(post.user)}>팔로우</button>
+            <button className="post-follow" onClick={() => actions.follow(post.user)}>
+              팔로우
+            </button>
           )}
           <button className="post-more" onClick={onMore} aria-label="더보기">
-            <Dots />
+            <Ico d={MENU} size={22} sw={2} />
           </button>
         </span>
       </div>
@@ -243,27 +257,36 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
         )}
       </div>
       <div className="post-actions">
-        <button className="ic-btn" onClick={() => actions.like(post.id)} aria-label="좋아요">
-          <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#000'} />
+        <button className="act" onClick={() => actions.like(post.id)} aria-label="좋아요">
+          <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#000'} size={26} />
+          <span>{fmtCount(likes)}</span>
         </button>
-        <button className="ic-btn" onClick={onComment} aria-label="댓글">
-          <Ico d={BUBBLE} />
+        <button className="act" onClick={onComment} aria-label="댓글">
+          <Ico d={BUBBLE} size={26} />
+          {post.comments.length > 0 && <span>{fmtCount(post.comments.length)}</span>}
         </button>
-        <button className="ic-btn" onClick={onShare} aria-label="공유">
-          <Ico d={SEND} />
+        <button className="act" onClick={onShare} aria-label="공유">
+          <Ico d={SEND} size={26} />
+          {post.shares > 0 && <span>{fmtCount(post.shares)}</span>}
         </button>
         <span className="grow" />
         <button className="ic-btn" onClick={() => actions.save(post.id)} aria-label="저장">
-          <Ico d={BOOKMARK} fill={saved ? '#000' : 'none'} />
+          <Ico d={BOOKMARK} fill={saved ? '#000' : 'none'} size={26} />
         </button>
       </div>
-      <div className="post-likes">좋아요 {count.toLocaleString()}개</div>
-      <div className="post-cap">
+      <div className={`post-cap ${longCaption && !expanded ? 'clip' : ''}`}>
         <b>{post.user}</b> {post.text}
       </div>
-      <button className="post-cm" onClick={onComment}>
-        {post.comments.length ? `댓글 ${post.comments.length}개 모두 보기` : '댓글 달기'}
-      </button>
+      {longCaption && !expanded && (
+        <button className="post-more-txt" onClick={() => setExpanded(true)}>
+          더 보기
+        </button>
+      )}
+      {post.comments.length > 0 && (
+        <button className="post-cm" onClick={onComment}>
+          댓글 {post.comments.length}개 모두 보기
+        </button>
+      )}
       {post.comments.slice(-2).map((c, i) => (
         <div key={i} className="post-prev">
           <b>{c.user}</b> {c.text}
@@ -428,17 +451,15 @@ export default function Sns({ params }) {
     <div className="page sns">
       {tab === 'feed' && (
         <>
-          <div className="sns-top">
-            <span className="sns-logo">그램</span>
-            <div className="sns-icons">
-              <span onClick={() => setTab('notif')} role="button" aria-label="알림">
-                <Ico d={HEART} />
-              </span>
-              <span className="rel" onClick={() => setTab('dm')} role="button" aria-label="메시지">
-                <Ico d={SEND} />
-                {unreadDm > 0 && <i className="mini-badge">{unreadDm}</i>}
-              </span>
-            </div>
+          <div className="ig-top">
+            <button className="glass-btn" onClick={() => flash('새 게시물 작성은 준비 중입니다')} aria-label="새 게시물">
+              <Ico d={PLUS} size={22} sw={2} />
+            </button>
+            <span className="ig-wordmark">Instagram</span>
+            <button className="glass-btn" onClick={() => setTab('notif')} aria-label="알림">
+              <Ico d={HEART} size={22} />
+              {state.snsNotifs.length > 0 && <i className="dot" />}
+            </button>
           </div>
           <div className="scroll">
             <div className="stories">
@@ -630,21 +651,25 @@ export default function Sns({ params }) {
         />
       )}
 
-      {(tab === 'feed' || tab === 'search' || tab === 'profile') && (
-        <div className="sns-tabs">
-          <span onClick={() => setTab('feed')} className={tab === 'feed' ? 'on' : ''} role="button" aria-label="홈">
-            <Ico d={HOME} fill={tab === 'feed' ? '#000' : 'none'} />
-          </span>
-          <span onClick={() => setTab('search')} className={tab === 'search' ? 'on' : ''} role="button" aria-label="검색">
-            <Ico d={SEARCH} sw={tab === 'search' ? 2.6 : 1.8} />
-          </span>
-          <span onClick={() => setTab('notif')} role="button" aria-label="알림">
-            <Ico d={HEART} />
-          </span>
-          <span onClick={() => setTab('profile')} className={tab === 'profile' ? 'on' : ''} role="button" aria-label="프로필">
+      {(tab === 'feed' || tab === 'search' || tab === 'profile' || tab === 'dm') && (
+        <nav className="ig-tabs">
+          <button className={tab === 'feed' ? 'on' : ''} onClick={() => setTab('feed')} aria-label="홈">
+            <Ico d={HOME} fill={tab === 'feed' ? '#000' : 'none'} size={26} />
+          </button>
+          <button onClick={() => flash('릴스는 준비 중입니다')} aria-label="릴스">
+            <Ico d={REELS} size={26} />
+          </button>
+          <button className={tab === 'dm' ? 'on' : ''} onClick={() => setTab('dm')} aria-label="메시지">
+            <Ico d={SEND} size={26} />
+            {unreadDm > 0 && <i className="dot" />}
+          </button>
+          <button className={tab === 'search' ? 'on' : ''} onClick={() => setTab('search')} aria-label="검색">
+            <Ico d={SEARCH} size={26} sw={tab === 'search' ? 2.6 : 1.8} />
+          </button>
+          <button className={tab === 'profile' ? 'on' : ''} onClick={() => setTab('profile')} aria-label="프로필">
             <AccountAvatar id={ME_ID} size={26} />
-          </span>
-        </div>
+          </button>
+        </nav>
       )}
 
       {/* 다른 계정 프로필 */}
