@@ -128,7 +128,7 @@ export default function Twitter() {
       <>
         <div className="th ch2"><Me s={32} onClick={() => to('profile')} /><b>Chat</b><span className="pill">전체 <Ic n="down" s={16} w={2.4} /></span></div>
         <div className="sc"><div className="sr"><Ic n="search" s={20} />검색</div>
-          {DM.map(([n, t, m, c, go, vf, def]) => <div key={n} className="dr" onClick={go ? () => to('chat') : undefined}><Av c={c} def={def} s={56} /><div className="m"><p><b>{n}</b>{vf ? <Vf /> : null}<span>{t}</span></p><small>{m}</small></div></div>)}
+          {DM.map(([n, t, m, c, go, vf, def]) => <div key={n} className="dr" onClick={() => to('chat')}><Av c={c} def={def} s={56} /><div className="m"><p><b>{n}</b>{vf ? <Vf /> : null}<span>{t}</span></p><small>{m}</small></div></div>)}
         </div>
         <button className="fab"><Ic n="newchat" s={28} w={2} /></button>
       </>
