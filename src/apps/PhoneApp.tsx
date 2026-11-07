@@ -5,7 +5,7 @@ import { fmtTime } from '../utils'
 import './PhoneApp.css'
 
 /* ───────── 저장소 (키 변경 금지) ───────── */
-const KEY = 'phone-app:v1:'
+const KEY = 'phone-app:v2:'
 function load(k, fallback) {
   try {
     const v = localStorage.getItem(KEY + k)
@@ -29,19 +29,25 @@ function usePersist(k, init) {
 /* ───────── 초기(가상) 데이터 ───────── */
 // [연락처, 종류(in|out|missed), 몇 분 전, 통화 시간(초)]
 const SEED_CALLS = [
-  ['nae', 'missed', 20, 0], ['hj', 'in', 95, 312], ['boss', 'out', 240, 185], ['yh', 'missed', 400, 0],
-  ['wy', 'out', 1000, 64], ['hj', 'out', 1500, 742], ['nae', 'in', 1700, 93], ['boss', 'missed', 1900, 0],
-  ['yh', 'in', 2900, 1280], ['hj', 'missed', 3100, 0], ['wy', 'in', 4300, 45], ['nae', 'out', 4500, 230],
-  ['boss', 'in', 5800, 128], ['hj', 'in', 7200, 1860], ['yh', 'out', 8700, 77], ['wy', 'missed', 10000, 0],
-  ['nae', 'in', 11500, 340], ['boss', 'out', 13000, 52], ['hj', 'out', 14500, 615], ['yh', 'missed', 16000, 0],
-  ['wy', 'in', 18000, 402], ['nae', 'missed', 20000, 0], ['hj', 'in', 23000, 95],
+  // 홍중은 드물게 먼저 전화하지만 한 번 통화하면 길게 이어짐
+  ['hj', 'in', 95, 312], ['hj', 'in', 1500, 1840], ['hj', 'out', 4200, 960],
+  // 윤호는 자주 짧게 통화
+  ['yh', 'in', 35, 72], ['yh', 'out', 180, 48], ['yh', 'in', 420, 95], ['yh', 'out', 900, 61],
+  ['yh', 'in', 1800, 84], ['yh', 'out', 2600, 55], ['yh', 'in', 3900, 112],
+  // 우영은 가끔 짧게
+  ['wy', 'in', 1100, 58], ['wy', 'out', 5200, 83],
+  // 아빠와 형은 연락이 드묾
+  ['dad', 'missed', 9000, 0], ['dad', 'out', 18000, 74], ['bro', 'in', 26000, 0],
+  // 단골손님, 광고성 번호, 친구, 알바 관련
+  ['regular', 'in', 600, 135], ['nae', 'out', 2400, 92], ['boss', 'missed', 5600, 0],
+  ['friend', 'out', 7200, 210], ['regular', 'missed', 10800, 0],
 ]
 const SEED_VOICEMAIL = [
-  ['boss', 60 * 5, 38, '내일 근무 시간 좀 바꿀 수 있을까? 확인되면 연락 줘.'],
-  ['nae', 60 * 26, 21, '언니 아니, 성화야 나 오늘 교대 좀 부탁해도 될까?'],
-  ['hj', 60 * 50, 47, '나 오늘 스케줄 끝났다. 시간 되면 전화 줘.'],
+  ['boss', 60 * 5, 38, '이번 주 근무 시간 확인되면 답 주세요.'],
+  ['regular', 60 * 26, 21, '사장님, 다음 주에도 예약 가능할까요?'],
+  ['hj', 60 * 50, 47, '나 스케줄 끝났어. 시간 되면 전화 줘.'],
   ['wy', 60 * 120, 15, '전화 안 받네. 나중에 다시 걸게.'],
-  ['yh', 60 * 300, 29, '이번 주말에 시간 괜찮아? 연락 기다릴게.'],
+  ['unknown', 60 * 300, 12, '이벤트 안내 전화였습니다.'],
 ]
 const makeCalls = () => {
   const now = Date.now()
@@ -574,7 +580,7 @@ export default function PhoneApp() {
   const contactsRef = useRef(null)
 
   const [calls, setCalls] = usePersist('calls', makeCalls)
-  const [favs, setFavs] = usePersist('favs', ['hj', 'wy', 'nae'])
+  const [favs, setFavs] = usePersist('favs', ['hj', 'yh', 'wy'])
   const [extras, setExtras] = usePersist('extras', [])
   const [overrides, setOverrides] = usePersist('overrides', {})
   const [deletedGame, setDeletedGame] = usePersist('deletedGame', [])
