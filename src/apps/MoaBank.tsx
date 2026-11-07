@@ -4,7 +4,7 @@ import './MoaBank.css'
 import { usePersist } from '../engine/persist'
 
 /* =========================================================
-   신한 SOL뱅크 — 가상 모바일뱅킹 (연습용, 실제 금융 거래 없음)
+   모아뱅크(토스 스타일) — 가상 모바일뱅킹 (연습용, 실제 금융 거래 없음)
    단일 원장(db.txs)이 유일한 진실의 원천입니다.
    잔액·보유수량·통계는 모두 원장에서 계산하므로 중복 반영이 없습니다.
    ========================================================= */
@@ -34,6 +34,11 @@ const nextPay = (at, day) => {
 
 /* ---------- 아이콘 (Lucide 스타일, stroke 1.8) ---------- */
 const I = {
+  send: '<path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/>',
+  loan: '<circle cx="12" cy="12" r="9"/><path d="m9 15 6-6M9.5 9.5h.01M14.5 14.5h.01"/>',
+  shield: '<path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+  score: '<path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 18 4-6"/>',
   home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
   swap: '<path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>',
   card: '<rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/>',
@@ -62,11 +67,12 @@ const Ic = ({ n, s = 20 }) => (
 
 const Logo = ({ s = 28 }) => (
   <svg viewBox="0 0 40 40" width={s} height={s} aria-hidden="true">
-    <rect width="40" height="40" rx="12" fill="#0046b8" />
-    <path d="M27.5 11.5c-2.1-2-4.6-3-7.8-3-5.1 0-8.5 2.5-8.5 6.2 0 8.1 17.5 3.8 17.5 11.1 0 3.7-3.6 6.1-8.8 6.1-3.5 0-6.7-1.2-9.1-3.6" fill="none" stroke="#fff" strokeWidth="3.1" strokeLinecap="round"/>
-    <circle cx="30.8" cy="30.4" r="3.1" fill="#68d5f4"/>
+    <rect width="40" height="40" rx="12" fill="#3182f6" />
+    <path d="M11 13h18M20 13v16" fill="none" stroke="#fff" strokeWidth="4.4" strokeLinecap="round" />
   </svg>
 )
+// 준비 중 메뉴 (실제 기능 없음)
+const MENUS = [['송금', 'send'], ['대출', 'loan'], ['보험', 'shield'], ['혜택', 'gift'], ['신용점수', 'score'], ['자산관리', 'pie']]
 
 /* ---------- 샘플 데이터 ---------- */
 const makeSeed = () => {
@@ -322,7 +328,7 @@ function Form({ f, db, commit, close }) {
 }
 
 /* ---------- 메인 ---------- */
-export default function ShinhanSOL({ close }) {
+export default function MoaBank({ close }) {
   const seed = useMemo(makeSeed, [])
   const [raw, setRaw] = usePersist('shinhan.sol.db', seed)
   const ok = raw && ['accounts', 'cards', 'stocks', 'txs'].every((k) => Array.isArray(raw[k]))
@@ -332,12 +338,10 @@ export default function ShinhanSOL({ close }) {
   const [tab, setTab] = useState('home')
   const [view, setView] = useState(null) // {k:'acct'|'card'|'stock', id}
   const [sheet, setSheet] = useState(null) // {k:'form', f} | {k:'tx', id}
-  const [seg, setSeg] = useState('acct')
   const [toast, setToast] = useState('')
   const [fl, setFl] = useState({ acc: 'all', dir: 'all', per: 'all', from: '', to: '', q: '' })
   const [cardSel, setCardSel] = useState(null)
   const [hide, setHide] = useState(false)
-  const [sel, setSel] = useState(null)
 
   const say = (m) => { setToast(m); setTimeout(() => setToast(''), 2600) }
   const commit = (fn) => {
@@ -360,6 +364,7 @@ export default function ShinhanSOL({ close }) {
   const total = cash + stockVal
   const mk = mkey(now), ms = monthStat(db, mk)
   const accName = (id) => db.accounts.find((a) => a.id === id)?.name || '삭제된 계좌'
+  const soon = (name, icon) => setView({ k: 'soon', name, icon })
   const openForm = (f) => setSheet({ k: 'form', f })
   const openTx = (id) => setSheet({ k: 'tx', id })
   const del = (t) => {
@@ -401,50 +406,72 @@ export default function ShinhanSOL({ close }) {
   const eyeBtn = <button className="moa-eye" aria-label={hide ? '잔액 표시' : '잔액 숨기기'} onClick={() => setHide(!hide)}><Ic n={hide ? 'eyeoff' : 'eye'} s={18} /></button>
   const Home = () => {
     const bankR = led.filter((t) => t.kind === 'bank' || t.kind === 'transfer').slice(0, 4)
-    const cardR = db.txs.filter((t) => t.kind === 'card' && t.at <= now).sort((a, b) => b.at - a.at).slice(0, 4)
-    const stockR = db.txs.filter((t) => t.kind === 'stock' && t.status === 'ok' && t.at <= now).sort((a, b) => b.at - a.at).slice(0, 3)
-    const selA = db.accounts.find((a) => a.id === sel) || db.accounts[0]
+    const cardR = db.txs.filter((t) => t.kind === 'card' && t.at <= now).sort((a, b) => b.at - a.at).slice(0, 3)
+    const cardUse = db.cards.reduce((x, c) => x + cardStat(c).use, 0)
+    const pl = stockVal - stockCost, uc = pl >= 0 ? 'up' : 'dn'
+    const held = db.stocks.filter((x) => hold[x.code].qty > 0)
     return (
       <>
         <header className="moa-top">
-          <Logo s={30} /><h1>신한 SOL뱅크</h1>
-          <button className="moa-ib" aria-label="알림" onClick={() => say('새로운 알림이 없어요')}><Ic n="bell" /></button>
-          <button className="moa-ib" aria-label="메뉴" onClick={() => setSheet({ k: 'menu' })}><Ic n="menu" /></button>
+          <Logo s={30} /><h1>toss</h1>
+          <button className="moa-ib" aria-label="메뉴" onClick={() => setTab('all')}><Ic n="menu" /></button>
+          <button className="moa-ib" aria-label="닫기" onClick={close}><Ic n="x" /></button>
         </header>
         <section className="moa-hero">
-          <span>전체 계좌 잔액 {eyeBtn}</span>
-          <b>{mny(cash)}</b>
-          {selA && <em className="moa-selc">선택 계좌 · {selA.name}</em>}
-          <div className="moa-two">
-            <button className="moa-btn w" onClick={() => openForm({ k: 'transfer', from: selA?.id })}>이체</button>
-            <button className="moa-btn w" onClick={() => openForm({ k: 'bank', dir: 'in', acc: selA?.id })}>입금</button>
-            <button className="moa-btn w" onClick={() => openForm({ k: 'bank', dir: 'out', acc: selA?.id })}>출금</button>
-          </div>
+          <span>내 자산 {eyeBtn}</span>
+          <b>{mny(total)}</b>
+          <p className="moa-hint">이번 달 지출 {mny(ms.out)}</p>
         </section>
-        <div className="moa-sec pad"><h3>내 계좌</h3><button onClick={() => openForm({ k: 'acct' })}>계좌 추가 <Ic n="plus" s={14} /></button></div>
-        <div className="moa-card flat">
+        <div className="moa-menu">{MENUS.map(([n, i]) => <button key={n} onClick={() => soon(n, i)}><i><Ic n={i} s={22} /></i><span>{n}</span></button>)}</div>
+
+        <section className="moa-card">
+          <div className="moa-sec"><h3>계좌</h3><button onClick={() => setTab('tx')}>전체 <Ic n="chev" s={14} /></button></div>
           {db.accounts.map((a) => (
-            <div key={a.id} className={'moa-acc' + (selA?.id === a.id ? ' on' : '')}>
-              <button className="moa-row" onClick={() => setSel(a.id)}>
-                <i className="moa-ri k-bank"><Ic n="wallet" s={18} /></i>
-                <div className="moa-rm"><b>{a.name}</b><span>{a.no}</span></div>
-                <div className="moa-ra"><b>{mny(bal[a.id])}</b></div>
-              </button>
-              {selA?.id === a.id && <button className="moa-more" onClick={() => setView({ k: 'acct', id: a.id })}>거래 내역 보기 <Ic n="chev" s={14} /></button>}
+            <div key={a.id} role="button" tabIndex={0} className="moa-row" onClick={() => setView({ k: 'acct', id: a.id })}>
+              <i className="moa-ri in"><Ic n="wallet" s={18} /></i>
+              <div className="moa-rm"><b>{a.name}</b><span>{mny(bal[a.id])}</span></div>
+              <span className="moa-pill" onClick={(e) => { e.stopPropagation(); soon('송금', 'send') }}>송금</span>
             </div>
           ))}
           {!db.accounts.length && <Empty>등록된 계좌가 없어요</Empty>}
-        </div>
-        <div className="moa-sec pad"><h3>최근 입출금</h3><button onClick={() => setTab('tx')}>더보기 <Ic n="chev" s={14} /></button></div>
-        <div className="moa-card flat">{bankR.map((t) => <TxRow key={t.id} t={t} db={db} onClick={() => openTx(t.id)} />)}{!bankR.length && <Empty>입출금 내역이 없어요</Empty>}</div>
-        <div className="moa-sec pad"><h3>최근 카드 이용</h3><button onClick={() => setTab('card')}>더보기 <Ic n="chev" s={14} /></button></div>
-        <div className="moa-card flat">{cardR.map((t) => <CardRow key={t.id} t={t} onClick={() => openTx(t.id)} />)}{!cardR.length && <Empty>카드 이용 내역이 없어요</Empty>}</div>
-        <div className="moa-sec pad"><h3>최근 증권 거래</h3><button onClick={() => setTab('stock')}>더보기 <Ic n="chev" s={14} /></button></div>
-        <div className="moa-card flat">{stockR.map((t) => <TxRow key={t.id} t={t} db={db} onClick={() => openTx(t.id)} />)}{!stockR.length && <Empty>증권 거래 내역이 없어요</Empty>}</div>
-        <p className="moa-foot">신한 SOL뱅크는 가상의 연습용 앱이에요. 실제 금융기관과 연결되어 있지 않아요.</p>
+        </section>
+
+        <section className="moa-card">
+          <div className="moa-sec"><h3>카드</h3><button onClick={() => setTab('card')}>전체 <Ic n="chev" s={14} /></button></div>
+          <p className="moa-sub0">이번 달 쓴 금액</p><b className="moa-num">{mny(cardUse)}</b>
+          {cardR.map((t) => <CardRow key={t.id} t={t} onClick={() => openTx(t.id)} />)}
+          {!cardR.length && <Empty>카드 이용 내역이 없어요</Empty>}
+        </section>
+
+        <section className="moa-card">
+          <div className="moa-sec"><h3>주식</h3><button onClick={() => setTab('stock')}>전체 <Ic n="chev" s={14} /></button></div>
+          <b className="moa-num">{mny(stockVal)}</b>
+          <p className={'moa-hint ' + uc}>{hide ? '•••••' : `${pl >= 0 ? '+' : ''}${won(pl)} (${stockCost > 0 ? pct((pl / stockCost) * 100) : '-'})`}</p>
+          {held.map((x) => { const h = hold[x.code], p = h.cost ? ((h.qty * x.price - h.cost) / h.cost) * 100 : 0; return (
+            <button key={x.code} className="moa-row" onClick={() => setView({ k: 'stock', id: x.code })}><i className="moa-ri in"><Ic n="chart" s={18} /></i><div className="moa-rm"><b>{x.name}</b><span>{num(h.qty)}주</span></div><div className="moa-ra"><b>{mny(h.qty * x.price)}</b><span className={p >= 0 ? 'up' : 'dn'}>{pct(p)}</span></div></button>) })}
+          {!held.length && <Empty>보유 중인 주식이 없어요</Empty>}
+        </section>
+
+        <section className="moa-card">
+          <div className="moa-sec"><h3>최근 입출금</h3><button onClick={() => setTab('tx')}>더보기 <Ic n="chev" s={14} /></button></div>
+          {bankR.map((t) => <TxRow key={t.id} t={t} db={db} onClick={() => openTx(t.id)} />)}
+          {!bankR.length && <Empty>입출금 내역이 없어요</Empty>}
+        </section>
+        <p className="moa-foot">연습용 가상 앱이에요. 실제 금융기관과 연결되어 있지 않아요.</p>
       </>
     )
   }
+
+  const All = () => (
+    <>
+      <Head title="전체" />
+      {[['금융', [['송금', 'send'], ['대출', 'loan'], ['신용점수', 'score'], ['자산관리', 'pie']]], ['보호 · 혜택', [['보험', 'shield'], ['혜택', 'gift']]]].map(([g, items]) => (
+        <div key={g}><div className="moa-sec pad"><h3>{g}</h3></div>
+          <div className="moa-card flat">{items.map(([n, i]) => <button key={n} className="moa-row" onClick={() => soon(n, i)}><i className="moa-ri in"><Ic n={i} s={18} /></i><div className="moa-rm"><b>{n}</b></div><Ic n="chev" s={16} /></button>)}</div></div>
+      ))}
+      <button className="moa-btn" style={{ marginTop: 24 }} onClick={close}>앱 닫기</button>
+    </>
+  )
 
   const Tx = () => {
     const rows = led.filter((t) => {
@@ -486,6 +513,18 @@ export default function ShinhanSOL({ close }) {
   const Cards = () => (
     <>
       <Head title="카드" right={<button className="moa-ib" aria-label="카드 결제 추가" onClick={() => openForm({ k: 'card' })}><Ic n="plus" /></button>} />
+      {(() => {
+        const k0 = K(now), ms6 = [5, 4, 3, 2, 1, 0].map((i) => new Date(Date.UTC(k0.getUTCFullYear(), k0.getUTCMonth() - i, 1)).toISOString().slice(0, 7))
+        const cm = ms6.map((m) => ({ m, v: db.txs.filter((t) => t.kind === 'card' && t.status === 'ok' && mkey(t.at) === m).reduce((x, t) => x + t.amt, 0) }))
+        const mx = Math.max(1, ...cm.map((x) => x.v))
+        return (
+          <section className="moa-card">
+            <div className="moa-sec"><h3>월별 카드 사용 금액</h3></div>
+            <b className="moa-num">{mny(cm[5].v)}</b><p className="moa-hint">이번 달 사용 금액</p>
+            <div className="moa-mb">{cm.map((x, i) => <div key={x.m} className={i === 5 ? 'on' : ''}><em>{x.v ? `${Math.round(x.v / 1000) / 10}만` : '-'}</em><i style={{ height: `${Math.max(4, (x.v / mx) * 100)}%` }} /><span>{+x.m.slice(5)}월</span></div>)}</div>
+          </section>
+        )
+      })()}
       {db.cards.length === 0 && <Empty>보유한 카드가 없어요</Empty>}
       {db.cards.map((c) => {
         const s = cardStat(c)
@@ -508,7 +547,7 @@ export default function ShinhanSOL({ close }) {
     const trades = db.txs.filter((t) => t.kind === 'stock' && t.status === 'ok' && t.at <= now).sort((a, b) => b.at - a.at)
     return (
       <>
-        <Head title="증권" right={<button className="moa-ib" aria-label="매매" onClick={() => openForm({ k: 'stock' })}><Ic n="plus" /></button>} />
+        <Head title="주식" right={<button className="moa-ib" aria-label="매매" onClick={() => openForm({ k: 'stock' })}><Ic n="plus" /></button>} />
         <section className="moa-card stk">
           <div className="moa-sec"><h3>총 주식 평가금액</h3></div>
           <b className="moa-num">{won(stockVal)}</b>
@@ -531,6 +570,12 @@ export default function ShinhanSOL({ close }) {
   /* ===== 상세 화면 ===== */
   const View = () => {
     const back = <button className="moa-ib" aria-label="뒤로" onClick={() => setView(null)}><Ic n="back" /></button>
+    if (view.k === 'soon') return (
+      <>
+        <Head title={view.name} left={back} />
+        <div className="moa-soon"><i><Ic n={view.icon} s={34} /></i><h2>{view.name} 서비스를 준비하고 있어요</h2><p>조금만 기다려 주세요. 곧 만나볼 수 있어요.</p><button className="moa-btn pri" onClick={() => setView(null)}>확인</button></div>
+      </>
+    )
     if (view.k === 'acct') {
       const a = db.accounts.find((x) => x.id === view.id)
       if (!a) return null
@@ -582,19 +627,13 @@ export default function ShinhanSOL({ close }) {
     )
   }
 
-  const tabs = [['home', '홈', 'home'], ['tx', '입출금', 'swap'], ['card', '카드', 'card'], ['stock', '증권', 'chart']]
+  const tabs = [['home', '홈', 'home'], ['tx', '입출금', 'swap'], ['card', '카드', 'card'], ['stock', '주식', 'chart'], ['all', '전체', 'menu']]
   return (
     <div className="moa">
-      <main className="moa-main" key={tab}>{tab === 'home' ? Home() : tab === 'tx' ? Tx() : tab === 'card' ? Cards() : Stocks()}</main>
+      <main className="moa-main" key={tab}>{tab === 'home' ? Home() : tab === 'tx' ? Tx() : tab === 'card' ? Cards() : tab === 'all' ? All() : Stocks()}</main>
       <nav className="moa-tabs">{tabs.map(([k, l, i]) => <button key={k} className={tab === k ? 'on' : ''} onClick={() => { setTab(k); setView(null) }}><Ic n={i} s={22} /><span>{l}</span></button>)}</nav>
       {view && <div className="moa-view"><div className="moa-main">{View()}</div></div>}
       {sheet?.k === 'form' && <Form key={JSON.stringify(sheet.f)} f={sheet.f} db={db} commit={commit} close={() => setSheet(null)} />}
-      {sheet?.k === 'menu' && (
-        <Sheet title="신한 SOL뱅크" onClose={() => setSheet(null)}>
-          <div className="moa-card flat">{[['home', '홈', 'home'], ['tx', '입출금', 'swap'], ['card', '카드', 'card'], ['stock', '증권', 'chart']].map(([k, l, i]) => <button key={k} className="moa-row" onClick={() => { setTab(k); setView(null); setSheet(null) }}><i className="moa-ri"><Ic n={i} s={18} /></i><div className="moa-rm"><b>{l}</b></div><Ic n="chev" s={16} /></button>)}</div>
-          <button className="moa-btn" onClick={() => { setSheet(null); close() }}>앱 닫기</button>
-        </Sheet>
-      )}
       {sheet?.k === 'tx' && TxSheet()}
       {toast && <div className="moa-toast">{toast}</div>}
     </div>
