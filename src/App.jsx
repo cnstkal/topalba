@@ -22,6 +22,7 @@ import Weather from './apps/Weather'
 import Someone from './apps/Someone'
 import Maps from './apps/Maps'
 import MoaBank from './apps/MoaBank'
+import Gyeol from './apps/Gyeol'
 import Reminders from './apps/Reminders'
 import Stub from './apps/Stub'
 
@@ -43,7 +44,7 @@ const COMPONENTS = {
   maps: Maps,
   reminders: Reminders,
   moabank: MoaBank,
-  dating: Stub,
+  dating: Gyeol,
   netflix: Stub,
   kakao: Stub,
 }
