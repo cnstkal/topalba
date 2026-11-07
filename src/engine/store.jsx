@@ -9,6 +9,7 @@ import {
   INITIAL_POSTS,
   INITIAL_RECENTS,
   INITIAL_PROFILE,
+  SNS_FOLLOWING,
 } from '../data/story'
 import { judgeEnding } from '../data/endings'
 import { ME } from '../data/characters'
@@ -53,7 +54,7 @@ function freshState() {
     calEvents: seedCalEvents(), // 캘린더 일정 (기존 저장본에는 이 키가 없으므로 시드가 자동 적용됨)
     liked: {},
     saved: {}, // 저장한 게시물
-    follows: {}, // 팔로우한 계정
+    follows: { ...SNS_FOLLOWING }, // 기본 팔로우 계정
     storySeen: {}, // 열람한 스토리 계정
     profile: JSON.parse(JSON.stringify(INITIAL_PROFILE)),
     history: [],
@@ -77,7 +78,7 @@ function load() {
         return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
       })
       const extra = old.filter((p) => !initIds.has(p.id))
-      const merged = { ...freshState(), ...saved, posts: [...extra, ...initial], banner: null }
+      const merged = { ...freshState(), ...saved, follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
       if (!Array.isArray(merged.calEvents)) merged.calEvents = seedCalEvents()
       return merged
     }
