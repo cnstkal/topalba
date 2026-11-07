@@ -150,3 +150,8 @@
 .gyeol-chat-hint{margin:3px 4px 8px;color:var(--mute);font-size:11px}
 .gyeol-chatgroup .gyeol-row:first-of-type{border-top:1px solid rgba(255,255,255,.1)!important}
 .gyeol-chatgroup .gyeol-row{padding-top:13px;padding-bottom:13px}
+
+/* 프로필 상세: 키워드 칩 제거 후 정보와 하단 액션이 겹치지 않도록 */
+.gyeol-detail{padding-bottom:104px}
+.gyeol-dbody{padding-bottom:120px}
+.gyeol-dbar{bottom:-8px;padding:12px 12px 20px}
