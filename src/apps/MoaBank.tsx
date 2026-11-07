@@ -74,10 +74,10 @@ export default function MoaBank({ close }) {
   )
   else if (tab === 'hist') body = (
     <div className="pg">
-      <div className="tb"><button onClick={() => go('home')}><Ic d="back" /></button><span className="sp" /><b className="ct">◀ 11월 ▶</b><span className="sp" /><Ic d="search" /><Ic d="dots" /></div>
+      <div className="tb hist-head"><button onClick={() => go('home')}><Ic d="back" /></button><b className="ct">◀ 11월 ▶</b><span className="sp" /><Ic d="search" /><Ic d="dots" /></div>
       <div className="chips">{['전체', '카드', '입·출금', '투자', '페이·기타'].map((t, i) => <span key={t} className={i ? '' : 'on'}>{t}</span>)}</div>
       <div className="sum"><div><span>지출</span><b>-180,641원</b></div><div><span>수입</span><b>+141,841원</b></div></div>
-      <div className="sum2"><div><b>지난달보다 <u>11만원</u> 덜 쓰는 중</b><span>분석·고정 지출 보기 〉</span></div><svg viewBox="0 0 100 40"><path d="M0 38 20 30 30 20 55 18 75 10 100 2V40H0z" fill="#2c2c33" /><path d="M0 38 20 30 30 20" stroke="#3182f6" strokeWidth="2" fill="none" /></svg></div>
+      
       <div className="wk">{WEEK.map(([d, v]) => <div key={v}><span>{d}</span><b>{v}</b></div>)}</div>
       <div className="chv">⌄</div>
       {HIST.map(([d, l]) => <div key={d}><p className="day">{d}</p>{l.map((r, i) => r.cash
