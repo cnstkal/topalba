@@ -1,4 +1,4 @@
-.gyeol-app{--lime:#c6ff00;--bg:#0b0b0c;--panel:#17171a;--line:#2a2a2e;--mute:#8b8b93;position:relative;display:flex;flex-direction:column;height:100%;width:100%;max-width:100%;overflow:hidden;background:var(--bg);color:#f2f2f2;font-family:inherit}
+.gyeol-app{--lime:#c6ff00;--bg:#0b0b0c;--panel:#17171a;--line:#2a2a2e;--mute:#8b8b93;position:relative;display:flex;flex-direction:column;box-sizing:border-box;height:100%;width:100%;max-width:100%;padding-top:62px;padding-bottom:28px;overflow:hidden;background:var(--bg);color:#f2f2f2;font-family:inherit}
 .gyeol-app *{box-sizing:border-box}
 .gyeol-app button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
 .gyeol-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
