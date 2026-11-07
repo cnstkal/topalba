@@ -24,6 +24,7 @@ import Maps from './apps/Maps'
 import MoaBank from './apps/MoaBank'
 import Gyeol from './apps/Gyeol'
 import Netflix from './apps/Netflix'
+import KakaoTalk from './apps/KakaoTalk'
 import Reminders from './apps/Reminders'
 import Stub from './apps/Stub'
 
@@ -47,7 +48,7 @@ const COMPONENTS = {
   moabank: MoaBank,
   dating: Gyeol,
   netflix: Netflix,
-  kakao: Stub,
+  kakao: KakaoTalk,
 }
 
 function Phone() {
