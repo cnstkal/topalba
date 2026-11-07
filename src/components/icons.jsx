@@ -6,6 +6,7 @@ const EXTRA_APPS = {
   dating: { label: '결', bg: 'linear-gradient(150deg,#2b2a4c,#6a4cff 70%,#ff7a59)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
+  twitter: { label: 'X', bg: '#000' },
   maps: { label: '길벗', bg: 'linear-gradient(160deg,#5fd18a,#1fa45a)' },
 }
 
@@ -44,6 +45,11 @@ const EXTRA_GLYPHS = {
   netflix: (
     <svg viewBox="0 0 60 60" width="60" height="60">
       <path d="M20 12h6l8 22V12h6v36h-6l-8-22v22h-6z" fill="#e50914" />
+    </svg>
+  ),
+  twitter: (
+    <svg viewBox="0 0 60 60" width="60" height="60">
+      <path d="M13 12h10.5l11.1 14.8L47.5 12H51L36.2 29.2 52 48H41.5L29.7 32.2 16 48h-3.5l15.7-18.3L13 12zm6.8 3 23.2 30h3.2L23 15h-3.2z" fill="#fff" />
     </svg>
   ),
   kakao: (
