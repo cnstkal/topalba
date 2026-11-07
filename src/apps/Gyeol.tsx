@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { Compass, MapPin, Heart, MessageCircle, User, X, Star, SlidersHorizontal, ChevronLeft, Send, Image as ImageIcon, Ban, Flag, Trash2, Plus } from 'lucide-react'
+import { Compass, MapPin, Heart, MessageCircle, User, X, Star, SlidersHorizontal, ChevronLeft, Send, Image as ImageIcon, Ban, Flag, Trash2, Plus, Flame, RotateCcw } from 'lucide-react'
 import './Gyeol.css'
 
 // 사진 URL을 여기에 채우세요 (사용자마다 서로 다른 사진). 없으면 모노그램으로 표시됩니다.
@@ -9,7 +9,7 @@ const PHOTOS = [
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900',
   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900',
 ]
-const NICKS = ['민재','jun_k','도윤','Theo','서준','하람','ryu','태오','시우','Kai','우진','건','지호','Noah','현','경민','Dex','은호','범','정우','Leo','찬','이든','승현','Mingu','해준','로이','다온','Jay','석','준서','Ian','무진','Han','럭키원','유유','검은고양이냐옹','현수','민규','재훈','시온','태민','준혁','도현','승우','지환','성민','우진2']
+const NICKS = ['mochi','jun_k','곰돌이','Theo','새벽감성','달콤커피','ryu','밤산책','시월','Kai','soda_pop','건빵','호두','Noah','한강러너','민트초코','Dex','은빛','범블비','정글','Leo','찬바람','이든','주말농부','Mingu','해바라기','로이','다람쥐','Jay','석양','준비물','Ian','무지개','Han','럭키원','유유','검은고양이냐옹','현수막','규리','재즈','시온','태양','준마','도토리','승냥이','지구인','성냥','우유빛']
 const AREAS = ['홍대','이태원','강남','성수','종로','신촌','잠실','해방촌','합정','건대']
 const GOALS = ['가벼운 만남','데이트','진지한 관계','친구','대화 상대']
 const JOBS = ['디자이너','개발자','바리스타','사진작가','간호사','대학원생','요리사','마케터','트레이너','에디터']
@@ -28,7 +28,7 @@ const mkUsers = () => NICKS.map((nick, i) => ({
 }))
 const mkState = () => {
   const users = mkUsers()
-  const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 2, 4, 5, 6, 8, 9, 10, 11, 13, 14, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+  const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 4, 5, 6, 8, 9, 10, 11, 13, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
   const chats = {}
   const seed = (id, lines, gap = 1) => { chats[id] = lines.map((text, j) => ({ me: j % 2 === 1, text, t: Date.now() - (lines.length - j) * gap * 3600e3 })) }
   seed(35, ['오늘 끝나고 시간 돼?', '오늘은 좀 늦게 끝날 듯', '그럼 끝나고 연락해. 밥이라도 먹자', 'ㅇㅋ 끝나면 연락할게'], 7)
@@ -62,16 +62,26 @@ const mkState = () => {
   seed(46, ['이번 주 일정 알 수 있을까요?', '가능한 날짜 정리해서 카톡으로 보내주세요'], 42)
   seed(47, ['안녕하세요', '네 안녕하세요', '혹시 알바 문의 가능할까요?'], 50)
   seed(48, ['혹시 번호 받을 수 있을까요?', '네 카톡 아이디 mars403 으로 연락 주세요'], 58)
-  return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
+  return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 14, 25, 20, 22, 27, 9, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
     me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => ({ ...u, nick: nickById[u.id] || u.nick, position: u.position || pick(POSITIONS, (u.id || 1) - 1, 8) })), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => ({ ...u, nick: (seed.users.find((x) => x.id === u.id) || u).nick, position: u.position || pick(POSITIONS, (u.id || 1) - 1, 8) })), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
   const src = u.photos[i]
   return src && !bad ? <img className={`gyeol-photo ${cls}`} src={src} alt={u.nick} onError={() => setBad(true)} draggable={false} />
-    : <div className={`gyeol-photo gyeol-mono ${cls}`}>{u.nick[0].toUpperCase()}</div>
+    : <div className={`gyeol-photo gyeol-mono ${cls}`}>{(u.nick || '?')[0].toUpperCase()}</div>
+}
+
+// 사진이 옆으로 부드럽게 밀려 넘어가는 스트립 (key={u.id}로 사람이 바뀔 때는 새로 그려 애니메이션 없이 시작)
+function PhotoStrip({ u, i }) {
+  const n = Math.max(u.photos.length, 1)
+  return (
+    <div className="gyeol-strip" style={{ width: `${n * 100}%`, transform: `translateX(-${(i * 100) / n}%)` }}>
+      {Array.from({ length: n }).map((_, k) => <div key={k} className="gyeol-slide" style={{ width: `${100 / n}%` }}><Photo u={u} i={k} /></div>)}
+    </div>
+  )
 }
 
 export default function Gyeol() {
@@ -82,7 +92,7 @@ export default function Gyeol() {
   const [showFilter, setShowFilter] = useState(false)
   const [pendingBlock, setPendingBlock] = useState(null)
   const [match, setMatch] = useState(null)
-  useEffect(() => { localStorage.setItem('gyeol-state', JSON.stringify(s)) }, [s])
+  useEffect(() => { try { localStorage.setItem('gyeol-state', JSON.stringify(s)) } catch { /* 저장 공간 부족 등은 무시 */ } }, [s])
   const upd = (p) => setS((o) => ({ ...o, ...(typeof p === 'function' ? p(o) : p) }))
   const byId = (id) => s.users.find((u) => u.id === id)
 
@@ -109,7 +119,7 @@ export default function Gyeol() {
   return (
     <div className="gyeol-app">
       <header className="gyeol-top">
-        <div className="gyeol-logo">결<span>GYEOL</span></div>
+        <div className="gyeol-logo"><Flame size={24} fill="currentColor" />결<span>GYEOL</span></div>
         {(tab === 'explore' || tab === 'nearby') && <button className="gyeol-icon" onClick={() => setShowFilter(true)}><SlidersHorizontal size={20} /></button>}
       </header>
       <main className="gyeol-body">
@@ -124,7 +134,7 @@ export default function Gyeol() {
           <button key={k} className={tab === k ? 'on' : ''} onClick={() => { setTab(k); setRoom(null) }}><Ic size={22} /><span>{l}</span></button>
         ))}
       </nav>
-      {detail && <Detail u={byId(detail)} {...ctx} onClose={() => setDetail(null)} />}
+      {detail && byId(detail) && <Detail u={byId(detail)} {...ctx} onClose={() => setDetail(null)} />}
       {match && byId(match) && <MatchScreen u={byId(match)} me={s.me} onChat={() => { const id = match; setMatch(null); openChat(id) }} onClose={() => setMatch(null)} />}
       {pendingBlock && (
         <div className="gyeol-sheetbg" onClick={() => setPendingBlock(null)}><div className="gyeol-sheet" onClick={(e) => e.stopPropagation()}>
@@ -142,7 +152,9 @@ export default function Gyeol() {
 }
 
 function Explore({ s, like, star, pass, ok, setDetail, upd }) {
-  const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)), [s])
+  // 나를 먼저 좋아한 사람(아직 매칭 전)을 덱 앞쪽에 배치 — 좋아요를 누르면 바로 매칭 연출이 보이도록
+  const pending = (id: number) => s.likedMe.includes(id) && !s.matches.includes(id)
+  const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)).sort((a, b) => Number(pending(b.id)) - Number(pending(a.id))), [s])
   const u = queue[0]
   const next = queue[1]
   const [dx, setDx] = useState(0)
@@ -172,7 +184,7 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
         {next && <div className="gyeol-card back" style={{ transform: `scale(${0.94 + 0.06 * p}) translateY(${(1 - p) * 10}px)`, opacity: 0.55 + 0.45 * p }}><Photo u={next} /></div>}
         <div className={`gyeol-card ${fly ? 'flying' : ''}`} style={cardStyle}
           onPointerDown={(e) => { if (fly) return; start.current = e.clientX; setDrag(true) }} onPointerMove={(e) => start.current != null && setDx(e.clientX - start.current)} onPointerUp={end} onPointerCancel={end}>
-          <Photo u={u} i={pi} />
+          <PhotoStrip key={u.id} u={u} i={pi} />
           <div className="gyeol-dots">{Array.from({ length: n }).map((_, i) => <i key={i} className={i === pi ? 'on' : ''} />)}</div>
           <button className="gyeol-tap l" onClick={() => setPi((q) => Math.max(0, q - 1))} />
           <button className="gyeol-tap r" onClick={() => setPi((q) => Math.min(n - 1, q + 1))} />
@@ -187,9 +199,10 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
         </div>
       </div>
       <div className="gyeol-actions">
-        <button onClick={() => act('pass')}><X size={26} /></button>
+        <button className="sm rewind" aria-label="되돌리기" title="되돌리기" disabled={!s.passed.length || !!fly} onClick={() => upd((o) => ({ passed: o.passed.slice(0, -1) }))}><RotateCcw size={20} /></button>
+        <button className="pass" aria-label="패스" onClick={() => act('pass')}><X size={28} strokeWidth={3} /></button>
         <button className={`sm ${s.starred.includes(u.id) ? "starred" : ""}`} aria-label={s.starred.includes(u.id) ? "즐겨찾기 해제" : "즐겨찾기 추가"} title="즐겨찾기" onClick={() => star(u.id)}><Star size={22} fill={s.starred.includes(u.id) ? "currentColor" : "none"} /></button>
-        <button className="main" onClick={() => act('like')}><Heart size={26} /></button>
+        <button className="main" aria-label="좋아요" onClick={() => act('like')}><Heart size={26} fill="currentColor" /></button>
       </div>
     </div>
   )
@@ -240,7 +253,7 @@ function Chat({ s, upd, byId, room, setRoom, setDetail, block }) {
   useEffect(() => { end.current && end.current.scrollIntoView() }, [room, s.chats])
   const fmt = (t) => new Date(t).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
   const send = (text) => { if (!text.trim()) return; upd((o) => ({ chats: { ...o.chats, [room]: [...(o.chats[room] || []), { me: true, text, t: Date.now() }] } })); setTxt('') }
-  if (room) {
+  if (room && byId(room)) {
     const u = byId(room), msgs = s.chats[room] || []
     return (
       <div className="gyeol-room">
@@ -313,7 +326,7 @@ function Me({ s, upd }) {
     </div>
   )
 }
-const setS0 = (upd) => { localStorage.removeItem('gyeol-state'); upd(mkState()) }
+const setS0 = (upd) => { try { localStorage.removeItem('gyeol-state') } catch { /* ignore */ } upd(mkState()) }
 
 function Detail({ u, s, like, unlike, block, openChat, matched, onClose }) {
   const [pi, setPi] = useState(0)
@@ -322,7 +335,7 @@ function Detail({ u, s, like, unlike, block, openChat, matched, onClose }) {
   return (
     <div className="gyeol-detail">
       <button className="gyeol-icon back" onClick={onClose}><ChevronLeft size={22} /></button>
-      <div className="gyeol-hero"><Photo u={u} i={pi} />
+      <div className="gyeol-hero"><PhotoStrip key={u.id} u={u} i={pi} />
         {u.photos.length > 1 && <><button className="gyeol-tap l" onClick={() => setPi(Math.max(0, pi - 1))} /><button className="gyeol-tap r" onClick={() => setPi(Math.min(u.photos.length - 1, pi + 1))} /></>}</div>
       <div className="gyeol-dbody">
         <h2>{u.nick} <em>{u.age}</em></h2>

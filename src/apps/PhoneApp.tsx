@@ -3,28 +3,10 @@ import { useGame } from '../engine/store'
 import { CHARACTERS, CONTACTS, ME, initialOf } from '../data/characters'
 import { fmtTime } from '../utils'
 import './PhoneApp.css'
+import { usePersist as sharedPersist } from '../engine/persist'
 
 /* ───────── 저장소 (키 변경 금지) ───────── */
-const KEY = 'phone-app:v2:'
-function load(k, fallback) {
-  try {
-    const v = localStorage.getItem(KEY + k)
-    return v ? JSON.parse(v) : fallback
-  } catch {
-    return fallback
-  }
-}
-function usePersist(k, init) {
-  const [v, setV] = useState(() => load(k, typeof init === 'function' ? init() : init))
-  useEffect(() => {
-    try {
-      localStorage.setItem(KEY + k, JSON.stringify(v))
-    } catch {
-      /* 저장 실패는 무시 */
-    }
-  }, [k, v])
-  return [v, setV]
-}
+const usePersist = (k, init) => sharedPersist(k, init, 'phone-app:v2:')
 
 /* ───────── 초기(가상) 데이터 ───────── */
 // [연락처, 종류(in|out|missed), 몇 분 전, 통화 시간(초)]

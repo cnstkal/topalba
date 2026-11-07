@@ -1611,3 +1611,10 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 
 /* 썸원 질문 목록: 답변 상태 칩과 카드 하단 구분선 사이 여백 */
 .sm-row .sm-chips{margin:0 0 7px!important}
+
+/* 사진 상세: 옆으로 넘길 때 손가락을 따라가고, 새 사진은 넘긴 방향에서 부드럽게 들어옴 */
+.pd-stage { touch-action: pan-y; overflow: hidden; }
+.pd-img.pd-in-n { animation: pd-in-n .3s cubic-bezier(.22,.8,.3,1); }
+.pd-img.pd-in-p { animation: pd-in-p .3s cubic-bezier(.22,.8,.3,1); }
+@keyframes pd-in-n { from { transform: translateX(60%); opacity: .3; } to { transform: translateX(0); opacity: 1; } }
+@keyframes pd-in-p { from { transform: translateX(-60%); opacity: .3; } to { transform: translateX(0); opacity: 1; } }

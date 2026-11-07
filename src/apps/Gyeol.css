@@ -115,12 +115,12 @@
 .gyeol-msg p{padding:12px 16px;border-radius:17px;font-size:16px;line-height:1.55}
 .gyeol-msg small{display:inline-block;margin:4px 5px 0;font-size:11px}
 /* 별표는 좋아요와 구분되는 특별 관심 표시 */
-.gyeol-actions .sm.starred{color:var(--lime);background:rgba(198,255,0,.14)!important;border-color:var(--lime)!important;box-shadow:0 0 18px rgba(198,255,0,.18)}
+.gyeol-actions .sm.starred{color:var(--lime);background:rgba(254,60,114,.14)!important;border-color:var(--lime)!important;box-shadow:0 0 18px rgba(254,60,114,.18)}
 .gyeol-starbadge{position:absolute;top:6px;left:6px;background:var(--lime);color:#000;font-size:10px;padding:4px 7px;border-radius:5px;z-index:2}
 /* 입력 폼 대신 완성된 프로필 카드 */
 .gyeol-me{padding:18px 16px}
 .gyeol-profile-card{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,#17191a,#101012);box-shadow:0 14px 34px rgba(0,0,0,.25)}
-.gyeol-profile-cover{height:118px;padding:16px;display:flex;align-items:flex-start;justify-content:flex-end;background:radial-gradient(circle at 18% 20%,rgba(198,255,0,.22),transparent 34%),linear-gradient(135deg,#242a1a,#111214 68%)}
+.gyeol-profile-cover{height:118px;padding:16px;display:flex;align-items:flex-start;justify-content:flex-end;background:radial-gradient(circle at 18% 20%,rgba(254,60,114,.22),transparent 34%),linear-gradient(135deg,#242a1a,#111214 68%)}
 .gyeol-profile-cover span{font-size:10px;letter-spacing:3px;color:var(--lime);font-weight:700}
 .gyeol-profile-main{position:relative;padding:48px 20px 22px}
 .gyeol-profile-avatar{position:absolute;top:-44px;left:20px;width:88px;height:88px;border:4px solid #17191a;border-radius:50%;overflow:hidden;background:var(--panel)}
@@ -166,10 +166,10 @@
 .gyeol-actions button{transition:transform .15s}.gyeol-actions button:active{transform:scale(.88)}
 .gyeol-match{position:absolute;inset:0;z-index:60;background:rgba(0,0,0,.88);display:grid;place-items:center;animation:gm-fade .3s}
 .gyeol-match-in{position:relative;width:100%;padding:0 28px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-.gyeol-match h1{margin:0;font-size:46px;font-style:italic;font-weight:900;letter-spacing:-1px;color:var(--lime);text-shadow:0 0 28px rgba(198,255,0,.55);animation:gm-pop .6s cubic-bezier(.2,1.6,.4,1) both .1s}
+.gyeol-match h1{margin:0;font-size:46px;font-style:italic;font-weight:900;letter-spacing:-1px;color:var(--lime);text-shadow:0 0 28px rgba(254,60,114,.55);animation:gm-pop .6s cubic-bezier(.2,1.6,.4,1) both .1s}
 .gyeol-match p{margin:0 0 10px;color:#ddd;font-size:15px;animation:gm-fade .5s both .5s}
 .gyeol-match-photos{display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.gyeol-match-photos>div{width:130px;height:170px;border-radius:18px;overflow:hidden;border:3px solid var(--lime);box-shadow:0 0 24px rgba(198,255,0,.3)}
+.gyeol-match-photos>div{width:130px;height:170px;border-radius:18px;overflow:hidden;border:3px solid var(--lime);box-shadow:0 0 24px rgba(254,60,114,.3)}
 .gyeol-match-photos .l{transform:rotate(-8deg);animation:gm-l .7s cubic-bezier(.2,1.2,.4,1) both .15s}
 .gyeol-match-photos .r{transform:rotate(8deg);animation:gm-r .7s cubic-bezier(.2,1.2,.4,1) both .15s}
 .gyeol-match-photos span{z-index:2;margin:0 -16px;width:48px;height:48px;border-radius:50%;background:var(--lime);color:#000;display:grid;place-items:center;animation:gm-heart 1s ease-out both .6s}
@@ -193,3 +193,38 @@
 .gyeol-sheet{padding-bottom:24px}
 .gyeol-sheet .gyeol-btn{flex:1;min-height:52px;font-size:16px}
 .gyeol-sheet .gyeol-btn-row{display:flex;gap:10px}
+
+/* ── 틴더 스타일 테마 (다크): 플레임 그라데이션 포인트 컬러, 원형 액션 버튼, 둥근 카드 ── */
+.gyeol-app{--lime:#fe3c72;--grad:linear-gradient(45deg,#fd267a,#ff6036);--like:#21d07a;--nope:#fd5068;--super:#1ba5f9;--gold:#f5b72f;--bg:#0f1012;--panel:#1b1c20}
+.gyeol-top{border-bottom:0;padding:10px 16px 6px;position:relative}
+.gyeol-logo{display:flex;align-items:center;gap:4px;font-size:24px;font-weight:800;letter-spacing:-1px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gyeol-logo svg{color:#fd267a;filter:drop-shadow(0 0 6px rgba(253,38,122,.35))}
+.gyeol-logo span{-webkit-text-fill-color:#8b8b93;background:none;font-size:10px}
+.gyeol-nav{border-top:1px solid rgba(255,255,255,.06);background:rgba(15,16,18,.96)}
+.gyeol-nav button.on{color:#fd267a}
+.gyeol-nav button.on svg{filter:drop-shadow(0 0 6px rgba(253,38,122,.45))}
+.gyeol-explore{padding:6px 10px 8px}
+.gyeol-card{border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.gyeol-strip{display:flex;height:100%;transition:transform .34s cubic-bezier(.22,.8,.3,1);will-change:transform}
+.gyeol-slide{flex:none;height:100%;overflow:hidden}
+.gyeol-hero{overflow:hidden}
+.gyeol-info{padding:64px 18px 18px;background:linear-gradient(transparent,rgba(0,0,0,.55) 40%,rgba(0,0,0,.9))}
+.gyeol-info h2{font-size:32px;font-weight:700;letter-spacing:-.5px}
+.gyeol-info em{color:#fff;font-weight:400}
+.gyeol-stamp{font-weight:800;letter-spacing:2px;border-width:4px;border-radius:10px;top:44px;background:rgba(0,0,0,.12)}
+.gyeol-stamp.like{color:var(--like);border-color:var(--like)}.gyeol-stamp.nope{color:var(--nope);border-color:var(--nope)}
+.gyeol-actions{gap:14px;padding:12px 0 2px}
+.gyeol-actions button{background:#16171a!important;border:2px solid currentColor!important;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.gyeol-actions .pass{color:var(--nope)}
+.gyeol-actions .sm{width:44px;height:44px;color:var(--super)}
+.gyeol-actions .sm.rewind{color:var(--gold)}
+.gyeol-actions .sm:disabled{opacity:.35}
+.gyeol-actions .sm.starred{color:var(--super);background:rgba(27,165,249,.16)!important;border-color:var(--super)!important;box-shadow:0 0 18px rgba(27,165,249,.25)}
+.gyeol-actions .main{width:64px;height:64px;background:#16171a!important;color:var(--like);border:2px solid var(--like)!important}
+.gyeol-actions button:active:not(:disabled){transform:scale(.88)}
+.gyeol-btn{background:var(--grad)!important;color:#fff!important;border-radius:999px}
+.gyeol-btn.ghost{background:var(--panel)!important;color:#fff!important}
+.gyeol-info em,.gyeol-dbody em{color:#ddd}
+.gyeol-match h1{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 22px rgba(253,38,122,.5))}
+.gyeol-match-photos>div{border-color:#fff}.gyeol-match-photos span{background:var(--grad);color:#fff}
+.gyeol-burst i{background:#fd267a}.gyeol-burst i.h{background:#ff6036}

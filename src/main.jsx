@@ -23,6 +23,16 @@ class AppErrorBoundary extends React.Component {
           <p>오류 내용을 확인할 수 있도록 표시했어요.</p>
           <pre style={{ padding: 16, background: '#f2f2f7', borderRadius: 12, fontSize: 12 }}>{String(this.state.error?.stack || this.state.error)}</pre>
           <button onClick={() => window.location.reload()} style={{ padding: '12px 18px', background: '#007aff', color: '#fff', borderRadius: 10 }}>새로고침</button>
+          <button
+            onClick={() => {
+              if (!window.confirm('저장된 진행 데이터가 모두 지워지고 처음부터 시작돼요. 계속할까요?')) return
+              try { localStorage.clear() } catch (e) { /* 저장소 사용 불가 */ }
+              window.location.reload()
+            }}
+            style={{ padding: '12px 18px', background: '#e5e5ea', color: '#111', borderRadius: 10, marginLeft: 8 }}
+          >
+            저장 데이터 초기화
+          </button>
         </div>
       )
     }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Component, useEffect, useRef, useState } from 'react'
 import { GameProvider, useGame } from './engine/store'
 import StatusBar from './components/StatusBar'
 import ControlCenter from './components/ControlCenter'
@@ -53,6 +53,27 @@ const COMPONENTS = {
   twitter: Twitter,
 }
 
+// 한 앱이 오류로 멈춰도 전체 화면이 아니라 그 앱만 닫히도록 격리
+class AppBoundary extends Component {
+  state = { error: null }
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+  componentDidCatch(error, info) {
+    console.error('앱 오류:', error, info)
+  }
+  render() {
+    if (!this.state.error) return this.props.children
+    return (
+      <div style={{ position: 'absolute', inset: 0, background: '#fff', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, padding: 32, textAlign: 'center' }}>
+        <b style={{ fontSize: 18 }}>앱을 불러오지 못했어요</b>
+        <span style={{ fontSize: 13, color: '#666' }}>일시적인 오류예요. 닫고 다시 열어 주세요.</span>
+        <button onClick={this.props.onClose} style={{ padding: '12px 22px', borderRadius: 12, background: '#007aff', color: '#fff', fontSize: 16 }}>닫기</button>
+      </div>
+    )
+  }
+}
+
 function Phone() {
   const { state, actions } = useGame()
   const phoneRef = useRef(null)
@@ -90,7 +111,9 @@ function Phone() {
       {cur && (
         <div key={cur.key} className={`app ${cur.closing ? 'app-closing' : ''}`} style={{ transformOrigin: cur.origin }}>
           <div className="app-inner">
-            <App params={cur.params} close={closeApp} />
+            <AppBoundary onClose={closeApp}>
+              {App ? <App params={cur.params} close={closeApp} /> : null}
+            </AppBoundary>
           </div>
         </div>
       )}

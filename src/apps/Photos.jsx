@@ -80,6 +80,9 @@ export default function Photos() {
   const [menu, setMenu] = useState(false)
   const [bright, setBright] = useState({})
   const touchX = useRef(null)
+  const [dragX, setDragX] = useState(0) // 손가락을 따라 움직이는 거리
+  const [dragging, setDragging] = useState(false)
+  const slideDir = useRef(0) // 새 사진이 들어오는 방향 (1: 오른쪽에서, -1: 왼쪽에서)
   const strip = useRef(null)
 
   const live = PHOTOS.filter((p) => !gone[p.id]) // 최신순
@@ -180,7 +183,7 @@ export default function Photos() {
     const idx = live.findIndex((x) => x.id === detail)
     if (idx < 0) { setDetail(null); return null }
     const p = live[idx]
-    const go = (d) => live[idx + d] && setDetail(live[idx + d].id)
+    const go = (d) => { if (!live[idx + d]) return false; slideDir.current = d; setDetail(live[idx + d].id); return true }
     return (
       <div className="page pd-page">
         <div className="pd-top">
@@ -193,14 +196,28 @@ export default function Photos() {
         </div>
         <div
           className="pd-stage"
-          onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
-          onTouchEnd={(e) => {
-            const dx = e.changedTouches[0].clientX - touchX.current
-            if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1)
+          onPointerDown={(e) => { touchX.current = { x: e.clientX, t: performance.now() }; setDragging(true); try { e.currentTarget.setPointerCapture(e.pointerId) } catch (err) { /* ignore */ } }}
+          onPointerMove={(e) => {
+            if (!touchX.current) return
+            const dx = e.clientX - touchX.current.x
+            // 끝 사진에서는 고무줄처럼 저항을 줘서 더 못 넘어가는 느낌
+            const blocked = (dx < 0 && !live[idx + 1]) || (dx > 0 && !live[idx - 1])
+            setDragX(blocked ? dx * 0.3 : dx)
           }}
+          onPointerUp={(e) => {
+            const t = touchX.current
+            touchX.current = null
+            setDragging(false)
+            if (!t) return
+            const dx = e.clientX - t.x
+            const v = Math.abs(dx) / Math.max(1, performance.now() - t.t)
+            if (Math.abs(dx) > 70 || (v > 0.4 && Math.abs(dx) > 25)) go(dx < 0 ? 1 : -1)
+            setDragX(0)
+          }}
+          onPointerCancel={() => { touchX.current = null; setDragging(false); setDragX(0) }}
         >
           <span className="pd-scene">{Ic.scene}{Ic.chev}</span>
-          <div className={`pd-img${p.shot ? ' shot' : ''}`} style={{ background: p.bg, filter: `brightness(${(bright[p.id] ?? 100) / 100})` }}>
+          <div key={p.id} className={`pd-img${p.shot ? ' shot' : ''}${slideDir.current ? (slideDir.current > 0 ? ' pd-in-n' : ' pd-in-p') : ''}`} style={{ background: p.bg, filter: `brightness(${(bright[p.id] ?? 100) / 100})`, transform: `translateX(${dragX}px)`, transition: dragging ? 'none' : 'transform .28s cubic-bezier(.22,.8,.3,1)' }}>
             <span>{p.caption}</span>
           </div>
         </div>

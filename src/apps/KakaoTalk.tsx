@@ -95,7 +95,10 @@ function seed(): Store {
   ], collapsed: false }
 }
 function load(): Store {
-  try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s) } catch { /* ignore */ }
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY) || 'null')
+    if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs))) return s
+  } catch { /* 손상된 데이터는 새로 시작 */ }
   return seed()
 }
 
