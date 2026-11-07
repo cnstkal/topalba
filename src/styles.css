@@ -1294,3 +1294,7 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .cc-mp-v{margin-top:16px;gap:10px}
 .cc-mp-v .cc-sl.h{height:5px}
 .cc-ap-pill{margin:16px auto 0;padding:9px 18px;font-size:15px;gap:6px;align-self:center}
+
+/* 제어센터 1페이지: 그리드를 화면 가운데 80% 폭 안에 맞춤 (오른쪽 아이콘 줄 피함) */
+.cc-pages>.cc-page:first-child{padding-left:6.5%;padding-right:0}
+.cc-g{--u:min(calc((80cqw - 36px) / 4),calc((100cqh - 280px) / 6.2));gap:12px;padding:0;justify-content:start;width:80cqw}
