@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { AppIcon } from './icons'
 import { useGame, unreadCount } from '../engine/store'
 
-const APPS = ['sns', 'mail', 'photos', 'calendar', 'notes', 'settings', 'clock', 'appstore', 'weather', 'someone', 'reminders', 'maps', 'moabank', 'dating', 'netflix', 'kakao']
+const APPS = ['sns', 'twitter', 'mail', 'photos', 'calendar', 'notes', 'settings', 'clock', 'appstore', 'weather', 'someone', 'reminders', 'maps', 'moabank', 'dating', 'netflix', 'kakao']
 const DOCK = ['phone', 'messages', 'safari', 'music']
 
 export default function HomeScreen({ openApp, dimmed }) {
