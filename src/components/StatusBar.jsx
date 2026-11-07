@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fmtStatus } from '../utils'
 
-export default function StatusBar() {
+export default function StatusBar({ onOpenCC }) {
   const [t, setT] = useState(fmtStatus())
   useEffect(() => {
     const id = setInterval(() => setT(fmtStatus()), 5000)
@@ -11,7 +11,7 @@ export default function StatusBar() {
     <>
       <div className="statusbar">
         <span className="sb-time">{t}</span>
-        <span className="sb-right">
+        <span className="sb-right" onClick={onOpenCC}>
           {/* 셀룰러 */}
           <svg width="18" height="12" viewBox="0 0 18 12">
             <rect x="0" y="8" width="3" height="4" rx="1" />

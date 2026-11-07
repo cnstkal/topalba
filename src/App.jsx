@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { GameProvider, useGame } from './engine/store'
 import StatusBar from './components/StatusBar'
+import ControlCenter from './components/ControlCenter'
 import HomeScreen from './components/HomeScreen'
 import { LockScreen, Banner, IncomingCall, EndingScreen } from './components/Overlays'
 import Messages from './apps/Messages'
@@ -49,6 +50,7 @@ function Phone() {
   const phoneRef = useRef(null)
   const [cur, setCur] = useState(null) // { id, origin, params, closing }
   const [leaving, setLeaving] = useState(false)
+  const [cc, setCc] = useState(false)
 
   const openApp = (id, rect, params) => {
     const p = phoneRef.current.getBoundingClientRect()
@@ -83,7 +85,8 @@ function Phone() {
         </div>
       )}
 
-      <StatusBar />
+      <StatusBar onOpenCC={() => setCc(true)} />
+      <ControlCenter open={cc} onClose={() => setCc(false)} />
       <Banner onOpen={(id, params) => openApp(id, null, params)} />
       <IncomingCall />
       {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} />}
