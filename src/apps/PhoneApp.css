@@ -1,140 +1,255 @@
-/* 전화 앱 전용 스타일 - 모든 선택자는 .phone-app 하위로 제한 */
+/* 전화 앱 전용 스타일 (iOS 26 스타일) - 모든 선택자는 .phone-app 하위로 제한 */
 .page.phone-app {
+  --pa-blue: #007aff;
+  --pa-green: #34c759;
+  --pa-red: #ff3b30;
+  --pa-label: #000;
+  --pa-sub: rgba(60, 60, 67, 0.6);
+  --pa-sep: rgba(60, 60, 67, 0.22);
+  --pa-fill: rgba(120, 120, 128, 0.12);
+  --pa-grouped: #f2f2f7;
   display: flex;
   flex-direction: column;
   min-height: 0;
   background: #fff;
-  color: #000;
+  color: var(--pa-label);
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif;
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
 }
 .phone-app *, .phone-app *::before, .phone-app *::after { box-sizing: border-box; }
-.phone-app button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.phone-app button:disabled { cursor: default; }
-.phone-app input { font: inherit; }
+:where(.phone-app) button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+:where(.phone-app) button:disabled { cursor: default; }
+:where(.phone-app) input { font: inherit; letter-spacing: inherit; -webkit-user-select: text; user-select: text; }
 
-.phone-app-body, .phone-app-sub { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.phone-app-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.phone-app-body, .phone-app-stackwrap { flex: 1; min-height: 0; display: flex; flex-direction: column; position: relative; }
+.phone-app-body { animation: paFade 0.22s ease both; }
+.phone-app-sub { flex: 1; min-height: 0; display: flex; flex-direction: column; background: #fff; animation: paPush 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.phone-app-sub.grouped { background: var(--pa-grouped); }
+.phone-app-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding-bottom: 112px; scrollbar-width: none; }
+.phone-app-scroll::-webkit-scrollbar { display: none; }
+.phone-app-scroll.rel { position: relative; }
+.phone-app-sub.nobar .phone-app-scroll { padding-bottom: 20px; }
+@keyframes paFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes paPush { from { transform: translateX(100%); box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12); } to { transform: none; box-shadow: none; } }
 
-/* 상단 바 */
-.phone-app-nav { flex: none; display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 0 12px; color: #007aff; }
-.phone-app-nav > b { color: #000; font-size: 17px; font-weight: 600; }
-.phone-app-navbtn { display: inline-flex; align-items: center; min-width: 50px; min-height: 44px; font-size: 17px; color: #007aff; }
-.phone-app-navbtn:disabled { color: #c7c7cc; }
-.phone-app-navbtn.red { color: #ff3b30; justify-content: flex-end; }
-.phone-app-title { flex: none; padding: 0 16px 6px; font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
-.phone-app-seg { display: flex; background: #eeeef0; border-radius: 9px; padding: 2px; }
-.phone-app-seg button { padding: 5px 18px; border-radius: 7px; font-size: 14px; font-weight: 500; }
-.phone-app-seg button.on { background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); font-weight: 600; }
+/* ── 상단 바 / 글래스 버튼 ── */
+.phone-app-nav { flex: none; position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 4px 16px 6px; color: var(--pa-blue); background: rgba(255, 255, 255, 0.86); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: box-shadow 0.2s; }
+.phone-app-sub.grouped .phone-app-nav { background: rgba(242, 242, 247, 0.86); }
+.phone-app-nav.line { box-shadow: 0 0.5px 0 var(--pa-sep); }
+.phone-app-navtitle { position: absolute; left: 50%; transform: translateX(-50%); max-width: 56%; font-size: 17px; font-weight: 600; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity 0.18s; pointer-events: none; }
+.phone-app-navtitle.show { opacity: 1; }
+.phone-app-glass { min-width: 40px; height: 40px; padding: 0 16px; border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 17px; color: var(--pa-blue); background: rgba(255, 255, 255, 0.78); -webkit-backdrop-filter: blur(16px) saturate(180%); backdrop-filter: blur(16px) saturate(180%); box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.1); transition: transform 0.15s, background 0.15s, opacity 0.15s; }
+.phone-app-glass.round { width: 40px; padding: 0; }
+.phone-app-glass.strong { font-weight: 600; }
+.phone-app-glass.danger { color: var(--pa-red); }
+.phone-app-glass.active { background: var(--pa-blue); color: #fff; }
+.phone-app-glass:active { transform: scale(0.94); background: rgba(225, 225, 230, 0.95); }
+.phone-app-glass.active:active { background: #0066d6; }
+.phone-app-glass:disabled { color: #c7c7cc; opacity: 0.7; transform: none; }
 
-/* 목록 */
-.phone-app-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 0 14px 0 16px; text-align: left; position: relative; }
-button.phone-app-row { padding-top: 0; padding-bottom: 0; }
-.phone-app-row::after { content: ''; position: absolute; left: 70px; right: 0; bottom: 0; height: 0.5px; background: #d1d1d6; }
-.phone-app-rowmain { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 8px 0; text-align: left; }
-.phone-app-row > .phone-app-face, .phone-app-row > :first-child:not(.phone-app-del):not(.phone-app-rowmain) { flex: none; }
-button.phone-app-row { padding: 8px 16px; gap: 12px; }
-.phone-app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.phone-app-main b { font-size: 17px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.phone-app-main span { display: flex; align-items: center; gap: 4px; font-size: 14px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.phone-app .red, .phone-app-main b.red, .phone-app-main span.red { color: #ff3b30; }
-.phone-app-time { flex: none; font-style: normal; font-size: 14px; color: #8e8e93; }
-.phone-app-iconbtn { flex: none; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #007aff; }
-.phone-app-iconbtn:active { background: #e5f1ff; }
-.phone-app-face { flex: none; border-radius: 50%; background: #aeaeb2; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; }
-.phone-app-del { flex: none; width: 24px; height: 24px; border-radius: 50%; background: #ff3b30; display: inline-flex; align-items: center; justify-content: center; }
-.phone-app-move { flex: none; display: flex; color: #007aff; }
-.phone-app-move button { width: 34px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+.phone-app-title { padding: 2px 20px 6px; font-size: 34px; font-weight: 700; letter-spacing: -0.7px; line-height: 1.2; }
+
+/* ── 필터 메뉴 ── */
+.phone-app-scrim { position: absolute; inset: 0; z-index: 20; }
+.phone-app-menu { position: absolute; z-index: 21; top: 56px; right: 14px; width: 232px; padding: 6px; border-radius: 22px; background: rgba(250, 250, 252, 0.9); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 10px 40px rgba(0, 0, 0, 0.22); transform-origin: 100% 0; animation: paMenu 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
+.phone-app-menu button { display: flex; align-items: center; gap: 4px; width: 100%; height: 44px; padding: 0 12px 0 6px; border-radius: 16px; font-size: 17px; text-align: left; }
+.phone-app-menu button:active { background: rgba(120, 120, 128, 0.16); }
+.phone-app-menu .chk { width: 26px; display: inline-flex; justify-content: center; color: var(--pa-label); }
+@keyframes paMenu { from { opacity: 0; transform: scale(0.82); } to { opacity: 1; transform: none; } }
+
+/* ── 목록 ── */
+.phone-app-row { display: flex; align-items: center; width: 100%; padding: 0 12px 0 20px; text-align: left; position: relative; }
+.phone-app-row::after { content: ''; position: absolute; left: 76px; right: 0; bottom: 0; height: 0.5px; background: var(--pa-sep); }
+.phone-app-rowmain { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 8px 0; text-align: left; border-radius: 0; transition: background 0.3s; }
+.phone-app-row:has(.phone-app-rowmain:active) { background: rgba(120, 120, 128, 0.14); transition: none; }
+.phone-app-btnrow { padding: 8px 20px; gap: 12px; transition: background 0.3s; }
+.phone-app-btnrow:active { background: rgba(120, 120, 128, 0.14); transition: none; }
+.phone-app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.phone-app-main b { font-size: 17px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone-app-main span { display: flex; align-items: center; gap: 4px; font-size: 14px; line-height: 1.3; color: var(--pa-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone-app .red, .phone-app-main b.red { color: var(--pa-red); }
+.phone-app-time { flex: none; font-style: normal; font-size: 15px; color: var(--pa-sub); padding-left: 6px; }
+.phone-app-info { flex: none; width: 40px; height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--pa-blue); }
+.phone-app-info:active { opacity: 0.4; }
+.phone-app-face { flex: none; position: relative; border-radius: 50%; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; letter-spacing: 0; box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.35); }
+.phone-app-face::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0) 55%); pointer-events: none; }
+.phone-app-face > span { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18); }
+.phone-app-del { flex: none; width: 24px; height: 24px; margin-right: 10px; border-radius: 50%; background: var(--pa-red); display: inline-flex; align-items: center; justify-content: center; animation: paFade 0.2s both; }
+.phone-app-del.badge { position: absolute; top: -2px; left: -2px; margin: 0; width: 28px; height: 28px; box-shadow: 0 0 0 2px #fff; }
+.phone-app-move { display: flex; justify-content: center; gap: 6px; color: var(--pa-blue); }
+.phone-app-move button { width: 36px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
 .phone-app-move button:disabled { color: #c7c7cc; }
-.phone-app-empty { padding: 56px 24px; text-align: center; color: #8e8e93; font-size: 15px; line-height: 1.6; }
-.phone-app-section { padding: 4px 16px; background: #f2f2f7; color: #6c6c70; font-size: 13px; font-weight: 600; position: sticky; top: 0; z-index: 1; }
+.phone-app-empty { padding: 72px 28px; text-align: center; color: var(--pa-sub); font-size: 16px; line-height: 1.6; }
 
-/* 검색 */
-.phone-app-search { flex: none; display: flex; align-items: center; gap: 6px; margin: 0 16px 8px; padding: 0 10px; height: 36px; border-radius: 10px; background: #eeeef0; }
-.phone-app-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 17px; }
-.phone-app-search button { display: inline-flex; }
+/* ── 검색 ── */
+.phone-app-search { display: flex; align-items: center; gap: 6px; margin: 6px 16px 10px; padding: 0 10px; height: 40px; border-radius: 20px; background: var(--pa-fill); }
+.phone-app-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 17px; color: #000; }
+.phone-app-search input::placeholder { color: var(--pa-sub); }
+.phone-app-search button { width: 18px; height: 18px; border-radius: 50%; background: #aeaeb2; display: inline-flex; align-items: center; justify-content: center; }
 
-/* 상세 */
-.phone-app-hero { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 16px 14px; }
-.phone-app-hero h2 { margin: 0; font-size: 26px; font-weight: 600; }
-.phone-app-actions { display: flex; gap: 8px; padding: 0 16px 14px; }
-.phone-app-actions button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px; border-radius: 12px; background: #f2f2f7; color: #007aff; font-size: 12px; }
+/* ── 즐겨찾기 그리드 ── */
+.phone-app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 8px; padding: 14px 14px 8px; }
+.phone-app-fav { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.phone-app-favface { position: relative; }
+.phone-app-favtap { display: block; border-radius: 50%; transition: transform 0.18s, filter 0.18s; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); }
+.phone-app-favtap:active { transform: scale(0.93); filter: brightness(0.86); }
+.phone-app-favname { max-width: 100%; padding: 0 2px; font-size: 15px; font-weight: 500; line-height: 1.2; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone-app-favname:active { opacity: 0.5; }
+
+/* ── 연락처 ── */
+.phone-app-mycard { display: flex; align-items: center; gap: 12px; padding: 8px 20px 12px; border-bottom: 0.5px solid var(--pa-sep); margin: 0 0 0 0; }
+.phone-app-mycard b { font-size: 21px; font-weight: 600; }
+.phone-app-mycard span { font-size: 14px; }
+.phone-app-section { padding: 3px 20px; background: rgba(247, 247, 249, 0.94); color: var(--pa-sub); font-size: 15px; font-weight: 600; position: sticky; top: 0; z-index: 1; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.phone-app-cname { display: block; width: 100%; padding: 0 0 0 20px; text-align: left; position: relative; transition: background 0.3s; }
+.phone-app-cname span { display: block; padding: 11px 36px 11px 0; font-size: 17px; font-weight: 600; border-bottom: 0.5px solid var(--pa-sep); }
+.phone-app-cname:active { background: rgba(120, 120, 128, 0.14); transition: none; }
+.phone-app-count { padding: 18px 20px 6px; text-align: center; color: var(--pa-sub); font-size: 15px; }
+.phone-app-index { position: absolute; z-index: 6; right: 3px; top: 150px; bottom: 118px; width: 18px; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; pointer-events: none; }
+.phone-app-index button { pointer-events: auto; width: 18px; font-size: 11px; font-weight: 700; line-height: 1; color: var(--pa-blue); padding: 1px 0; }
+
+/* ── 상세 ── */
+.phone-app-hero { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 10px 16px 18px; }
+.phone-app-hero .phone-app-face { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px rgba(0, 0, 0, 0.1); }
+.phone-app-hero h2 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.5px; }
+.phone-app-hero.small { padding-bottom: 14px; }
+.phone-app-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 16px 14px; }
+.phone-app-actions button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; height: 66px; border-radius: 14px; background: #fff; color: var(--pa-blue); font-size: 12px; font-weight: 500; transition: background 0.2s, transform 0.15s; }
+.phone-app-actions button:active { background: #e5e5ea; transform: scale(0.97); }
 .phone-app-actions button.on { color: #ff9f0a; }
-.phone-app-card { margin: 0 16px 10px; padding: 10px 14px; border-radius: 12px; background: #f2f2f7; display: flex; flex-direction: column; gap: 4px; }
-.phone-app-card small { color: #6c6c70; font-size: 13px; }
-.phone-app-plain { text-align: left; color: #007aff; font-size: 17px; }
-.phone-app-hist { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; font-size: 15px; border-top: 0.5px solid #d1d1d6; }
-.phone-app-hist em { font-style: normal; color: #8e8e93; font-size: 14px; }
-.phone-app-hist.missed span { color: #ff3b30; }
-.phone-app-danger { display: block; width: calc(100% - 32px); margin: 6px 16px 16px; padding: 12px; border-radius: 12px; background: #f2f2f7; color: #ff3b30; font-size: 17px; }
-.phone-app-input { width: 100%; padding: 8px 10px; border: 0.5px solid #d1d1d6; border-radius: 8px; background: #fff; font-size: 17px; outline: 0; }
-.phone-app-input.center { text-align: center; max-width: 260px; }
-.phone-app-input:focus { border-color: #007aff; }
+.phone-app-card { margin: 0 16px 12px; padding: 12px 16px; border-radius: 16px; background: #fff; display: flex; flex-direction: column; gap: 4px; }
+.phone-app-card small { color: var(--pa-sub); font-size: 13px; }
+.phone-app-plain { text-align: left; color: var(--pa-blue); font-size: 17px; }
+.phone-app-plain:active { opacity: 0.45; }
+.phone-app-card.list { gap: 0; }
+.phone-app-card.list small { padding-bottom: 6px; }
+.phone-app-hist { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 0; border-top: 0.5px solid var(--pa-sep); }
+.phone-app-hist > div { display: flex; flex-direction: column; gap: 1px; }
+.phone-app-hist b { font-size: 16px; font-weight: 500; }
+.phone-app-hist span { font-size: 13px; color: var(--pa-sub); }
+.phone-app-hist em { font-style: normal; color: var(--pa-sub); font-size: 14px; }
+.phone-app-hist.missed b { color: var(--pa-red); }
+.phone-app-danger { display: block; width: calc(100% - 32px); margin: 6px 16px 16px; padding: 14px; border-radius: 16px; background: #fff; color: var(--pa-red); font-size: 17px; }
+.phone-app-danger:active { background: #e5e5ea; }
+.phone-app-input { width: 100%; padding: 8px 0; border: 0; border-bottom: 0.5px solid var(--pa-sep); background: transparent; font-size: 17px; outline: 0; color: #000; }
+.phone-app-input.center { text-align: center; max-width: 260px; border: 0.5px solid var(--pa-sep); border-radius: 10px; background: #fff; padding: 8px 10px; }
+.phone-app-input:focus { border-bottom-color: var(--pa-blue); }
 
-/* 메시지 */
-.phone-app-bubbles { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; }
-.phone-app-bubble { align-self: flex-end; max-width: 78%; padding: 8px 13px; border-radius: 18px; background: #007aff; color: #fff; font-size: 16px; line-height: 1.35; word-break: break-word; }
-.phone-app-compose { flex: none; display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-top: 0.5px solid #d1d1d6; }
-.phone-app-compose button { color: #007aff; font-weight: 600; font-size: 16px; padding: 0 6px; }
-.phone-app-compose button:disabled { color: #c7c7cc; }
+/* ── 메시지 ── */
+.phone-app-bubbles { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; }
+.phone-app-bubble { align-self: flex-end; max-width: 78%; padding: 8px 14px; border-radius: 19px 19px 5px 19px; background: linear-gradient(180deg, #2f95ff, #007aff); color: #fff; font-size: 17px; line-height: 1.3; word-break: break-word; animation: paFade 0.2s both; }
+.phone-app-compose { flex: none; display: flex; gap: 8px; align-items: center; padding: 8px 12px 36px; background: #fff; }
+.phone-app-msginput { flex: 1; min-width: 0; height: 38px; padding: 0 14px; border: 0.5px solid #c7c7cc; border-radius: 19px; outline: 0; font-size: 17px; background: #fff; }
+.phone-app-send { width: 32px; height: 32px; border-radius: 50%; background: var(--pa-blue); display: inline-flex; align-items: center; justify-content: center; flex: none; transition: background 0.2s, transform 0.15s; }
+.phone-app-send:active { transform: scale(0.92); }
+.phone-app-send:disabled { background: #c7c7cc; }
 
-/* 키패드 */
-.phone-app-keypad { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; padding: 8px 0; }
-.phone-app-keyout { text-align: center; min-height: 64px; width: 100%; padding: 0 16px; }
-.phone-app-num { font-size: 34px; font-weight: 300; letter-spacing: 1px; min-height: 42px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.phone-app-match { color: #8e8e93; font-size: 15px; min-height: 20px; }
-.phone-app-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 2vh, 16px) clamp(14px, 5vw, 24px); width: min(100%, 300px); padding: 0 16px; }
-.phone-app-keys button { aspect-ratio: 1; width: 100%; max-width: 78px; justify-self: center; border-radius: 50%; background: #e9e9ee; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
-.phone-app-keys button:active { background: #c7c7cc; }
-.phone-app-keys b { font-size: 30px; font-weight: 400; }
-.phone-app-keys i { font-style: normal; font-size: 10px; letter-spacing: 2px; font-weight: 600; min-height: 11px; margin-top: 2px; }
-.phone-app-keyfoot { display: grid; grid-template-columns: 1fr 78px 1fr; align-items: center; width: min(100%, 300px); padding: 0 16px; }
-.phone-app-green { width: 72px; height: 72px; border-radius: 50%; background: #34c759; display: inline-flex; align-items: center; justify-content: center; }
-.phone-app-green:disabled { background: #b8e8c4; }
-.phone-app-back { justify-self: start; margin-left: 14px; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+/* ── 키패드 ── */
+.phone-app-keypad { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 4px 0 104px; }
+.phone-app-keyout { text-align: center; width: 100%; padding: 4px 28px 0; }
+.phone-app-num { font-size: 38px; font-weight: 400; letter-spacing: -0.4px; line-height: 46px; min-height: 46px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.phone-app-match { color: var(--pa-sub); font-size: 16px; min-height: 22px; margin-top: 2px; }
+.phone-app-match button { color: var(--pa-blue); font-size: 16px; }
+.phone-app-match button:active { opacity: 0.4; }
+.phone-app-keys { display: grid; grid-template-columns: repeat(3, 80px); justify-content: center; gap: 14px 22px; }
+.phone-app-keys button { width: 80px; height: 80px; border-radius: 50%; background: #e9e9ee; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; transition: background 0.35s ease; user-select: none; -webkit-user-select: none; }
+.phone-app-keys button:active { background: #c4c4c9; transition: none; }
+.phone-app-keys b { font-size: 36px; font-weight: 400; line-height: 38px; letter-spacing: 0; }
+.phone-app-keys i { font-style: normal; font-size: 10.5px; letter-spacing: 2px; font-weight: 700; min-height: 11px; margin-top: 1px; color: #000; }
+.phone-app-keys button:nth-child(10) b { font-size: 40px; line-height: 44px; padding-top: 8px; }
+.phone-app-keys button:nth-child(10) i { display: none; }
+.phone-app-keys button:nth-child(12) b { font-size: 32px; }
+.phone-app-keys button:nth-child(12) i { display: none; }
+.phone-app-keyfoot { display: grid; grid-template-columns: 80px 80px 80px; column-gap: 22px; justify-content: center; align-items: center; }
+.phone-app-green { grid-column: 2; width: 80px; height: 80px; border-radius: 50%; background: var(--pa-green); display: inline-flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.2s, opacity 0.2s; }
+.phone-app-green:active:not(:disabled) { transform: scale(0.94); background: #2bb04f; }
+.phone-app-green:disabled { opacity: 0.55; }
+.phone-app-back { grid-column: 3; justify-self: center; width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; }
+.phone-app-back:active { opacity: 0.4; }
 
-/* 음성 사서함 */
-.phone-app-vm { border-bottom: 0.5px solid #d1d1d6; }
-.phone-app-vmhead { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 16px 4px 8px; text-align: left; }
-.phone-app-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: #007aff; }
+/* ── 음성 사서함 ── */
+.phone-app-vm { position: relative; transition: background 0.25s; }
+.phone-app-vm::after { content: ''; position: absolute; left: 34px; right: 0; bottom: 0; height: 0.5px; background: var(--pa-sep); }
+.phone-app-vmhead { display: flex; align-items: center; gap: 8px; width: 100%; padding: 10px 14px 10px 10px; text-align: left; transition: background 0.3s; }
+.phone-app-vmhead:active { background: rgba(120, 120, 128, 0.14); transition: none; }
+.phone-app-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--pa-blue); margin-right: 2px; }
 .phone-app-dot.off { background: transparent; }
-.phone-app-len { display: block; color: #8e8e93; font-size: 13px; }
-.phone-app-len.pad { padding: 0 16px 8px 28px; }
-.phone-app-player { padding: 6px 16px 14px 28px; }
-.phone-app-prog { height: 4px; border-radius: 2px; background: #d1d1d6; overflow: hidden; }
-.phone-app-prog div { height: 100%; background: #007aff; transition: width 0.9s linear; }
-.phone-app-ptime { display: flex; justify-content: space-between; font-size: 12px; color: #8e8e93; margin: 4px 0; }
-.phone-app-pbtns { display: flex; justify-content: space-around; align-items: center; padding: 4px 0; color: #007aff; }
-.phone-app-pbtns button { width: 46px; height: 46px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
-.phone-app-pbtns button.red { color: #ff3b30; }
-.phone-app-trans { margin: 6px 0 4px; font-size: 14px; line-height: 1.45; color: #3c3c43; }
+.phone-app-chev { flex: none; color: #c4c4c9; display: inline-flex; transition: transform 0.25s; }
+.phone-app-chev.open { transform: rotate(90deg); }
+.phone-app-player { padding: 2px 20px 16px 34px; animation: paFade 0.25s both; }
+.phone-app-prog { position: relative; height: 4px; border-radius: 2px; background: #d8d8dc; margin: 10px 0 6px; }
+.phone-app-prog .fill { height: 100%; border-radius: 2px; background: #8e8e93; transition: width 0.9s linear; }
+.phone-app-prog .thumb { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #636366; transition: left 0.9s linear; }
+.phone-app-ptime { display: flex; justify-content: space-between; font-size: 12px; color: var(--pa-sub); font-variant-numeric: tabular-nums; }
+.phone-app-pbtns { display: flex; justify-content: space-between; align-items: center; padding: 6px 18px 0; color: var(--pa-blue); }
+.phone-app-pbtns button { width: 46px; height: 46px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.15s; }
+.phone-app-pbtns button:active { background: rgba(0, 122, 255, 0.12); transform: scale(0.92); }
+.phone-app-pbtns button.main { width: 56px; height: 56px; color: #000; }
+.phone-app-pbtns button.red { color: var(--pa-red); }
+.phone-app-trans { margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: var(--pa-grouped); }
+.phone-app-trans small { display: block; font-size: 12px; color: var(--pa-sub); margin-bottom: 4px; }
+.phone-app-trans p { margin: 0; font-size: 16px; line-height: 1.4; color: #000; }
 
-/* 하단 탭 바 */
-.phone-app-tabbar { flex: none; display: flex; border-top: 0.5px solid #c6c6c8; background: rgba(249, 249, 249, 0.96); padding: 6px 0 4px; }
-.phone-app-tabbar button { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; color: #8e8e93; font-size: 10px; }
-.phone-app-tabbar button.on { color: #007aff; }
+/* ── 하단 탭 바 (플로팅 글래스) ── */
+.phone-app-tabbar { position: absolute; z-index: 30; left: 10px; right: 10px; bottom: 30px; height: 64px; display: flex; align-items: stretch; gap: 0; padding: 4px; border-radius: 32px; background: rgba(248, 248, 250, 0.82); -webkit-backdrop-filter: blur(28px) saturate(190%); backdrop-filter: blur(28px) saturate(190%); box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.07), 0 8px 28px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+.phone-app-tabbar button { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 28px; color: #3c3c43; font-size: 10px; font-weight: 500; letter-spacing: -0.1px; transition: background 0.25s, color 0.2s, transform 0.15s; }
+.phone-app-tabbar button.on { color: var(--pa-blue); background: rgba(120, 120, 128, 0.16); }
+.phone-app-tabbar button:active { transform: scale(0.95); }
 .phone-app-tabbar button > span:last-child { white-space: nowrap; }
 .phone-app-tabicon { position: relative; display: inline-flex; }
-.phone-app-badge { position: absolute; top: -4px; right: -9px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: #ff3b30; color: #fff; font-size: 11px; font-style: normal; display: inline-flex; align-items: center; justify-content: center; }
+.phone-app-badge { position: absolute; top: -3px; right: -9px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--pa-red); color: #fff; font-size: 12px; font-weight: 500; font-style: normal; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px rgba(248, 248, 250, 0.95); }
 
-/* 통화 화면 */
-.page.phone-app.phone-app-call { background: linear-gradient(180deg, #3a3f4b 0%, #1c1d22 100%); color: #fff; align-items: center; justify-content: space-between; padding: 36px 20px 28px; }
-.phone-app-call-head { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.phone-app-call-name { margin-top: 10px; font-size: 30px; font-weight: 500; }
-.phone-app-call-num { font-size: 16px; color: rgba(255, 255, 255, 0.7); }
-.phone-app-call-state { font-size: 18px; color: rgba(255, 255, 255, 0.85); font-variant-numeric: tabular-nums; }
-.phone-app-call-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 36px; }
-.phone-app-call-opt { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 13px; }
-.phone-app-call-opt button { width: 68px; height: 68px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); display: inline-flex; align-items: center; justify-content: center; }
-.phone-app-call-opt button.on { background: #fff; }
-.phone-app-end { width: 72px; height: 72px; border-radius: 50%; background: #ff3b30; display: inline-flex; align-items: center; justify-content: center; flex: none; }
-.phone-app-call-pad { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.phone-app-call-typed { min-height: 30px; font-size: 26px; letter-spacing: 2px; }
-.phone-app-keys.small button { max-width: 62px; background: rgba(255, 255, 255, 0.2); color: #fff; }
-.phone-app-keys.small b { font-size: 24px; }
-.phone-app-link.light { color: #fff; font-size: 16px; padding: 6px 12px; }
-.phone-app-call-list { width: 100%; max-height: 40%; overflow-y: auto; background: rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 8px 12px; }
-.phone-app-call-list-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 0 8px; }
-.phone-app-call-contact { display: flex; align-items: center; gap: 10px; width: 100%; padding: 6px 0; text-align: left; }
-.phone-app-call-contact span { flex: 1; }
+/* ── 통화 화면 ── */
+.page.phone-app.phone-app-call {
+  --tint: #5ac8fa;
+  background: #1c1c20;
+  background:
+    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--tint) 60%, transparent) 0%, transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tint) 46%, #1a1a1e) 0%, #0e0e11 100%);
+  color: #fff;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 62px 24px 44px;
+  animation: paCallIn 0.32s cubic-bezier(0.2, 0.85, 0.25, 1) both;
+}
+@keyframes paCallIn { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+.phone-app-call-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 460px; font-weight: 700; line-height: 1; color: rgba(255, 255, 255, 0.12); filter: blur(2px); pointer-events: none; overflow: hidden; }
+.phone-app-call-head { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding-top: 18px; }
+.phone-app-call-name { font-size: 34px; font-weight: 600; letter-spacing: -0.6px; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2); }
+.phone-app-call-state { font-size: 20px; color: rgba(255, 255, 255, 0.78); font-variant-numeric: tabular-nums; }
+.phone-app-call-state:not(.on) { animation: paBlink 1.6s ease-in-out infinite; }
+@keyframes paBlink { 50% { opacity: 0.5; } }
+.phone-app-call-num { font-size: 15px; color: rgba(255, 255, 255, 0.55); }
+.phone-app-call-mid { position: relative; flex: 1; min-height: 0; display: flex; align-items: flex-end; justify-content: center; padding: 18px 0 26px; }
+.phone-app-call-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 16px; width: 100%; max-width: 320px; }
+.phone-app-call-opt { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
+.phone-app-call-opt button { width: 78px; height: 78px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.25); transition: background 0.2s, color 0.2s, transform 0.15s; }
+.phone-app-call-opt button:active:not(:disabled) { transform: scale(0.94); background: rgba(255, 255, 255, 0.34); }
+.phone-app-call-opt button.on { background: #fff; color: #000; }
+.phone-app-call-opt.dis { opacity: 0.4; }
+.phone-app-end { position: relative; align-self: center; width: 78px; height: 78px; border-radius: 50%; background: var(--pa-red); display: inline-flex; align-items: center; justify-content: center; flex: none; box-shadow: 0 6px 20px rgba(255, 59, 48, 0.35); transition: transform 0.15s, background 0.2s; }
+.phone-app-end:active { transform: scale(0.94); background: #d92d23; }
+.phone-app-call-pad { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.phone-app-call-typed { min-height: 38px; font-size: 32px; letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+.phone-app-keys.small { grid-template-columns: repeat(3, 66px); gap: 10px 20px; }
+.phone-app-keys.small button { width: 66px; height: 66px; background: rgba(255, 255, 255, 0.2); color: #fff; }
+.phone-app-keys.small button:active { background: rgba(255, 255, 255, 0.4); }
+.phone-app-keys.small b { font-size: 29px; line-height: 30px; }
+.phone-app-keys.small i { color: #fff; font-size: 9px; }
+.phone-app-keys.small button:nth-child(10) b { padding-top: 6px; font-size: 32px; }
+.phone-app-hide { color: #fff; font-size: 17px; font-weight: 500; padding: 8px 16px; }
+.phone-app-call-list { width: 100%; max-height: 100%; display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.14); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); border-radius: 24px; padding: 10px 16px; }
+.phone-app-call-list-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 0 8px; font-size: 17px; }
+.phone-app-call-list-scroll { overflow-y: auto; min-height: 0; scrollbar-width: none; }
+.phone-app-call-list-scroll::-webkit-scrollbar { display: none; }
+.phone-app-call-contact { display: flex; align-items: center; gap: 12px; width: 100%; padding: 7px 0; text-align: left; }
+.phone-app-call-contact span { flex: 1; font-size: 17px; }
 .phone-app-call-contact em { font-style: normal; font-size: 13px; color: rgba(255, 255, 255, 0.65); }
-.phone-app-peek { padding: 6px 0 8px; font-size: 14px; color: #8fd3ff; }
+.phone-app-peek { padding: 4px 0 8px; font-size: 14px; color: #8fd3ff; }
+
+/* 통화 화면에서는 상태바/홈 인디케이터를 흰색으로 (이 앱에만 적용) */
+.phone:has(.phone-app-call) .statusbar { color: #fff; }
+.phone:has(.phone-app-call) .sb-right svg { fill: #fff; }
+.app:has(.phone-app-call) ~ .home-bar-zone .home-bar { background: #fff; }
