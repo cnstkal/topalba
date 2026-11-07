@@ -209,7 +209,7 @@ export default function Maps({ close }) {
   const { w, h } = size
   const S0 = 128, S1 = Math.round(h * 0.44), S2 = Math.max(S1 + 60, h - 112)
   const snaps = [S0, S1, S2]
-  const sheetH = dragH ?? snaps[sheet]
+  const sheetH = Number.isFinite(dragH) ? dragH : snaps[sheet]
 
   /* 크기 측정 */
   useEffect(() => {
@@ -410,23 +410,15 @@ export default function Maps({ close }) {
 
   /* ----- 시트 드래그 ----- */
   const sd = useRef(null)
-  const sdDown = (e) => {
-    sd.current = { y: e.clientY, h: snaps[sheet], t: performance.now(), moved: false, sc: (box.current.getBoundingClientRect().width / box.current.offsetWidth) || 1 }
-    try { e.currentTarget.setPointerCapture(e.pointerId) } catch {}
-  }
-  const sdMove = (e) => {
-    const d = sd.current
-    if (!d) return
-    const dy = (d.y - e.clientY) / d.sc
-    if (Math.abs(dy) > 4) d.moved = true
-    if (d.moved) setDragH(clamp(d.h + dy, S0, S2))
-  }
-  const sdUp = (e) => {
+  const sdEnd = (clientY) => {
     const d = sd.current
     sd.current = null
-    if (!d) return
+    window.removeEventListener('pointermove', sdWin)
+    window.removeEventListener('pointerup', sdWin)
+    window.removeEventListener('pointercancel', sdWin)
+    if (!d) { setDragH(null); return }
     if (!d.moved) { setSheet((s) => (s + 1) % 3); setDragH(null); return }
-    const dy = (d.y - e.clientY) / d.sc
+    const dy = (d.y - clientY) / d.sc
     const v = dy / Math.max(1, performance.now() - d.t) // px/ms
     const cur = clamp(d.h + dy, S0, S2)
     let target = snaps.reduce((best, s, i) => (Math.abs(s - cur) < Math.abs(snaps[best] - cur) ? i : best), 0)
@@ -434,6 +426,29 @@ export default function Maps({ close }) {
     setSheet(target)
     setDragH(null)
   }
+  // 포인터가 핸들 밖으로 나가거나 캡처가 풀려도 드래그가 끝나도록 window에서 추적
+  const sdWin = (e) => {
+    if (e.type === 'pointermove') {
+      const d = sd.current
+      if (!d) return
+      const dy = (d.y - e.clientY) / d.sc
+      if (Math.abs(dy) > 4) d.moved = true
+      if (d.moved) setDragH(clamp(d.h + dy, S0, S2))
+    } else sdEnd(e.clientY)
+  }
+  const sdDown = (e) => {
+    sd.current = { y: e.clientY, h: snaps[sheet], t: performance.now(), moved: false, sc: (box.current.getBoundingClientRect().width / box.current.offsetWidth) || 1 }
+    window.addEventListener('pointermove', sdWin)
+    window.addEventListener('pointerup', sdWin)
+    window.addEventListener('pointercancel', sdWin)
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch {}
+  }
+  // 언마운트 시 리스너 정리
+  useEffect(() => () => {
+    window.removeEventListener('pointermove', sdWin)
+    window.removeEventListener('pointerup', sdWin)
+    window.removeEventListener('pointercancel', sdWin)
+  }, [])
 
   /* ----- 표시용 파생값 ----- */
   const searching = focus || !!pickFor
@@ -554,7 +569,7 @@ export default function Maps({ close }) {
 
       {/* 하단 시트 */}
       <div className={'mp-sheet' + (dragH != null ? ' drag' : '')} style={{ height: sheetH }}>
-        <div className="mp-dz" onPointerDown={sdDown} onPointerMove={sdMove} onPointerUp={sdUp} onPointerCancel={sdUp}>
+        <div className="mp-dz" onPointerDown={sdDown}>
           <div className="mp-grab"><i /></div>
           {!nav && !place && (
             <div className="mp-sh-title">
