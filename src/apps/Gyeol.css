@@ -139,3 +139,6 @@
 .gyeol-msg.has-image{width:fit-content;max-width:min(76%,280px);padding:6px!important}
 .gyeol-sent-photo{display:block;width:100%;max-width:260px;max-height:340px;object-fit:cover;border-radius:13px}
 .gyeol-msg.has-image small{display:block;margin:5px 3px 1px}
+
+/* 프로필 상세 하단 액션 버튼을 조금 더 두툼하고 누르기 쉽게 */
+.gyeol-dbar .gyeol-btn{min-height:50px;padding:15px 18px;border-radius:14px;font-size:16px;}
