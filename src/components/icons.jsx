@@ -65,7 +65,7 @@ const S = { fill: 'none', stroke: '#fff', strokeWidth: 2.4, strokeLinecap: 'roun
 // 홈 화면 앱 정의 (순서/배치는 여기서 관리)
 export const APPS = {
   messages: { label: '메시지', bg: 'linear-gradient(#67e86c,#1fc84a)' },
-  sns: { label: '그램', bg: 'linear-gradient(135deg,#feda75,#fa7e1e 30%,#d62976 60%,#962fbf)' },
+  sns: { label: '인스타그램', bg: 'linear-gradient(135deg,#feda75,#fa7e1e 30%,#d62976 60%,#962fbf)' },
   mail: { label: '메일', bg: 'linear-gradient(#3fa9f5,#1a6cf0)' },
   photos: { label: '사진', bg: '#fff' },
   calendar: { label: '캘린더', bg: '#fff' },
