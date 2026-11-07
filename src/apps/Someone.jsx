@@ -65,10 +65,17 @@ const label = (k) => {
 /* ───────── 저장소 (localStorage, 다른 앱 데이터와 분리) ───────── */
 const LS = 'someone-app-v1'
 const load = () => {
-  const base = { me: '나', pt: '하늘', start: null, first: dk(new Date()), meImg: '', ptImg: '', ans: {} }
+  const base = { me: '성화', pt: '윤호', start: '2026-07-08', first: dk(new Date()), meImg: '', ptImg: '', ans: {} }
   try {
     const r = JSON.parse(localStorage.getItem(LS))
-    if (r && typeof r === 'object') return { ...base, ...r, ans: r.ans && typeof r.ans === 'object' ? r.ans : {} }
+    if (r && typeof r === 'object') {
+      const saved = { ...base, ...r, ans: r.ans && typeof r.ans === 'object' ? r.ans : {} }
+      // 이전 기본 프로필 값만 새 설정으로 마이그레이션하고, 직접 바꾼 값은 유지
+      if (!r.me || r.me === '나') saved.me = '성화'
+      if (!r.pt || r.pt === '하늘') saved.pt = '윤호'
+      if (!r.start) saved.start = '2026-07-08'
+      return saved
+    }
   } catch (e) {
     /* 손상된 데이터는 기본값 사용 */
   }
@@ -522,7 +529,7 @@ function Couple(c) {
             </label>
             <div className="sm-inp">
               <small>{t === '나' ? '내 이름' : '상대방 이름'}</small>
-              <input value={s[w]} maxLength={8} onChange={(e) => setS((p) => ({ ...p, [w]: e.target.value }))} onBlur={() => !s[w].trim() && setS((p) => ({ ...p, [w]: w === 'me' ? '나' : '하늘' }))} />
+              <input value={s[w]} maxLength={8} onChange={(e) => setS((p) => ({ ...p, [w]: e.target.value }))} onBlur={() => !s[w].trim() && setS((p) => ({ ...p, [w]: w === 'me' ? '성화' : '윤호' }))} />
             </div>
           </div>
         ))}
