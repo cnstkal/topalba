@@ -16,6 +16,10 @@
 // 설정 메모
 // - 주인공은 박성화. 김홍중 / 정우영 / 정윤호는 서로 접점이 없고,
 //   각 관계는 독립적으로 진행합니다. 세 사람은 서로의 존재를 모릅니다.
+// - 성화와 홍중은 원래 알던 사이가 아닙니다. 탑알바에서 우연히 처음 만났으며,
+//   당시 홍중은 아직 대중적으로 알려지지 않은 무명 아이돌이라 성화는 일반인으로 알았습니다.
+//   홍중이 이후 유명해진 뒤에도 둘은 종종 연락합니다. 성화가 입이 무겁고 사생활을 지켜줘
+//   홍중이 편하게 속내를 털어놓을 수 있는 몇 안 되는 지인입니다.
 // - 사건은 일상적인 연락, 약속, 근무 일정 위주입니다.
 // - 엔딩 및 마지막 선택지 문구는 아직 확정하지 않아 placeholder 로 둡니다.
 // ─────────────────────────────────────────────────────────────
@@ -50,7 +54,7 @@ export const EVENTS = [
         t: 'msg',
         thread: 'msg:hj',
         from: 'hj',
-        text: '오늘 연습 끝나고 저녁 같이 먹을래? 늦으면 그냥 말해줘',
+        text: '오늘 연습 끝나고 저녁 같이 먹을래? 탑알바 근처에 그때 자주 가던 곳 아직 있더라.',
         choices: [
           { label: '좋아, 같이 먹자', unlock: ['r_hj2'] },
           { label: '오늘은 좀 피곤해', unlock: ['r_hj2'] },
@@ -181,7 +185,7 @@ export const EVENTS = [
     delay: 1500,
     effects: [
       { t: 'flag', key: 'answered', value: true },
-      { t: 'msg', thread: 'msg:hj', from: 'hj', text: '오랜만에 목소리 들으니까 좋다. 시간 되면 밥 한번 먹자.' },
+      { t: 'msg', thread: 'msg:hj', from: 'hj', text: '오랜만이다. 요즘은 연락할 때마다 조심스러운데 너한텐 그냥 예전처럼 얘기해도 될 것 같아서.' },
       { t: 'unlock', ids: ['e_hj_choice'] },
     ],
   },
@@ -207,7 +211,7 @@ export const EVENTS = [
         t: 'msg',
         thread: 'msg:hj',
         from: 'hj',
-        text: '이번 주 목요일 저녁 어때? 예전에 가던 식당 아직 있더라',
+        text: '이번 주 목요일 저녁 어때? 탑알바 끝나고 자주 가던 식당 아직 있더라.',
         choices: [
           { label: '좋아, 그날 보자', score: { meet: 1 }, unlock: ['e_dm2'] },
           { label: '다음 주에 보자', score: { later: 1 }, unlock: ['e_dm2'] },
@@ -276,8 +280,8 @@ export const EVENT_MAP = Object.fromEntries(EVENTS.map((e) => [e.id, e]))
 
 export const INITIAL_THREADS = {
   'msg:hj': [
-    { id: 'i1', from: 'sh', text: '어제 고생했어', ts: Date.now() - 86400000, read: true },
-    { id: 'i2', from: 'hj', text: '너도! 얼른 자', ts: Date.now() - 86000000 },
+    { id: 'i1', from: 'sh', text: '그때 탑알바에서 처음 봤을 땐 진짜 그냥 일반인인 줄 알았는데', ts: Date.now() - 86400000, read: true },
+    { id: 'i2', from: 'hj', text: 'ㅋㅋㅋ 그땐 아무도 몰랐지. 지금도 너는 똑같이 대해줘서 편하고', ts: Date.now() - 86000000 },
   ],
 }
 
