@@ -142,3 +142,11 @@
 
 /* 프로필 상세 하단 액션 버튼을 조금 더 두툼하고 누르기 쉽게 */
 .gyeol-dbar .gyeol-btn{min-height:50px;padding:15px 18px;border-radius:14px;font-size:16px;}
+
+/* 결 채팅 목록 그룹 구분 */
+.gyeol-chatlist{padding:8px 20px 22px}
+.gyeol-chatgroup{margin:8px 0 22px}
+.gyeol-chatgroup h3{margin:8px 4px 2px;font-size:15px;font-weight:750;color:#f2f2f2}
+.gyeol-chat-hint{margin:3px 4px 8px;color:var(--mute);font-size:11px}
+.gyeol-chatgroup .gyeol-row:first-of-type{border-top:1px solid rgba(255,255,255,.1)!important}
+.gyeol-chatgroup .gyeol-row{padding-top:13px;padding-bottom:13px}
