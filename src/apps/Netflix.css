@@ -146,3 +146,9 @@
 /* 프로필 선택: 두 프로필을 가운데에 모아 간격을 좁힘 */
 .netflix-profiles{grid-template-columns:repeat(2,120px);justify-content:center;justify-items:center;gap:20px 24px}
 .netflix-profile{width:120px}
+
+/* 프로필 선택 화면: 제목·프로필을 화면 가운데 정렬 */
+.netflix-gate{display:flex;flex-direction:column}
+.netflix-gate-top{flex:none}
+.netflix-gate-t{margin:auto 0 30px}
+.netflix-profiles{margin:0 auto auto;width:100%}

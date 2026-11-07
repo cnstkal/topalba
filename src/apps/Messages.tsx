@@ -340,7 +340,7 @@ function fmtList(ts) {
 function fmtDivider(ts) {
   const n = dayDiff(ts)
   const d = new Date(ts)
-  const day = n <= 0 ? '오늘' : n === 1 ? '어제' : n < 7 ? `${WD[d.getDay()]}요일` : `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`
+  const day = n <= 0 ? '오늘' : n === 1 ? '어제' : n < 7 ? `${WD[d.getDay()]}요일` : `${d.getMonth() + 1}월 ${d.getDate()}일`
   return [day, hm(ts)]
 }
 
