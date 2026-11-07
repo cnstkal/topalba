@@ -37,6 +37,19 @@ const CLOSE = 'M18 6L6 18M6 6l12 12'
 const PLUS = 'M12 5v14M5 12h14'
 const MENU = 'M4 9h16M4 15h16'
 const REELS = 'M4 4h16v16H4zM10 8.5v7l6-3.5z'
+// 상대 시간: 방금 전 / N분 전 / N시간 전 / N일 전 / N개월 전 / N년 전
+const relTime = (ts) => {
+  const m = Math.floor((Date.now() - ts) / 60000)
+  if (m < 1) return '방금 전'
+  if (m < 60) return `${m}분 전`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h}시간 전`
+  const d = Math.floor(h / 24)
+  if (d < 30) return `${d}일 전`
+  const mo = Math.floor(d / 30)
+  if (mo < 12) return `${mo}개월 전`
+  return `${Math.floor(mo / 12)}년 전`
+}
 const fmtCount = (n) => (n >= 10000 ? `${(n / 10000).toFixed(1).replace(/\.0$/, '')}만` : n.toLocaleString())
 
 const Dots = () => (
@@ -224,7 +237,7 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
     timer.current = setTimeout(() => setPop(false), 700)
   }
   const likes = post.likes + (liked ? 1 : 0)
-  const when = post.ts ? fmtTime(post.ts) : post.ago
+  const when = post.ts ? relTime(post.ts) : post.ago
   const longCaption = post.text.length > 26
 
   return (
@@ -390,7 +403,7 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
 
 const STORY_TRAY = [
   { key: 'me', name: '내 스토리', mine: true, when: '' },
-  ...Object.keys(SNS_STORIES).map((id) => ({ key: id, name: id, when: '3시간' })),
+  ...Object.keys(SNS_STORIES).map((id) => ({ key: id, name: id, when: '3시간 전' })),
 ]
 
 export default function Sns({ params }) {
@@ -627,7 +640,7 @@ export default function Sns({ params }) {
                 <AccountAvatar id={n.user} size={40} />
                 <div>
                   <b>{n.user}</b> {n.text}
-                  <div className="muted">{fmtTime(n.ts)}</div>
+                  <div className="muted">{relTime(n.ts)}</div>
                 </div>
               </div>
             ))}
