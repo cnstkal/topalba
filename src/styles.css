@@ -574,3 +574,10 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .rm-d.late { color: var(--red); }
 .rm-new { position: absolute; left: 16px; right: 16px; bottom: 22px; display: flex; align-items: center; gap: 8px; padding: 12px 4px; color: var(--blue); background: rgba(242,242,247,.94); font-size: 16px; font-weight: 600; }
 .rm-new b { font-size: 26px; font-weight: 400; }
+
+/* 레퍼런스 보강: 게시물 헤더 팔로우, DM 목록 검색·작성, 탭 터치 영역 */
+.post-head-r { display: flex; align-items: center; gap: 4px; }
+.post-follow { color: #0095f6; font-size: 13px; font-weight: 600; padding: 4px 6px; }
+.dm-compose { display: flex; cursor: pointer; }
+.dm-search { margin: 8px 16px; height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 10px; background: #efefef; color: #8e8e93; font-size: 15px; }
+.sns-tabs > span { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
