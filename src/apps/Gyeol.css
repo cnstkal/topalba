@@ -104,8 +104,9 @@
 
 /* 채팅 목록: 원형 아바타, 항목별 간격과 좌우 여백 */
 .gyeol-photo.sm{border-radius:50%!important}
-.gyeol-chatlist{display:flex;flex-direction:column;gap:9px;padding:12px 14px 18px}
-.gyeol-chatlist .gyeol-row{width:100%;padding:12px;border:1px solid var(--line)!important;border-radius:14px;background:#111113!important;gap:12px}
+.gyeol-chatlist{display:flex;flex-direction:column;gap:0;padding:4px 20px 18px}
+.gyeol-chatlist .gyeol-row{width:100%;padding:17px 4px;border:0!important;border-bottom:1px solid rgba(255,255,255,.13)!important;border-radius:0!important;background:transparent!important;gap:14px}
+.gyeol-chatlist .gyeol-row:last-child{border-bottom:0!important}
 .gyeol-chatlist .gyeol-row>div{min-width:0}
 .gyeol-chatlist .gyeol-row p{font-size:14px;line-height:1.45}
 /* 채팅 말풍선 가독성 */
