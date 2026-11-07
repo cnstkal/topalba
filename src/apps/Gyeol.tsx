@@ -30,10 +30,10 @@ const mkState = () => {
   const matchIds = [3, 7, 12, 18]
   const chats = {}
   matchIds.forEach((id, k) => { chats[id] = MSGS[k % MSGS.length].map((t, j) => ({ me: j % 2 === 1, text: t, t: Date.now() - (9 - j) * 3600e3 * (k + 1) })) })
-  return { users: mkUsers(), liked: [5, 9, 21], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2 },
+  return { users: mkUsers(), liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2 },
     me: { nick: 'me_', age: 27, bio: '', tags: [], goal: '데이트', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return s } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, starred: s.starred || [] } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
@@ -58,13 +58,14 @@ export default function Gyeol() {
     return { liked: [...o.liked, id], passed: o.passed.filter((x) => x !== id), matches: m ? [...o.matches, id] : o.matches, chats: m ? { ...o.chats, [id]: o.chats[id] || [] } : o.chats }
   })
   const unlike = (id) => upd((o) => ({ liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) }))
+  const star = (id) => upd((o) => ({ starred: o.starred.includes(id) ? o.starred.filter((x) => x !== id) : [...o.starred, id] }))
   const pass = (id) => upd((o) => ({ passed: [...o.passed, id] }))
   const block = (id) => { upd((o) => ({ blocked: [...o.blocked, id], liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) })); setDetail(null); setRoom(null) }
   const f = s.filter
   const ok = (u) => !s.blocked.includes(u.id) && u.age >= f.min && u.age <= f.max && u.dist <= f.dist && (f.goal === '전체' || u.goal === f.goal)
   const matched = (id) => s.matches.includes(id)
   const openChat = (id) => { upd((o) => ({ unread: { ...o.unread, [id]: 0 } })); setDetail(null); setRoom(id); setTab('chat') }
-  const ctx = { s, upd, like, unlike, pass, block, byId, ok, setDetail, openChat, matched }
+  const ctx = { s, upd, like, unlike, star, pass, block, byId, ok, setDetail, openChat, matched }
 
   return (
     <div className="gyeol-app">
@@ -90,7 +91,7 @@ export default function Gyeol() {
   )
 }
 
-function Explore({ s, like, pass, ok, setDetail, upd }) {
+function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)), [s])
   const u = queue[0]
   const [dx, setDx] = useState(0)
@@ -118,7 +119,7 @@ function Explore({ s, like, pass, ok, setDetail, upd }) {
       </div>
       <div className="gyeol-actions">
         <button onClick={() => pass(u.id)}><X size={26} /></button>
-        <button className="sm" onClick={() => like(u.id)}><Star size={22} /></button>
+        <button className={`sm ${s.starred.includes(u.id) ? "starred" : ""}`} aria-label={s.starred.includes(u.id) ? "특별 관심 취소" : "특별 관심 보내기"} title="특별 관심" onClick={() => star(u.id)}><Star size={22} fill={s.starred.includes(u.id) ? "currentColor" : "none"} /></button>
         <button className="main" onClick={() => like(u.id)}><Heart size={26} /></button>
       </div>
     </div>
@@ -153,7 +154,7 @@ function Likes({ s, byId, setDetail, unlike, like, openChat, matched }) {
       <div className="gyeol-grid">
         {ids.map((id) => { const u = byId(id); return (
           <div key={id} className="gyeol-cell" onClick={() => matched(id) ? openChat(id) : setDetail(id)}>
-            <Photo u={u} />{matched(id) && <b className="gyeol-badge">MATCH</b>}
+            <Photo u={u} />{matched(id) && <b className="gyeol-badge">MATCH</b>}{s.starred?.includes(id) && <b className="gyeol-starbadge">★ 특별 관심</b>}
             <span>{u.nick}, {u.age}<small>{u.area}</small></span>
             {t === 'sent' ? <button className="gyeol-mini" onClick={(e) => { e.stopPropagation(); unlike(id) }}><X size={14} /></button>
               : !s.liked.includes(id) && <button className="gyeol-mini like" onClick={(e) => { e.stopPropagation(); like(id) }}><Heart size={14} /></button>}
@@ -187,7 +188,7 @@ function Chat({ s, upd, byId, room, setRoom, setDetail, block }) {
   }
   const rooms = s.matches.filter((id) => !s.blocked.includes(id))
   if (!rooms.length) return <div className="gyeol-empty">아직 매칭이 없어요</div>
-  return <div>{rooms.map((id) => { const u = byId(id), m = (s.chats[id] || []).slice(-1)[0]; const un = s.unread[id]; return (
+  return <div className="gyeol-chatlist">{rooms.map((id) => { const u = byId(id), m = (s.chats[id] || []).slice(-1)[0]; const un = s.unread[id]; return (
     <button key={id} className="gyeol-row" onClick={() => { upd((o) => ({ unread: { ...o.unread, [id]: 0 } })); setRoom(id) }}>
       <Photo u={u} cls="sm" /><div><b>{u.nick}</b><p>{m ? m.text : '매칭됐어요! 먼저 말을 걸어보세요'}</p></div>
       <small>{m ? fmt(m.t) : ''}{un > 0 && <i className="gyeol-un">{un}</i>}</small></button>) })}</div>
@@ -199,15 +200,19 @@ function Me({ s, upd }) {
   const add = () => { const url = prompt('사진 URL'); if (url) set({ photos: [...m.photos, url] }) }
   return (
     <div className="gyeol-me">
-      <div className="gyeol-mephotos">{m.photos.map((p, i) => <div key={i}><img src={p} alt="" /><button onClick={() => set({ photos: m.photos.filter((_, j) => j !== i) })}><Trash2 size={14} /></button></div>)}<button className="add" onClick={add}><Plus size={22} /></button></div>
-      <label>닉네임<input value={m.nick} onChange={(e) => set({ nick: e.target.value })} /></label>
-      <label>나이 (성인만 이용 가능)<input type="number" min="19" value={m.age} onChange={(e) => set({ age: Math.max(19, +e.target.value || 19) })} /></label>
-      <label>자기소개<textarea rows={3} value={m.bio} onChange={(e) => set({ bio: e.target.value })} /></label>
-      <label>관계 목적<select value={m.goal} onChange={(e) => set({ goal: e.target.value })}>{GOALS.map((g) => <option key={g}>{g}</option>)}</select></label>
-      <div className="gyeol-tags">{TAGS.map((t) => <button key={t} className={m.tags.includes(t) ? 'on' : ''} onClick={() => set({ tags: m.tags.includes(t) ? m.tags.filter((x) => x !== t) : [...m.tags, t] })}>{t}</button>)}</div>
-      <label className="gyeol-chk"><input type="checkbox" checked={m.visible} onChange={(e) => set({ visible: e.target.checked })} />프로필 공개</label>
-      <p className="gyeol-note">가상 서비스입니다. 실제 개인정보와 위치를 수집하지 않아요.</p>
-      <button className="gyeol-btn ghost" onClick={() => { if (confirm('모든 데이터를 초기화할까요?')) setS0(upd) }}>데이터 초기화</button>
+      <section className="gyeol-profile-card">
+        <div className="gyeol-profile-cover"><span>MY PROFILE</span></div>
+        <div className="gyeol-profile-main">
+          <div className="gyeol-profile-avatar"><img src={m.photos[0] || PHOTOS[0]} alt="" /></div>
+          <span className="gyeol-profile-status">PROFILE ACTIVE</span>
+          <h2>{m.nick}</h2>
+          <p className="gyeol-profile-meta">{m.age}세 · {m.goal}</p>
+          <p className="gyeol-profile-bio">{m.bio || "천천히 알아가며 편하게 대화하는 걸 좋아해요."}</p>
+          <div className="gyeol-profile-tags">{(m.tags.length ? m.tags : ["커피","전시","산책"]).map((tag) => <span key={tag}>#{tag}</span>)}</div>
+        </div>
+        <div className="gyeol-profile-foot"><span>결에서 만나는 나</span><b>GYEOL MEMBER</b></div>
+      </section>
+      <p className="gyeol-note">내 프로필 미리보기 · 가상 프로필</p>
     </div>
   )
 }
