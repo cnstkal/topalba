@@ -23,6 +23,7 @@ import Someone from './apps/Someone'
 import Maps from './apps/Maps'
 import MoaBank from './apps/MoaBank'
 import Gyeol from './apps/Gyeol'
+import Netflix from './apps/Netflix'
 import Reminders from './apps/Reminders'
 import Stub from './apps/Stub'
 
@@ -45,7 +46,7 @@ const COMPONENTS = {
   reminders: Reminders,
   moabank: MoaBank,
   dating: Gyeol,
-  netflix: Stub,
+  netflix: Netflix,
   kakao: Stub,
 }
 
