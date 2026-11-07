@@ -62,6 +62,26 @@ const QS = [
   ['가치관', '누군가를 믿게 되는 순간은 언제야?', '말보다 행동이 꾸준히 같을 때 믿음이 생겨.'],
   ['추억', '사진으로 남겨 두고 싶은 평범한 순간은?', '특별한 날보다 같이 밥 먹고 웃는 순간을 남기고 싶어.'],
   ['연애', '우리 사이에서 조금 더 자주 했으면 하는 건?', '바쁘더라도 하루에 한 번은 서로 안부를 나누면 좋겠어.'],
+  ['일상', '요즘 가장 자주 들르는 곳은 어디야?', '집 근처 편의점이랑 자주 가는 카페 정도야.'],
+  ['취향', '하루 중 휴대폰을 가장 많이 보는 시간은?', '자기 전 침대에 누워 있을 때 제일 많이 보는 것 같아.'],
+  ['추억', '최근에 오래 기억하고 싶은 하루가 있었어?', '별일 없이 같이 밥 먹고 돌아다녔던 날이 오히려 기억에 남아.'],
+  ['연애', '내가 무심코 해도 기분 좋아지는 행동은?', '내 얘기를 기억해 뒀다가 나중에 먼저 물어봐 주는 거.'],
+  ['가치관', '친해지는 데 시간이 오래 걸리는 편이야?', '처음에는 조용한데 몇 번 만나면 편해지는 편이야.'],
+  ['일상', '요즘 가장 기다려지는 일정은 뭐야?', '일 끝나고 아무 약속 없이 쉬는 날이 제일 기다려져.'],
+  ['취향', '카페에 가면 주로 어떤 메뉴를 골라?', '늘 마시던 메뉴를 고르거나 신메뉴가 있으면 한 번 도전해.'],
+  ['추억', '어릴 때 유난히 좋아했던 장소가 있어?', '동네 문구점이랑 친구 집 앞 놀이터가 생각나.'],
+  ['연애', '같이 있을 때 가장 편하다고 느끼는 순간은?', '굳이 대화를 이어 가지 않아도 어색하지 않을 때.'],
+  ['일상', '최근에 새로 생긴 사소한 습관이 있어?', '집에 오면 씻기 전에 냉장고부터 열어 봐.'],
+  ['취향', '좋아하는 향이나 냄새가 있다면?', '막 세탁한 옷이나 비 온 뒤 바깥 공기 냄새가 좋아.'],
+  ['가치관', '약속 시간보다 일찍 도착하는 편이야?', '늦는 건 싫어서 보통 조금 일찍 도착해.'],
+  ['추억', '지금도 가끔 연락하는 오래된 친구가 있어?', '자주는 아니어도 생각날 때 안부를 주고받는 친구가 있어.'],
+  ['연애', '둘이 함께 있을 때 굳이 하지 않아도 되는 건?', '계속 뭘 해야 한다는 생각. 그냥 같이 있어도 충분해.'],
+  ['일상', '요즘 하루를 마무리하는 방식은?', '씻고 침대에 누워 영상 조금 보다가 잠들어.'],
+  ['취향', '여행에서 숙소와 먹거리 중 더 중요하게 보는 건?', '먹거리. 맛있는 걸 먹으면 여행 기억이 더 좋아져.'],
+  ['가치관', '다른 사람에게 꼭 지키려고 하는 예의가 있어?', '상대가 싫다고 한 건 가볍게 넘기지 않는 거.'],
+  ['추억', '사진첩에서 가장 자주 다시 보는 사진은?', '특별한 날보다 친구들이랑 장난치며 찍은 사진이야.'],
+  ['연애', '서로 바쁜 날에는 어떻게 연락하는 게 좋아?', '짧게라도 지금 뭐 하는지만 알려 주면 마음이 놓여.'],
+  ['일상', '오늘 하루를 색깔로 표현하면 무슨 색이야?', '조금 흐린 회색인데 저녁엔 괜찮아진 느낌이야.'],
 ]
 
 /* ───────── 날짜 유틸 (로컬 날짜 키: YYYY-MM-DD) ───────── */
@@ -84,15 +104,15 @@ const label = (k) => {
 /* ───────── 저장소 (localStorage, 다른 앱 데이터와 분리) ───────── */
 const LS = 'someone-app-v1'
 const load = () => {
-  const base = { me: '성화', pt: '윤호', start: '2026-07-08', first: dk(new Date()), meImg: '', ptImg: '', ans: {} }
+  const base = { me: '성화', pt: '윤호', start: '2026-07-08', first: '2026-10-19', meImg: '', ptImg: '', ans: {} }
   try {
     const r = JSON.parse(localStorage.getItem(LS))
     if (r && typeof r === 'object') {
-      const saved = { ...base, ...r, ans: r.ans && typeof r.ans === 'object' ? r.ans : {} }
+      const saved = { ...base, ...r, first: '2026-10-19', start: '2026-07-08', ans: r.ans && typeof r.ans === 'object' ? r.ans : {} }
       // 이전 기본 프로필 값만 새 설정으로 마이그레이션하고, 직접 바꾼 값은 유지
       if (!r.me || r.me === '나') saved.me = '성화'
       if (!r.pt || r.pt === '하늘') saved.pt = '윤호'
-      if (!r.start) saved.start = '2026-07-08'
+      saved.start = '2026-07-08'
       return saved
     }
   } catch (e) {
@@ -263,18 +283,17 @@ export default function Someone() {
   /* 날짜 → 질문 (저장된 답변은 질문 번호를 함께 보관해 덮어써지지 않음) */
   const qOf = (date) => {
     const saved = s.ans[date]
-    const n = diff(date, s.first) + 1
-    if (date > today) return null
-    if (saved) return { n: Math.max(n, 1), qi: saved.qi }
-    if (n < 1) return null
-    return { n, qi: (n - 1) % QS.length }
+    const n = diff(date, s.first) + 104
+    if (date > today || n < 104 || n > 124) return null
+    if (saved) return { n, qi: saved.qi }
+    return { n, qi: (n - 104) % QS.length }
   }
   const mine = (date) => (s.ans[date] && s.ans[date].text ? s.ans[date] : null)
-  const days = Array.from({ length: diff(today, s.first) + 1 }, (_, i) => addDays(s.first, i))
+  const days = Array.from({ length: Math.max(0, Math.min(21, diff(today, s.first) + 1)) }, (_, i) => addDays(s.first, i))
   const allDates = [...new Set([...days, ...Object.keys(s.ans)])].filter((d) => d <= today).sort()
   const count = Object.keys(s.ans).filter((d) => s.ans[d].text).length
   const stage = STEPS.filter((n) => count >= n).length
-  const dday = s.start ? diff(today, s.start) + 1 : null
+  const dday = 124
 
   const save = (date, text) => {
     const q = qOf(date)
