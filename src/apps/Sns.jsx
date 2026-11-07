@@ -6,8 +6,8 @@ import { Avatar } from '../components/Overlays'
 import Thread from '../components/Thread'
 import { fmtTime } from '../utils'
 
-const ME_ID = 'yoonho_j'
-const ME_INITIAL = '정'
+const ME_ID = '_starhwa_'
+const ME_INITIAL = '박'
 
 // 사진 원본 URL. 크롭은 쿼리(fit=crop)로 처리해 화면 비율에 맞춘다.
 const PHOTOS = {
@@ -320,10 +320,10 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
   const followers = mine
     ? state.flags.newsOut
       ? 4812
-      : 203
+      : 294
     : acc.followers + (following ? 1 : 0)
-  const followingCount = mine ? 187 : acc.following
-  const name = mine ? '정윤호' : uid
+  const followingCount = mine ? 303 : acc.following
+  const name = mine ? '박성화' : (acc.name || uid)
   const bio = mine ? state.profile.bio : acc.bio
 
   return (
