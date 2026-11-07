@@ -119,7 +119,7 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
       </div>
       <div className="gyeol-actions">
         <button onClick={() => pass(u.id)}><X size={26} /></button>
-        <button className={`sm ${s.starred.includes(u.id) ? "starred" : ""}`} aria-label={s.starred.includes(u.id) ? "특별 관심 취소" : "특별 관심 보내기"} title="특별 관심" onClick={() => star(u.id)}><Star size={22} fill={s.starred.includes(u.id) ? "currentColor" : "none"} /></button>
+        <button className={`sm ${s.starred.includes(u.id) ? "starred" : ""}`} aria-label={s.starred.includes(u.id) ? "즐겨찾기 해제" : "즐겨찾기 추가"} title="즐겨찾기" onClick={() => star(u.id)}><Star size={22} fill={s.starred.includes(u.id) ? "currentColor" : "none"} /></button>
         <button className="main" onClick={() => like(u.id)}><Heart size={26} /></button>
       </div>
     </div>
@@ -154,7 +154,7 @@ function Likes({ s, byId, setDetail, unlike, like, openChat, matched }) {
       <div className="gyeol-grid">
         {ids.map((id) => { const u = byId(id); return (
           <div key={id} className="gyeol-cell" onClick={() => matched(id) ? openChat(id) : setDetail(id)}>
-            <Photo u={u} />{matched(id) && <b className="gyeol-badge">MATCH</b>}{s.starred?.includes(id) && <b className="gyeol-starbadge">★ 특별 관심</b>}
+            <Photo u={u} />{matched(id) && <b className="gyeol-badge">MATCH</b>}{s.starred?.includes(id) && <b className="gyeol-starbadge">★ 즐겨찾기</b>}
             <span>{u.nick}, {u.age}<small>{u.area}</small></span>
             {t === 'sent' ? <button className="gyeol-mini" onClick={(e) => { e.stopPropagation(); unlike(id) }}><X size={14} /></button>
               : !s.liked.includes(id) && <button className="gyeol-mini like" onClick={(e) => { e.stopPropagation(); like(id) }}><Heart size={14} /></button>}
