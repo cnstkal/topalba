@@ -8,15 +8,14 @@ type Room = { id: string; name: string; group: boolean; members: number; pinned:
 type Me = { name: string; status: string; music: string; photo?: string; bg?: string }
 type Store = { me: Me; rooms: Room[]; collapsed: boolean }
 
-const KEY = 'kakaotalk-v1'
+const KEY = 'kakaotalk-v2'
 
 const FRIENDS: [string, string][] = [
-  ['김민준', '오늘도 출근 완료'], ['이서연', '커피 수혈 중'], ['박지호', '주말엔 등산 갑니다'], ['최유진', '졸업 논문 마무리 단계'],
-  ['정다은', '고양이 집사 3년차'], ['강현우', '러닝 크루 모집해요'], ['조수빈', '여행 계획 짜는 중'], ['윤재민', '야근은 사랑입니다'],
-  ['임하늘', '맛집 발견하면 공유할게'], ['한소희', '요즘 필라테스에 빠짐'], ['오승준', '월요일은 언제 끝나나'], ['서지안', '책 읽는 중'],
-  ['신예린', '비 오는 날이 좋아요'], ['권태양', '게임 한 판만 더'], ['황나연', '이사 준비로 정신없음'], ['안도윤', '조용히 살고 싶다'],
-  ['송채원', '오늘 하루도 수고했어'], ['류시우', '자격증 공부 중입니다'], ['문가은', '베이킹 연습 중'], ['배준서', '퇴근하고 한잔?'],
-  ['남지후', '카메라 들고 산책'], ['노은서', '다이어트는 내일부터'], ['홍유나', '새 직장 적응 중'], ['전민재', '운동 3일차 포기 직전'], ['고서윤', '주말 약속 있어요'],
+  ['엄마', '밥은 먹었니?'], ['아빠', '필요한 거 있으면 연락해'], ['형', '집 들어올 때 연락해'],
+  ['김홍중', '오늘 일정 끝났어'], ['정윤호', '형 오늘 시간 괜찮으세요?'], ['정우영', '야 뭐함 ㅋㅋ'],
+  ['서나은', '이번 주 근무표 확인 부탁해요'], ['도윤', '오늘 탑 근무 들어가?'],
+  ['민석', '주소 보내줘'], ['지훈', '오늘 방 비어 있어?'],
+  ['고등학교 동창', '오랜만이다 잘 지내?'], ['동창 단톡', '다들 잘 지내지?'],
 ]
 const MUSIC: Record<string, string> = {
   이서연: 'Love Dive - IVE', 박지호: 'Perfect Night - LE SSERAFIM', 정다은: 'Spicy - aespa', 조수빈: 'Super Shy - NewJeans',
@@ -85,7 +84,15 @@ function seed(): Store {
     const msgs = r.m.map(([who, text], k) => { t += (8 + ((i * 7 + k * 13) % 40)) * 60e3; return { id: i * 100 + k, who, text, t } })
     return { id: 'r' + i, name: r.n, group: r.g > 0, members: r.g || 2, pinned: i < 2, muted: false, unread: i % 4 === 1 ? (i % 3) + 1 : 0, msgs }
   })
-  return { me: { name: '나', status: '오늘도 좋은 하루', music: '' }, rooms, collapsed: false }
+  return { me: { name: '박성화', status: '', music: '' }, rooms: [
+    { id: 'r-family-mom', name: '엄마', group: false, members: 2, pinned: true, muted: false, unread: 0, msgs: [{ id: 9001, who: '엄마', text: '성화야 밥은 먹었니?', t: now - 3600000 }, { id: 9002, who: 'me', text: '응 먹었어. 걱정 마', t: now - 3500000 }] },
+    { id: 'r-family-dad', name: '아빠', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9003, who: '아빠', text: '차 조심하고 늦으면 연락해라', t: now - 86400000 }] },
+    { id: 'r-bro', name: '형', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9004, who: '형', text: '집에 택배 왔던데 네 거냐', t: now - 7200000 }] },
+    { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: [{ id: 9005, who: '김홍중', text: '오늘 촬영 끝났어. 너 알바 끝나면 연락해', t: now - 1800000 }] },
+    { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9006, who: '정윤호', text: '성화 형, 아까 말씀하신 주소 보내주실 수 있어요?', t: now - 5400000 }] },
+    { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: [{ id: 9007, who: '정우영', text: '야 오늘 뭐함 ㅋㅋ', t: now - 900000 }] },
+    { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
+  ], collapsed: false }
 }
 function load(): Store {
   try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s) } catch { /* ignore */ }
