@@ -1575,3 +1575,10 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .phone:has(.app .gyeol-app) .home-bar {
   background: #fff !important;
 }
+
+/* 제어 센터 연결 버튼 간격과 크기 조정 */
+.cc-conn .big{width:39%;}
+.cc-conn .big:nth-child(1){left:9%;top:9%;}
+.cc-conn .big:nth-child(2){right:9%;top:9%;}
+.cc-conn .big:nth-child(3){left:9%;bottom:9%;}
+.cc-mini{right:9%;bottom:9%;width:39%;gap:16%;}
