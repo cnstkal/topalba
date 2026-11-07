@@ -1600,3 +1600,10 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .phone:has(.app .moa) .statusbar .sb-right svg{fill:#fff!important}
 .phone:has(.app .moa) .statusbar .sb-right svg rect[stroke]{stroke:#fff!important}
 .phone:has(.app .moa) .home-bar{background:#fff!important}
+
+
+/* 썸원 질문 목록 페이지 표시: 20개 단위, 페이지 이동 컨트롤은 비활성 */
+.sm-pagination{display:flex;align-items:center;justify-content:center;gap:22px;padding:18px 0 26px;color:var(--sub);font-size:14px}
+.sm-pagination button{width:38px;height:38px;border-radius:50%;background:#f1e8d6;color:#a99c88;font-size:24px;line-height:1}
+.sm-pagination button:disabled{opacity:.45;cursor:default;pointer-events:none}
+.sm-pagination span{font-variant-numeric:tabular-nums;font-weight:600}
