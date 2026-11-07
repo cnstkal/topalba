@@ -193,3 +193,6 @@
 .kakaotalk-bubble.tail { border-top-left-radius: 5px; }
 .kakaotalk-msg.me .kakaotalk-bubble.tail { border-top-left-radius: 15px; border-top-right-radius: 5px; }
 .kakaotalk-bubble.photo, .kakaotalk-bubble.sticker { border-radius: 14px; }
+
+/* 채팅 입력창 아래 안전영역도 입력창 배경과 자연스럽게 연결 */
+.kakaotalk-room .kakaotalk-input{margin-bottom:calc(-1 * var(--kt-bottom));padding-bottom:calc(8px + var(--kt-bottom));background:#fff}
