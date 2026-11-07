@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { GameProvider, useGame } from './engine/store'
 import StatusBar from './components/StatusBar'
 import ControlCenter from './components/ControlCenter'
+import { DeviceFX } from './components/CCTools'
+import { useDevice } from './engine/device'
 import HomeScreen from './components/HomeScreen'
 import { LockScreen, Banner, IncomingCall, EndingScreen } from './components/Overlays'
 import Messages from './apps/Messages'
@@ -51,6 +53,8 @@ function Phone() {
   const [cur, setCur] = useState(null) // { id, origin, params, closing }
   const [leaving, setLeaving] = useState(false)
   const [cc, setCc] = useState(false)
+  const dev = useDevice()
+  const edge = useRef(null)
 
   const openApp = (id, rect, params) => {
     const p = phoneRef.current.getBoundingClientRect()
@@ -74,7 +78,7 @@ function Phone() {
   const App = cur ? COMPONENTS[cur.id] : null
 
   return (
-    <div className="phone" ref={phoneRef}>
+    <div className={`phone ${dev.dark ? 'cc-dark' : ''}`} ref={phoneRef}>
       <HomeScreen openApp={openApp} dimmed={!!cur} />
 
       {cur && (
@@ -86,11 +90,20 @@ function Phone() {
       )}
 
       <StatusBar onOpenCC={() => setCc(true)} />
-      <ControlCenter open={cc} onClose={() => setCc(false)} />
+      {/* 오른쪽 상단에서 아래로 스와이프(또는 탭)하면 제어센터 열기 */}
+      <div
+        className="cc-edge"
+        onPointerDown={(e) => { edge.current = [e.clientX, e.clientY]; e.currentTarget.setPointerCapture(e.pointerId) }}
+        onPointerMove={(e) => { if (edge.current && e.clientY - edge.current[1] > 18) { edge.current = null; setCc(true) } }}
+        onPointerUp={() => { if (edge.current) setCc(true); edge.current = null }}
+        onPointerCancel={() => (edge.current = null)}
+      />
+      <ControlCenter open={cc} onClose={() => setCc(false)} onOpenApp={(id) => openApp(id, null)} />
       <Banner onOpen={(id, params) => openApp(id, null, params)} />
       <IncomingCall />
       {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} />}
       <EndingScreen />
+      <DeviceFX />
       <div className="home-bar-zone" onClick={closeApp}>
         <div className="home-bar" />
       </div>

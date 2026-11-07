@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { DAYS } from '../utils'
+import { dev } from '../engine/device'
 
 /* ───────────────────────── 상수·유틸 ───────────────────────── */
 const LS = 'private-clock-v1' // 시계 앱 전용 저장 키 (게임 저장 데이터와 분리)
@@ -165,7 +166,7 @@ function beep(n) {
       const o = c.createOscillator()
       const g = c.createGain()
       o.frequency.value = 880
-      g.gain.value = 0.07
+      g.gain.value = 0.14 * (dev.get().vol / 100) // 제어센터 음량 반영
       o.connect(g)
       g.connect(c.destination)
       o.start(c.currentTime + i * 0.4)
