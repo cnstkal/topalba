@@ -79,3 +79,25 @@
 .gyeol-sheet{width:100%;background:var(--panel);border-radius:16px 16px 0 0;padding:18px;display:flex;flex-direction:column;gap:14px}
 .gyeol-sheet h3{margin:0}.gyeol-sheet label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--mute)}
 .gyeol-sheet input[type=range]{accent-color:var(--lime)}
+
+
+/* 버튼 터치 피드백: 누르는 순간 반응하고 손을 떼면 부드럽게 복귀 */
+.gyeol-app button{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),filter .16s ease,background-color .16s ease,box-shadow .16s ease,opacity .16s ease;
+}
+.gyeol-app button:active:not(:disabled){
+  transform:scale(.94);
+  filter:brightness(1.18);
+}
+.gyeol-app button:disabled{cursor:default}
+.gyeol-nav button:active:not(:disabled),
+.gyeol-seg button:active:not(:disabled){transform:scale(.96)}
+.gyeol-actions button:active:not(:disabled),
+.gyeol-send:active:not(:disabled){transform:scale(.9)}
+.gyeol-btn:active:not(:disabled){filter:brightness(.9)}
+.gyeol-cell:active{filter:brightness(.88)}
+@media (prefers-reduced-motion:reduce){
+  .gyeol-app button{transition:none}
+}
