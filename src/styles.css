@@ -1582,3 +1582,9 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .cc-conn .big:nth-child(2){right:9%;top:9%;}
 .cc-conn .big:nth-child(3){left:9%;bottom:9%;}
 .cc-mini{right:9%;bottom:9%;width:39%;gap:16%;}
+
+/* 토스 화면은 어두운 앱 배경 위에 시스템 상·하단 표시를 흰색으로 */
+.phone:has(.app .moa) .statusbar{color:#fff!important}
+.phone:has(.app .moa) .statusbar .sb-right svg{fill:#fff!important}
+.phone:has(.app .moa) .statusbar .sb-right svg rect[stroke]{stroke:#fff!important}
+.phone:has(.app .moa) .home-bar{background:#fff!important}
