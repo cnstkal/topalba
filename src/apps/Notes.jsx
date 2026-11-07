@@ -591,7 +591,6 @@ function Editor({ note, folderName, onClose, onToast }) {
           onFocus={() => setPanel((p) => (p === 'more' ? null : p))}
         />
         {tags.length > 0 && <div className="ne-tags">{tags.map((t) => <span key={t}>{t}</span>)}</div>}
-        {stored && <div className="ne-mod">마지막 수정 {fullDate(stored.ts)}</div>}
       </div>
 
       {panel === 'more' && (
@@ -663,17 +662,7 @@ function Editor({ note, folderName, onClose, onToast }) {
       )}
       <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { addPhoto(e.target.files[0]); e.target.value = '' }} />
 
-      {!isTrash && (
-        <div className="ne-bar">
-          {bar('', toggleChecklist, <Ic n="checklist" />, '체크리스트', fmt.block === 'cl')}
-          {bar('', () => { restore(); setPanel(panel === 'fmt' ? null : 'fmt') }, <span className="na-aa">Aa</span>, '텍스트 서식', panel === 'fmt')}
-          {bar('', () => { restore(); readFmt(); setPanel(panel === 'table' ? null : 'table') }, <Ic n="table" />, '표', panel === 'table')}
-          {bar('', () => setPanel(panel === 'attach' ? null : 'attach'), <Ic n="attach" />, '첨부 및 추가', panel === 'attach')}
-          <span className="sep" />
-          <button aria-label="실행 취소" disabled={!hs.u} onMouseDown={(e) => e.preventDefault()} onClick={() => travel(-1)}><Ic n="undo" /></button>
-          <button aria-label="다시 실행" disabled={!hs.r} onMouseDown={(e) => e.preventDefault()} onClick={() => travel(1)}><Ic n="redo" /></button>
-        </div>
-      )}
+      {/* 하단 편집 도구 모음 제거 */}
     </div>
   )
 }
