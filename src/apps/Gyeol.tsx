@@ -13,7 +13,7 @@ const NICKS = ['민재','jun_k','도윤','Theo','서준','하람','ryu','태오'
 const AREAS = ['홍대','이태원','강남','성수','종로','신촌','잠실','해방촌','합정','건대']
 const GOALS = ['가벼운 만남','데이트','진지한 관계','친구','대화 상대']
 const JOBS = ['디자이너','개발자','바리스타','사진작가','간호사','대학원생','요리사','마케터','트레이너','에디터']
-const BODY = ['슬림','보통','탄탄한','근육질','통통']
+const POSITIONS = ['탑','바텀','올라운더']
 const TAGS = ['러닝','전시','커피','헬스','클럽','영화','여행','게임','요리','독서','캠핑','반려견','음악','와인']
 const BIOS = ['주말엔 한강 러닝 하고 저녁엔 맥주','말 많은 편은 아니에요. 편하게 말 걸어요','성수 카페 투어 중. 추천 받습니다','평일엔 야근, 주말엔 전시','강아지 산책 같이 할 사람','그냥 얘기 잘 통하면 좋겠어요','운동 끝나고 먹는 치킨이 낙','영화 취향 맞는 분 찾아요','천천히 알아가는 거 좋아해요','맛집 같이 다닐 사람 구함','밤산책 좋아함. 조용한 사람 선호','여행 갔다 와서 정리 중']
 const MSGS = [['오늘 뭐 했어요?','야근하고 이제 퇴근이요 ㅠ','고생했네요. 맥주 한잔?'],['사진 분위기 좋네요','고마워요 성수에서 찍은 거예요','다음에 같이 가요'],['혹시 이태원 자주 가세요?','가끔요, 주로 해방촌 쪽','오 저도 거기 좋아해요'],['안녕하세요 :)','네 안녕하세요!','러닝 좋아하신다고 해서요']]
@@ -22,7 +22,7 @@ const rnd = (i, n) => (i * 7919 + n * 104729) % 9973
 const pick = (a, i, n) => a[rnd(i, n) % a.length]
 const mkUsers = () => NICKS.map((nick, i) => ({
   id: i + 1, nick, age: 22 + (rnd(i, 1) % 20), area: pick(AREAS, i, 2), dist: +(0.4 + (rnd(i, 3) % 180) / 10).toFixed(1),
-  online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), body: pick(BODY, i, 8),
+  online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
   photos: PHOTOS[i] ? [PHOTOS[i]] : [],
 }))
@@ -33,7 +33,7 @@ const mkState = () => {
   return { users: mkUsers(), liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2 },
     me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, users: s.users.map((u) => ({ ...u, position: u.position || pick(POSITIONS, (u.id || 1) - 1, 8) })), starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
@@ -253,7 +253,7 @@ function Detail({ u, s, like, unlike, block, openChat, matched, onClose }) {
       <div className="gyeol-dbody">
         <h2>{u.nick} <em>{u.age}</em></h2>
         <p>{u.online ? <><i className="gyeol-on" />접속 중</> : `마지막 접속 ${u.last}`} · {u.area} · {u.dist}km</p>
-        <dl><dt>키</dt><dd>{u.height}cm</dd><dt>직업</dt><dd>{u.job}</dd><dt>체형</dt><dd>{u.body}</dd><dt>관계 목적</dt><dd>{u.goal}</dd></dl>
+        <dl><dt>키</dt><dd>{u.height}cm</dd><dt>포지션</dt><dd>{u.position}</dd><dt>관계 목적</dt><dd>{u.goal}</dd></dl>
         <p>{u.bio}</p>
         <div className="gyeol-tags">{u.tags.map((t) => <span key={t}>{t}</span>)}</div>
         <div className="gyeol-safety"><button onClick={() => setRep(true)}><Flag size={14} />신고</button><button onClick={() => block(u.id)}><Ban size={14} />차단</button></div>
