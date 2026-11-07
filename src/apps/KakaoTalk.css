@@ -186,3 +186,10 @@
 .kakaotalk-fields span{width:100%;font-size:12px;color:#8a8a8a;margin-bottom:4px}
 .kakaotalk-fields input{flex:1;min-width:0;border:0;outline:0;font-size:16px;padding:4px 0;background:none;color:#111}
 .kakaotalk-fields em{font-style:normal;font-size:12px;color:#b0b0b0;margin-left:8px}
+
+
+/* 채팅 말풍선을 조금 더 둥글고 부드럽게 */
+.kakaotalk-bubble { border-radius: 15px; }
+.kakaotalk-bubble.tail { border-top-left-radius: 5px; }
+.kakaotalk-msg.me .kakaotalk-bubble.tail { border-top-left-radius: 15px; border-top-right-radius: 5px; }
+.kakaotalk-bubble.photo, .kakaotalk-bubble.sticker { border-radius: 14px; }
