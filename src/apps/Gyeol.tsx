@@ -31,9 +31,9 @@ const mkState = () => {
   const chats = {}
   matchIds.forEach((id, k) => { chats[id] = MSGS[k % MSGS.length].map((t, j) => ({ me: j % 2 === 1, text: t, t: Date.now() - (9 - j) * 3600e3 * (k + 1) })) })
   return { users: mkUsers(), liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2 },
-    me: { nick: '성화', age: 20, bio: '새로운 카페와 전시를 찾아다니는 걸 좋아해요. 편하게 대화해요.', tags: ['커피','전시','산책'], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
+    me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, starred: s.starred || [], me: { ...s.me, nick: s.me?.nick === 'me_' ? '성화' : s.me?.nick, age: s.me?.nick === 'me_' ? 20 : s.me?.age, bio: s.me?.bio || '새로운 카페와 전시를 찾아다니는 걸 좋아해요. 편하게 대화해요.', tags: s.me?.tags?.length ? s.me.tags : ['커피','전시','산책'], goal: s.me?.goal || '친구' } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
@@ -230,8 +230,8 @@ function Me({ s, upd }) {
           <span className="gyeol-profile-status">PROFILE ACTIVE</span>
           <h2>{m.nick}</h2>
           <p className="gyeol-profile-meta">{m.age}세 · {m.goal}</p>
-          <p className="gyeol-profile-bio">{m.bio || "천천히 알아가며 편하게 대화하는 걸 좋아해요."}</p>
-          <div className="gyeol-profile-tags">{(m.tags.length ? m.tags : ["커피","전시","산책"]).map((tag) => <span key={tag}>#{tag}</span>)}</div>
+          <p className="gyeol-profile-bio">{m.bio}</p>
+          <div className="gyeol-profile-tags">{m.tags.map((tag) => <span key={tag}>#{tag}</span>)}</div>
         </div>
         <div className="gyeol-profile-foot"><span>결에서 만나는 나</span><b>GYEOL MEMBER</b></div>
       </section>
