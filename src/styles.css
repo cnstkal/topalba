@@ -1556,3 +1556,22 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .ck .ck-cb.g { background:#183d27 !important; color:#30d158 !important; border-color:#2c2c2e !important; }
 .ck .ck-cb.r { background:#4a2020 !important; color:#ff453a !important; border-color:#2c2c2e !important; }
 .ck .ck-cb.o { background:#49331a !important; color:#ff9f0a !important; border-color:#2c2c2e !important; }
+
+
+/* 다크 테마 앱에서는 시스템 상태바와 홈 인디케이터도 밝게 표시 */
+.phone:has(.app .ck) .statusbar,
+.phone:has(.app .gyeol-app) .statusbar {
+  color: #fff !important;
+}
+.phone:has(.app .ck) .statusbar .sb-right svg,
+.phone:has(.app .gyeol-app) .statusbar .sb-right svg {
+  fill: #fff !important;
+}
+.phone:has(.app .ck) .statusbar .sb-right svg rect[stroke],
+.phone:has(.app .gyeol-app) .statusbar .sb-right svg rect[stroke] {
+  stroke: #fff !important;
+}
+.phone:has(.app .ck) .home-bar,
+.phone:has(.app .gyeol-app) .home-bar {
+  background: #fff !important;
+}
