@@ -15,6 +15,23 @@ import { ME } from '../data/characters'
 
 const KEY = 'private-save-v1'
 
+// ── 캘린더 일정 (날짜는 'YYYY-MM-DD', 시간은 'HH:mm' 문자열) ──
+const calKey = (d) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+
+// 기존 임시 일정 4건: 최초 로드 시점의 오늘을 기준으로 실제 날짜로 고정해 저장
+function seedCalEvents() {
+  const t = new Date()
+  const at = (n) => calKey(new Date(t.getFullYear(), t.getMonth(), t.getDate() + n))
+  const base = { alert: '10', note: '' }
+  return [
+    { ...base, id: 'ev1', title: '마케팅팀 내일 회의 준비', startDate: at(0), endDate: at(0), startTime: '09:00', endTime: '10:00', allDay: true, place: '회사', note: '회의 자료 최종 확인', color: '#ff9500' },
+    { ...base, id: 'ev2', title: '저녁 약속', startDate: at(0), endDate: at(0), startTime: '20:00', endTime: '21:00', allDay: false, place: '집', color: '#007aff' },
+    { ...base, id: 'ev3', title: '치과 예약', startDate: at(3), endDate: at(3), startTime: '18:30', endTime: '19:30', allDay: false, place: '서울 치과', note: '정기 검진', color: '#34c759', alert: '60' },
+    { ...base, id: 'ev4', title: '월간 보고', startDate: at(9), endDate: at(9), startTime: '10:00', endTime: '11:00', allDay: false, place: '회의실 B', color: '#af52de', alert: '30' },
+  ]
+}
+
 function freshState() {
   return {
     unlocked: false, // 잠금 화면 해제 여부 (해제 후 스토리 시작)
@@ -33,6 +50,7 @@ function freshState() {
     notes: JSON.parse(JSON.stringify(INITIAL_NOTES)),
     noteFolders: [], // 사용자가 만든 메모 폴더 [{ id, name }]
     noteUi: { folder: 'all', view: 'list' }, // 메모 앱 마지막 폴더 / 보기 방식
+    calEvents: seedCalEvents(), // 캘린더 일정 (기존 저장본에는 이 키가 없으므로 시드가 자동 적용됨)
     liked: {},
     saved: {}, // 저장한 게시물
     follows: {}, // 팔로우한 계정
@@ -59,7 +77,9 @@ function load() {
         return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
       })
       const extra = old.filter((p) => !initIds.has(p.id))
-      return { ...freshState(), ...saved, posts: [...extra, ...initial], banner: null }
+      const merged = { ...freshState(), ...saved, posts: [...extra, ...initial], banner: null }
+      if (!Array.isArray(merged.calEvents)) merged.calEvents = seedCalEvents()
+      return merged
     }
   } catch (e) {
     /* 저장 데이터 손상 시 새로 시작 */
@@ -234,6 +254,13 @@ function reducer(state, a) {
         notes: state.notes.map((n) => (n.folder === a.id ? { ...n, folder: 'icloud' } : n)),
         noteUi: state.noteUi?.folder === a.id ? { ...state.noteUi, folder: 'all' } : state.noteUi,
       }
+    case 'CAL_SAVE': {
+      const list = Array.isArray(state.calEvents) ? state.calEvents : []
+      const exists = list.some((e) => e.id === a.event.id)
+      return { ...state, calEvents: exists ? list.map((e) => (e.id === a.event.id ? { ...e, ...a.event } : e)) : [...list, a.event] }
+    }
+    case 'CAL_DELETE':
+      return { ...state, calEvents: (state.calEvents || []).filter((e) => e.id !== a.id) }
     case 'NOTE_UI':
       return { ...state, noteUi: { ...(state.noteUi || {}), ...a.ui } }
     default:
@@ -303,6 +330,8 @@ export function GameProvider({ children }) {
       renameFolder: (id, name) => dispatch({ type: 'FOLDER_RENAME', id, name }),
       deleteFolder: (id) => dispatch({ type: 'FOLDER_DELETE', id }),
       noteUi: (ui) => dispatch({ type: 'NOTE_UI', ui }),
+      saveCalEvent: (event) => dispatch({ type: 'CAL_SAVE', event }),
+      deleteCalEvent: (id) => dispatch({ type: 'CAL_DELETE', id }),
       reset: () => {
         try {
           localStorage.removeItem(KEY)
