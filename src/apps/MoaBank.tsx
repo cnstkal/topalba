@@ -61,10 +61,10 @@ const Ic = ({ n, s = 20 }) => (
 )
 
 const Logo = ({ s = 28 }) => (
-  <svg viewBox="0 0 32 32" width={s} height={s} aria-hidden="true">
-    <rect width="32" height="32" rx="9" fill="#0046ff" />
-    <path d="M21 10.5C19.8 9 18.2 8.3 16 8.3c-2.6 0-4.3 1.2-4.3 3 0 4.3 8.8 1.7 8.8 6.5 0 1.9-1.8 3.3-4.6 3.3-2.2 0-4-.8-5.2-2.4" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" />
-    <circle cx="23.6" cy="23.6" r="2" fill="#8fd3ff" />
+  <svg viewBox="0 0 40 40" width={s} height={s} aria-hidden="true">
+    <rect width="40" height="40" rx="12" fill="#0046b8" />
+    <path d="M27.5 11.5c-2.1-2-4.6-3-7.8-3-5.1 0-8.5 2.5-8.5 6.2 0 8.1 17.5 3.8 17.5 11.1 0 3.7-3.6 6.1-8.8 6.1-3.5 0-6.7-1.2-9.1-3.6" fill="none" stroke="#fff" strokeWidth="3.1" strokeLinecap="round"/>
+    <circle cx="30.8" cy="30.4" r="3.1" fill="#68d5f4"/>
   </svg>
 )
 
@@ -73,20 +73,20 @@ const makeSeed = () => {
   const z = kst0(), cap = Date.now() - 60000
   const at = (d, h = 12, m = 0) => Math.min(z + d * DAY + (h * 60 + m) * 60000, cap)
   const accounts = [
-    { id: 'a1', name: '모아 입출금통장', no: '3333-12-4821907', open: 4200000 },
+    { id: 'a1', name: 'SOL 입출금통장', no: '3333-12-4821907', open: 4200000 },
     { id: 'a2', name: '생활비 통장', no: '3333-04-7730215', open: 420000 },
-    { id: 'a3', name: '모아 파킹통장', no: '3333-27-1156098', open: 3000000 },
+    { id: 'a3', name: 'SOL 파킹통장', no: '3333-27-1156098', open: 3000000 },
   ]
   const cards = [
-    { id: 'c1', name: '모아 신용카드 Blue', kind: 'credit', last4: '4829', acc: 'a1', payDay: 14, tone: 'navy' },
-    { id: 'c2', name: '모아 체크카드', kind: 'check', last4: '7163', acc: 'a2', tone: 'blue' },
+    { id: 'c1', name: '신한 SOL 신용카드', kind: 'credit', last4: '4829', acc: 'a1', payDay: 14, tone: 'navy' },
+    { id: 'c2', name: '신한 SOL 체크카드', kind: 'check', last4: '7163', acc: 'a2', tone: 'blue' },
   ]
   const stocks = [
     { code: '900101', name: '한강전자', price: 72400 },
     { code: '900102', name: '새벽바이오', price: 48150 },
     { code: '900103', name: '미래모빌리티', price: 215000 },
     { code: '900104', name: '온누리푸드', price: 31700 },
-    { code: '900105', name: '모아에너지', price: 18950 },
+    { code: '900105', name: '한빛에너지', price: 18950 },
   ]
   const txs = []
   const bank = (acc, dir, amt, w, party, memo = '') => txs.push({ id: uid(), kind: 'bank', acc, dir, amt, at: w, eff: w, party, memo, status: 'ok' })
@@ -103,7 +103,7 @@ const makeSeed = () => {
     const s = stocks.find((x) => x.code === code), w = at(d, 10, 31)
     txs.push({ id: uid(), kind: 'stock', acc: 'a1', code, qty, price, side, dir: side === 'buy' ? 'out' : 'in', amt: qty * price, at: w, eff: w, party: `${s.name} ${side === 'buy' ? '매수' : '매도'}`, memo: '', status: 'ok' })
   }
-  bank('a1', 'in', 3200000, at(-34, 9, 0), '주식회사 모아테크', '10월 급여')
+  bank('a1', 'in', 3200000, at(-34, 9, 0), '주식회사 한빛테크', '10월 급여')
   bank('a1', 'out', 650000, at(-33, 8, 40), '김영수', '월세')
   bank('a1', 'out', 59000, at(-30, 7, 0), '통신요금 자동이체', '')
   trade('buy', '900101', 10, 68000, -28)
@@ -121,10 +121,10 @@ const makeSeed = () => {
   bank('a1', 'in', 3820, at(0, 0, 5), '예금이자', '')
   bank('a2', 'out', 44000, at(-10, 7, 0), '통신요금 자동이체', '')
   bank('a2', 'in', 50000, at(-2, 13, 40), '박지수', '용돈')
-  ;[[54300, -27, 18, '온누리마트'], [23000, -24, 19, '모아치킨', '친구 모임'], [30000, -21, 8, '지하철 교통카드', '충전'], [18500, -19, 20, '심야서점'], [5800, -16, 9, '한강카페'], [28000, -13, 21, '시네온 영화관'],
-    [41200, -11, 18, '온누리마트'], [9000, -8, 12, '새벽집 국밥'], [6300, -6, 9, '한강카페'], [89000, -5, 22, '데일리샵', '온라인 주문', 'cancel'], [21000, -3, 20, '모아치킨'], [4800, -1, 9, '한강카페']]
+  ;[[54300, -27, 18, '온누리마트'], [23000, -24, 19, '바삭치킨', '친구 모임'], [30000, -21, 8, '지하철 교통카드', '충전'], [18500, -19, 20, '심야서점'], [5800, -16, 9, '한강카페'], [28000, -13, 21, '시네온 영화관'],
+    [41200, -11, 18, '온누리마트'], [9000, -8, 12, '새벽집 국밥'], [6300, -6, 9, '한강카페'], [89000, -5, 22, '데일리샵', '온라인 주문', 'cancel'], [21000, -3, 20, '바삭치킨'], [4800, -1, 9, '한강카페']]
     .forEach(([a, d, h, m, memo, st]) => charge('c1', a, d, h, m, memo || '', st || 'ok'))
-  ;[[3400, -26, 22, '새벽25 편의점'], [8500, -22, 12, '새벽집 국밥'], [12000, -17, 17, '건강약국'], [4500, -12, 9, '한강카페'], [33700, -9, 19, '온누리마트'], [5100, -7, 23, '새벽25 편의점'], [14000, -4, 20, '시네온 영화관'], [19500, -2, 20, '모아치킨']]
+  ;[[3400, -26, 22, '새벽25 편의점'], [8500, -22, 12, '새벽집 국밥'], [12000, -17, 17, '건강약국'], [4500, -12, 9, '한강카페'], [33700, -9, 19, '온누리마트'], [5100, -7, 23, '새벽25 편의점'], [14000, -4, 20, '시네온 영화관'], [19500, -2, 20, '바삭치킨']]
     .forEach(([a, d, h, m]) => charge('c2', a, d, h, m))
   return { v: 1, accounts, cards, stocks, txs }
 }
@@ -322,9 +322,9 @@ function Form({ f, db, commit, close }) {
 }
 
 /* ---------- 메인 ---------- */
-export default function MoaBank({ close }) {
+export default function ShinhanSOL({ close }) {
   const seed = useMemo(makeSeed, [])
-  const [raw, setRaw] = usePersist('moa.db', seed)
+  const [raw, setRaw] = usePersist('shinhan.sol.db', seed)
   const ok = raw && ['accounts', 'cards', 'stocks', 'txs'].every((k) => Array.isArray(raw[k]))
   const db = ok ? raw : seed
   useEffect(() => { if (!ok) setRaw(seed) }, [])
