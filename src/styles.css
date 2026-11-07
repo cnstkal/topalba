@@ -905,7 +905,7 @@ background: linear-gradient(155deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.
 .sm-legend{display:flex;justify-content:center;gap:12px;margin-top:12px;font-size:11.5px;color:var(--sub)}
 .sm-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
 .sm-legend .lb{background:#f7d6d3}.sm-legend .lm{background:#fbe3d0}.sm-legend .lq{background:#f3ead8;border:1px solid #e3d5ba}
-.sm-diary{position:relative;background-color:#fffdf6;background-image:repeating-linear-gradient(transparent 0 31px,#efe4cf 31px 32px);border:1.5px solid var(--line);border-radius:6px 20px 20px 6px;border-left:8px solid var(--peach);padding:18px 18px 20px;box-shadow:2px 3px 0 var(--line)}
+.sm-diary{position:relative;background:#fffaf1;background-image:none;border:1.5px solid var(--line);border-radius:20px;border-left:1.5px solid var(--line);padding:20px 18px 22px;box-shadow:0 2px 0 var(--line)}
 .sm-diary-d{font-size:13px;color:var(--acc);font-weight:700;margin-bottom:10px}
 .sm-who-a{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
 .sm-who-a b{font-size:13px;color:#9a5e48}
