@@ -14,26 +14,41 @@ const Av = ({ t }) => {
 
 const WEEK = [['일', 8], ['월', 9], ['화', 10], ['수', 11], ['목', 12], ['금', 13], ['토', 14]]
 const HIST = [
-  ['7일 토요일', [
-    { cash: 1, t: '3건', s: '캐시백 가능한 내역' },
-    { a: 'cp', t: '-8,900원', s: '내 토스뱅크 통장 → 쿠팡' },
-    { a: 'w', t: '1원', s: '이자 (나눠모으기 통장) → 내 이자 모으기', b: 1 },
+  ['8일 일요일', [
+    { a: 'w', t: '-1,000,000원', s: '정윤호에게 송금 · 토스뱅크 → 정윤호', d: 1 },
+    { a: 'w', t: '-12,500원', s: '배달의민족 · 저녁 식사' },
+    { a: 'cu', t: '-5,400원', s: 'GS25 신림역점 · 간식' },
+    { a: 'w', t: '-8,000원', s: '신림 김밥천국 · 식사' },
   ]],
-  ['6일 금요일', [
-    { a: 'w', t: '8,000원', s: 'Eliz Rodon → 내 토스뱅크 통장', b: 1 },
-    { a: 'cu', t: '-3,100원', s: '취소 | CU 동구제물량점 | 토스페이머니', x: 1 },
-    { a: 'post', t: '-1,800원', s: '내 카카오뱅크계좌 → 우정사업본부(우체국)' },
-    { a: 'w', t: '-100,000원', s: '내 계좌 이체 | 토스뱅크 → 카카오뱅크', d: 1 },
-    { a: 'post', t: '-1,800원', s: '내 카카오뱅크계좌 → 우정사업본부(우체국)' },
-    { a: 'cu', t: '-800원', s: 'CU 동구제물량점', o: '-2,800' },
-    { a: 'w', t: '-600원', s: '내 계좌 이체 | 토스뱅크 → 토스증권' },
-    { a: 'w', t: '-499원', s: '내 계좌 이체 | 토스뱅크 → 토스증권' },
-    { a: 'w', t: '-501원', s: '내 계좌 이체 | 토스뱅크 → 토스증권' },
-    { a: 'w', t: '-188,130원', s: '내 계좌 이체 | 토스뱅크 → 토스증권' },
+  ['7일 토요일', [
+    { a: 'w', t: '+250,000원', s: '김민준 → 내 토스뱅크 통장', b: 1 },
+    { a: 'cp', t: '-18,900원', s: '쿠팡 · 생활용품' },
+    { a: 'w', t: '-16,000원', s: '신림동 PC방 · 이용요금' },
+    { a: 'w', t: '-32,000원', s: '마포 고깃집 · 식사' },
+  ]],
+  ['4일 수요일', [
+    { a: 'w', t: '-14,800원', s: '배달의민족 · 점심' },
+    { a: 'w', t: '-6,500원', s: '메가커피 신림점' },
+    { a: 'w', t: '-22,000원', s: '홍콩반점 신림점 · 식사' },
+  ]],
+  ['3일 화요일', [
+    { a: 'w', t: '+220,000원', s: '이준호 → 내 토스뱅크 통장', b: 1 },
+    { a: 'cu', t: '-4,800원', s: 'CU 신림중앙점 · 편의점' },
+    { a: 'w', t: '-11,000원', s: '배달의민족 · 저녁' },
+  ]],
+  ['10월 31일 토요일', [
+    { a: 'w', t: '+280,000원', s: '박지훈 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '-19,000원', s: '신림역 PC방 · 이용요금' },
+    { a: 'w', t: '-28,500원', s: '동네 삼겹살집 · 식사' },
+  ]],
+  ['10월 27일 화요일', [
+    { a: 'w', t: '+230,000원', s: '최도현 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '-13,500원', s: '배달의민족 · 야식' },
+    { a: 'w', t: '-7,000원', s: '카페 모모 · 음료' },
   ]],
 ]
-const PAST = [['11월 6일 금요일', [['-100,000원', '토스뱅크 → 카카오뱅크'], ['-600원', '토스뱅크 → 토스증권'], ['-499원', '토스뱅크 → 토스증권'], ['-501원', '토스뱅크 → 토스증권'], ['-188,130원', '토스뱅크 → 토스증권']]], ['10월 29일 목요일', [['-499,000원', 'KB국민 → 진소윤'], ['-450,000원', 'KB국민 → 진소윤']]]]
-const STK = [['삼성전자', 193400, 176631, '-4.0%'], ['삼성중공업', 16240, 30975, '-4.2%'], ['SK하이닉스', 1176000, 2322000, '-6.9%'], ['재료정제', 25050, 0, '']]
+const PAST = [['11월 8일 일요일', [['-1,000,000원', '정윤호에게 송금'], ['-12,500원', '배달의민족'], ['-8,000원', '김밥천국']]], ['11월 7일 토요일', [['+250,000원', '김민준 → 내 토스뱅크'], ['-16,000원', '신림동 PC방'], ['-32,000원', '마포 고깃집']]], ['11월 3일 화요일', [['+220,000원', '이준호 → 내 토스뱅크'], ['-11,000원', '배달의민족']]]]
+const STK = [['SK하이닉스', 1120000, 2500000, '-55.2%']]
 const CH = [1800,1760,1850,1780,1790,1770,1770,1700,1860,1700,1700,1530,1520,1180,1170,1500,1650,1790,1730,1500,1450,1400,1250,1120,1000,1080,1120,1060,1030,1050,1020,1000,1010,970,980,1000,1050,1020,1030,990,970,980,960,940]
 const Chart = () => {
   const mn = Math.min(...CH), mx = Math.max(...CH), W = 400, H = 330
@@ -52,8 +67,8 @@ export default function MoaBank({ close }) {
   if (sub === 'chart') body = (
     <div className="pg">
       <div className="tb"><button onClick={() => setSub(null)}><Ic d="back" /></button><span className="sp" /><Ic d="heart" /><Ic d="bell" f="#fdb92a" /><Ic d="dots" /></div>
-      <h2 className="nm">SK하이닉스</h2><h1 className="px">1,176,000원</h1>
-      <p className="gr">11월 6일보다 <b className="dn">-88,000원 (6.9%)</b></p>
+      <h2 className="nm">SK하이닉스</h2><h1 className="px">1,120,000원</h1>
+      <p className="gr">매입 평균 2,500,000원 · 투자 원금 7,000,000원</p>
       <div className="tabs">{['차트', '호가', '내 주식', '종목정보', '커뮤니티'].map((t, i) => <span key={t} className={i ? '' : 'on'}>{t}</span>)}</div>
       <p className="gr dm">◯ 자세한 차트</p>
       <div className="cw"><span className="hi">최고 1,217,000원</span><Chart /><span className="lo">최저 1,070,000원</span></div>
@@ -76,7 +91,7 @@ export default function MoaBank({ close }) {
     <div className="pg">
       <div className="tb hist-head"><button onClick={() => go('home')}><Ic d="back" /></button><b className="ct">◀ 11월 ▶</b><span className="sp" /><Ic d="search" /><Ic d="dots" /></div>
       <div className="chips">{['전체', '카드', '입·출금', '투자', '페이·기타'].map((t, i) => <span key={t} className={i ? '' : 'on'}>{t}</span>)}</div>
-      <div className="sum"><div><span>지출</span><b>-180,641원</b></div><div><span>수입</span><b>+141,841원</b></div></div>
+      <div className="sum"><div><span>지출</span><b>-1,184,700원</b></div><div><span>수입</span><b>+1,000,000원</b></div></div>
       
       <div className="wk">{WEEK.map(([d, v]) => <div key={v}><span>{d}</span><b>{v}</b></div>)}</div>
       <div className="chv">⌄</div>
@@ -90,11 +105,11 @@ export default function MoaBank({ close }) {
       <div className="tb"><span className="sp" /><Ic d="search" /><Ic d="menu" /></div>
       <h2 className="nm">토스증권</h2><p className="gr">러셀 2000 선물 <b className="up">2,760.50</b> <small className="up">+0.9%</small></p>
       <div className="acc"><i>⚡</i> 기본계좌 ⌃⌄ <span>계좌 보기</span></div>
-      <div className="two2"><div><span>원화</span><b>2원</b></div><div><span>달러</span><b>$0.14</b></div></div>
-      <p className="h3 s">내 투자</p><h1 className="px">2,068,338원 〉</h1><p className="dn big">-1,237,498원 (37.4%)</p>
+      <div className="two2"><div><span>원화</span><b>328,450원</b></div><div><span>달러</span><b>$0.14</b></div></div>
+      <p className="h3 s">내 투자</p><h1 className="px">3,136,000원</h1><p className="dn big">-3,864,000원 (-55.2%) · 투자 원금 700만원</p>
       <div className="flt"><span>수익률 높은 순 ⌄</span><em><u>현재가</u>평가금</em><em><u className="n">$</u><u>원</u></em></div>
       <p className="h3">국내주식 <b className="dn">-37.3%</b> 〉</p>
-      {STK.map(([nm, p, a, r]) => <div className="row st" key={nm} onClick={nm === 'SK하이닉스' ? () => setSub('chart') : null}>
+      {STK.map(([nm, p, a, r]) => <div className="row st" key={nm}>
         <svg viewBox="0 0 40 20" className="sp2"><path d="M0 14 8 8 14 4 22 8 30 7 40 5V20H0z" fill="#1d2b4a" /><path d="M0 14 8 8 14 4 22 8 30 7 40 5" stroke="#3182f6" fill="none" /></svg>
         <div className="m"><b className="w">{nm}</b>{a ? <span>내 평균 {n(a)}원</span> : null}</div>
         <div className="ra"><b>{n(p)}원</b><span className="dn">{r}</span></div></div>)}
@@ -103,10 +118,10 @@ export default function MoaBank({ close }) {
   else body = (
     <div className="pg">
       <div className="tb"><b className="lg">◗ 토스뱅크 〉</b><span className="sp" /><Ic d="grid" /><i className="bw"><Ic d="bell" /></i></div>
-      <div className="crd"><div className="ln"><i className="ic">⚡</i><div className="m"><b className="xl">923,935원</b><span>토스뱅크 통장 <u className="bl">+이자 191원</u></span></div><button className="gb">송금</button></div>
+      <div className="crd"><div className="ln"><i className="ic">⚡</i><div className="m"><b className="xl">328,450원</b><span>토스뱅크 통장 <u className="bl">+이자 191원</u></span></div><button className="gb">송금</button></div>
         <div className="ln"><i className="ic p">P</i><div className="m"><b className="xl">3번</b><span>송금·결제 후 받는 포인트</span></div><button className="gb">받기</button></div>
         <div className="ft"><span>계좌</span><span>대출</span><span>카드</span><span className="r">모두보기</span></div></div>
-      <div className="crd ln" onClick={() => go('hist')}><div className="m"><b className="xl">142,976원</b><span>11월에 쓴 돈</span></div><button className="nw">새 내역 10건 +</button></div>
+      <div className="crd ln" onClick={() => go('hist')}><div className="m"><b className="xl">1,184,700원</b><span>11월에 쓴 돈</span></div><button className="nw">새 내역 10건 +</button></div>
       <div className="crd"><div className="ln"><b className="xl">내 신용점수</b><em className="tag">변동 감지</em></div><div className="ft c"><span>계좌개설</span><span>카드발급</span><span>대출받기</span></div></div>
       <div className="crd"><div className="ln"><div className="m"><b className="xl">최근 본 상품</b><span>널담 뚱카롱 넌 사랑이야, 50g, 8개…</span></div><i className="th" /></div>
         <div className="ln"><div className="m"><b className="xl">방문한 서비스</b><span>페이스페이</span></div><i className="th s" /></div>
