@@ -9,7 +9,7 @@ const PHOTOS = [
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900',
   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900',
 ]
-const NICKS = ['민재','jun_k','도윤','Theo','서준','하람','ryu','태오','시우','Kai','우진','건','지호','Noah','현','경민','Dex','은호','범','정우','Leo','찬','이든','승현','Mingu','해준','로이','다온','Jay','석','준서','Ian','무진','Han']
+const NICKS = ['민재','jun_k','도윤','Theo','서준','하람','ryu','태오','시우','Kai','우진','건','지호','Noah','현','경민','Dex','은호','범','정우','Leo','찬','이든','승현','Mingu','해준','로이','다온','Jay','석','준서','Ian','무진','Han','김홍중','정윤호','정우영','현수','민규','재훈','시온','태민','준혁','도현','승우','지환','성민','우진2']
 const AREAS = ['홍대','이태원','강남','성수','종로','신촌','잠실','해방촌','합정','건대']
 const GOALS = ['가벼운 만남','데이트','진지한 관계','친구','대화 상대']
 const JOBS = ['디자이너','개발자','바리스타','사진작가','간호사','대학원생','요리사','마케터','트레이너','에디터']
@@ -27,13 +27,45 @@ const mkUsers = () => NICKS.map((nick, i) => ({
   photos: PHOTOS[i] ? [PHOTOS[i]] : [],
 }))
 const mkState = () => {
-  const matchIds = [3, 7, 12, 18]
+  const users = mkUsers()
+  const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 2, 4, 5, 6, 8, 9, 10, 11, 13, 14, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
   const chats = {}
-  matchIds.forEach((id, k) => { chats[id] = MSGS[k % MSGS.length].map((t, j) => ({ me: j % 2 === 1, text: t, t: Date.now() - (9 - j) * 3600e3 * (k + 1) })) })
-  return { users: mkUsers(), liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2 },
+  const seed = (id, lines, gap = 1) => { chats[id] = lines.map((text, j) => ({ me: j % 2 === 1, text, t: Date.now() - (lines.length - j) * gap * 3600e3 })) }
+  seed(35, ['오늘 끝나고 시간 돼?', '오늘은 좀 늦게 끝날 듯', '그럼 끝나고 연락해. 밥이라도 먹자', 'ㅇㅋ 끝나면 연락할게'], 7)
+  seed(36, ['어제 집 잘 들어갔어?', '응ㅋㅋ 너는', '나도. 다음에 그쪽에서 보자', '이번 주 중에 시간 맞춰볼게'], 11)
+  seed(37, ['이번 주말 뭐 해', '아직 별일 없어', '그럼 토요일에 볼래?', '콜 몇 시쯤?'], 18)
+  seed(3, ['고생했네요. 맥주 한잔?', 'ㅋㅋ 오늘은 패스', '담에 보자'], 26)
+  seed(7, ['지금 어디야', '이태원 쪽', '나도 근처인데 잠깐 볼래?'], 32)
+  seed(12, ['오늘 뭐 먹었어', '아직 안 먹었어', '그럼 끝나고 간단히 먹자'], 40)
+  seed(18, ['오랜만이네 잘 지내?', '그럭저럭 지내지 뭐', '시간 되면 얼굴 보자'], 52)
+  seed(1, ['오늘도 출근?', '응 이제 나가', '고생해라'], 60)
+  seed(2, ['스토리 봤어ㅋㅋ', '아 그거 별거 아님', 'ㅋㅋ 알겠음'], 70)
+  seed(4, ['이번 주는 바빠?', '조금. 왜?', '그냥 물어봤어'], 82)
+  seed(5, ['잘 지내지?', 'ㅇㅇ 너도?', '그럼그럼'], 95)
+  seed(6, ['담에 술 한잔하자', '시간 맞으면 보자'], 110)
+  seed(8, ['근처 갈 일 있는데', '오면 연락해'], 125)
+  seed(9, ['ㅋㅋㅋㅋ 그건 좀 웃겼다', '인정'], 140)
+  seed(10, ['요즘 바빠서 연락 늦었네', '괜찮아'], 155)
+  seed(11, ['이번 달 안에 한번 보자', 'ㅇㅋ 일정 보고 연락할게'], 170)
+  seed(13, ['혹시 오늘 가능해요?', '오늘은 어려워요', '네 다음에 연락드릴게요'], 185)
+  seed(14, ['안녕하세요 프로필 보고 연락드려요', '네 무슨 일이세요?', '그냥 근처라서요'], 200)
+  seed(15, ['지금 뭐 하세요?', '일하는 중이에요', '아 넵'], 215)
+  seed(16, ['오랜만이에요', '그러게요 잘 지냈어요?'], 230)
+  seed(38, ['안녕하세요 알바 아직 구하시나요?', '네 일정 맞으면 가능합니다', '번호 드릴게요. 010-4827-1936 여기로 연락 주세요', '네 카톡으로 연락드릴게요!'], 3)
+  seed(39, ['탑 알바 문의드려요', '가능한 날짜랑 시간 먼저 보내주세요', '이번 주 금요일 가능할까요?', '번호 남겨드릴게요. 카톡으로 얘기해요 010-4827-1936'], 5)
+  seed(40, ['혹시 오늘 급하게 가능하세요?', '오늘은 마감됐어요. 다음 일정은 번호로 문의 주세요', '010-4827-1936 저장하고 카톡 주세요'], 8)
+  seed(41, ['안녕하세요 조건 문의하고 싶어요', '네 번호로 연락 주시면 자세히 안내할게요', '010-4827-1936 입니다'], 12)
+  seed(42, ['알바 보고 연락드렸습니다', '가능한 날짜 보내주세요. 카톡으로 안내할게요', '010-4827-1936'], 16)
+  seed(43, ['안녕하세요 혹시 아직 구하세요?', '네, 자세한 내용은 카톡으로 부탁드려요', '010-4827-1936 입니다'], 22)
+  seed(44, ['오늘 밤 가능하신가요?', '시간 확인해보고 번호로 답 드릴게요'], 28)
+  seed(45, ['프로필 보고 연락드려요', '어떤 문의세요?', '알바 관련이요. 카톡으로 여쭤봐도 될까요?'], 35)
+  seed(46, ['이번 주 일정 알 수 있을까요?', '가능한 날짜 정리해서 카톡으로 보내주세요'], 42)
+  seed(47, ['안녕하세요', '네 안녕하세요', '혹시 알바 문의 가능할까요?'], 50)
+  seed(48, ['혹시 번호 받을 수 있을까요?', '네 010-4827-1936 으로 연락 주세요'], 58)
+  return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 9, 14, 25, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
     me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) return { ...s, users: s.users.map((u) => ({ ...u, position: u.position || pick(POSITIONS, (u.id || 1) - 1, 8) })), starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); return { ...seed, ...s, users: [...s.users.map((u) => ({ ...u, position: u.position || pick(POSITIONS, (u.id || 1) - 1, 8) })), ...seed.users.filter(u => !known.has(u.id))], matches: [...new Set([...(s.matches || []), ...seed.matches])], chats: { ...seed.chats, ...(s.chats || {}) }, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
@@ -209,12 +241,20 @@ function Chat({ s, upd, byId, room, setRoom, setDetail, block }) {
       </div>
     )
   }
-  const rooms = s.matches.filter((id) => !s.blocked.includes(id))
-  if (!rooms.length) return <div className="gyeol-empty">아직 매칭이 없어요</div>
-  return <div className="gyeol-chatlist">{rooms.map((id) => { const u = byId(id), m = (s.chats[id] || []).slice(-1)[0]; const un = s.unread[id]; return (
+  const rooms = s.matches.filter((id) => !s.blocked.includes(id) && byId(id))
+  const frequent = [35, 36, 37]
+  const inquiries = [38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+  const casual = rooms.filter(id => !frequent.includes(id) && !inquiries.includes(id))
+  const renderRows = (ids) => ids.map((id) => { const u = byId(id), m = (s.chats[id] || []).slice(-1)[0], un = s.unread[id]; if (!u) return null; return (
     <button key={id} className="gyeol-row" onClick={() => { upd((o) => ({ unread: { ...o.unread, [id]: 0 } })); setRoom(id) }}>
       <Photo u={u} cls="sm" /><div><b>{u.nick}</b><p>{m ? m.text : '매칭됐어요! 먼저 말을 걸어보세요'}</p></div>
-      <small>{m ? fmt(m.t) : ''}{un > 0 && <i className="gyeol-un">{un}</i>}</small></button>) })}</div>
+      <small>{m ? fmt(m.t) : ''}{un > 0 && <i className="gyeol-un">{un}</i>}</small></button>) })
+  if (!rooms.length) return <div className="gyeol-empty">아직 대화가 없어요</div>
+  return <div className="gyeol-chatlist">
+    <section className="gyeol-chatgroup"><h3>자주 만나는 사람</h3>{renderRows(frequent.filter(id => rooms.includes(id)))}</section>
+    <section className="gyeol-chatgroup"><h3>가벼운 연락</h3>{renderRows(casual)}</section>
+    <section className="gyeol-chatgroup"><h3>알바 문의</h3><p className="gyeol-chat-hint">일정과 조건 확인 후 카톡으로 이어지는 문의</p>{renderRows(inquiries.filter(id => rooms.includes(id)))}</section>
+  </div>
 }
 
 function Me({ s, upd }) {
