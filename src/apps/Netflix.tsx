@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import './Netflix.css'
 
-const KEY = 'netflix-app-v1'
+const KEY = 'netflix-app-v2'
 // 실제 재생 가능한 CC0 샘플 클립 (스트리밍 서버 대신 사용)
 const SAMPLE = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
 const PHOTO = [
@@ -80,7 +80,7 @@ const SEED_PROG = { glory: { s: 1, e: 3, f: 0.4, t: 3 }, inception: { s: 1, e: 1
 
 const mkProfile = (id, name, a, kids, prog = {}) => ({ id, name, color: AVATARS[a].color, glyph: AVATARS[a].glyph, kids, list: [], hist: Object.keys(prog), prog, recent: [] })
 const init = () => ({
-  profiles: [mkProfile('p1', '나', 0, false, SEED_PROG), mkProfile('p2', '가족', 1, false), mkProfile('p3', '키즈', 2, true)],
+  profiles: [mkProfile('p1', '성화', 0, false, SEED_PROG), mkProfile('p2', '우영', 1, false)],
   last: null,
 })
 function load() {
