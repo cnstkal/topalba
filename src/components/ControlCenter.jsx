@@ -38,6 +38,7 @@ const I = {
   ant: (s) => sv(<><circle cx="12" cy="10" r="1.600" {...F}/><path d="M12 12v8M8.700 6.700a4.700 4.700 0 0 0 0 6.600M15.300 6.700a4.700 4.700 0 0 1 0 6.600M5.800 4a8.500 8.500 0 0 0 0 12M18.200 4a8.500 8.500 0 0 1 0 12"/></>, s),
   plus: (s) => sv(<path d="M12 5v14M5 12h14" strokeWidth="2.4"/>, s),
   power: (s) => sv(<path d="M12 3v8M7 6.500a7.500 7.500 0 1 0 10 0" strokeWidth="2.2"/>, s),
+  wave: (s) => sv(<g {...F} stroke="none"><rect x="2" y="9" width="2" height="6" rx="1"/><rect x="6" y="6" width="2" height="12" rx="1"/><rect x="10" y="3" width="2" height="18" rx="1"/><rect x="14" y="6" width="2" height="12" rx="1"/><rect x="18" y="9" width="2" height="6" rx="1"/></g>, s),
   check: (s) => sv(<path d="M5 12.500l4.5 4.500L19 7" strokeWidth="2.4" />, s),
 }
 
@@ -147,17 +148,18 @@ function MediaBig({ d }) {
     <div className="cc-mp">
       <Cover i={cur} big />
       <div className="cc-mp-t">
-        <b>{s ? s[0] : '재생 중인 음악 없음'}</b>
-        <span>{s ? s[1] : '음악을 재생해 보세요'}</span>
+        <div><b>{s ? s[0] : '재생 중인 음악 없음'}</b>
+        <span>{s ? s[1] : '음악을 재생해 보세요'}</span></div>
+        <span className="cc-mp-w">{I.wave(22)}</span>
       </div>
       <div className="cc-mp-p">
         <Slider value={s ? Math.round((pos / s[3]) * 100) : 0} onChange={(v) => dev.seek(v / 100)} label="재생 위치" />
         <div className="cc-mp-time"><span>{mmss(pos)}</span><span>{s ? `-${mmss(s[3] - pos)}` : '-0:00'}</span></div>
       </div>
       <div className="cc-mp-c">
-        <button onClick={() => dev.next(-1)} aria-label="이전 곡">{I.prev(38)}</button>
-        <button className="pp" onClick={() => dev.toggle()} aria-label={song.play ? '일시정지' : '재생'}>{song.play ? I.pause(46) : I.play(46)}</button>
-        <button onClick={() => dev.next(1)} aria-label="다음 곡">{I.next(38)}</button>
+        <button onClick={() => dev.next(-1)} aria-label="이전 곡">{I.prev(30)}</button>
+        <button className="pp" onClick={() => dev.toggle()} aria-label={song.play ? '일시정지' : '재생'}>{song.play ? I.pause(40) : I.play(40)}</button>
+        <button onClick={() => dev.next(1)} aria-label="다음 곡">{I.next(30)}</button>
       </div>
       <div className="cc-mp-v">
         {I.mute(18)}

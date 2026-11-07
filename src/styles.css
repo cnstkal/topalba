@@ -1275,3 +1275,22 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .cc-cr{height:calc(var(--u,60px) * .85)}
 .cc-cr .cc-c{width:38px;height:38px}
 .cc-mp .cc-cover.big{width:min(100%,28cqh);height:min(100%,28cqh)}
+
+/* 음악 페이지 v3: 실제 iOS 제어센터 음악 카드 비율 */
+.cc-pages > .cc-page:nth-child(2){display:flex;align-items:center;justify-content:center;padding:0 44px 0 0}
+.cc-mp{width:min(300px,100%);height:auto;overflow:visible;margin:0;padding:18px 18px 16px;box-sizing:border-box;border-radius:36px;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.08) 60%,rgba(255,255,255,.12));border:1px solid rgba(255,255,255,.18);border-top-color:rgba(255,255,255,.38);box-shadow:inset 0 1px 1px rgba(255,255,255,.35),0 18px 44px rgba(0,0,0,.3);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6)}
+.cc-mp .cc-cover.big{width:100%;height:auto;aspect-ratio:1;border-radius:20px;margin:0;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.cc-mp-t{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cc-mp-t>div{min-width:0}
+.cc-mp-t b{font-size:19px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.cc-mp-t span{font-size:15px;color:rgba(255,255,255,.6)}
+.cc-mp-w{color:rgba(255,255,255,.85);display:flex;flex:none}
+.cc-mp-p{margin-top:14px}
+.cc-mp .cc-sl.h{height:5px;border-radius:3px;background:rgba(255,255,255,.3)}
+.cc-mp-time{margin-top:6px;font-size:12px;color:rgba(255,255,255,.55)}
+.cc-mp-c{margin-top:14px;gap:34px}
+.cc-mp-c button{padding:0}
+.cc-mp-c button,.cc-mp-c .pp{color:#fff}
+.cc-mp-v{margin-top:16px;gap:10px}
+.cc-mp-v .cc-sl.h{height:5px}
+.cc-ap-pill{margin:16px auto 0;padding:9px 18px;font-size:15px;gap:6px;align-self:center}
