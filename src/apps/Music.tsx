@@ -644,7 +644,7 @@ export default function Music() {
 
   return (
     <div className={`music-root ${dv.dark ? 'music-dark' : ''}`}>
-      <div className="music-body" key={`${tab}-${stack.length}-${v ? v.t + (v.id || v.name || v.title || '') : ''}`}>{body}</div>
+      <div className={`music-body ${tab !== 'listen' ? 'inactive' : ''}`} key={`${tab}-${stack.length}-${v ? v.t + (v.id || v.name || v.title || '') : ''}`}>{body}</div>
       {cur !== null && (
         <div className="music-mini" onClick={() => setFull(true)}>
           {songCover(cur)}
@@ -655,7 +655,7 @@ export default function Music() {
       )}
       <div className="music-tabs">
         {TABS.map(([id, label, ic]) => (
-          <button key={id} className={`music-tab ${tab === id ? 'on' : ''}`} onClick={() => pickTab(id)}><Ic n={ic} s={26} /><span>{label}</span></button>
+          <button key={id} className={`music-tab ${tab === id ? 'on' : ''}`} disabled={id !== 'listen'} aria-disabled={id !== 'listen'} onClick={() => id === 'listen' && pickTab(id)}><Ic n={ic} s={26} /><span>{label}</span></button>
         ))}
       </div>
       <Full open={full} close={() => setFull(false)} />
