@@ -1,0 +1,197 @@
+/* iMessage 스타일 — 모든 클래스는 imessage- 접두사. 다른 앱과 충돌하지 않습니다. */
+.imessage-root {
+  --imessage-top: 54px;      /* 상태 표시줄 영역 */
+  --imessage-bottom: 30px;   /* 홈 인디케이터 영역 */
+  --imessage-blue: #0a84ff;
+  --imessage-gray: #e9e9eb;
+  --imessage-sep: #d1d1d6;
+  --imessage-sub: #8e8e93;
+  position: absolute; inset: 0; overflow: hidden;
+  background: #fff; color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.imessage-root *, .imessage-root *::before, .imessage-root *::after { box-sizing: border-box; }
+.imessage-root button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.imessage-root input, .imessage-root textarea { font: inherit; color: inherit; border: 0; outline: 0; background: none; }
+
+.imessage-layer { position: absolute; inset: 0; display: flex; flex-direction: column; background: #fff; padding-top: var(--imessage-top); }
+.imessage-thread, .imessage-compose { padding-bottom: var(--imessage-bottom); }
+.imessage-page { position: absolute; inset: 0; z-index: 5; box-shadow: -8px 0 24px rgba(0,0,0,.12); }
+.imessage-page.in { animation: imessage-in .3s cubic-bezier(.2,.8,.2,1) both; }
+.imessage-page.up { animation: imessage-up .32s cubic-bezier(.2,.8,.2,1) both; }
+.imessage-page.out { animation: imessage-out .26s ease-in both; }
+@keyframes imessage-in { from { transform: translateX(100%); } }
+@keyframes imessage-up { from { transform: translateY(100%); } }
+@keyframes imessage-out { to { transform: translateX(100%); opacity: .6; } }
+
+/* 공통 */
+.imessage-navbar { display: flex; align-items: center; justify-content: space-between; padding: 6px 16px; min-height: 44px; flex: none; }
+.imessage-link { color: var(--imessage-blue); font-size: 17px; }
+.imessage-link.bold { font-weight: 600; }
+.imessage-iconbtn { width: 36px; height: 36px; display: grid; place-items: center; color: var(--imessage-blue); border-radius: 50%; }
+.imessage-iconbtn.s { width: 28px; height: 28px; }
+.imessage-iconbtn:disabled { opacity: .3; }
+.imessage-empty { text-align: center; color: var(--imessage-sub); padding: 20px 16px; font-size: 14px; }
+.imessage-empty.big { padding-top: 80px; font-size: 15px; }
+.imessage-modal { position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.35); animation: imessage-fade .15s both; }
+@keyframes imessage-fade { from { opacity: 0; } }
+
+/* 목록 */
+.imessage-scroll { flex: 1; overflow-y: auto; padding-bottom: calc(var(--imessage-bottom) + 10px); -webkit-overflow-scrolling: touch; }
+.imessage-title { font-size: 34px; font-weight: 700; margin: 2px 16px 8px; letter-spacing: -.5px; }
+.imessage-search { display: flex; align-items: center; gap: 6px; margin: 0 16px 8px; padding: 0 10px; height: 36px; border-radius: 10px; background: #76768014; color: var(--imessage-sub); }
+.imessage-search input { flex: 1; font-size: 17px; color: #000; min-width: 0; }
+.imessage-search button { color: var(--imessage-sub); display: grid; }
+.imessage-swipe { position: relative; overflow: hidden; background: #fff; }
+.imessage-swipe-actions { position: absolute; right: 0; top: 0; bottom: 0; display: flex; }
+.imessage-swipe-actions button { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #fff; font-size: 12px; }
+.imessage-swipe-actions .pin { background: #ff9f0a; }
+.imessage-swipe-actions .read { background: var(--imessage-blue); }
+.imessage-swipe-actions .del { background: #ff3b30; }
+.imessage-swipe-front { position: relative; background: #fff; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.imessage-item { display: flex; align-items: center; gap: 8px; padding: 0 16px 0 0; height: 76px; }
+.imessage-item.edit { padding-left: 8px; }
+.imessage-radio { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #c7c7cc; display: grid; place-items: center; color: #fff; flex: none; margin-left: 6px; }
+.imessage-radio.on { background: var(--imessage-blue); border-color: var(--imessage-blue); }
+.imessage-dot { width: 22px; display: grid; place-items: center; flex: none; }
+.imessage-dot i { width: 11px; height: 11px; border-radius: 50%; background: var(--imessage-blue); }
+.imessage-main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 2px; border-bottom: .5px solid var(--imessage-sep); margin-left: 4px; }
+.imessage-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.imessage-top b { font-size: 17px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.imessage-top span { color: var(--imessage-sub); font-size: 15px; flex: none; }
+.imessage-prev { display: flex; align-items: center; gap: 6px; color: var(--imessage-sub); font-size: 15px; line-height: 1.3; }
+.imessage-prev span { flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.imessage-prev svg { flex: none; }
+.imessage-editbar { display: flex; justify-content: space-between; padding: 10px 20px calc(var(--imessage-bottom) + 6px); border-top: .5px solid var(--imessage-sep); background: #f9f9f9; font-size: 17px; }
+.imessage-editbar button { color: var(--imessage-blue); }
+.imessage-editbar .danger { color: #ff3b30; }
+.imessage-editbar button:disabled { opacity: .35; }
+.imessage-alert > div { width: 270px; background: #f2f2f7; border-radius: 14px; overflow: hidden; text-align: center; }
+.imessage-alert p { margin: 0; padding: 22px 16px; font-size: 15px; font-weight: 600; }
+.imessage-alert button { display: block; width: 100%; padding: 13px; border-top: .5px solid var(--imessage-sep); font-size: 17px; color: var(--imessage-blue); }
+.imessage-alert .danger { color: #ff3b30; }
+
+/* 대화방 상단 */
+.imessage-thread-nav { position: relative; justify-content: space-between; padding: 4px 10px 8px; border-bottom: .5px solid var(--imessage-sep); background: rgba(249,249,249,.94); min-height: 74px; align-items: flex-start; }
+.imessage-back { color: var(--imessage-blue); height: 36px; display: flex; align-items: center; }
+.imessage-who { position: absolute; left: 50%; transform: translateX(-50%); top: 2px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; max-width: 55%; }
+.imessage-who span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.imessage-who em { color: var(--imessage-sub); font-style: normal; }
+.imessage-searchbar { display: flex; align-items: center; gap: 4px; padding: 6px 10px; border-bottom: .5px solid var(--imessage-sep); background: #f9f9f9; }
+.imessage-searchfield { flex: 1; display: flex; align-items: center; gap: 6px; background: #76768014; border-radius: 9px; padding: 0 8px; height: 32px; color: var(--imessage-sub); min-width: 0; }
+.imessage-searchfield input { flex: 1; min-width: 0; font-size: 16px; color: #000; }
+.imessage-count { font-size: 12px; color: var(--imessage-sub); white-space: nowrap; }
+
+/* 말풍선 */
+.imessage-msgs { flex: 1; overflow-y: auto; padding: 8px 14px 10px; -webkit-overflow-scrolling: touch; }
+.imessage-gap { margin-top: 9px; }
+.imessage-divider { text-align: center; color: var(--imessage-sub); font-size: 11px; margin: 14px 0 8px; }
+.imessage-divider b { font-weight: 600; }
+.imessage-row { display: flex; flex-direction: column; margin-top: 2px; }
+.imessage-row.me { align-items: flex-end; }
+.imessage-row.them { align-items: flex-start; }
+.imessage-wrap { position: relative; max-width: 78%; touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.imessage-row.tail { margin-bottom: 0; }
+.imessage-bubble { position: relative; padding: 7px 13px; border-radius: 18px; font-size: 17px; line-height: 1.28; white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; }
+.imessage-bubble.me { background: var(--imessage-blue); color: #fff; }
+.imessage-bubble.them { background: var(--imessage-gray); color: #000; }
+.imessage-bubble.hit { outline: 2px solid #ffcc00; }
+.imessage-bubble mark { background: #ffe066; color: #000; border-radius: 3px; }
+.imessage-bubble.tail::before, .imessage-bubble.tail::after { content: ''; position: absolute; bottom: 0; height: 18px; }
+.imessage-bubble.me.tail::before { right: -7px; width: 20px; background: var(--imessage-blue); border-bottom-left-radius: 16px 14px; }
+.imessage-bubble.me.tail::after { right: -26px; width: 26px; background: #fff; border-bottom-left-radius: 10px; }
+.imessage-bubble.them.tail::before { left: -7px; width: 20px; background: var(--imessage-gray); border-bottom-right-radius: 16px 14px; }
+.imessage-bubble.them.tail::after { left: -26px; width: 26px; background: #fff; border-bottom-right-radius: 10px; }
+.imessage-quote { font-size: 13px; opacity: .75; border-left: 2px solid currentColor; padding-left: 7px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+.imessage-time { font-size: 11px; color: var(--imessage-sub); margin: 2px 6px 0; }
+.imessage-receipt { text-align: right; font-size: 11px; font-weight: 500; color: var(--imessage-sub); margin: 2px 4px 0 0; }
+.imessage-sticker { font-size: 72px; line-height: 1.1; padding: 2px 4px; }
+.imessage-photo { width: 210px; height: 210px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; font-size: 72px; }
+.imessage-photo img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.imessage-photo.big { width: min(86%, 360px); height: auto; aspect-ratio: 1; }
+.imessage-linkcard { margin: -7px -13px 6px; border-radius: 18px 18px 0 0; overflow: hidden; background: rgba(0,0,0,.06); padding-bottom: 8px; min-width: 200px; }
+.imessage-bubble.me .imessage-linkcard { background: rgba(255,255,255,.18); }
+.imessage-linkthumb { height: 92px; display: grid; place-items: center; background: linear-gradient(135deg, #c9d6ff, #e2e2e2); color: #555; margin-bottom: 6px; }
+.imessage-linkcard b, .imessage-linkcard small { display: block; padding: 0 12px; font-size: 14px; }
+.imessage-linkcard small { opacity: .65; font-size: 12px; font-weight: 400; }
+.imessage-tap { position: absolute; top: -12px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1.5px #fff, 0 1px 4px rgba(0,0,0,.25); display: grid; place-items: center; font-size: 14px; z-index: 2; }
+.imessage-tap.r { right: -10px; }
+.imessage-tap.l { left: -10px; }
+
+/* 롱프레스 메뉴 */
+.imessage-menu { background: rgba(255,255,255,.55); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.imessage-menu > div { width: 86%; display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+.imessage-tapbar { align-self: center; display: flex; gap: 2px; padding: 6px 8px; border-radius: 28px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.18); }
+.imessage-tapbar button { width: 40px; height: 40px; font-size: 22px; border-radius: 50%; }
+.imessage-tapbar button.on { background: var(--imessage-blue); }
+.imessage-menupreview { display: flex; justify-content: center; pointer-events: none; padding: 6px 0; }
+.imessage-menupreview .imessage-row { align-items: center; }
+.imessage-actions { align-self: center; width: 230px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.18); }
+.imessage-actions button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 12px 16px; font-size: 17px; border-bottom: .5px solid var(--imessage-sep); }
+.imessage-actions button:last-child { border: 0; }
+.imessage-actions .danger { color: #ff3b30; }
+
+/* 입력창 */
+.imessage-composer { flex: none; padding: 6px 10px 8px; background: #fff; }
+.imessage-composerow { display: flex; align-items: flex-end; gap: 8px; }
+.imessage-plus { width: 34px; height: 34px; border-radius: 50%; background: var(--imessage-gray); color: #6c6c70; display: grid; place-items: center; flex: none; }
+.imessage-field { flex: 1; min-width: 0; display: flex; align-items: flex-end; border: 1px solid var(--imessage-sep); border-radius: 18px; padding: 3px 4px 3px 12px; min-height: 34px; }
+.imessage-field textarea { flex: 1; min-width: 0; resize: none; font-size: 17px; line-height: 1.3; padding: 3px 0; max-height: 120px; }
+.imessage-send { width: 28px; height: 28px; border-radius: 50%; background: var(--imessage-blue); color: #fff; display: grid; place-items: center; flex: none; margin-left: 4px; }
+.imessage-replybar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 6px 42px; padding: 4px 10px; border-left: 3px solid var(--imessage-blue); background: #f2f2f7; border-radius: 6px; font-size: 13px; }
+.imessage-replybar div { min-width: 0; display: flex; flex-direction: column; }
+.imessage-replybar b { color: var(--imessage-blue); font-weight: 600; }
+.imessage-replybar span { color: var(--imessage-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.imessage-replybar button { color: var(--imessage-sub); }
+
+/* 첨부 시트 */
+.imessage-sheet { flex: none; background: #f2f2f7; border-top: .5px solid var(--imessage-sep); padding: 10px 14px 12px; animation: imessage-up .22s both; }
+.imessage-sheet-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 15px; }
+.imessage-attach { display: flex; gap: 14px; justify-content: center; padding: 6px 0; }
+.imessage-attach button { width: 86px; height: 76px; border-radius: 16px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13px; color: var(--imessage-blue); }
+.imessage-photogrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.imessage-photogrid .imessage-photo { width: 100%; height: auto; aspect-ratio: 1; font-size: 40px; border-radius: 10px; }
+.imessage-stickergrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.imessage-stickergrid button { font-size: 40px; padding: 6px 0; border-radius: 12px; }
+.imessage-stickergrid button:active { background: #fff; }
+
+/* 새 메시지 */
+.imessage-compose-nav b { font-size: 17px; }
+.imessage-to { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: .5px solid var(--imessage-sep); font-size: 17px; }
+.imessage-to > span { color: var(--imessage-sub); }
+.imessage-to input { flex: 1; min-width: 0; }
+.imessage-chip { display: flex; align-items: center; gap: 4px; background: #e5f0ff; color: var(--imessage-blue); padding: 2px 10px; border-radius: 14px; }
+.imessage-suggest { flex: 1; overflow-y: auto; }
+.imessage-contact { display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px 16px; text-align: left; }
+.imessage-contact div { display: flex; flex-direction: column; border-bottom: .5px solid var(--imessage-sep); flex: 1; padding: 6px 0; }
+.imessage-contact b { font-size: 17px; font-weight: 500; }
+.imessage-contact small { color: var(--imessage-sub); font-size: 13px; }
+
+/* 연락처 상세 */
+.imessage-info { background: #f2f2f7; z-index: 4; }
+.imessage-info .imessage-navbar { justify-content: flex-end; }
+.imessage-info-scroll { flex: 1; overflow-y: auto; padding-bottom: calc(var(--imessage-bottom) + 16px); }
+.imessage-info-head { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0 18px; }
+.imessage-info-head h2 { margin: 8px 0 0; font-size: 24px; }
+.imessage-info-head p { margin: 0; color: var(--imessage-sub); font-size: 15px; }
+.imessage-group { margin: 0 16px 16px; background: #fff; border-radius: 12px; overflow: hidden; }
+.imessage-cell { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; font-size: 17px; text-align: left; border-bottom: .5px solid var(--imessage-sep); color: var(--imessage-blue); gap: 12px; }
+.imessage-cell:last-child { border: 0; }
+.imessage-cell .imessage-switch + *, .imessage-cell span:only-child { color: inherit; }
+.imessage-linkcell { color: #000; justify-content: flex-start; }
+.imessage-linkcell div { display: flex; flex-direction: column; min-width: 0; }
+.imessage-linkcell small { color: var(--imessage-sub); font-size: 12px; }
+.imessage-switch { width: 51px; height: 31px; border-radius: 16px; background: #e9e9ea; position: relative; transition: background .2s; flex: none; }
+.imessage-switch i { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.25); transition: transform .2s; }
+.imessage-switch.on { background: #34c759; }
+.imessage-switch.on i { transform: translateX(20px); }
+.imessage-cell:has(.imessage-switch) { color: #000; }
+.imessage-sec { margin: 4px 32px 6px; font-size: 13px; color: var(--imessage-sub); text-transform: uppercase; }
+.imessage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 0 16px 16px; border-radius: 12px; overflow: hidden; }
+.imessage-grid .imessage-photo { width: 100%; height: auto; aspect-ratio: 1; border-radius: 0; font-size: 36px; }
+.imessage-sharecard { width: 260px; background: #fff; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.imessage-sharecard span { color: var(--imessage-sub); }
+.imessage-pill { margin: 10px 0 4px; padding: 10px 22px; background: var(--imessage-blue); color: #fff !important; border-radius: 22px; }
+.imessage-lightbox { flex-direction: column; gap: 14px; background: rgba(0,0,0,.85); z-index: 40; }
+.imessage-lightbox .imessage-link { color: #fff; }
