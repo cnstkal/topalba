@@ -166,6 +166,7 @@ function Likes({ s, byId, setDetail, unlike, like, openChat, matched }) {
 
 function Chat({ s, upd, byId, room, setRoom, setDetail, block }) {
   const [txt, setTxt] = useState('')
+  const photoInput = useRef(null)
   const end = useRef(null)
   useEffect(() => { end.current && end.current.scrollIntoView() }, [room, s.chats])
   const fmt = (t) => new Date(t).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
@@ -177,9 +178,31 @@ function Chat({ s, upd, byId, room, setRoom, setDetail, block }) {
         <div className="gyeol-roomtop"><button className="gyeol-icon" onClick={() => setRoom(null)}><ChevronLeft size={22} /></button>
           <button className="gyeol-who" onClick={() => setDetail(room)}><Photo u={u} cls="sm" />{u.nick}</button>
           <button className="gyeol-icon" onClick={() => block(room)}><Ban size={18} /></button></div>
-        <div className="gyeol-msgs">{msgs.map((m, i) => <div key={i} className={`gyeol-msg ${m.me ? 'me' : ''}`}><p>{m.text}</p><small>{fmt(m.t)}</small></div>)}<div ref={end} /></div>
+        <div className="gyeol-msgs">{msgs.map((m, i) => <div key={i} className={`gyeol-msg ${m.me ? 'me' : ''} ${m.image ? 'has-image' : ''}`}>{m.image ? <img className="gyeol-sent-photo" src={m.image} alt="보낸 사진" /> : <p>{m.text}</p>}<small>{fmt(m.t)}</small></div>)}<div ref={end} /></div>
         <div className="gyeol-input">
-          <button className="gyeol-icon" onClick={() => send('📷 사진을 보냈어요')}><ImageIcon size={20} /></button>
+          <input ref={photoInput} type="file" accept="image/*" hidden onChange={(e) => {
+            const file = e.target.files?.[0]
+            if (!file) return
+            const reader = new FileReader()
+            reader.onload = () => {
+              const image = new Image()
+              image.onload = () => {
+                const scale = Math.min(1, 1200 / Math.max(image.width, image.height))
+                const canvas = document.createElement('canvas')
+                canvas.width = Math.round(image.width * scale)
+                canvas.height = Math.round(image.height * scale)
+                const ctx = canvas.getContext('2d')
+                if (!ctx) return
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+                const data = canvas.toDataURL('image/jpeg', 0.78)
+                upd((o) => ({ chats: { ...o.chats, [room]: [...(o.chats[room] || []), { me: true, image: data, t: Date.now() }] } }))
+              }
+              image.src = String(reader.result)
+            }
+            reader.readAsDataURL(file)
+            e.target.value = ''
+          }} />
+          <button className="gyeol-icon" onClick={() => photoInput.current?.click()}><ImageIcon size={20} /></button>
           <input value={txt} onChange={(e) => setTxt(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && send(txt)} placeholder="메시지 입력" />
           <button className="gyeol-send" onClick={() => send(txt)}><Send size={18} /></button>
         </div>
