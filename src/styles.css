@@ -117,7 +117,7 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .w-name { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-size: 11px; color: var(--gray); }
 .w-notes-h { font-size: 14px; font-weight: 700; color: #d9a400; margin-bottom: 8px; }
 .w-note { font-size: 13px; padding: 6px 0; border-bottom: .5px solid var(--sep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.grid { display: grid; grid-template-columns: repeat(4, 60px); justify-content: center; column-gap: 14px; row-gap: 8px; }
+.grid { display: grid; grid-template-columns: repeat(4, 60px); justify-content: space-between; row-gap: 14px; }
 .home-pages { flex: 1; min-height: 0; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .home-pages::-webkit-scrollbar { display: none; }
 .home-page { flex: 0 0 100%; width: 100%; min-width: 0; box-sizing: border-box; padding: 0 27px; scroll-snap-align: start; display: flex; flex-direction: column; overflow: hidden; }
