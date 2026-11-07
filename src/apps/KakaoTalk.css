@@ -1,70 +1,188 @@
-.kakaotalk{position:absolute;inset:0;background:#fff;color:#191919;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;overflow:hidden}
+.kakaotalk{position:absolute;inset:0;background:#fff;color:#111;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;overflow:hidden;letter-spacing:-.2px;-webkit-tap-highlight-color:transparent;--kt-top:54px;--kt-bottom:28px;--kt-yellow:#fee500;--kt-chat:#bacee0}
 .kakaotalk *{box-sizing:border-box}
-.kakaotalk button{border:0;background:none;font:inherit;color:inherit;cursor:pointer}
-.kakaotalk-main,.kakaotalk-page{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;padding-top:48px;padding-bottom:26px}
-.kakaotalk-page{z-index:5}
-.kakaotalk-head{display:flex;align-items:center;gap:8px;padding:6px 16px;min-height:44px}
-.kakaotalk-head h1{flex:1;margin:0;font-size:20px;font-weight:700}
-.kakaotalk-head i{font-style:normal;color:#999;font-size:14px}
-.kakaotalk-head button{font-size:15px;padding:4px 6px}
-.kakaotalk-search{margin:4px 16px 8px;border:0;background:#f2f2f2;border-radius:10px;padding:9px 12px;font-size:14px;outline:0}
-.kakaotalk-scroll{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch}
-.kakaotalk-row{display:flex;align-items:center;gap:12px;padding:8px 16px;cursor:pointer}
-.kakaotalk-row:active{background:#f6f6f6}
-.kakaotalk-row b{font-size:15px;font-weight:600}
-.kakaotalk-row b i{font-style:normal;color:#aaa;font-weight:400}
-.kakaotalk-row p{margin:2px 0 0;font-size:13px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:230px}
-.kakaotalk-row small{color:#aaa;font-size:11px}
+.kakaotalk button{border:0;background:none;font:inherit;color:inherit;cursor:pointer;padding:0}
+.kakaotalk svg{display:block;flex:none}
+.kakaotalk input,.kakaotalk textarea{font-family:inherit;letter-spacing:inherit}
+.kakaotalk ::-webkit-scrollbar{display:none}
+.kakaotalk-scroll{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior:contain}
+
+/* 레이아웃 */
+.kakaotalk-main,.kakaotalk-page{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;padding-top:var(--kt-top)}
+.kakaotalk-page{z-index:5;padding-bottom:var(--kt-bottom);animation:ktIn .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ktIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes ktFade{from{opacity:0}to{opacity:1}}
+@keyframes ktPop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes ktUp{from{transform:translateY(100%)}to{transform:none}}
+
+/* 헤더 */
+.kakaotalk-head{display:flex;align-items:center;padding:0 6px 0 20px;height:48px;flex:none}
+.kakaotalk-head h1{flex:1;margin:0;font-size:22px;font-weight:700;letter-spacing:-.5px}
+.kakaotalk-head button{width:42px;height:44px;display:flex;align-items:center;justify-content:center;color:#111}
+.kakaotalk-head button:active{opacity:.5}
+.kakaotalk-nav{display:flex;align-items:center;height:48px;padding:0 4px;flex:none}
+.kakaotalk-nav h1{flex:1;margin:0;font-size:17px;font-weight:600;display:flex;align-items:center;gap:5px;min-width:0;padding-left:2px}
+.kakaotalk-nav h1 span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-nav h1 i{font-style:normal;font-size:15px;font-weight:400;color:#777;flex:none}
+.kakaotalk-nav button{width:42px;height:44px;display:flex;align-items:center;justify-content:center}
+.kakaotalk-nav button:active{opacity:.5}
+.kakaotalk-nav .kakaotalk-done{width:auto;padding:0 14px;font-size:16px;font-weight:700}
+
+/* 검색 */
+.kakaotalk-search{display:flex;align-items:center;gap:8px;margin:2px 16px 8px;height:38px;background:#f2f2f2;border-radius:10px;padding:0 12px;color:#999;flex:none}
+.kakaotalk-search input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:15px;color:#111}
+.kakaotalk-search input::placeholder{color:#aaa}
+.kakaotalk-search button{width:22px;height:22px;border-radius:50%;background:#c4c4c4!important;color:#fff;display:flex;align-items:center;justify-content:center}
+.kakaotalk-search.inroom{background:#fff;margin:0;border-radius:0;height:44px;border-bottom:1px solid #e5e5e5;padding:0 16px}
+
+/* 리스트 공통 */
+.kakaotalk-row{display:flex;align-items:center;gap:12px;padding:7px 18px;cursor:pointer;min-height:58px}
+.kakaotalk-row:active{background:#f4f4f4}
+.kakaotalk-row b{font-size:15px;font-weight:500;color:#111;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-row p{margin:2px 0 0;font-size:13px;color:#8a8a8a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-row small{display:block;margin-top:2px;color:#a5a5a5;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .kakaotalk-grow{flex:1;min-width:0}
-.kakaotalk-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:11px;color:#aaa}
-.kakaotalk-meta em{font-style:normal;background:#ff5a4f;color:#fff;border-radius:9px;min-width:18px;padding:1px 5px;text-align:center;font-weight:600}
-.kakaotalk-sec{padding:10px 16px 4px;font-size:12px;color:#999}
-.kakaotalk-fold{cursor:pointer}
-.kakaotalk-static{cursor:default}.kakaotalk-static:active{background:none}
-.kakaotalk-avatar{border-radius:38%;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0}
-.kakaotalk-avatar img{width:100%;height:100%;object-fit:cover}
-.kakaotalk-open-img{width:52px;height:52px;border-radius:14px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.kakaotalk-tabs{display:flex;border-top:1px solid #eee;background:#fafafa}
-.kakaotalk-tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:10px;color:#999;filter:grayscale(1)}
-.kakaotalk-tabs button span{font-size:19px}
-.kakaotalk-tabs button.on{color:#191919;filter:none;font-weight:700}
-.kakaotalk-tabs button.kakaotalk-disabled{opacity:.35;cursor:default;pointer-events:none}
-.kakaotalk-room{background:#b2c7da}
-.kakaotalk-room .kakaotalk-head{background:#b2c7da}
-.kakaotalk-chat{padding:8px 12px}
-.kakaotalk-day{text-align:center;margin:12px auto;font-size:11px;color:#fff;background:rgba(0,0,0,.2);width:fit-content;padding:3px 12px;border-radius:12px}
-.kakaotalk-msg{display:flex;gap:8px;margin:6px 0;align-items:flex-start}
-.kakaotalk-msg.me{flex-direction:row-reverse}
-.kakaotalk-who{display:block;font-size:12px;margin-bottom:3px}
+.kakaotalk-me{padding:10px 18px 12px;min-height:80px;border-bottom:1px solid #f0f0f0}
+.kakaotalk-me b{font-size:16px;font-weight:600}
+.kakaotalk-me p{font-size:13px;margin-top:3px}
+.kakaotalk-sec{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 6px;font-size:12px;color:#8a8a8a}
+.kakaotalk-fold{cursor:pointer;border-top:1px solid #f0f0f0;margin-top:6px}
+.kakaotalk-static{cursor:default;align-items:flex-start;padding-top:10px;padding-bottom:10px}.kakaotalk-static:active{background:none}
+.kakaotalk-empty{padding:60px 0;text-align:center;font-size:14px;color:#aaa}
+.kakaotalk-empty.light{color:rgba(0,0,0,.35)}
+.kakaotalk-gift{color:#f0a000}
+.kakaotalk-music{display:inline-flex;align-items:center;gap:4px;max-width:128px;height:22px;padding:0 9px 0 7px;border:1px solid #e3e3e3;border-radius:11px;color:#777;flex:none;background:#fff}
+.kakaotalk-music em{font-style:normal;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-ico{display:inline-flex;color:#b3b3b3;flex:none}
+
+/* 아바타 */
+.kakaotalk-avatar{position:relative;border-radius:36%;overflow:hidden;flex:none;background:#e6e9ed}
+.kakaotalk-avatar img,.kakaotalk-avatar svg{width:100%;height:100%;object-fit:cover;display:block;-webkit-user-drag:none}
+.kakaotalk-avatar::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.1);pointer-events:none}
+.kakaotalk-gav{position:relative;flex:none}
+.kakaotalk-gav>div{position:absolute;border-radius:36%;box-shadow:0 0 0 1.5px #fff;background:#fff}
+.kakaotalk-open-img{position:relative;width:56px;height:56px;border-radius:20px;overflow:hidden;flex:none;background:#e6e9ed}
+.kakaotalk-fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kakaotalk-picfb{background:linear-gradient(135deg,#cfd8e3,#a9b8c9)}
+
+/* 채팅 목록 */
+.kakaotalk-chatrow{min-height:74px;padding:12px 18px}
+.kakaotalk-nameline{display:flex;align-items:center;gap:5px;min-width:0}
+.kakaotalk-nameline b{flex:0 1 auto}
+.kakaotalk-nameline i{font-style:normal;font-size:13px;color:#a0a0a0;flex:none}
+.kakaotalk-chatrow p{margin-top:3px;color:#7d7d7d}
+.kakaotalk-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;align-self:stretch;justify-content:center;padding:2px 0;flex:none}
+.kakaotalk-meta>span{font-size:11px;color:#b0b0b0;white-space:nowrap}
+.kakaotalk-badges{display:flex;align-items:center;gap:4px;min-height:18px}
+.kakaotalk-meta em{font-style:normal;background:#ff5a4f;color:#fff;border-radius:9px;min-width:18px;height:18px;padding:0 5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;line-height:1}
+
+/* 하단 탭 */
+.kakaotalk-tabs{display:flex;border-top:1px solid #e9e9e9;background:#fff;padding-bottom:var(--kt-bottom);flex:none}
+.kakaotalk-tabs button{position:relative;flex:1;height:50px;display:flex;align-items:center;justify-content:center;color:#a2a2a2}
+.kakaotalk-tabs button.on{color:#111}
+.kakaotalk-tabs button:active{opacity:.6}
+.kakaotalk-tabs button.kakaotalk-disabled{cursor:default;pointer-events:none;color:#c2c2c2}
+.kakaotalk-tabs em{position:absolute;top:5px;left:calc(50% + 6px);font-style:normal;background:#ff5a4f;color:#fff;border-radius:8px;min-width:16px;height:16px;padding:0 4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1;box-shadow:0 0 0 1.5px #fff}
+
+/* 채팅방 */
+.kakaotalk-room{background:var(--kt-chat)}
+.kakaotalk-room>.kakaotalk-nav{background:var(--kt-chat)}
+.kakaotalk-chat{padding:6px 10px 10px}
+.kakaotalk-day{width:fit-content;margin:16px auto 10px;padding:4px 14px;border-radius:13px;font-size:11.5px;color:#fff;background:rgba(0,0,0,.22);letter-spacing:-.1px}
+.kakaotalk-msg{display:flex;align-items:flex-start;margin-top:3px}
+.kakaotalk-msg.head{margin-top:12px}
+.kakaotalk-msg.me{justify-content:flex-end}
+.kakaotalk-side{width:40px;margin-right:8px;flex:none}
+.kakaotalk-body{min-width:0;max-width:calc(100% - 48px)}
+.kakaotalk-msg.me .kakaotalk-body{max-width:100%}
+.kakaotalk-who{display:block;font-size:12.5px;color:#333;margin:0 0 4px 2px}
 .kakaotalk-line{display:flex;align-items:flex-end;gap:5px}
-.kakaotalk-msg.me .kakaotalk-line{flex-direction:row}
-.kakaotalk-time{font-size:10px;color:#555;white-space:nowrap}
-.kakaotalk-bubble{background:#fff;padding:8px 11px;border-radius:12px;max-width:225px;font-size:14px;line-height:1.4;white-space:pre-wrap;word-break:break-word;user-select:none;-webkit-user-select:none}
-.kakaotalk-msg.me .kakaotalk-bubble{background:#fee500}
-.kakaotalk-bubble img{max-width:180px;max-height:220px;border-radius:8px;display:block}
-.kakaotalk-quote{font-size:11px;color:#777;border-left:2px solid #ccc;padding-left:6px;margin-bottom:4px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kakaotalk-input{display:flex;align-items:flex-end;gap:6px;padding:8px;background:#fff}
-.kakaotalk-input textarea{flex:1;border:0;background:#f2f2f2;border-radius:18px;padding:9px 12px;font:inherit;font-size:14px;resize:none;max-height:90px;outline:0}
-.kakaotalk-plus{font-size:24px;width:32px;text-align:center;cursor:pointer;color:#666}
-.kakaotalk-send{background:#eee!important;color:#aaa;border-radius:16px;padding:8px 12px;font-size:13px}
-.kakaotalk-send.on{background:#fee500!important;color:#191919}
-.kakaotalk-emo{display:flex;flex-wrap:wrap;gap:4px;background:#fff;padding:8px;border-top:1px solid #eee}
-.kakaotalk-emo button{font-size:26px;width:15%}
-.kakaotalk-replybar{background:#f2f2f2;padding:6px 14px;font-size:12px;display:flex;justify-content:space-between}
-.kakaotalk-pop{position:absolute;right:12px;top:92px;background:#fff;border-radius:10px;z-index:8;display:flex;flex-direction:column;box-shadow:0 0 0 1px #ddd}
-.kakaotalk-pop button{padding:11px 18px;font-size:14px;text-align:left}
-.kakaotalk-dim{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:center;justify-content:center}
-.kakaotalk-menu{background:#fff;border-radius:14px;width:200px;display:flex;flex-direction:column;overflow:hidden}
-.kakaotalk-menu button{padding:14px;font-size:15px;border-bottom:1px solid #eee}
-.kakaotalk-big{max-width:92%;max-height:80%}
-.kakaotalk-profile{background:#4a5560;color:#fff;justify-content:flex-end;align-items:center;padding-bottom:50px}
-.kakaotalk-x{position:absolute;top:56px;left:16px;color:#fff;font-size:20px}
-.kakaotalk-pcenter{text-align:center;margin-bottom:36px}
-.kakaotalk-pcenter .kakaotalk-avatar{margin:0 auto}
-.kakaotalk-pcenter p{opacity:.8}
-.kakaotalk-primary{background:#fee500!important;color:#191919!important;padding:12px 40px!important;border-radius:10px;font-weight:700}
-.kakaotalk-form{padding:12px 16px}
-.kakaotalk-form label{display:block;font-size:12px;color:#888;margin:14px 0}
-.kakaotalk-form input:not([type=file]){display:block;width:100%;border:0;border-bottom:1px solid #ddd;padding:8px 0;font-size:15px;outline:0}
-.kakaotalk-preview{background:#6b7782 center/cover;color:#fff;border-radius:14px;padding:24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
-.kakaotalk-preview p{margin:0}
+.kakaotalk-time{font-size:10.5px;color:#586674;white-space:nowrap;display:flex;flex-direction:column;line-height:1.25;flex:none;padding-bottom:1px}
+.kakaotalk-msg.me .kakaotalk-time{align-items:flex-end}
+.kakaotalk-time b{color:#f4a000;font-weight:700;font-size:10.5px}
+.kakaotalk-bubble{position:relative;min-width:0;max-width:238px;padding:8px 11px;border-radius:10px;background:#fff;font-size:15px;line-height:1.38;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;color:#111}
+.kakaotalk-msg.me .kakaotalk-bubble{background:var(--kt-yellow)}
+.kakaotalk-bubble.tail::before{content:'';position:absolute;top:0;left:-6px;width:10px;height:11px;background:#fff;clip-path:polygon(100% 0,100% 100%,0 0)}
+.kakaotalk-msg.me .kakaotalk-bubble.tail::before{left:auto;right:-6px;background:var(--kt-yellow);clip-path:polygon(0 0,100% 0,0 100%)}
+.kakaotalk-bubble.tail{border-top-left-radius:2px}
+.kakaotalk-msg.me .kakaotalk-bubble.tail{border-top-left-radius:10px;border-top-right-radius:2px}
+.kakaotalk-bubble mark{background:#ffd54a;color:inherit;border-radius:2px}
+.kakaotalk-bubble.photo,.kakaotalk-bubble.sticker{padding:0;background:none!important;border-radius:12px}
+.kakaotalk-bubble img{display:block;max-width:100%;-webkit-user-drag:none}
+.kakaotalk-bubble.photo img{max-width:210px;max-height:280px;width:auto;height:auto;border-radius:12px;object-fit:cover;cursor:pointer}
+.kakaotalk-bubble.sticker img{width:104px;height:104px}
+.kakaotalk-quote{display:flex;align-items:center;gap:4px;font-size:12px;color:#6b6b6b;padding-bottom:5px;margin-bottom:5px;border-bottom:1px solid rgba(0,0,0,.1);max-width:200px}
+.kakaotalk-quote span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* 입력창 */
+.kakaotalk-input{display:flex;align-items:flex-end;gap:8px;padding:8px 10px 8px 6px;background:#fff;border-top:1px solid #e6e6e6;flex:none}
+.kakaotalk-plus{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#666;cursor:pointer;flex:none}
+.kakaotalk-plus:active{background:#f0f0f0}
+.kakaotalk-field{flex:1;min-width:0;display:flex;align-items:flex-end;background:#f2f2f2;border-radius:19px;padding:0 4px 0 14px;min-height:36px}
+.kakaotalk-field textarea{flex:1;min-width:0;border:0;background:none;outline:0;resize:none;font-size:15px;line-height:20px;padding:8px 0;max-height:100px;color:#111}
+.kakaotalk-field textarea::placeholder{color:#aaa}
+.kakaotalk-field button{width:32px;height:36px;display:flex;align-items:center;justify-content:center;color:#7a7a7a;flex:none}
+.kakaotalk-field button.on{color:#111}
+.kakaotalk-send{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#ececec!important;color:#b5b5b5;flex:none;transition:background .15s}
+.kakaotalk-send.on{background:var(--kt-yellow)!important;color:#111}
+.kakaotalk-emo{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;height:230px;overflow-y:auto;background:#fff;padding:10px 12px;border-top:1px solid #eee;flex:none;margin-bottom:calc(-1 * var(--kt-bottom));padding-bottom:calc(var(--kt-bottom) + 10px);height:auto;max-height:240px;animation:ktUp .2s ease both}
+.kakaotalk-emo button{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.kakaotalk-emo button:active{background:#f2f2f2}
+.kakaotalk-emo img{width:62px;height:62px}
+.kakaotalk-replybar{display:flex;align-items:center;gap:10px;background:#fff;border-top:1px solid #e6e6e6;padding:8px 8px 8px 16px;color:#777;flex:none}
+.kakaotalk-replybar div{flex:1;min-width:0}
+.kakaotalk-replybar b{font-size:12px;color:#333;font-weight:600}
+.kakaotalk-replybar p{margin:1px 0 0;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-replybar button{width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+
+/* 팝업 / 시트 / 오버레이 */
+.kakaotalk-scrim{position:absolute;inset:0;z-index:30}
+.kakaotalk-pop{position:absolute;right:10px;top:calc(var(--kt-top) + 46px);min-width:176px;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.08);overflow:hidden;animation:ktPop .16s ease both;transform-origin:top right}
+.kakaotalk-pop.top{top:calc(var(--kt-top) + 40px)}
+.kakaotalk-pop button{display:flex;align-items:center;gap:10px;width:100%;padding:13px 16px;font-size:15px;text-align:left;border-bottom:1px solid #f0f0f0}
+.kakaotalk-pop button:last-child{border-bottom:0}
+.kakaotalk-pop button:active,.kakaotalk-menu button:active{background:#f4f4f4}
+.kakaotalk-pop .danger,.kakaotalk-menu .danger{color:#e5382d}
+.kakaotalk-dim{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:40;display:flex;align-items:center;justify-content:center;animation:ktFade .18s ease both}
+.kakaotalk-dim.sheet{align-items:flex-end}
+.kakaotalk-sheet{width:100%;height:72%;background:#fff;border-radius:16px 16px 0 0;display:flex;flex-direction:column;padding-bottom:var(--kt-bottom);animation:ktUp .26s cubic-bezier(.2,.8,.2,1) both}
+.kakaotalk-sheethead{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 20px;height:52px;border-bottom:1px solid #f0f0f0;flex:none}
+.kakaotalk-sheethead b{font-size:17px;font-weight:600}
+.kakaotalk-sheethead button{width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.kakaotalk-menu{background:#fff;border-radius:14px;width:236px;overflow:hidden;animation:ktPop .16s ease both}
+.kakaotalk-mprev{padding:12px 16px;font-size:13px;color:#888;background:#f8f8f8;border-bottom:1px solid #eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-menu button{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;font-size:15px;border-bottom:1px solid #f0f0f0;text-align:left}
+.kakaotalk-menu button:last-child{border-bottom:0}
+.kakaotalk-viewer{position:absolute;inset:0;background:#000;z-index:50;display:flex;align-items:center;justify-content:center;animation:ktFade .18s ease both}
+.kakaotalk-viewer img{max-width:100%;max-height:78%;object-fit:contain}
+.kakaotalk-viewer button{position:absolute;top:calc(var(--kt-top) + 2px);left:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff}
+.kakaotalk-toast{position:absolute;left:50%;bottom:calc(var(--kt-bottom) + 70px);transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;z-index:60;white-space:nowrap;animation:ktFade .18s ease both}
+
+/* 프로필 */
+.kakaotalk-profile{background:#3d4752;color:#fff;padding-bottom:0;overflow:hidden}
+.kakaotalk-pbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kakaotalk-pshade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.05) 35%,rgba(0,0,0,.5) 70%,rgba(0,0,0,.75))}
+.kakaotalk-x{position:absolute;top:calc(var(--kt-top) + 2px);left:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;z-index:2}
+.kakaotalk-pcenter{position:relative;margin-top:auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 32px 28px;gap:6px;z-index:1}
+.kakaotalk-pcenter .kakaotalk-avatar{margin-bottom:8px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.kakaotalk-pcenter h2{margin:0;font-size:21px;font-weight:700}
+.kakaotalk-pcenter p{margin:0;font-size:14px;opacity:.88}
+.kakaotalk-pcenter .kakaotalk-music{background:rgba(0,0,0,.28);border-color:rgba(255,255,255,.35);color:#fff;margin-top:6px;height:26px;max-width:240px}
+.kakaotalk-pcenter .kakaotalk-music em{font-size:12px}
+.kakaotalk-pactions{position:relative;z-index:1;display:flex;justify-content:center;gap:36px;padding:16px 0 calc(var(--kt-bottom) + 12px);border-top:1px solid rgba(255,255,255,.2)}
+.kakaotalk-pactions button{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12.5px;color:#fff;min-width:64px}
+.kakaotalk-pactions button span{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
+.kakaotalk-pactions button:active span{background:rgba(255,255,255,.3)}
+
+/* 프로필 편집 */
+.kakaotalk-edit{background:#fff}
+.kakaotalk-ecover{position:relative;height:196px;background:#8b97a4 center/cover no-repeat linear-gradient(135deg,#9fb1c4,#6d7f93);flex:none}
+.kakaotalk-chip{position:absolute;right:14px;bottom:12px;display:flex;align-items:center;gap:6px;height:32px;padding:0 13px;border-radius:16px;background:rgba(0,0,0,.45);color:#fff;font-size:13px;cursor:pointer}
+.kakaotalk-eavatar{position:relative;width:92px;margin:-46px auto 0;z-index:1}
+.kakaotalk-eavatar .kakaotalk-avatar{box-shadow:0 0 0 3px #fff}
+.kakaotalk-cam{position:absolute;right:-6px;bottom:-4px;width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;color:#444;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.kakaotalk-fields{padding:22px 20px 40px}
+.kakaotalk-fields label{display:flex;flex-wrap:wrap;align-items:center;padding:12px 0 8px;border-bottom:1px solid #ececec;margin-bottom:6px}
+.kakaotalk-fields label:focus-within{border-bottom-color:#111}
+.kakaotalk-fields span{width:100%;font-size:12px;color:#8a8a8a;margin-bottom:4px}
+.kakaotalk-fields input{flex:1;min-width:0;border:0;outline:0;font-size:16px;padding:4px 0;background:none;color:#111}
+.kakaotalk-fields em{font-style:normal;font-size:12px;color:#b0b0b0;margin-left:8px}
