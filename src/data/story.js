@@ -293,11 +293,11 @@ export const INITIAL_NOTES = [
 export const INITIAL_MAILS = [
   {
     id: 'mail_init1',
-    from: '쇼핑몰',
-    addr: 'event@shop.example',
-    subject: '이번 주 한정 할인 쿠폰이 도착했어요',
-    preview: '놓치기 전에 확인해 보세요.',
-    body: '이번 주 한정 할인 쿠폰이 도착했어요.\n\n지금 바로 확인해 보세요.',
+    from: '무신사',
+    addr: 'notice@musinsa.example',
+    subject: '[광고] 이번 주 인기 상품 쿠폰 안내',
+    preview: '회원님을 위한 할인 혜택을 확인해 보세요.',
+    body: '안녕하세요. 무신사입니다.\n\n이번 주 인기 상품과 회원 전용 쿠폰을 안내드립니다.\n수신 설정은 마이페이지에서 변경할 수 있습니다.\n\n본 메일은 광고성 정보 수신 동의에 따라 발송되었습니다.',
     ts: Date.now() - 2 * 86400000,
     read: true,
   },
@@ -351,11 +351,6 @@ export const SNS_FOLLOWING = {
   oldschool_friend: true,
   afterwork_friend: true,
   samevibe_daily: true,
-  cafe_seoul_log: true,
-  han_river_walk: true,
-  coffee_day: true,
-  hello_star: true,
-  mint_tea: true,
 }
 
 // 계정별 스토리 (열람 전후 테두리 구분용 키는 계정 id)
@@ -380,7 +375,7 @@ export const SNS_HIGHLIGHTS = [
   { id: 'hl1', title: '🍚', photo: 'food', items: [{ photo: 'food', text: '🍚' }] },
 ]
 
-export const INITIAL_PROFILE = { bio: '평범한 일상 기록' }
+export const INITIAL_PROFILE = { bio: '', name: '박성화', username: '_starhwa_', followers: 294, following: 303, posts: 3 }
 
 export const EXPLORE_TAGS = ['카페', '한강', '맛집', '여행', '일상', '서울']
 
