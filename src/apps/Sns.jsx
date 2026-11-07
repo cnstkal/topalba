@@ -109,7 +109,7 @@ function AccountAvatar({ id, size = 32 }) {
 }
 
 // 스토리 / 하이라이트 뷰어. 자동 진행, 좌우 탭 이동, 길게 누르면 일시정지, 답장·반응
-function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
+function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
   const [idx, setIdx] = useState(0)
   const [hold, setHold] = useState(false)
   const [focus, setFocus] = useState(false)
@@ -119,7 +119,7 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
   const n = slides.length
   const paused = hold || focus
 
-  const next = () => (idx < n - 1 ? setIdx(idx + 1) : onClose())
+  const next = () => (idx < n - 1 ? setIdx(idx + 1) : (onDone || onClose)())
   const prev = () => idx > 0 && setIdx(idx - 1)
   const react = (emoji) => {
     const id = Date.now() + Math.random()
@@ -440,13 +440,22 @@ export default function Sns({ params }) {
 
   if (dmId) return <Thread id={dmId} dm onBack={() => setDmId(null)} />
 
+  const buildStory = (key) => ({ key, title: key, owner: key, when: '3시간 전', slides: SNS_STORIES[key] })
   const openStory = (s) => {
     if (s.mine) return setStory({ key: 'me', title: '내 스토리', owner: ME_ID, when: '', slides: [] })
-    setStory({ key: s.key, title: s.key, owner: s.key, when: s.when, slides: SNS_STORIES[s.key] })
+    setStory(buildStory(s.key))
   }
   const closeStory = () => {
     if (story && story.key !== 'me') actions.storySeen(story.key)
     setStory(null)
+  }
+  // 현재 계정 다음에 남아 있는(아직 안 본) 스토리가 있으면 이어서 재생, 없으면 닫기
+  const finishStory = () => {
+    const keys = STORY_TRAY.filter((t) => !t.mine).map((t) => t.key)
+    const i = keys.indexOf(story.key)
+    const nxt = keys.find((k, j) => j > i && !state.storySeen[k])
+    if (story.key !== 'me') actions.storySeen(story.key)
+    setStory(nxt ? buildStory(nxt) : null)
   }
 
   const cardProps = {
@@ -812,7 +821,7 @@ export default function Sns({ params }) {
         </div>
       )}
 
-      {story && <StoryViewer title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onToast={flash} />}
+      {story && <StoryViewer key={story.key} title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} />}
       {hl && <StoryViewer title={hl.title} owner={ME_ID} when="" slides={hl.items} onClose={() => setHl(null)} onToast={flash} />}
 
       {toast && <div className="sns-toast">{toast}</div>}
