@@ -97,6 +97,18 @@ export default function Photos() {
               <button className="ph-sheet-b" onClick={() => setSheet(null)}>취소</button>
             </>
           )}
+          {sheet === 'info' && p && (
+            <>
+              <div className="ph-sheet-t">{fmtDay(p)} {fmtTime(p)}</div>
+              <div className="ph-meta">
+                <div><span>위치</span><b>{p.place}</b></div>
+                <div><span>파일명</span><b>{p.file}</b></div>
+                <div><span>해상도</span><b>{p.res}</b></div>
+                <div><span>크기</span><b>{p.mb}MB</b></div>
+              </div>
+              <button className="ph-sheet-b" onClick={() => setSheet(null)}>완료</button>
+            </>
+          )}
           {sheet === 'edit' && p && (
             <>
               <div className="ph-sheet-t">편집 · 밝기</div>
@@ -146,12 +158,6 @@ export default function Photos() {
           <div className="pd-img" style={{ background: p.tint, filter: `brightness(${(bright[p.id] ?? 100) / 100})`, aspectRatio: p.shot ? '9 / 19.5' : '4 / 3' }}>
             <span>{p.caption}</span>
           </div>
-          {idx > 0 && <button className="pd-arrow l" onClick={() => go(-1)}>‹</button>}
-          {idx < live.length - 1 && <button className="pd-arrow r" onClick={() => go(1)}>›</button>}
-        </div>
-        <div className="pd-info">
-          <b>{p.place}</b>
-          <span>{p.file} · {p.res} · {p.mb}MB</span>
         </div>
         <div className="pd-strip">
           {live.map((x) => (
@@ -161,6 +167,7 @@ export default function Photos() {
         <div className="toolbar pd-bar">
           <button onClick={() => setSheet('share')}>⬆︎<small>공유</small></button>
           <button className={isFav(p) ? 'on' : ''} onClick={() => setFavs({ ...favs, [p.id]: !isFav(p) })}>{isFav(p) ? '♥' : '♡'}<small>즐겨찾기</small></button>
+          <button onClick={() => setSheet('info')}>ⓘ<small>정보</small></button>
           <button onClick={() => setSheet('edit')}>☰<small>편집</small></button>
           <button className="red-txt" onClick={() => setSheet('del')}>🗑<small>삭제</small></button>
         </div>
@@ -199,16 +206,14 @@ export default function Photos() {
       <div className="nav">
         {selMode ? <span className="nav-btn" onClick={exitSel}>취소</span> : <span />}
         {selMode ? <b className="ph-selcnt">{selIds.length ? `${selIds.length}개 선택됨` : '항목 선택'}</b> : null}
-        {selMode ? <span style={{ width: 40 }} /> : <span className="nav-btn ph-pill" onClick={() => setSelMode(true)}>선택</span>}
+        {selMode ? <span style={{ width: 40 }} /> : (
+          <span className="ph-top">
+            <span className="ph-pill" onClick={() => setSelMode(true)}>선택</span>
+            <span className="ph-pill ph-round" onClick={() => setView(VIEWS[(VIEWS.findIndex((x) => x[0] === view) + 1) % 4][0])}>•••</span>
+          </span>
+        )}
       </div>
       <div className="large-title">{tab === 'lib' ? '보관함' : '앨범'}</div>
-      {tab === 'lib' && (
-        <div className="ph-seg">
-          {VIEWS.map(([v, l]) => (
-            <button key={v} className={view === v ? 'on' : ''} onClick={() => setView(v)}>{l}</button>
-          ))}
-        </div>
-      )}
       <div className="scroll ph-scroll">
         {tab === 'lib' ? (
           <>
@@ -254,10 +259,21 @@ export default function Photos() {
           <button disabled={!selIds.length} className="red-txt" onClick={() => setSheet('delSel')}>🗑<small>삭제</small></button>
         </div>
       ) : (
-        <div className="toolbar">
-          <button className={tab === 'lib' ? 'on' : ''} onClick={() => setTab('lib')}>보관함</button>
-          {/* 앨범 탭은 비활성화 */}
-          <button disabled style={{ opacity: 0.35 }}>앨범</button>
+        <div className="ph-float">
+          <div className="ph-seg">
+            {VIEWS.map(([v, l]) => (
+              <button key={v} className={view === v ? 'on' : ''} onClick={() => setView(v)}>{l}</button>
+            ))}
+          </div>
+          <div className="ph-tabrow">
+            <div className="ph-tabs">
+              <button className="on">보관함</button>
+              {/* 컬렉션(앨범) 탭은 비활성화 */}
+              <button disabled>컬렉션</button>
+            </div>
+            {/* 검색은 비활성화 */}
+            <button className="ph-sbtn" disabled>⌕</button>
+          </div>
         </div>
       )}
       {sheetView()}

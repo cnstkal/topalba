@@ -664,3 +664,22 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .story-name b { font-size: 13px; }
 .story-name span { font-size: 11px; }
 
+
+/* iOS 26 사진: 플로팅 글래스 하단 바 */
+.ph-top { display: flex; gap: 8px; }
+.ph-round { width: 34px; padding: 6px 0; text-align: center; letter-spacing: 1px; }
+.ph-scroll { padding-bottom: 150px; }
+.ph-float { position: absolute; left: 0; right: 0; bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0 16px; pointer-events: none; z-index: 5; }
+.ph-float > * { pointer-events: auto; }
+.ph-float .ph-seg { margin: 0; padding: 3px; background: rgba(245,245,247,.72); backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8); border: .5px solid rgba(255,255,255,.8); border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+.ph-float .ph-seg button { padding: 6px 12px; border-radius: 17px; font-size: 13px; }
+.ph-tabrow { display: flex; gap: 10px; width: 100%; }
+.ph-tabs { flex: 1; display: flex; padding: 4px; border-radius: 30px; background: rgba(245,245,247,.72); backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8); border: .5px solid rgba(255,255,255,.8); box-shadow: 0 8px 24px rgba(0,0,0,.14); }
+.ph-tabs button { flex: 1; padding: 11px 0; border-radius: 26px; font-size: 14px; font-weight: 600; color: #3c3c43; }
+.ph-tabs button.on { background: rgba(120,120,128,.18); color: var(--blue); }
+.ph-tabs button:disabled { opacity: .4; }
+.ph-sbtn { width: 54px; height: 54px; border-radius: 50%; font-size: 24px; background: rgba(245,245,247,.72); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: .5px solid rgba(255,255,255,.8); box-shadow: 0 8px 24px rgba(0,0,0,.14); opacity: .4; }
+.ph-meta { background: #fff; border-radius: 12px; }
+.ph-meta div { display: flex; justify-content: space-between; padding: 11px 14px; border-bottom: .5px solid var(--sep); font-size: 15px; }
+.ph-meta div:last-child { border: 0; } .ph-meta span { color: var(--gray); }
+.pd-bar { background: rgba(249,249,249,.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
