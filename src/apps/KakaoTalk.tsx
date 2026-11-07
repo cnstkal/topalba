@@ -510,7 +510,7 @@ function ChatRoom({ room, onBack, patch, onLeave }: { room: Room; onBack: () => 
             </div>
           )
         })}
-        {msgs.length === 0 && <div className="kakaotalk-empty light">{sq ? '검색 결과가 없어요' : '대화를 시작해 보세요'}</div>}
+        {msgs.length === 0 && sq && <div className="kakaotalk-empty light">검색 결과가 없어요</div>}
       </div>
       {reply && (
         <div className="kakaotalk-replybar">
