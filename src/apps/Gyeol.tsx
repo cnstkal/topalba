@@ -80,6 +80,7 @@ export default function Gyeol() {
   const [detail, setDetail] = useState(null)
   const [room, setRoom] = useState(null)
   const [showFilter, setShowFilter] = useState(false)
+  const [pendingBlock, setPendingBlock] = useState(null)
   useEffect(() => { localStorage.setItem('gyeol-state', JSON.stringify(s)) }, [s])
   const upd = (p) => setS((o) => ({ ...o, ...(typeof p === 'function' ? p(o) : p) }))
   const byId = (id) => s.users.find((u) => u.id === id)
@@ -92,11 +93,12 @@ export default function Gyeol() {
   const unlike = (id) => upd((o) => ({ liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) }))
   const star = (id) => upd((o) => ({ starred: o.starred.includes(id) ? o.starred.filter((x) => x !== id) : [...o.starred, id] }))
   const pass = (id) => upd((o) => ({ passed: [...o.passed, id] }))
-  const block = (id) => { upd((o) => ({ blocked: [...o.blocked, id], liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) })); setDetail(null); setRoom(null) }
+  const doBlock = (id) => { setPendingBlock(null); upd((o) => ({ blocked: [...o.blocked, id], liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) })); setDetail(null); setRoom(null) }
   const f = s.filter
   const ok = (u) => !s.blocked.includes(u.id) && u.age >= f.min && u.age <= f.max && u.dist <= f.dist && (f.goal === '전체' || u.goal === f.goal)
   const matched = (id) => s.matches.includes(id)
   const openChat = (id) => { upd((o) => ({ unread: { ...o.unread, [id]: 0 } })); setDetail(null); setRoom(id); setTab('chat') }
+  const block = (id) => setPendingBlock(id)
   const ctx = { s, upd, like, unlike, star, pass, block, byId, ok, setDetail, openChat, matched }
 
   return (
@@ -118,6 +120,14 @@ export default function Gyeol() {
         ))}
       </nav>
       {detail && <Detail u={byId(detail)} {...ctx} onClose={() => setDetail(null)} />}
+      {pendingBlock && (
+        <div className="gyeol-sheetbg" onClick={() => setPendingBlock(null)}><div className="gyeol-sheet" onClick={(e) => e.stopPropagation()}>
+          <h3>차단하시겠습니까?</h3>
+          <p className="gyeol-note">차단하면 이 사람의 프로필이 더 이상 보이지 않고 매칭과 채팅도 끊어져요.</p>
+          <button className="gyeol-btn" onClick={() => doBlock(pendingBlock)}>차단</button>
+          <button className="gyeol-btn ghost" onClick={() => setPendingBlock(null)}>취소</button>
+        </div></div>
+      )}
       {showFilter && <Filter f={f} onClose={() => setShowFilter(false)} set={(p) => upd({ filter: { ...f, ...p } })} />}
     </div>
   )
