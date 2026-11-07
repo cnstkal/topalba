@@ -21,7 +21,7 @@ const HIST = [
     { a: 'w', t: '-8,000원', s: '신림 김밥천국 · 식사' },
   ]],
   ['7일 토요일', [
-    { a: 'w', t: '+250,000원', s: '김민준 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '+250,000원', s: '김영수 → 내 토스뱅크 통장', b: 1 },
     { a: 'cp', t: '-18,900원', s: '쿠팡 · 생활용품' },
     { a: 'w', t: '-16,000원', s: '신림동 PC방 · 이용요금' },
     { a: 'w', t: '-32,000원', s: '마포 고깃집 · 식사' },
@@ -32,17 +32,17 @@ const HIST = [
     { a: 'w', t: '-22,000원', s: '홍콩반점 신림점 · 식사' },
   ]],
   ['3일 화요일', [
-    { a: 'w', t: '+220,000원', s: '이준호 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '+220,000원', s: '박성호 → 내 토스뱅크 통장', b: 1 },
     { a: 'cu', t: '-4,800원', s: 'CU 신림중앙점 · 편의점' },
     { a: 'w', t: '-11,000원', s: '배달의민족 · 저녁' },
   ]],
   ['10월 31일 토요일', [
-    { a: 'w', t: '+280,000원', s: '박지훈 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '+280,000원', s: '최병철 → 내 토스뱅크 통장', b: 1 },
     { a: 'w', t: '-19,000원', s: '신림역 PC방 · 이용요금' },
     { a: 'w', t: '-28,500원', s: '동네 삼겹살집 · 식사' },
   ]],
   ['10월 27일 화요일', [
-    { a: 'w', t: '+230,000원', s: '최도현 → 내 토스뱅크 통장', b: 1 },
+    { a: 'w', t: '+230,000원', s: '정기훈 → 내 토스뱅크 통장', b: 1 },
     { a: 'w', t: '-13,500원', s: '배달의민족 · 야식' },
     { a: 'w', t: '-7,000원', s: '카페 모모 · 음료' },
   ]],
@@ -97,7 +97,7 @@ export default function MoaBank({ close }) {
       <div className="chv">⌄</div>
       {HIST.map(([d, l]) => <div key={d}><p className="day">{d}</p>{l.map((r, i) => r.cash
         ? <div className="row" key={i}><Av t="cash" /><div className="m"><b>{r.t}</b><span>{r.s}</span></div><button className="rcv">받기</button></div>
-        : <div className="row" key={i} onClick={r.d ? () => setSub('det') : null}><Av t={r.a} /><div className="m"><b className={(r.b ? 'bl ' : '') + (r.x ? 'cx' : '')}>{r.o && <s>{r.o} </s>}{r.t}</b><span>{r.s}</span></div></div>)}</div>)}
+        : <div className="row" key={i} ><Av t={r.a} /><div className="m"><b className={(r.b ? 'bl ' : '') + (r.x ? 'cx' : '')}>{r.o && <s>{r.o} </s>}{r.t}</b><span>{r.s}</span></div></div>)}</div>)}
     </div>
   )
   else if (tab === 'stock') body = (
