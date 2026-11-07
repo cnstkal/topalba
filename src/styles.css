@@ -933,6 +933,18 @@ background: linear-gradient(155deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.
 .sm-note.c{text-align:center}
 .sm-toast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(90,70,56,.92);color:#fff;font-size:14px;padding:10px 18px;border-radius:99px;z-index:60;white-space:nowrap}
 
+/* 썸원: 터치 버튼 높이와 눌림 영역 확장 */
+.sm button{min-height:44px}
+.sm .sm-btn{min-height:52px;padding:17px 16px}
+.sm .sm-top-r button,.sm .sm-bk{min-width:44px;min-height:44px;align-items:center;justify-content:center}
+.sm .sm-dd{min-height:56px;justify-content:center}
+.sm .sm-seg button{min-height:44px;padding:10px 16px}
+.sm .sm-tabs button{min-height:58px;justify-content:center;padding:5px 0}
+.sm .sm-cal-h button{min-height:44px}
+.sm .sm-cal-g .d{min-height:42px;height:42px;width:42px}
+.sm .sm-egg>button{min-height:0}
+.sm .sm-row{min-height:0}
+
 /* ===== control center (cc-*) : iOS 18 스타일 제어센터 ===== */
 .cc{position:absolute;inset:0;z-index:230;container-type:inline-size;touch-action:none;color:#fff;background:rgba(16,16,22,.4);backdrop-filter:blur(34px) saturate(1.5);-webkit-backdrop-filter:blur(34px) saturate(1.5);-webkit-user-select:none;user-select:none;animation:ccIn .26s ease both}
 .cc.closing{animation:ccOut .24s ease both}
