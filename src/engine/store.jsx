@@ -8,6 +8,7 @@ import {
   INITIAL_SENT,
   INITIAL_POSTS,
   INITIAL_RECENTS,
+  INITIAL_PROFILE,
 } from '../data/story'
 import { judgeEnding } from '../data/endings'
 import { ME } from '../data/characters'
@@ -31,6 +32,10 @@ function freshState() {
     recents: JSON.parse(JSON.stringify(INITIAL_RECENTS)),
     notes: JSON.parse(JSON.stringify(INITIAL_NOTES)),
     liked: {},
+    saved: {}, // 저장한 게시물
+    follows: {}, // 팔로우한 계정
+    storySeen: {}, // 열람한 스토리 계정
+    profile: JSON.parse(JSON.stringify(INITIAL_PROFILE)),
     history: [],
     ringing: null,
     banner: null,
@@ -42,7 +47,18 @@ function freshState() {
 function load() {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) return { ...freshState(), ...JSON.parse(raw), banner: null }
+    if (raw) {
+      const saved = JSON.parse(raw)
+      const old = saved.posts || []
+      // 기존 저장본에도 새 사진/위치 데이터가 반영되도록 초기 게시물은 최신 정의로 덮어쓴다 (좋아요·댓글은 유지)
+      const initIds = new Set(INITIAL_POSTS.map((p) => p.id))
+      const initial = INITIAL_POSTS.map((ip) => {
+        const prev = old.find((p) => p.id === ip.id)
+        return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
+      })
+      const extra = old.filter((p) => !initIds.has(p.id))
+      return { ...freshState(), ...saved, posts: [...extra, ...initial], banner: null }
+    }
   } catch (e) {
     /* 저장 데이터 손상 시 새로 시작 */
   }
@@ -168,6 +184,14 @@ function reducer(state, a) {
     }
     case 'LIKE':
       return { ...state, liked: { ...state.liked, [a.id]: !state.liked[a.id] } }
+    case 'SAVE':
+      return { ...state, saved: { ...state.saved, [a.id]: !state.saved[a.id] } }
+    case 'FOLLOW':
+      return { ...state, follows: { ...state.follows, [a.id]: !state.follows[a.id] } }
+    case 'STORY_SEEN':
+      return { ...state, storySeen: { ...state.storySeen, [a.id]: true } }
+    case 'PROFILE_SAVE':
+      return { ...state, profile: { ...state.profile, ...a.profile } }
     case 'COMMENT': {
       return {
         ...state,
@@ -234,6 +258,10 @@ export function GameProvider({ children }) {
       dismissBanner: () => dispatch({ type: 'DISMISS_BANNER' }),
       answer: (accepted) => dispatch({ type: 'ANSWER', accepted }),
       like: (id) => dispatch({ type: 'LIKE', id }),
+      save: (id) => dispatch({ type: 'SAVE', id }),
+      follow: (id) => dispatch({ type: 'FOLLOW', id }),
+      storySeen: (id) => dispatch({ type: 'STORY_SEEN', id }),
+      saveProfile: (profile) => dispatch({ type: 'PROFILE_SAVE', profile }),
       comment: (id, text) => dispatch({ type: 'COMMENT', id, text }),
       addHistory: (q) => dispatch({ type: 'HISTORY', q }),
       clearHistory: () => dispatch({ type: 'CLEAR_HISTORY' }),
