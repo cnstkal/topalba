@@ -687,8 +687,8 @@ export default function Sns({ params }) {
             <Ico d={SEND} size={26} />
             {unreadDm > 0 && <i className="dot" />}
           </button>
-          <button className={tab === 'search' ? 'on' : ''} onClick={() => setTab('search')} aria-label="검색">
-            <Ico d={SEARCH} size={26} sw={tab === 'search' ? 2.6 : 1.8} />
+          <button className="search-disabled" type="button" disabled aria-label="검색 (비활성화)">
+            <Ico d={SEARCH} size={26} sw={1.8} />
           </button>
           <button className={tab === 'profile' ? 'on' : ''} onClick={() => setTab('profile')} aria-label="프로필">
             <AccountAvatar id={ME_ID} size={26} />
