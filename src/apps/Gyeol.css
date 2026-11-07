@@ -183,3 +183,13 @@
 @keyframes gm-r{from{transform:translateX(160px) rotate(30deg);opacity:0}to{transform:translateX(0) rotate(8deg);opacity:1}}
 @keyframes gm-heart{0%{transform:scale(0)}55%{transform:scale(1.6)}100%{transform:scale(1)}}
 @keyframes gm-burst{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}}
+
+/* ── 레이아웃 보정: 상단바 영역 확보, 하단 버튼 정리, 확인 시트 버튼 좌우 배치 ── */
+.gyeol-detail{top:62px;bottom:28px;padding-bottom:150px}
+.gyeol-detail .back{top:8px}
+.gyeol-dbody{padding-bottom:24px}
+.gyeol-dbar{bottom:0;padding:12px 12px 14px}
+.gyeol-dbar .gyeol-btn{min-height:52px;font-size:16px}
+.gyeol-sheet{padding-bottom:24px}
+.gyeol-sheet .gyeol-btn{flex:1;min-height:52px;font-size:16px}
+.gyeol-sheet .gyeol-btn-row{display:flex;gap:10px}

@@ -130,8 +130,10 @@ export default function Gyeol() {
         <div className="gyeol-sheetbg" onClick={() => setPendingBlock(null)}><div className="gyeol-sheet" onClick={(e) => e.stopPropagation()}>
           <h3>차단하시겠습니까?</h3>
           <p className="gyeol-note">차단하면 이 사람의 프로필이 더 이상 보이지 않고 매칭과 채팅도 끊어져요.</p>
-          <button className="gyeol-btn" onClick={() => doBlock(pendingBlock)}>차단</button>
-          <button className="gyeol-btn ghost" onClick={() => setPendingBlock(null)}>취소</button>
+          <div className="gyeol-btn-row">
+            <button className="gyeol-btn ghost" onClick={() => setPendingBlock(null)}>취소</button>
+            <button className="gyeol-btn" onClick={() => doBlock(pendingBlock)}>차단</button>
+          </div>
         </div></div>
       )}
       {showFilter && <Filter f={f} onClose={() => setShowFilter(false)} set={(p) => upd({ filter: { ...f, ...p } })} />}
