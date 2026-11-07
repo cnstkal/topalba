@@ -57,7 +57,7 @@ const CITIES = {
   },
 }
 
-const DEFAULT_ID = 'incheon'
+const DEFAULT_ID = 'seoul'
 const KEY = 'topalba.weather.v1'
 
 const loadState = () => {
@@ -65,7 +65,7 @@ const loadState = () => {
     const s = JSON.parse(localStorage.getItem(KEY) || 'null')
     const list = Array.isArray(s && s.list) ? s.list.filter((id) => CITIES[id]) : []
     if (!list.includes(DEFAULT_ID)) list.unshift(DEFAULT_ID)
-    const sel = s && list.includes(s.sel) ? s.sel : DEFAULT_ID
+    const sel = DEFAULT_ID
     return { list, sel }
   } catch (e) {
     return { list: [DEFAULT_ID], sel: DEFAULT_ID }
