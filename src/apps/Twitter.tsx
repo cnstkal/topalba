@@ -34,21 +34,38 @@ const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av
 
 /* 데이터 */
 const TL = [
-  { rt: '샤림보르기니 님이 재게시함', name: '뉴해피', vf: 1, h: 'IF_SU_SH_', t: '5시', text: '프라우드!!!!!! 제스트!!!!!!!!!\n티원이 화물맵을 이겼습니다!!!!!!!!', def: 1, media: 1, rts: 27, lk: 24, vw: 1333 },
-  { name: '루!!', lock: 1, h: 'rxzcos', t: '2분', text: '제 침대에 강아지님이 방문해 주셨어요ㅠㅠ', c: '#c98a6a', vw: 5, dimRt: 1 },
-  { rt: '빙빙이(상태:나우아임엄) 님이 재게시함', name: '아지', h: 'qdmoar', t: '1일', text: '말투가 거의 뭐 남자 없냐, 남자급', c: '#b8636e', q: { name: '우태정', h: 'tlqkftoRl44', t: '1일', text: '씨발… 군대 안 오냐, 군대?' }, rts: '2222', lk: '1.1만', vw: '22만' },
-  { name: '배르트', h: 'baeerlt', t: '1일', text: '좆같네 진짜\n실친 트위터 계정 찾아버림\n근데 그걸로 놀릴 수준의 계정이 아니었음\n진지하게 아는 척 했다가 연 끊길 만한....', c: '#4a3524', detail: 1, rts: 350, lk: 2436, vw: '44만' },
+  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2025. 3. 2.', text: '', c: '#d6b7a2', media: 1, rts: 20, lk: 812, vw: 0 },
+  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2025. 2. 14.', text: '요즘 날씨 좋네', c: '#d6b7a2', rts: 18, lk: 786, vw: 0 },
+  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2024. 12. 21.', text: '', c: '#d6b7a2', media: 1, rts: 23, lk: 841, vw: 0 },
+  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2024. 8. 9.', text: 'ㅎㅎ', c: '#d6b7a2', rts: 16, lk: 768, vw: 0 },
 ]
 const PROF = [
-  { text: 'nadeu_u', t: '2026. 1. 31.', vw: 46 }, { link: 'saju-kid.com/share/4c25949d…', t: '2026. 1. 23.', rp: 1, vw: 78, thread: 1 }, { link: 'saju-kid.com/share/1af600a6…', t: '2026. 4. 6.', rp: 1, vw: 45 },
+  { text: '', t: '2025. 3. 2.', vw: 0, rts: 20, lk: 812, media: 1 },
+  { text: '요즘 날씨 좋네', t: '2025. 2. 14.', vw: 0, rts: 18, lk: 786 },
+  { text: '', t: '2024. 12. 21.', vw: 0, rts: 23, lk: 841, media: 1 },
+  { text: 'ㅎㅎ', t: '2024. 8. 9.', vw: 0, rts: 16, lk: 768 },
 ]
 const DM = [
-  ['밥', '3일', '게시물을 보냈습니다', '#9a5a5a'], ['렙', '1주', '팔신걸어져', '#3b4559', 'chat'], ['윤호체크무늬빤츄통꼬츄홍중소츄성화…', '3주', 'ㅎㅎㅎ', '#555a6a'], ['샤림보르기니', '4주', 'ㅎㅎ', '#f5d24a'],
-  ['떠', '5주', '어머어머 완전환영이지^^', '#f6cfd6'], ['ももうさぎ', '6주', 'もちろんです', '#7a5a42', 0, 1], ['루루', '', '', '', 0, 0, 1],
+  ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
+  ['daily__jun', '3분', '몇 살이세요? 실례가 안 된다면', '#65758a'],
+  ['오늘도출근', '18분', '혹시 디엠 자주 하세요?', '#b18a72'],
+  ['honeytoast', '1시간', '사진 분위기 좋으시네요', '#7a6b8f'],
+  ['익명', '어제', '연락하면서 지내고 싶어요', '#9a7777'],
+  ['mood_00', '어제', '혹시 애인 있으세요?', '#607d79'],
+  ['김도현', '2일', '안녕하세요ㅎㅎ', '#8b7968'],
+  ['밤산책', '3일', '친하게 지내요!', '#53647c'],
+  ['monday__', '1주', '몇 년생이세요?', '#a18c77'],
+  ['bluehour', '1주', '답장 가능하실까요', '#776b8a'],
+  ['no_name', '2주', '혹시 어디 사세요?', '#8c6f72'],
+  ['새벽감성', '3주', '친해지고 싶어서 연락드렸어요', '#6b7d8d'],
 ]
 const CHAT = [
-  ['r', '정혁이개패버릴거야..'], ['l', '나또실물보면 좋다고 헤벌레할거같아서 더 슬픔'], ['r', '백퍼.'], ['l', '헐…'], ['d', '10월 26일 (월) 오후 10:19'],
-  ['l', '새로운최애를 박는 삐계만들었오'], ['l', '오고싶음오고, 안와두댐'], ['l', '@ubexhg', 1], ['r', '당연히가야지씨빠^^'], ['r', '팔신걸어져'], ['rd', '읽음'],
+  ['r', '안녕하세요! 친해지고 싶어서 디엠했어요'],
+  ['r', '혹시 몇 살이세요?'],
+  ['r', '답장 한 번만 부탁드려요ㅎㅎ'],
+  ['r', '사진 잘 보고 있어요'],
+  ['r', '시간 되면 만나서 커피라도 마실래요?'],
+  ['r', '읽으셨는데 답이 없으시네ㅠ'],
 ]
 
 const Act = ({ r, l, v, rp, bm = 1 }) => (
@@ -83,16 +100,16 @@ export default function Twitter() {
       <div className="sc pf">
         <div className="ban"><button className="rb" onClick={back}><Ic n="back" s={24} w={2.4} /></button><button className="rb"><Ic n="search" s={22} w={2.4} /></button></div>
         <div className="pav"><Av corgi s={80} /></div>
-        <h1>sa <Lock /></h1><p className="hd">@jukee_3</p>
-        <p className="ml"><span><Ic n="bag" s={18} />기업가</span><span><Ic n="pin" s={18} />생일: 1994년 1월 16일</span></p>
-        <p className="ml"><span><Ic n="cal" s={18} />2020년 2월에 가입함 <Ic n="right" s={14} /></span></p>
-        <p className="fw"><b>55</b> 팔로잉 <b>0</b> 팔로워</p>
+        <h1>ㅅㅎ</h1><p className="hd">@cnsjbqH72w</p>
+        <p className="ml"><span><Ic n="bag" s={18} />기업가</span></p>
+        <p className="ml"><span><Ic n="cal" s={18} />2023년 7월에 가입함 <Ic n="right" s={14} /></span></p>
+        <p className="fw"><b>12</b> 팔로잉 <b>790</b> 팔로워</p>
         <div className="pb"><span>프로필 공유</span><span>프로필 수정</span></div>
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
         {PROF.map((p, i) => (
           <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
-            <div className="m"><p className="n"><b>sa</b> <Lock /> <span>@jukee_3 · {p.t}</span><em><X s={20} /></em></p>{p.text ? <p className="x">{p.text}</p> : <p className="x lnk">{p.link}</p>}
-              <Act r="" l="" v={p.vw} rp={p.rp} /></div></div>
+            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x">{p.text}</p>}{p.media && <div className="med"><i /></div>}
+              <Act r={p.rts} l={p.lk} v="" rp="" /></div></div>
         ))}
         <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
       </div>
@@ -100,7 +117,7 @@ export default function Twitter() {
   } else if (sc === 'chat') {
     body = (
       <>
-        <div className="th ch"><button onClick={back}><Ic n="back" s={26} w={2.4} /></button><Av c="#3b4559" s={32} /><b>렙</b><span className="sp" /><Ic n="phone" s={24} /><Ic n="video" s={26} /></div>
+        <div className="th ch"><button onClick={back}><Ic n="back" s={26} w={2.4} /></button><Av c="#3b4559" s={32} /><b>DM</b><span className="sp" /><Ic n="phone" s={24} /><Ic n="video" s={26} /></div>
         <div className="sc msgs">{CHAT.map(([k, t, u], i) => k === 'd' ? <p key={i} className="dd">{t}</p> : k === 'rd' ? <p key={i} className="rd">{t}</p> : <div key={i} className={'bb ' + k}><span>{u ? <u>{t}</u> : t}</span></div>)}</div>
         <div className="ci"><i><Ic n="plus" s={26} w={2.2} /></i><span>쪽지<Ic n="mic" s={22} /></span></div>
       </>
@@ -119,16 +136,16 @@ export default function Twitter() {
     body = (
       <>
         <div className="th hm"><Me s={32} onClick={() => to('profile')} /><X s={30} /><span className="sp" /></div>
-        <div className="tabs"><span>추천</span><span className="on">팔로우 중 <Ic n="down" s={16} w={2.4} /></span><Ic n="plus" s={24} w={2.2} /></div>
+        <div className="tabs"><span className="on">추천 <Ic n="down" s={16} w={2.4} /></span><span>팔로우 중</span><Ic n="plus" s={24} w={2.2} /></div>
         <div className="sc">
           {TL.map((t, i) => (
             <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc"><Av c={t.c} def={t.def} s={48} /></div>
-              <div className="m">{t.rt && <p className="rt"><Ic n="rt" s={16} w={2.2} /> {t.rt}</p>}
-                <p className="n"><b>{t.name}</b>{t.vf ? <Vf /> : null}{t.lock ? <Lock /> : null} <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
-                <p className="x">{t.text}</p>
+              <div className="m">
+                <p className="n"><b>{t.name}</b> <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
+                {t.text && <p className="x">{t.text}</p>}
                 {t.media && <div className="med"><i /></div>}
                 {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x">{t.q.text}</p></div>}
-                <Act r={t.rts || (t.dimRt ? 0 : '')} l={t.lk || ''} v={t.vw} />
+                <Act r={t.rts} l={t.lk} v={t.vw || ''} />
               </div></div>
           ))}
         </div>
