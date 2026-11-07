@@ -34,10 +34,11 @@ const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av
 
 /* 데이터 */
 const TL = [
-  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2025. 3. 2.', text: '', c: '#d6b7a2', media: 1, rts: 20, lk: 812, vw: 0 },
-  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2025. 2. 14.', text: '요즘 날씨 좋네', c: '#d6b7a2', rts: 18, lk: 786, vw: 0 },
-  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2024. 12. 21.', text: '', c: '#d6b7a2', media: 1, rts: 23, lk: 841, vw: 0 },
-  { name: 'ㅅㅎ', h: 'cnsjbqH72w', t: '2024. 8. 9.', text: 'ㅎㅎ', c: '#d6b7a2', rts: 16, lk: 768, vw: 0 },
+  { name: '퇴근하고싶다', h: 'afterwork_02', t: '12분', text: '오늘 퇴근길에 붕어빵 사먹음 겨울 다 왔다', c: '#b58b72', rts: 2, lk: 31, vw: 0 },
+  { name: '김밥한줄', h: 'gimbap_day', t: '1시간', text: '점심 뭐 먹지 매일 고민하는 것도 일이다', c: '#8b9b78', rts: 1, lk: 18, vw: 0 },
+  { name: '무채색', h: 'gray_mood7', t: '3시간', text: '주말에 아무것도 안 하고 누워있고 싶어', c: '#7d8797', rts: 3, lk: 42, vw: 0 },
+  { name: '홍중아카이브', h: 'hj_archive98', t: '5시간', text: '오늘도 무대 위 홍중 너무 좋다… 사진 정리하다가 또 멈춤', c: '#9b7d9f', rts: 20, lk: 186, vw: 0, media: 1 },
+  { name: '밤의친구', h: 'night_friend_', t: '어제', text: '#게친소\n편하게 일상 얘기하고 가끔 만날 친구 구해요\n서울 / 성인 / 공개계', c: '#607d86', rts: 4, lk: 29, vw: 0 },
 ]
 const PROF = [
   { text: '', t: '2025. 3. 2.', vw: 0, rts: 20, lk: 812, media: 1 },
