@@ -7,7 +7,7 @@ const TINTS = [
   ['#fff0b3', '#e0b84a'], ['#d6ceff', '#8a7bd6'], ['#ffd0b3', '#d98258'], ['#bfe8ec', '#4f9aa3'],
 ]
 const PLACES = ['서울 영등포구', '서울 마포구', '인천 연수구', '서울 강남구', '경기 성남시', '인천 중구']
-const PHOTOS = Array.from({ length: 24 }).map((_, i) => ({
+const PHOTOS = Array.from({ length: 120 }).map((_, i) => ({
   id: i,
   tint: TINTS[i % TINTS.length][0],
   bg: `linear-gradient(155deg, ${TINTS[i % TINTS.length][0]}, ${TINTS[i % TINTS.length][1]})`,
@@ -274,7 +274,7 @@ export default function Photos() {
       {!selMode && (
         <button className="ph-sync">
           {Ic.cloud}
-          <b>동기화가 일시 정지됨</b>
+          <b>120개의 항목</b>
           {Ic.chev}
         </button>
       )}
