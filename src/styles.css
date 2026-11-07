@@ -612,4 +612,13 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .story-stage .story-photo { position: absolute; inset: 0; }
 .story-foot { position: relative; left: auto; right: auto; bottom: auto; flex: none; background: #000; padding: 10px 12px 28px; }
 .story-empty { display: flex; }
+/* 스토리 뷰어 세부 조정: 상단 검은 영역, 사진 하단 둥근 모서리, 얇은 진행 바, 프로필·이름 크기와 간격 */
+.story-view { top: 0; padding-top: 58px; }
+.story-empty > .story-head { top: 62px; }
+.story-stage { border-radius: 0 0 16px 16px; }
+.story-bar { height: 1.5px; }
+.story-who { gap: 10px; }
+.story-name { gap: 2px; }
+.story-name b { font-size: 13px; }
+.story-name span { font-size: 11px; }
 

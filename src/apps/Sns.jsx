@@ -130,7 +130,7 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
   const head = (
     <div className="story-head">
       <div className="story-who">
-        <AccountAvatar id={owner} size={32} />
+        <AccountAvatar id={owner} size={28} />
         <div className="story-name">
           <b>{title}</b>
           {when && <span>{when}</span>}
