@@ -562,6 +562,15 @@ export const PLACES = RAW.map(([name, cat, i, j, u, v, desc], n) => {
   const num = 3 + Math.floor(rng(40 + n * 7)() * 70)
   return { id: 'p' + (n + 1), name, cat, x, y, road, addr: `가상 신림동 ${road} ${num}`, desc, hours: cat === 'park' || cat === 'transit' || cat === 'sight' ? '상시 개방 (가상 설정)' : '09:00 – 21:00 (가상 설정)' }
 })
+// 성화의 저장 장소 (모두 가상 지도 내 창작 장소)
+{
+  const base = PLACES.find((p) => p.id === 'p37') || PLACES[0]
+  PLACES.push(
+    { id: 'p101', name: '달빛모텔', cat: 'stay', x: base.x + 42, y: base.y + 28, road: base.road, addr: '가상 신림동 달무리순환로 38', desc: '탑알바 근처에서 가끔 머무는 숙소. 즐겨찾기에 저장된 장소입니다.', hours: '24시간 (가상 설정)' },
+    { id: 'p102', name: '웨이브온 엔터테인먼트', cat: 'office', x: base.x - 56, y: base.y + 72, road: base.road, addr: '가상 신림동 별빛대로 112', desc: '김홍중이 소속된 가상의 엔터테인먼트 사옥입니다.', hours: '평일 10:00 – 18:00 (가상 설정)' },
+    { id: 'p103', name: '은하오피스텔', cat: 'apt', x: base.x + 88, y: base.y - 64, road: base.road, addr: '가상 신림동 소담길 21', desc: '자주 오가는 주거 건물. 즐겨찾기에 저장된 장소입니다.', hours: '상시 (가상 설정)' },
+  )
+}
 // 지하철역은 교차로에 배치
 {
   const [x, y] = vt(5, 4)
