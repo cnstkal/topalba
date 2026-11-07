@@ -86,7 +86,7 @@ const init = () => ({
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem(KEY))
-    if (d && Array.isArray(d.profiles) && d.profiles.length) return d
+    if (d && Array.isArray(d.profiles) && d.profiles.length) { const profiles = d.profiles.filter((p) => !p.kids).slice(0, 2); if (profiles.length) return { ...d, profiles } }
   } catch { /* ignore */ }
   return null
 }
@@ -177,12 +177,6 @@ function Gate({ db, setDb, onPick }) {
             {p.kids && <b className="netflix-kids">KIDS</b>}
           </button>
         ))}
-        {ps.length < 5 && (
-          <button className="netflix-profile" onClick={add}>
-            <div className="netflix-avatar netflix-avatar-add">{Ic.plus}</div>
-            <span>프로필 추가</span>
-          </button>
-        )}
       </div>
       {ed && (
         <div className="netflix-modal">
