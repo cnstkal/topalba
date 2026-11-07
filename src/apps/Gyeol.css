@@ -133,3 +133,9 @@
 .gyeol-profile-tags span{padding:7px 11px;border-radius:20px;background:#242620;color:var(--lime);font-size:12px}
 .gyeol-profile-foot{display:flex;justify-content:space-between;padding:13px 20px;border-top:1px solid var(--line);color:var(--mute);font-size:11px}
 .gyeol-profile-foot b{color:#777;font-size:9px;letter-spacing:1.4px}
+
+
+/* 실제 전송된 채팅 사진 */
+.gyeol-msg.has-image{width:fit-content;max-width:min(76%,280px);padding:6px!important}
+.gyeol-sent-photo{display:block;width:100%;max-width:260px;max-height:340px;object-fit:cover;border-radius:13px}
+.gyeol-msg.has-image small{display:block;margin:5px 3px 1px}
