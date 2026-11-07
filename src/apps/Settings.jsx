@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './Settings.css'
 import { useGame } from '../engine/store'
 import Back from '../components/Back'
 
