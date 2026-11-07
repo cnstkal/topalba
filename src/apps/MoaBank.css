@@ -3,3 +3,8 @@
 /* 내역 화면 월 선택은 화면 정중앙에 고정 */
 .moa .tb.hist-head{position:relative;justify-content:space-between}
 .moa .tb.hist-head .ct{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+
+/* 증권 종목 행이 전역 .st 스타일에 영향받지 않도록 다크 테마 고정 */
+.moa .pg .row.st{background:var(--cd)!important;color:#fff!important;border-bottom:1px solid #2e2e36;}
+.moa .pg .row.st .m b,.moa .pg .row.st .ra b{color:#fff!important;}
+.moa .pg .row.st .m span,.moa .pg .row.st .ra span{color:var(--g)!important;}
