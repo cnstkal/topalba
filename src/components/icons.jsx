@@ -2,7 +2,7 @@ import { DAYS } from '../utils'
 
 const EXTRA_APPS = {
   reminders: { label: '미리알림', bg: '#fff' },
-  moabank: { label: '모아뱅크', bg: 'linear-gradient(145deg,#3b82ff,#1746d6)' },
+  moabank: { label: '신한 SOL뱅크', bg: 'linear-gradient(145deg,#0066cc,#003b8f)' },
   dating: { label: '결', bg: 'linear-gradient(150deg,#2b2a4c,#6a4cff 70%,#ff7a59)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
@@ -30,8 +30,9 @@ const EXTRA_GLYPHS = {
   ),
   moabank: (
     <svg viewBox="0 0 60 60" width="60" height="60">
-      <path d="M14 42V20l16 14 16-14v22" fill="none" stroke="#fff" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="30" cy="16" r="3.2" fill="#ffd43b" />
+      <path d="M39 17c-2.3-2.2-5.3-3.4-9-3.4-6.2 0-10.2 3-10.2 7.2 0 9.5 20.4 4.2 20.4 13 0 4.3-4.2 7.2-10.3 7.2-4.2 0-7.9-1.5-10.7-4.2" fill="none" stroke="#fff" strokeWidth="4.2" strokeLinecap="round"/>
+      <circle cx="44" cy="43" r="3.5" fill="#6bd8f2"/>
+      <text x="30" y="54" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff" letterSpacing="1.2">SOL</text>
     </svg>
   ),
   dating: (
