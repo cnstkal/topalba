@@ -32,6 +32,12 @@ const I = {
   prev: (s) => sv(<g {...F}><path d="M19 5.500v13a.8.8 0 0 1-1.3.6L9 12.600a.8.8 0 0 1 0-1.200l8.7-6.500a.8.8 0 0 1 1.3.6z" /><rect x="5" y="5" width="2.6" height="14" rx="1.2" /></g>, s),
   next: (s) => sv(<g {...F}><path d="M5 5.500v13a.8.8 0 0 0 1.3.6L15 12.600a.8.8 0 0 0 0-1.200L6.3 4.900A.8.8 0 0 0 5 5.500z" /><rect x="16.4" y="5" width="2.6" height="14" rx="1.2" /></g>, s),
   note: (s) => sv(<path d="M9 18V6.500l10-2V16M9 18a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM19 16a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />, s),
+  globe: (s) => sv(<><circle cx="12" cy="10" r="7"/><path d="M5 10h14M12 3c-3 3.500-3 10.500 0 14M12 3c3 3.500 3 10.500 0 14M12 21h0M7 21h10M12 17v4"/></>, s),
+  airplay: (s) => sv(<><path d="M7.500 17.500a7 7 0 1 1 9 0M4.800 20.500a11 11 0 1 1 14.400 0"/><path d="M12 14.500l4 5.500H8z" {...F}/></>, s),
+  heart: (s) => sv(<path {...F} d="M12 20.500C5 15.500 3 12 3 8.800A4.800 4.800 0 0 1 12 6.500a4.800 4.800 0 0 1 9 2.300c0 3.200-2 6.700-9 11.700z"/>, s),
+  ant: (s) => sv(<><circle cx="12" cy="10" r="1.600" {...F}/><path d="M12 12v8M8.700 6.700a4.700 4.700 0 0 0 0 6.600M15.300 6.700a4.700 4.700 0 0 1 0 6.600M5.800 4a8.500 8.500 0 0 0 0 12M18.200 4a8.500 8.500 0 0 1 0 12"/></>, s),
+  plus: (s) => sv(<path d="M12 5v14M5 12h14" strokeWidth="2.4"/>, s),
+  power: (s) => sv(<path d="M12 3v8M7 6.500a7.500 7.500 0 1 0 10 0" strokeWidth="2.2"/>, s),
   check: (s) => sv(<path d="M5 12.500l4.5 4.500L19 7" strokeWidth="2.4" />, s),
 }
 
@@ -112,17 +118,16 @@ function MediaMini({ song, onOpen }) {
   useTick(song.play)
   const cur = song.cur
   const s = cur === null ? null : SONGS[cur]
-  const frac = s ? dev.pos() / s[3] : 0
   return (
     <div className="cc-t cc-media" onClick={onOpen}>
       <div className="cc-media-h">
         <Cover i={cur} />
-        <div className="cc-media-t">
-          <b>{s ? s[0] : '재생 중인 음악 없음'}</b>
-          <span>{s ? s[1] : '재생 버튼을 눌러 보세요'}</span>
-        </div>
+        <span className="cc-c ap">{I.airplay(24)}</span>
       </div>
-      <div className="cc-prog"><i style={{ width: `${frac * 100}%` }} /></div>
+      <div className="cc-media-t">
+        <b>{s ? s[0] : '재생 중인 음악 없음'}</b>
+        <span>{s ? s[1] : '재생 버튼을 눌러 보세요'}</span>
+      </div>
       <div className="cc-media-c" onClick={(e) => e.stopPropagation()}>
         <button onClick={() => dev.next(-1)} aria-label="이전 곡">{I.prev(22)}</button>
         <button onClick={() => dev.toggle()} aria-label={song.play ? '일시정지' : '재생'}>{song.play ? I.pause(28) : I.play(28)}</button>
@@ -159,6 +164,7 @@ function MediaBig({ d }) {
         <Slider value={d.vol} onChange={(v) => dev.set({ vol: v })} label="음량" />
         {I.vol(18)}
       </div>
+      <button className="cc-ap-pill">{I.airplay(22)}AirPlay</button>
     </div>
   )
 }
@@ -279,38 +285,45 @@ function Panel({ closing, onClose, onOpenApp }) {
     <div className={`cc ${closing ? 'closing' : ''}`} onPointerDown={down} onPointerUp={up} onPointerCancel={() => (drag.current = null)} onClickCapture={(e) => { if (moved.current) { e.stopPropagation(); moved.current = false } }}>
       <div className={`cc-hint ${hint ? 'on' : ''}`}>{hint}</div>
 
+      <div className="cc-top" data-nodrag>
+        <button className="cc-gl" onClick={() => say('시뮬레이터에서는 편집할 수 없어요')} aria-label="추가">{I.plus(26)}</button>
+        <button className="cc-gl" onClick={() => say('시뮬레이터에서는 사용할 수 없어요')} aria-label="전원">{I.power(26)}</button>
+      </div>
+
       <div className="cc-vp">
         <div className="cc-pages" style={{ transform: `translateY(${-page * 100}%)` }}>
           {/* 1. 즐겨찾기 */}
           <section className="cc-page">
             <div className="cc-g">
-              <div className="cc-t cc-conn" onClick={() => {}}>
-                <Press className={`cc-c ${d.air ? 'air' : ''}`} onTap={airTap} label="비행기 모드">{I.air(26)}</Press>
-                <Press className={`cc-c ${d.cell ? 'cell' : ''}`} onTap={cellTap} label="셀룰러 데이터">{I.cell(26)}</Press>
-                <Press className={`cc-c ${d.wifi ? 'blue' : ''}`} onTap={wifiTap} onLong={() => setDetail('wifi')} label="Wi-Fi">{I.wifi(26)}</Press>
-                <Press className={`cc-c ${d.bt ? 'blue' : ''}`} onTap={btTap} onLong={() => setDetail('bt')} label="Bluetooth">{I.bt(26)}</Press>
+              <div className="cc-t cc-conn">
+                <Press className={`cc-c big ${d.air ? 'air' : ''}`} onTap={airTap} label="비행기 모드">{I.air(30)}</Press>
+                <Press className={`cc-c big ${d.airdrop > 0 ? 'blue' : ''}`} onTap={airdropTap} onLong={() => setDetail('airdrop')} label="AirDrop">{I.airdrop(30)}</Press>
+                <Press className={`cc-c big ${d.wifi ? 'blue' : ''}`} onTap={wifiTap} onLong={() => setDetail('wifi')} label="Wi-Fi">{I.wifi(32)}</Press>
+                <div className="cc-mini">
+                  <Press className={`cc-c ${d.cell ? 'cell' : ''}`} onTap={cellTap} label="셀룰러 데이터">{I.cell(18)}</Press>
+                  <Press className={`cc-c ${d.bt ? 'wh' : ''}`} onTap={btTap} onLong={() => setDetail('bt')} label="Bluetooth">{I.bt(18)}</Press>
+                  <Press className={`cc-c ${d.hotspot ? 'cell' : ''}`} onTap={hotTap} label="개인용 핫스팟">{I.link(18)}</Press>
+                  <Press className={`cc-c ${d.vpn ? 'blue' : ''}`} onTap={() => { dev.set({ vpn: !d.vpn }); say(`VPN: ${!d.vpn ? '켬' : '끔'}`) }} label="VPN">{I.globe(18)}</Press>
+                </div>
               </div>
               <MediaMini song={d.song} onOpen={() => setPage(1)} />
+              <T cls="sq rotc" on={d.rot} onTap={() => tog('rot', (v) => `세로 방향 고정: ${v ? '켬' : '끔'}`)} label="회전 잠금">{I.rot(38)}</T>
+              <T cls={`sq ${d.cell ? 'grn' : ''}`} on={d.cell} onTap={cellTap} label="셀룰러">{I.cell(38)}</T>
+              <div className="cc-t cc-sltile">
+                <Slider vertical value={d.bright} onChange={(v) => dev.set({ bright: v })} icon={I.sun(30)} label="화면 밝기" />
+              </div>
+              <div className="cc-t cc-sltile vol">
+                <Slider vertical value={d.vol} onChange={(v) => dev.set({ vol: v })} icon={d.vol === 0 ? I.mute(30) : I.vol(30)} label="음량" />
+              </div>
               <T cls="wide" on={d.focus !== null} onTap={() => dev.set({ focus: d.focus === null ? d.focusLast : null })} onLong={() => setDetail('focus')} label="집중 모드">
-                {I.moon(26)}<span>{focusName}</span>
+                <span className="cc-c sm">{I.moon(26)}</span><span>{focusName}</span><em className="chev">⌃⌄</em>
               </T>
-              <div className="cc-t cc-sltile">
-                <Slider vertical value={d.bright} onChange={(v) => dev.set({ bright: v })} icon={I.sun(24)} label="화면 밝기" />
-              </div>
-              <div className="cc-t cc-sltile">
-                <Slider vertical value={d.vol} onChange={(v) => dev.set({ vol: v })} icon={d.vol === 0 ? I.mute(24) : I.vol(24)} label="음량" />
-              </div>
-              <T cls="sq w" on={d.flash} onTap={() => tog('flash', (v) => `손전등: ${v ? '켬' : '끔'} (시뮬레이션)`)} label="손전등">{I.flash(28)}</T>
-              <T cls="sq" onTap={() => { onOpenApp('clock'); onClose() }} label="타이머">{I.timer(28)}</T>
-              <T cls="sq" onTap={() => setTool('calc')} label="계산기">{I.calc(28)}</T>
-              <T cls="sq" onTap={() => setTool('cam')} label="카메라">{I.cam(28)}</T>
-              <T cls="sq red" on={d.rec} onTap={() => tog('rec', (v) => `화면 기록: ${v ? '시작 (시뮬레이션)' : '종료'}`)} label="화면 기록">{I.rec(28)}</T>
-              <T cls="sq red" on={d.rot} onTap={() => tog('rot', (v) => `세로 방향 고정: ${v ? '켬' : '끔'}`)} label="회전 잠금">{I.rot(28)}</T>
-              <T cls="wide w" on={!!d.mirror} onTap={() => setDetail('mirror')} onLong={() => setDetail('mirror')} label="화면 미러링">
-                {I.mirror(26)}<span>{d.mirror || '화면 미러링'}</span>
-              </T>
-              <T cls="sq yel" on={d.low} onTap={() => tog('low', (v) => `저전력 모드: ${v ? '켬' : '끔'}`)} label="저전력 모드">{I.batt(28)}</T>
-              <T cls="sq w" on={d.dark} onTap={() => tog('dark', (v) => `다크 모드: ${v ? '켬' : '끔'}`)} label="다크 모드">{I.dark(28)}</T>
+              <T cls="sq w" on={d.flash} onTap={() => tog('flash', (v) => `손전등: ${v ? '켬' : '끔'} (시뮬레이션)`)} label="손전등">{I.flash(32)}</T>
+              <T cls="sq w" on={d.bt} onTap={btTap} label="Bluetooth">{I.bt(32)}</T>
+              <T cls="sq yel" on={d.low} onTap={() => tog('low', (v) => `저전력 모드: ${v ? '켬' : '끔'}`)} label="저전력 모드">{I.batt(36)}</T>
+              <T cls="sq" onTap={() => setTool('cam')} label="카메라">{I.cam(34)}</T>
+              <T cls="sq red" on={d.rec} onTap={() => tog('rec', (v) => `화면 기록: ${v ? '시작 (시뮬레이션)' : '종료'}`)} label="화면 기록">{I.rec(34)}</T>
+              <T cls="sq" onTap={() => setTool('calc')} label="계산기">{I.calc(34)}</T>
             </div>
           </section>
 
@@ -321,16 +334,17 @@ function Panel({ closing, onClose, onOpenApp }) {
           <section className="cc-page">
             <div className="cc-cn">
               {[
-                ['air', I.air, '비행기 모드', d.air ? '켬' : '끔', d.air, 'air', airTap],
-                ['cell', I.cell, '셀룰러 데이터', d.cell ? '켬' : '끔', d.cell, 'cell', cellTap],
-                ['wifi', I.wifi, 'Wi-Fi', net, d.wifi, 'blue', wifiTap, () => setDetail('wifi')],
-                ['bt', I.bt, 'Bluetooth', d.bt ? d.btDev || '켬' : '끔', d.bt, 'blue', btTap, () => setDetail('bt')],
-                ['hot', I.link, '개인용 핫스팟', d.hotspot ? '켬' : '끔', d.hotspot, 'cell', hotTap],
-                ['ad', I.airdrop, 'AirDrop', ['수신 끔', '연락처만', '모든 사람'][d.airdrop], d.airdrop > 0, 'blue', airdropTap, () => setDetail('airdrop')],
-              ].map(([k, ic, t, sub, on, col, tap, long]) => (
-                <Press key={k} className={`cc-t cc-cr ${on ? 'on' : ''}`} onTap={tap} onLong={long} label={t}>
-                  <span className={`cc-c ${on ? col : ''}`}>{ic(24)}</span>
-                  <span className="tx"><b>{t}</b><small>{sub}</small></span>
+                ['air', I.air, '비행기 모드', d.air ? '켬' : '끔', d.air, 'air', airTap, null, 'full'],
+                ['wifi', I.wifi, 'Wi-Fi', net, d.wifi, 'blue', wifiTap, () => setDetail('wifi'), 'half'],
+                ['ad', I.airdrop, 'AirDrop', ['수신 끔', '연락처만', '모든 사람'][d.airdrop], d.airdrop > 0, 'blue', airdropTap, () => setDetail('airdrop'), 'half'],
+                ['cell', I.cell, '셀룰러 데이터', d.cell ? '켬' : '끔', d.cell, 'cell', cellTap, null, 'half'],
+                ['bt', I.bt, 'Bluetooth', d.bt ? d.btDev || '켬' : '연결 안 됨', d.bt, 'blue', btTap, () => setDetail('bt'), 'half'],
+                ['hot', I.link, '개인용 핫스팟', d.hotspot ? '켬' : '끔', d.hotspot, 'cell', hotTap, null, 'full dim'],
+                ['vpn', I.globe, 'VPN', d.vpn ? '켬' : '끔', d.vpn, 'blue', () => dev.set({ vpn: !d.vpn }), null, 'full dim'],
+              ].map(([k, ic, t, sub, on, col, tap, long, sz]) => (
+                <Press key={k} className={`cc-t cc-cr ${sz} ${on ? 'on' : ''}`} onTap={tap} onLong={long} label={t}>
+                  <span className={`cc-c ${on ? col : ''}`}>{ic(26)}</span>
+                  <span className="tx"><b>{t}</b><small>{sub}{long ? ' ⌃⌄' : ''}</small></span>
                 </Press>
               ))}
             </div>
@@ -339,7 +353,7 @@ function Panel({ closing, onClose, onOpenApp }) {
         </div>
       </div>
 
-      <div className="cc-dots">{[0, 1, 2].map((i) => <button key={i} className={page === i ? 'on' : ''} onClick={() => setPage(i)} aria-label={`${i + 1}페이지`} />)}</div>
+      <div className="cc-dots" data-nodrag>{[I.heart, I.note, I.ant].map((ic, i) => <button key={i} className={page === i ? 'on' : ''} onClick={() => setPage(i)} aria-label={`${i + 1}페이지`}>{ic(26)}</button>)}</div>
 
       <div
         className="cc-close"

@@ -1126,3 +1126,46 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 @keyframes ccOut{from{opacity:1}to{opacity:0}}
 @keyframes ccPop{from{opacity:0;transform:scale(.88) translateY(-18px)}to{opacity:1;transform:none}}
 @keyframes ccPopOut{from{opacity:1;transform:none}to{opacity:0;transform:scale(.9) translateY(-18px)}}
+
+/* ── 제어센터 v2: iOS 26 리퀴드 글래스 ── */
+.cc{background:radial-gradient(120% 80% at 50% 0,rgba(56,70,70,.55),rgba(24,30,30,.72));backdrop-filter:blur(40px) saturate(1.6);-webkit-backdrop-filter:blur(40px) saturate(1.6)}
+.cc-top{position:absolute;top:52px;left:0;right:0;height:40px;padding:0 16px;display:flex;justify-content:space-between;z-index:3}
+.cc-vp{top:104px}
+.cc-g{gap:12px;--u:calc((100cqw - 60px)/4)}
+.cc-t,.cc-gl,.cc-ap-pill,.cc-c.ap{background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.07) 55%,rgba(255,255,255,.12));border:1px solid rgba(255,255,255,.14);border-top-color:rgba(255,255,255,.34);border-left-color:rgba(255,255,255,.24);box-shadow:inset 0 1px 1px rgba(255,255,255,.35),inset 0 -1px 2px rgba(255,255,255,.08),0 8px 24px rgba(0,0,0,.22);backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7)}
+.cc-gl{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+.cc-t.sq{border-radius:50%}
+.cc-t.wide{border-radius:999px;padding:0 14px 0 12px}
+.cc-t.wide .chev{margin-left:auto;font-style:normal;font-size:11px;opacity:.6;letter-spacing:-2px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.cc-c.sm{width:44px;max-width:44px;flex:none;background:rgba(255,255,255,.2)}
+.cc-c{background:rgba(255,255,255,.2);box-shadow:inset 0 1px 1px rgba(255,255,255,.3)}
+.cc-c.air{background:#ff9f0a}.cc-c.cell,.cc-t.grn.on{background:#30d158}.cc-c.blue{background:#1a8cff}.cc-c.wh{background:#fff;color:#1c1c1e}
+.cc-conn{display:block;position:relative;padding:0;border-radius:34px}
+.cc-conn .big{position:absolute;width:44%;max-width:none}
+.cc-conn .big:nth-child(1){left:6%;top:6%}.cc-conn .big:nth-child(2){right:6%;top:6%}.cc-conn .big:nth-child(3){left:6%;bottom:6%}
+.cc-mini{position:absolute;right:6%;bottom:6%;width:44%;aspect-ratio:1;display:grid;grid-template-columns:1fr 1fr;gap:12%}
+.cc-mini .cc-c{width:100%;max-width:none}
+.cc-t.rotc.on{background:#fafafa;color:#ff6b6b}
+.cc-t.w.on{background:#fafafa}
+.cc-media{border-radius:34px;padding:14px 14px 12px;align-items:stretch}
+.cc-media-h{justify-content:space-between;align-items:flex-start}
+.cc-c.ap{width:44px;height:44px;flex:none}
+.cc-media-t b{font-size:15px}
+.cc-media-c{padding:0 4px}
+.cc-sltile{border-radius:999px;padding:0}
+.cc-sl.v{border-radius:999px}
+.cc-sl.v .fill{background:#fafafa}
+.cc-sl .ic{bottom:22px;color:#f5b800}
+.cc-sltile.vol .ic{color:#12b9e6}
+.cc-dots{right:6px;gap:22px}
+.cc-dots button{width:auto;height:auto;background:none;color:rgba(255,255,255,.4);display:flex}
+.cc-dots button.on{color:#fff}
+.cc-cr{height:92px;border-radius:999px;padding:0 20px 0 16px;grid-column:span 2}
+.cc-cr.half{grid-column:span 1;padding:0 8px 0 12px}
+.cc-cr .cc-c{width:52px;height:52px;max-width:none}
+.cc-cr.dim:not(.on) .tx,.cc-cr.dim:not(.on) .cc-c{opacity:.55}
+.cc-cn{grid-template-columns:1fr 1fr;gap:12px;padding:6px 16px}
+.cc-cr.half small{font-size:11.5px}
+.cc-mp .cc-cover.big{border-radius:24px}
+.cc-mp{background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 1px rgba(255,255,255,.35);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-radius:40px;margin:6px 14px 0;height:auto;padding:16px 16px 14px;align-items:stretch}
+.cc-ap-pill{display:flex;align-items:center;gap:8px;align-self:center;margin-top:18px;padding:12px 24px;border-radius:999px;color:#fff;font-size:17px}
