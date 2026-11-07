@@ -1451,3 +1451,108 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 @media (prefers-reduced-motion: reduce) {
   .st-sw, .st-sw i { transition: none; }
 }
+
+
+/* 시계 앱은 항상 다크 모드 + 작은 화면에서도 중앙 정렬 */
+.ck {
+  --bg:#000;
+  --bg2:#1c1c1e;
+  --sep:rgba(84,84,88,.65);
+  --gray:#8e8e93;
+  --blue:#0a84ff;
+  --green:#30d158;
+  --red:#ff453a;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  background:#000 !important;
+  color:#f5f5f7 !important;
+}
+.ck .nav,
+.ck .large-title,
+.ck .scroll { background:#000; color:#f5f5f7; }
+.ck .ck-tabs {
+  background:rgba(28,28,30,.97);
+  border-top-color:rgba(84,84,88,.65);
+  padding-bottom:30px;
+}
+.ck .ck-tabs button { color:#8e8e93; }
+.ck .ck-tabs button.on { color:#ff9f0a; }
+.ck .ck-row { border-bottom-color:rgba(84,84,88,.55); }
+.ck .ck-city span,
+.ck .ck-al.off .ck-time,
+.ck .ck-al.off .ck-al-main span { color:#8e8e93; }
+.ck .ck-sheet { background:#1c1c1e; color:#f5f5f7; }
+.ck .ck-sheet-nav b,
+.ck .ck-wheel div.on { color:#f5f5f7; }
+.ck .ck-group,
+.ck .ck-alert { background:#2c2c2e; color:#f5f5f7; }
+.ck .ck-fr { border-bottom-color:rgba(84,84,88,.65); }
+.ck .ck-txt,
+.ck .ck-search input { background:#3a3a3c; color:#f5f5f7; }
+.ck .ck-txt::placeholder,
+.ck .ck-search input::placeholder { color:#8e8e93; }
+.ck .ck-band { background:rgba(142,142,147,.22); }
+.ck .ck-cb { display:flex; align-items:center; justify-content:center; flex:0 0 82px; text-align:center; white-space:nowrap; }
+.ck .ck-btns {
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  gap:clamp(12px, 8vw, 48px);
+  padding:20px clamp(12px, 5vw, 24px);
+  box-sizing:border-box;
+}
+.ck .ck-swwrap,
+.ck .ck-tmwrap {
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  align-items:center;
+}
+.ck .ck-swt {
+  width:100%;
+  max-width:100%;
+  padding:0 8px;
+  box-sizing:border-box;
+  text-align:center;
+  white-space:nowrap;
+  font-size:clamp(42px, 12vw, 80px);
+  letter-spacing:-.045em;
+  font-variant-numeric:tabular-nums;
+}
+.ck .ck-swt.long { font-size:clamp(36px, 9.5vw, 64px); }
+.ck .ck-picker.tm {
+  width:100%;
+  max-width:100%;
+  justify-content:center;
+  gap:0;
+  overflow:hidden;
+  padding:0 4px;
+  box-sizing:border-box;
+}
+.ck .ck-picker.tm .ck-wheel {
+  width:clamp(44px, 15vw, 64px) !important;
+  flex:0 1 64px;
+  min-width:0;
+}
+.ck .ck-picker.tm .ck-unit {
+  flex:0 0 auto;
+  margin:0 2px;
+  font-size:clamp(12px, 3.8vw, 15px);
+  white-space:nowrap;
+}
+.ck .ck-ring { width:min(280px, 78vw); height:auto; aspect-ratio:1; }
+.ck .ck-ring-t { font-size:clamp(42px, 15vw, 64px); text-align:center; white-space:nowrap; }
+.ck .ck-ring-t.long { font-size:clamp(34px, 11vw, 50px); }
+.ck .ck-laps { min-width:0; }
+.ck .ck-lap { color:#f5f5f7; border-top-color:rgba(84,84,88,.65); }
+.ck .ck-lap.fast { color:#30d158; }
+.ck .ck-lap.slow { color:#ff453a; }
+.ck .ck-picker .ck-wheel div { color:#8e8e93; }
+.ck .ck-picker .ck-wheel div.on { color:#f5f5f7; }
+.ck .ck-cb.d { background:#2c2c2e !important; color:#f5f5f7 !important; border-color:#3a3a3c !important; }
+.ck .ck-cb.g { background:#183d27 !important; color:#30d158 !important; border-color:#2c2c2e !important; }
+.ck .ck-cb.r { background:#4a2020 !important; color:#ff453a !important; border-color:#2c2c2e !important; }
+.ck .ck-cb.o { background:#49331a !important; color:#ff9f0a !important; border-color:#2c2c2e !important; }
