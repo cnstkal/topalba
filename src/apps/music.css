@@ -115,3 +115,18 @@
 .music-pick{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;border-bottom:.5px solid var(--sep);font-size:17px}
 .music-pick span{flex:1}
 .music-pick svg:last-child{color:var(--red)}
+
+/* 지금 듣기 화면의 가로 카드 목록은 화면 양쪽에 일정한 여백 유지 */
+.music-root .music-h {
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+/* 지금 듣기 외 탭은 화면만 표시하고 모든 내부 동작 비활성화 */
+.music-root .music-body.inactive {
+  pointer-events: none !important;
+}
+.music-root .music-tab:disabled {
+  cursor: default;
+}
