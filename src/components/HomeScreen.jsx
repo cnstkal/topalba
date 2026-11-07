@@ -64,13 +64,6 @@ export default function HomeScreen({ openApp, dimmed }) {
         <i className={page === 1 ? 'on' : ''} />
       </div>
 
-      <div className="search-pill">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6c6c70" strokeWidth="3" strokeLinecap="round">
-          <circle cx="10" cy="10" r="7" />
-          <path d="M21 21l-6-6" />
-        </svg>
-        검색
-      </div>
       <div className="dock">{DOCK.map((id) => icon(id, { noLabel: true }))}</div>
     </div>
   )
