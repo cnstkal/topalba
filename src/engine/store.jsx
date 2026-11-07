@@ -31,6 +31,8 @@ function freshState() {
     sent: JSON.parse(JSON.stringify(INITIAL_SENT)),
     recents: JSON.parse(JSON.stringify(INITIAL_RECENTS)),
     notes: JSON.parse(JSON.stringify(INITIAL_NOTES)),
+    noteFolders: [], // 사용자가 만든 메모 폴더 [{ id, name }]
+    noteUi: { folder: 'all', view: 'list' }, // 메모 앱 마지막 폴더 / 보기 방식
     liked: {},
     saved: {}, // 저장한 게시물
     follows: {}, // 팔로우한 계정
@@ -204,11 +206,36 @@ function reducer(state, a) {
       return { ...state, history: [] }
     case 'NOTE_SAVE': {
       const exists = state.notes.some((n) => n.id === a.note.id)
-      const notes = exists ? state.notes.map((n) => (n.id === a.note.id ? { ...a.note, ts: Date.now() } : n)) : [{ ...a.note, ts: Date.now() }, ...state.notes]
+      const notes = exists ? state.notes.map((n) => (n.id === a.note.id ? { ...n, ...a.note, ts: Date.now() } : n)) : [{ ...a.note, ts: Date.now() }, ...state.notes]
       return { ...state, notes }
     }
+    // 삭제는 '최근 삭제된 항목'으로 이동 (복구 가능)
     case 'NOTE_DELETE':
+      return { ...state, notes: state.notes.map((n) => (n.id === a.id ? { ...n, deleted: true, delTs: Date.now() } : n)) }
+    case 'NOTE_RESTORE':
+      return { ...state, notes: state.notes.map((n) => (n.id === a.id ? { ...n, deleted: false, delTs: undefined } : n)) }
+    case 'NOTE_PURGE':
       return { ...state, notes: state.notes.filter((n) => n.id !== a.id) }
+    case 'NOTE_EMPTY_TRASH':
+      return { ...state, notes: state.notes.filter((n) => !n.deleted) }
+    case 'NOTE_PIN':
+      return { ...state, notes: state.notes.map((n) => (n.id === a.id ? { ...n, pinned: !n.pinned } : n)) }
+    case 'NOTE_MOVE':
+      return { ...state, notes: state.notes.map((n) => (n.id === a.id ? { ...n, folder: a.folder } : n)) }
+    case 'FOLDER_ADD':
+      return { ...state, noteFolders: [...(state.noteFolders || []), { id: a.id, name: a.name }] }
+    case 'FOLDER_RENAME':
+      return { ...state, noteFolders: (state.noteFolders || []).map((f) => (f.id === a.id ? { ...f, name: a.name } : f)) }
+    // 폴더 삭제 시 안의 메모는 iCloud 메모로 이동
+    case 'FOLDER_DELETE':
+      return {
+        ...state,
+        noteFolders: (state.noteFolders || []).filter((f) => f.id !== a.id),
+        notes: state.notes.map((n) => (n.folder === a.id ? { ...n, folder: 'icloud' } : n)),
+        noteUi: state.noteUi?.folder === a.id ? { ...state.noteUi, folder: 'all' } : state.noteUi,
+      }
+    case 'NOTE_UI':
+      return { ...state, noteUi: { ...(state.noteUi || {}), ...a.ui } }
     default:
       return state
   }
@@ -267,6 +294,15 @@ export function GameProvider({ children }) {
       clearHistory: () => dispatch({ type: 'CLEAR_HISTORY' }),
       saveNote: (note) => dispatch({ type: 'NOTE_SAVE', note }),
       deleteNote: (id) => dispatch({ type: 'NOTE_DELETE', id }),
+      restoreNote: (id) => dispatch({ type: 'NOTE_RESTORE', id }),
+      purgeNote: (id) => dispatch({ type: 'NOTE_PURGE', id }),
+      emptyTrash: () => dispatch({ type: 'NOTE_EMPTY_TRASH' }),
+      pinNote: (id) => dispatch({ type: 'NOTE_PIN', id }),
+      moveNote: (id, folder) => dispatch({ type: 'NOTE_MOVE', id, folder }),
+      addFolder: (name) => dispatch({ type: 'FOLDER_ADD', id: `nf${Date.now()}`, name }),
+      renameFolder: (id, name) => dispatch({ type: 'FOLDER_RENAME', id, name }),
+      deleteFolder: (id) => dispatch({ type: 'FOLDER_DELETE', id }),
+      noteUi: (ui) => dispatch({ type: 'NOTE_UI', ui }),
       reset: () => {
         try {
           localStorage.removeItem(KEY)
