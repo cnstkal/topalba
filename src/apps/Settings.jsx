@@ -86,7 +86,7 @@ export default function Settings() {
         </div>
         <div className="scroll st-scroll">
           <div className="st-group">
-            {[['이름', '정윤호의 iPhone'], ['모델 이름', 'iPhone 18 Pro'], ['iOS 버전', '26'], ['용량', '256GB']].map(([k, v]) => (
+            {[['이름', '박성화의 iPhone'], ['모델 이름', 'iPhone 18 Pro'], ['iOS 버전', '26'], ['용량', '256GB']].map(([k, v]) => (
               <div key={k} className="st-row plain">
                 <span className="st-lb">{k}</span>
                 <em className="st-val">{v}</em>
@@ -126,8 +126,8 @@ export default function Settings() {
       <div className="scroll st-scroll">
         <div className="st-group">
           <div className="st-row st-prof">
-            <div className="st-av">정</div>
-            <div className="st-prof-t"><b>정윤호</b><span>Apple ID, iCloud, 미디어 및 구입</span></div>
+            <div className="st-av">박</div>
+            <div className="st-prof-t"><b>박성화</b><span>Apple ID, iCloud, 미디어 및 구입</span></div>
             <Chev />
           </div>
         </div>
