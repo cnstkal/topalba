@@ -81,11 +81,16 @@ export default function Gyeol() {
   const [room, setRoom] = useState(null)
   const [showFilter, setShowFilter] = useState(false)
   const [pendingBlock, setPendingBlock] = useState(null)
+  const [match, setMatch] = useState(null)
   useEffect(() => { localStorage.setItem('gyeol-state', JSON.stringify(s)) }, [s])
   const upd = (p) => setS((o) => ({ ...o, ...(typeof p === 'function' ? p(o) : p) }))
   const byId = (id) => s.users.find((u) => u.id === id)
 
-  const like = (id) => upd((o) => {
+  const like = (id) => {
+    if (s.likedMe.includes(id) && !s.matches.includes(id) && !s.liked.includes(id)) setMatch(id)
+    likeRaw(id)
+  }
+  const likeRaw = (id) => upd((o) => {
     if (o.liked.includes(id)) return {}
     const m = o.likedMe.includes(id) && !o.matches.includes(id)
     return { liked: [...o.liked, id], passed: o.passed.filter((x) => x !== id), matches: m ? [...o.matches, id] : o.matches, chats: m ? { ...o.chats, [id]: o.chats[id] || [] } : o.chats }
@@ -120,6 +125,7 @@ export default function Gyeol() {
         ))}
       </nav>
       {detail && <Detail u={byId(detail)} {...ctx} onClose={() => setDetail(null)} />}
+      {match && byId(match) && <MatchScreen u={byId(match)} me={s.me} onChat={() => { const id = match; setMatch(null); openChat(id) }} onClose={() => setMatch(null)} />}
       {pendingBlock && (
         <div className="gyeol-sheetbg" onClick={() => setPendingBlock(null)}><div className="gyeol-sheet" onClick={(e) => e.stopPropagation()}>
           <h3>차단하시겠습니까?</h3>
@@ -136,33 +142,52 @@ export default function Gyeol() {
 function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)), [s])
   const u = queue[0]
+  const next = queue[1]
   const [dx, setDx] = useState(0)
-  const start = useRef(null)
+  const [drag, setDrag] = useState(false)
+  const [fly, setFly] = useState<null | 'like' | 'pass'>(null)
+  const start = useRef<number | null>(null)
   const [pi, setPi] = useState(0)
-  useEffect(() => setPi(0), [u && u.id])
+  useEffect(() => { setPi(0); setFly(null); setDx(0) }, [u && u.id])
   if (!u) return <div className="gyeol-empty">추천이 끝났어요.<button className="gyeol-btn" onClick={() => upd({ passed: [] })}>패스한 사람 다시 보기</button></div>
-  const end = () => { if (dx > 90) like(u.id); else if (dx < -90) pass(u.id); setDx(0); start.current = null }
+  const act = (kind: 'like' | 'pass') => {
+    if (fly) return
+    setFly(kind); setDrag(false); start.current = null
+    setTimeout(() => { kind === 'like' ? like(u.id) : pass(u.id) }, 280)
+  }
+  const end = () => { setDrag(false); if (start.current == null) return; if (dx > 90) act('like'); else if (dx < -90) act('pass'); else setDx(0); start.current = null }
   const n = Math.max(u.photos.length, 1)
+  const x = fly ? (fly === 'like' ? 520 : -520) : dx
+  const p = Math.min(1, Math.abs(x) / 140)
+  const cardStyle = {
+    transform: `translateX(${x}px) rotate(${x / 18}deg)`,
+    transition: drag ? 'none' : 'transform .28s cubic-bezier(.2,.9,.3,1.2), opacity .28s',
+    opacity: fly ? 0 : 1,
+  }
   return (
     <div className="gyeol-explore">
-      <div className="gyeol-card" style={{ transform: `translateX(${dx}px) rotate(${dx / 20}deg)` }}
-        onPointerDown={(e) => { start.current = e.clientX }} onPointerMove={(e) => start.current != null && setDx(e.clientX - start.current)} onPointerUp={end} onPointerCancel={end}>
-        <Photo u={u} i={pi} />
-        <div className="gyeol-dots">{Array.from({ length: n }).map((_, i) => <i key={i} className={i === pi ? 'on' : ''} />)}</div>
-        <button className="gyeol-tap l" onClick={() => setPi((p) => Math.max(0, p - 1))} />
-        <button className="gyeol-tap r" onClick={() => setPi((p) => Math.min(n - 1, p + 1))} />
-        {dx > 40 && <b className="gyeol-stamp like">LIKE</b>}{dx < -40 && <b className="gyeol-stamp nope">PASS</b>}
-        <div className="gyeol-info" onClick={() => Math.abs(dx) < 5 && setDetail(u.id)}>
-          <h2>{u.nick} <em>{u.age}</em></h2>
-          <p>{u.online && <i className="gyeol-on" />}{u.online ? '접속 중' : u.last} · {u.area} · {u.dist}km</p>
-          <p className="gyeol-sub">{u.bio}</p>
-          <p className="gyeol-sub">{u.height}cm · {u.job} · {u.goal}</p>
+      <div className="gyeol-deck">
+        {next && <div className="gyeol-card back" style={{ transform: `scale(${0.94 + 0.06 * p}) translateY(${(1 - p) * 10}px)`, opacity: 0.55 + 0.45 * p }}><Photo u={next} /></div>}
+        <div className={`gyeol-card ${fly ? 'flying' : ''}`} style={cardStyle}
+          onPointerDown={(e) => { if (fly) return; start.current = e.clientX; setDrag(true) }} onPointerMove={(e) => start.current != null && setDx(e.clientX - start.current)} onPointerUp={end} onPointerCancel={end}>
+          <Photo u={u} i={pi} />
+          <div className="gyeol-dots">{Array.from({ length: n }).map((_, i) => <i key={i} className={i === pi ? 'on' : ''} />)}</div>
+          <button className="gyeol-tap l" onClick={() => setPi((q) => Math.max(0, q - 1))} />
+          <button className="gyeol-tap r" onClick={() => setPi((q) => Math.min(n - 1, q + 1))} />
+          <b className="gyeol-stamp like" style={{ opacity: x > 0 ? Math.min(1, (x - 20) / 80) : 0 }}>LIKE</b>
+          <b className="gyeol-stamp nope" style={{ opacity: x < 0 ? Math.min(1, (-x - 20) / 80) : 0 }}>PASS</b>
+          <div className="gyeol-info" onClick={() => Math.abs(dx) < 5 && setDetail(u.id)}>
+            <h2>{u.nick} <em>{u.age}</em></h2>
+            <p>{u.online && <i className="gyeol-on" />}{u.online ? '접속 중' : u.last} · {u.area} · {u.dist}km</p>
+            <p className="gyeol-sub">{u.bio}</p>
+            <p className="gyeol-sub">{u.height}cm · {u.job} · {u.goal}</p>
+          </div>
         </div>
       </div>
       <div className="gyeol-actions">
-        <button onClick={() => pass(u.id)}><X size={26} /></button>
+        <button onClick={() => act('pass')}><X size={26} /></button>
         <button className={`sm ${s.starred.includes(u.id) ? "starred" : ""}`} aria-label={s.starred.includes(u.id) ? "즐겨찾기 해제" : "즐겨찾기 추가"} title="즐겨찾기" onClick={() => star(u.id)}><Star size={22} fill={s.starred.includes(u.id) ? "currentColor" : "none"} /></button>
-        <button className="main" onClick={() => like(u.id)}><Heart size={26} /></button>
+        <button className="main" onClick={() => act('like')}><Heart size={26} /></button>
       </div>
     </div>
   )
@@ -322,5 +347,28 @@ function Filter({ f, set, onClose }) {
       <label>관계 목적<select value={f.goal} onChange={(e) => set({ goal: e.target.value })}><option>전체</option>{GOALS.map((g) => <option key={g}>{g}</option>)}</select></label>
       <button className="gyeol-btn" onClick={onClose}>적용</button>
     </div></div>
+  )
+}
+
+function MatchScreen({ u, me, onChat, onClose }) {
+  const bits = useMemo(() => Array.from({ length: 26 }, (_, i) => {
+    const a = (i / 26) * Math.PI * 2 + Math.random() * 0.4, r = 120 + Math.random() * 150
+    return { x: Math.cos(a) * r, y: Math.sin(a) * r - 40, d: Math.random() * 0.25, s: 10 + Math.random() * 16, h: i % 3 === 0 }
+  }), [])
+  return (
+    <div className="gyeol-match" onClick={onClose}>
+      <div className="gyeol-match-in" onClick={(e) => e.stopPropagation()}>
+        <div className="gyeol-burst">{bits.map((b, i) => <i key={i} className={b.h ? 'h' : ''} style={{ ['--x' as any]: `${b.x}px`, ['--y' as any]: `${b.y}px`, animationDelay: `${0.35 + b.d}s`, width: b.s, height: b.s }} />)}</div>
+        <h1>MATCH!</h1>
+        <p>{u.nick}님도 나를 좋아했어요</p>
+        <div className="gyeol-match-photos">
+          <div className="l"><Photo u={{ nick: me.nick, photos: me.photos }} i={0} /></div>
+          <span><Heart size={26} fill="currentColor" /></span>
+          <div className="r"><Photo u={u} i={0} /></div>
+        </div>
+        <button className="gyeol-btn" onClick={onChat}><MessageCircle size={18} />메시지 보내기</button>
+        <button className="gyeol-btn ghost" onClick={onClose}>계속 탐색하기</button>
+      </div>
+    </div>
   )
 }

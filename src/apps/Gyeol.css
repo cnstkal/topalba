@@ -155,3 +155,31 @@
 .gyeol-detail{padding-bottom:104px}
 .gyeol-dbody{padding-bottom:120px}
 .gyeol-dbar{bottom:-8px;padding:12px 12px 20px}
+
+/* ── 스와이프 모션 + 매칭 연출 ── */
+.gyeol-deck{position:relative;flex:1;min-height:0}
+.gyeol-deck .gyeol-card{position:absolute;inset:0;will-change:transform}
+.gyeol-card.back{transition:transform .2s,opacity .2s;pointer-events:none}
+.gyeol-card.flying{pointer-events:none}
+.gyeol-stamp{transition:none}
+.gyeol-stamp.like{transform:rotate(-14deg)}.gyeol-stamp.nope{transform:rotate(14deg)}
+.gyeol-actions button{transition:transform .15s}.gyeol-actions button:active{transform:scale(.88)}
+.gyeol-match{position:absolute;inset:0;z-index:60;background:rgba(0,0,0,.88);display:grid;place-items:center;animation:gm-fade .3s}
+.gyeol-match-in{position:relative;width:100%;padding:0 28px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.gyeol-match h1{margin:0;font-size:46px;font-style:italic;font-weight:900;letter-spacing:-1px;color:var(--lime);text-shadow:0 0 28px rgba(198,255,0,.55);animation:gm-pop .6s cubic-bezier(.2,1.6,.4,1) both .1s}
+.gyeol-match p{margin:0 0 10px;color:#ddd;font-size:15px;animation:gm-fade .5s both .5s}
+.gyeol-match-photos{display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.gyeol-match-photos>div{width:130px;height:170px;border-radius:18px;overflow:hidden;border:3px solid var(--lime);box-shadow:0 0 24px rgba(198,255,0,.3)}
+.gyeol-match-photos .l{transform:rotate(-8deg);animation:gm-l .7s cubic-bezier(.2,1.2,.4,1) both .15s}
+.gyeol-match-photos .r{transform:rotate(8deg);animation:gm-r .7s cubic-bezier(.2,1.2,.4,1) both .15s}
+.gyeol-match-photos span{z-index:2;margin:0 -16px;width:48px;height:48px;border-radius:50%;background:var(--lime);color:#000;display:grid;place-items:center;animation:gm-heart 1s ease-out both .6s}
+.gyeol-match .gyeol-btn{width:100%;max-width:280px}
+.gyeol-burst{position:absolute;left:50%;top:44%;width:0;height:0;pointer-events:none}
+.gyeol-burst i{position:absolute;left:0;top:0;border-radius:50%;background:var(--lime);opacity:0;animation:gm-burst 1.1s ease-out forwards}
+.gyeol-burst i.h{background:#ff5d8f}
+@keyframes gm-fade{from{opacity:0}to{opacity:1}}
+@keyframes gm-pop{0%{transform:scale(.2) rotate(-12deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes gm-l{from{transform:translateX(-160px) rotate(-30deg);opacity:0}to{transform:translateX(0) rotate(-8deg);opacity:1}}
+@keyframes gm-r{from{transform:translateX(160px) rotate(30deg);opacity:0}to{transform:translateX(0) rotate(8deg);opacity:1}}
+@keyframes gm-heart{0%{transform:scale(0)}55%{transform:scale(1.6)}100%{transform:scale(1)}}
+@keyframes gm-burst{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1);opacity:0}}
