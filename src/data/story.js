@@ -292,14 +292,25 @@ export const INITIAL_NOTES = [
 
 export const INITIAL_MAILS = [
   {
-    id: 'mail_init1',
-    from: '무신사',
-    addr: 'notice@musinsa.example',
+    id: 'mail_init1', from: '무신사', addr: 'notice@musinsa.example',
     subject: '[광고] 이번 주 인기 상품 쿠폰 안내',
     preview: '회원님을 위한 할인 혜택을 확인해 보세요.',
     body: '안녕하세요. 무신사입니다.\n\n이번 주 인기 상품과 회원 전용 쿠폰을 안내드립니다.\n수신 설정은 마이페이지에서 변경할 수 있습니다.\n\n본 메일은 광고성 정보 수신 동의에 따라 발송되었습니다.',
-    ts: Date.now() - 2 * 86400000,
-    read: true,
+    ts: Date.now() - 2 * 86400000, read: true,
+  },
+  {
+    id: 'mail_init2', from: '네이버페이', addr: 'pay@notice.naver.example',
+    subject: '[결제내역] 네이버페이 이용 내역 안내',
+    preview: '최근 결제하신 내역을 안내드립니다.',
+    body: '네이버페이 결제 내역을 안내드립니다.\n\n가맹점: 온라인 쇼핑몰\n결제금액: 24,800원\n결제수단: 등록 카드\n\n본 메일은 결제 정보 안내 메일입니다.',
+    ts: Date.now() - 4 * 86400000, read: true,
+  },
+  {
+    id: 'mail_init3', from: '오늘의집', addr: 'news@ohou.se.example',
+    subject: '[광고] 오늘만 받을 수 있는 추천 혜택',
+    preview: '관심 상품과 주간 할인 소식을 모았어요.',
+    body: '안녕하세요. 오늘의집입니다.\n\n이번 주 인기 상품과 할인 소식을 전해드립니다.\n\n본 메일은 정기 수신 동의에 따라 발송되었습니다.',
+    ts: Date.now() - 6 * 86400000, read: true,
   },
 ]
 
