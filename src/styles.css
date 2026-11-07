@@ -606,4 +606,10 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .story-reply input { background: rgba(255,255,255,.12); border: .5px solid rgba(255,255,255,.6); }
 .story-foot { gap: 14px; }
 .story-foot .story-like { padding: 0; }
+/* 스토리 하단 입력줄은 사진 밖(검은 바닥)에 배치 */
+.story-view { display: flex; flex-direction: column; background: #000; }
+.story-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.story-stage .story-photo { position: absolute; inset: 0; }
+.story-foot { position: relative; left: auto; right: auto; bottom: auto; flex: none; background: #000; padding: 10px 12px 28px; }
+.story-empty { display: flex; }
 

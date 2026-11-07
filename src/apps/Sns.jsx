@@ -157,6 +157,7 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
   const s = slides[idx]
   return (
     <div className="story-view">
+      <div className="story-stage">
       <Photo key={idx} photo={s.photo} tint="#2b2b30" w={540} h={960} className="story-photo" alt={s.text} />
       <div className="story-shade" />
       <div className="story-bars">
@@ -185,6 +186,7 @@ function StoryViewer({ title, owner, when, slides, onClose, onToast }) {
       {floats.map((f) => (
         <span key={f.id} className="story-float">{f.emoji}</span>
       ))}
+      </div>
       <div className="story-foot">
         <form
           className="story-reply"
