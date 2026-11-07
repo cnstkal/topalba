@@ -753,6 +753,50 @@ input, textarea { font: inherit; -webkit-user-select: text; user-select: text; }
 .alert button + button { border-left: .5px solid var(--sep); font-weight: 600; }
 
 
+/* ===== settings-ios.css ===== */
+/* 설정 앱 전용 (st- 접두사, 다른 앱에 영향 없음) */
+.st { background: #f2f2f7; }
+.st-title { flex: none; padding: 40px 20px 4px; font-size: 34px; font-weight: 700; letter-spacing: .35px; line-height: 1.2; }
+.st-search { flex: none; display: flex; align-items: center; gap: 6px; height: 36px; margin: 8px 16px 14px; padding: 0 9px; border-radius: 10px; background: rgba(118, 118, 128, .12); color: #8e8e93; font-size: 17px; }
+.st-search span { flex: 1; }
+.st-mic { opacity: .9; }
+.st-scroll { padding-bottom: 44px; }
+.st-nav { position: relative; }
+.st-nav-title { position: absolute; left: 0; right: 0; text-align: center; font-size: 17px; font-weight: 600; color: #000; pointer-events: none; }
+.st-group { background: #fff; margin: 0 16px 22px; border-radius: 14px; overflow: hidden; }
+.st-row { position: relative; display: flex; align-items: center; gap: 14px; width: 100%; min-height: 46px; padding: 0 14px 0 16px; font-size: 17px; letter-spacing: -.2px; }
+.st-row + .st-row::before { content: ''; position: absolute; top: 0; left: 60px; right: 0; border-top: .5px solid var(--sep); }
+.st-row.plain + .st-row.plain::before { left: 16px; }
+.st-row:active { background: #e5e5ea; }
+.st-ic { flex: none; width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; background-image: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 60%); box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .08); }
+.st-ic svg { display: block; }
+.st-lb { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-val { font-style: normal; color: #8e8e93; flex: none; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-chev { flex: none; color: #c4c4c7; margin-left: -4px; margin-right: -2px; }
+.st-row.plain { min-height: 44px; }
+.st-row.plain .st-lb { flex: 0 0 auto; margin-right: auto; }
+.st-row.danger { justify-content: center; color: var(--red); }
+.st-prof { min-height: 84px; padding: 12px 14px 12px 16px; gap: 14px; }
+.st-prof::before { display: none; }
+.st-av { flex: none; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(180deg, #b9bac0, #8e8f96); color: #fff; font-size: 26px; font-weight: 500; }
+.st-prof-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.st-prof-t b { font-size: 20px; font-weight: 500; letter-spacing: -.3px; }
+.st-prof-t span { font-size: 13px; color: #6c6c70; line-height: 1.3; }
+.st-sw { flex: none; position: relative; width: 51px; height: 31px; border-radius: 16px; background: #e9e9eb; transition: background .25s; }
+.st-sw i { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .15), 0 1px 1px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .06); transition: transform .25s cubic-bezier(.3, .8, .3, 1); }
+.st-sw.on { background: var(--green); }
+.st-sw.on i { transform: translateX(20px); }
+.st-dim { position: absolute; inset: 0; z-index: 40; background: rgba(0, 0, 0, .4); display: flex; align-items: center; justify-content: center; animation: fade .2s ease both; }
+.st-alert { width: 270px; border-radius: 14px; overflow: hidden; text-align: center; background: rgba(246, 246, 248, .94); backdrop-filter: blur(30px) saturate(1.8); -webkit-backdrop-filter: blur(30px) saturate(1.8); animation: stPop .24s cubic-bezier(.2, .9, .3, 1.1) both; }
+@keyframes stPop { from { transform: scale(1.12); opacity: 0; } to { transform: none; opacity: 1; } }
+.st-alert-b { padding: 20px 16px 18px; }
+.st-alert-b b { display: block; font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.st-alert-b p { margin: 0; font-size: 13px; line-height: 1.35; color: #000; }
+.st-alert-act { display: flex; border-top: .5px solid rgba(60, 60, 67, .29); }
+.st-alert-act button { flex: 1; height: 44px; text-align: center; font-size: 17px; color: var(--blue); }
+.st-alert-act button + button { border-left: .5px solid rgba(60, 60, 67, .29); font-weight: 600; }
+.st-alert-act button:active { background: rgba(0, 0, 0, .06); }
+
 /* ===== clock-music-appstore.css ===== */
 /* 시계 / 음악 / 앱스토어 */
 .clock-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: .5px solid var(--sep); }
