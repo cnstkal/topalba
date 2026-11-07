@@ -181,7 +181,7 @@ function Markers({ k, cat, sel, onPick }) {
 
 /* ---------- 메인 ---------- */
 export default function Maps({ close }) {
-  const [fav, setFav] = usePersist('maps.fav2', ['p101', 'p102', 'p103'])
+  const [fav, setFav] = usePersist('maps.fav3', ['p101', 'p102', 'p103'])
   const [recent, setRecent] = usePersist('maps.recent2', [])
   const [view, setView] = useState(HOME_VIEW)
   const [size, setSize] = useState({ w: 390, h: 800 })
