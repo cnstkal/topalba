@@ -295,7 +295,6 @@ function Detail({ u, s, like, unlike, block, openChat, matched, onClose }) {
         <p>{u.online ? <><i className="gyeol-on" />접속 중</> : `마지막 접속 ${u.last}`} · {u.area} · {u.dist}km</p>
         <dl><dt>키</dt><dd>{u.height}cm</dd><dt>포지션</dt><dd>{u.position}</dd><dt>관계 목적</dt><dd>{u.goal}</dd></dl>
         <p>{u.bio}</p>
-        <div className="gyeol-tags">{u.tags.map((t) => <span key={t}>{t}</span>)}</div>
         <div className="gyeol-safety"><button onClick={() => setRep(true)}><Flag size={14} />신고</button><button onClick={() => block(u.id)}><Ban size={14} />차단</button></div>
         {rep && <p className="gyeol-note">신고가 접수되었어요. (샘플)</p>}
       </div>
