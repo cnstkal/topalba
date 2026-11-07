@@ -3,7 +3,7 @@ import { DAYS } from '../utils'
 import { dev } from '../engine/device'
 
 /* ───────────────────────── 상수·유틸 ───────────────────────── */
-const LS = 'private-clock-v1' // 시계 앱 전용 저장 키 (게임 저장 데이터와 분리)
+const LS = 'private-clock-v2' // 시계 앱 전용 저장 키 (게임 저장 데이터와 분리)
 const ITEM = 36
 const HOME = (() => {
   try {
@@ -86,7 +86,18 @@ function fmtRemain(ms) {
    시간 계산은 모두 타임스탬프(Date.now) 기준이라 화면 이동·앱 종료·재렌더링에도 오차가 쌓이지 않는다. */
 const DEF = () => ({
   cities: ['Asia/Seoul', 'America/New_York', 'Europe/London', 'Asia/Tokyo'],
-  alarms: [{ id: 'al-wake', h: 7, m: 0, label: '기상', repeat: [1, 2, 3, 4, 5], on: false, last: '' }],
+  alarms: [
+    { id: 'al-wake', h: 6, m: 30, label: '기상', repeat: [1, 2, 3, 4, 5], on: true, last: '' },
+    { id: 'al-1', h: 7, m: 0, label: '일어나기', repeat: [1,2,3,4,5], on: true, last: '' },
+    { id: 'al-2', h: 7, m: 15, label: '씻기', repeat: [1,2,3,4,5], on: true, last: '' },
+    { id: 'al-3', h: 7, m: 30, label: '출발 준비', repeat: [1,2,3,4,5], on: true, last: '' },
+    { id: 'al-4', h: 8, m: 0, label: '수업 확인', repeat: [1,2,3,4,5], on: true, last: '' },
+    { id: 'al-5', h: 9, m: 0, label: '메일 확인', repeat: [1,2,3,4,5], on: true, last: '' },
+    { id: 'al-6', h: 12, m: 0, label: '점심', repeat: [1,2,3,4,5,6,0], on: true, last: '' },
+    { id: 'al-7', h: 18, m: 0, label: '퇴근 확인', repeat: [1,2,3,4,5,6,0], on: true, last: '' },
+    { id: 'al-8', h: 22, m: 30, label: '약 챙기기', repeat: [1,2,3,4,5,6,0], on: true, last: '' },
+    { id: 'al-9', h: 23, m: 30, label: '잘 준비', repeat: [1,2,3,4,5,6,0], on: true, last: '' },
+  ],
   snoozes: [],
   sw: { acc: 0, start: null, laps: [] },
   timer: { state: 'idle', total: 0, end: null, remain: 0 },
