@@ -1,0 +1,70 @@
+.kakaotalk{position:absolute;inset:0;background:#fff;color:#191919;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;overflow:hidden}
+.kakaotalk *{box-sizing:border-box}
+.kakaotalk button{border:0;background:none;font:inherit;color:inherit;cursor:pointer}
+.kakaotalk-main,.kakaotalk-page{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;padding-top:48px;padding-bottom:26px}
+.kakaotalk-page{z-index:5}
+.kakaotalk-head{display:flex;align-items:center;gap:8px;padding:6px 16px;min-height:44px}
+.kakaotalk-head h1{flex:1;margin:0;font-size:20px;font-weight:700}
+.kakaotalk-head i{font-style:normal;color:#999;font-size:14px}
+.kakaotalk-head button{font-size:15px;padding:4px 6px}
+.kakaotalk-search{margin:4px 16px 8px;border:0;background:#f2f2f2;border-radius:10px;padding:9px 12px;font-size:14px;outline:0}
+.kakaotalk-scroll{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch}
+.kakaotalk-row{display:flex;align-items:center;gap:12px;padding:8px 16px;cursor:pointer}
+.kakaotalk-row:active{background:#f6f6f6}
+.kakaotalk-row b{font-size:15px;font-weight:600}
+.kakaotalk-row b i{font-style:normal;color:#aaa;font-weight:400}
+.kakaotalk-row p{margin:2px 0 0;font-size:13px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:230px}
+.kakaotalk-row small{color:#aaa;font-size:11px}
+.kakaotalk-grow{flex:1;min-width:0}
+.kakaotalk-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:11px;color:#aaa}
+.kakaotalk-meta em{font-style:normal;background:#ff5a4f;color:#fff;border-radius:9px;min-width:18px;padding:1px 5px;text-align:center;font-weight:600}
+.kakaotalk-sec{padding:10px 16px 4px;font-size:12px;color:#999}
+.kakaotalk-fold{cursor:pointer}
+.kakaotalk-static{cursor:default}.kakaotalk-static:active{background:none}
+.kakaotalk-avatar{border-radius:38%;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0}
+.kakaotalk-avatar img{width:100%;height:100%;object-fit:cover}
+.kakaotalk-open-img{width:52px;height:52px;border-radius:14px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kakaotalk-tabs{display:flex;border-top:1px solid #eee;background:#fafafa}
+.kakaotalk-tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:10px;color:#999;filter:grayscale(1)}
+.kakaotalk-tabs button span{font-size:19px}
+.kakaotalk-tabs button.on{color:#191919;filter:none;font-weight:700}
+.kakaotalk-tabs button.kakaotalk-disabled{opacity:.35;cursor:default;pointer-events:none}
+.kakaotalk-room{background:#b2c7da}
+.kakaotalk-room .kakaotalk-head{background:#b2c7da}
+.kakaotalk-chat{padding:8px 12px}
+.kakaotalk-day{text-align:center;margin:12px auto;font-size:11px;color:#fff;background:rgba(0,0,0,.2);width:fit-content;padding:3px 12px;border-radius:12px}
+.kakaotalk-msg{display:flex;gap:8px;margin:6px 0;align-items:flex-start}
+.kakaotalk-msg.me{flex-direction:row-reverse}
+.kakaotalk-who{display:block;font-size:12px;margin-bottom:3px}
+.kakaotalk-line{display:flex;align-items:flex-end;gap:5px}
+.kakaotalk-msg.me .kakaotalk-line{flex-direction:row}
+.kakaotalk-time{font-size:10px;color:#555;white-space:nowrap}
+.kakaotalk-bubble{background:#fff;padding:8px 11px;border-radius:12px;max-width:225px;font-size:14px;line-height:1.4;white-space:pre-wrap;word-break:break-word;user-select:none;-webkit-user-select:none}
+.kakaotalk-msg.me .kakaotalk-bubble{background:#fee500}
+.kakaotalk-bubble img{max-width:180px;max-height:220px;border-radius:8px;display:block}
+.kakaotalk-quote{font-size:11px;color:#777;border-left:2px solid #ccc;padding-left:6px;margin-bottom:4px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kakaotalk-input{display:flex;align-items:flex-end;gap:6px;padding:8px;background:#fff}
+.kakaotalk-input textarea{flex:1;border:0;background:#f2f2f2;border-radius:18px;padding:9px 12px;font:inherit;font-size:14px;resize:none;max-height:90px;outline:0}
+.kakaotalk-plus{font-size:24px;width:32px;text-align:center;cursor:pointer;color:#666}
+.kakaotalk-send{background:#eee!important;color:#aaa;border-radius:16px;padding:8px 12px;font-size:13px}
+.kakaotalk-send.on{background:#fee500!important;color:#191919}
+.kakaotalk-emo{display:flex;flex-wrap:wrap;gap:4px;background:#fff;padding:8px;border-top:1px solid #eee}
+.kakaotalk-emo button{font-size:26px;width:15%}
+.kakaotalk-replybar{background:#f2f2f2;padding:6px 14px;font-size:12px;display:flex;justify-content:space-between}
+.kakaotalk-pop{position:absolute;right:12px;top:92px;background:#fff;border-radius:10px;z-index:8;display:flex;flex-direction:column;box-shadow:0 0 0 1px #ddd}
+.kakaotalk-pop button{padding:11px 18px;font-size:14px;text-align:left}
+.kakaotalk-dim{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:center;justify-content:center}
+.kakaotalk-menu{background:#fff;border-radius:14px;width:200px;display:flex;flex-direction:column;overflow:hidden}
+.kakaotalk-menu button{padding:14px;font-size:15px;border-bottom:1px solid #eee}
+.kakaotalk-big{max-width:92%;max-height:80%}
+.kakaotalk-profile{background:#4a5560;color:#fff;justify-content:flex-end;align-items:center;padding-bottom:50px}
+.kakaotalk-x{position:absolute;top:56px;left:16px;color:#fff;font-size:20px}
+.kakaotalk-pcenter{text-align:center;margin-bottom:36px}
+.kakaotalk-pcenter .kakaotalk-avatar{margin:0 auto}
+.kakaotalk-pcenter p{opacity:.8}
+.kakaotalk-primary{background:#fee500!important;color:#191919!important;padding:12px 40px!important;border-radius:10px;font-weight:700}
+.kakaotalk-form{padding:12px 16px}
+.kakaotalk-form label{display:block;font-size:12px;color:#888;margin:14px 0}
+.kakaotalk-form input:not([type=file]){display:block;width:100%;border:0;border-bottom:1px solid #ddd;padding:8px 0;font-size:15px;outline:0}
+.kakaotalk-preview{background:#6b7782 center/cover;color:#fff;border-radius:14px;padding:24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.kakaotalk-preview p{margin:0}
