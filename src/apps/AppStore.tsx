@@ -1,5 +1,3 @@
-import './AppStore.css'
-
 /* App Store '앱' 탭 목업. 모든 버튼은 장식 (눌러도 반응 없음) */
 const Sv = ({ s = 24, children, ...p }) => <svg viewBox="0 0 24 24" width={s} height={s} {...p}>{children}</svg>
 const St = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }
