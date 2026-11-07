@@ -344,6 +344,20 @@ export const SNS_ACCOUNTS = {
   mint_tea: { photo: 'daily', bio: '', followers: 130, following: 240 },
 }
 
+export const SNS_FOLLOWING = {
+  no1likeme8_8: true,
+  wooyounggg__: true,
+  'yunou._.u': true,
+  oldschool_friend: true,
+  afterwork_friend: true,
+  samevibe_daily: true,
+  cafe_seoul_log: true,
+  han_river_walk: true,
+  coffee_day: true,
+  hello_star: true,
+  mint_tea: true,
+}
+
 // 계정별 스토리 (열람 전후 테두리 구분용 키는 계정 id)
 export const SNS_STORIES = {
   cafe_seoul_log: [
