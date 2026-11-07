@@ -18,6 +18,7 @@ const P = {
 const Ic = ({ n, s = 22, f, w = 1.8 }) => <svg viewBox="0 0 24 24" width={s} height={s} fill={f ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={n === 'dots' ? 3 : w} strokeLinecap="round" strokeLinejoin="round"><path d={P[n]} /></svg>
 const X = ({ s = 22 }) => <svg viewBox="0 0 24 24" width={s} height={s}><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
 const Lock = () => <svg viewBox="0 0 24 24" width="15" height="15" className="lk"><path d="M7 10V8a5 5 0 0 1 10 0v2" fill="none" stroke="#000" strokeWidth="2.500" /><rect x="4.500" y="10" width="15" height="11" rx="3" fill="#000" /></svg>
+const TweetText = ({ text = '' }) => text.split(/(#[가-힣A-Za-z0-9_]+)/g).map((part, i) => part.startsWith('#') ? <span key={i} className="lnk">{part}</span> : <span key={i}>{part}</span>)
 const Vf = () => <svg viewBox="0 0 24 24" width="17" height="17" className="lk"><circle cx="12" cy="12" r="10" fill="#1d9bf0" /><path d="m7.500 12.500 3 3 6-6.500" stroke="#fff" strokeWidth="2.400" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
 
 /* 아바타 (전부 벡터) */
@@ -109,7 +110,7 @@ export default function Twitter() {
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
         {PROF.map((p, i) => (
           <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
-            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x">{p.text}</p>}{p.media && <div className="med"><i /></div>}
+            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><i /></div>}
               <Act r={p.rts} l={p.lk} v="" rp="" /></div></div>
         ))}
         <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
@@ -143,9 +144,9 @@ export default function Twitter() {
             <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc"><Av c={t.c} def={t.def} s={48} /></div>
               <div className="m">
                 <p className="n"><b>{t.name}</b> <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
-                {t.text && <p className="x">{t.text}</p>}
+                {t.text && <p className="x"><TweetText text={t.text} /></p>}
                 {t.media && <div className="med"><i /></div>}
-                {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x">{t.q.text}</p></div>}
+                {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x"><TweetText text={t.q.text} /></p></div>}
                 <Act r={t.rts} l={t.lk} v={t.vw || ''} />
               </div></div>
           ))}
