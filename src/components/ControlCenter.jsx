@@ -350,7 +350,6 @@ function Panel({ closing, onClose, onOpenApp }) {
                 </Press>
               ))}
             </div>
-            <p className="cc-fine mid">Wi-Fi · Bluetooth · AirDrop은 길게 눌러 자세히 볼 수 있어요.<br />시뮬레이터 안의 상태만 바뀌며 실제 기기 설정은 변경하지 않아요.</p>
           </section>
         </div>
       </div>
