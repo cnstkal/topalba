@@ -321,15 +321,20 @@ export const INITIAL_SENT = [
 export const INITIAL_POSTS = [
   { id: 'p0a', user: 'cafe_seoul_log', photo: 'cafe', text: '오늘의 커피', loc: '서울 성수동', ago: '2시간 전', likes: 312, comments: [{ user: 'coffee_day', text: '맛있겠다' }], tint: '#f5e6d3' },
   { id: 'p0b', user: 'han_river_walk', photo: 'land', text: '퇴근길 하늘이 예뻐서', loc: '여의도 한강공원', ago: '5시간 전', likes: 508, comments: [], tint: '#d6ecff' },
-  { id: 'py1', user: 'yoonho_j', photo: 'daily', text: '월요일 아침은 역시 편의점 김밥', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'mint_tea', text: '저도 그거 먹었어요ㅎㅎ' }], tint: '#e8f5e9' },
-  { id: 'py2', user: 'yoonho_j', photo: 'travel', text: '잠깐 떠났던 바다', loc: '강릉 안목해변', ago: '2주 전', likes: 96, comments: [{ user: 'hello_star', text: '바다 너무 좋다' }], tint: '#d6ecff' },
-  { id: 'py3', user: 'yoonho_j', photo: 'street', text: '알바 끝나고 걷는 길', loc: '서울 연남동', ago: '1주 전', likes: 57, comments: [], tint: '#e6e0ff' },
-  { id: 'py4', user: 'yoonho_j', photo: 'food', text: '사장님이 서비스로 주신 빵 😋', loc: '', ago: '4일 전', likes: 73, comments: [{ user: 'cafe_seoul_log', text: '빵 맛집 인정' }], tint: '#fff4cc' },
-  { id: 'py5', user: 'yoonho_j', photo: 'cafe', text: '시험 전날 밤, 카페 자리 확보 성공', loc: '서울 신촌', ago: '3주 전', likes: 129, comments: [], tint: '#f5e6d3' },
+  { id: 'ps1', user: '_starhwa_', photo: 'daily', text: '쉬는 날 기록', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'wooyounggg__', text: '뭐야 여기 좋네' }], tint: '#e8f5e9' },
+  { id: 'ps2', user: '_starhwa_', photo: 'travel', text: '잠깐 바람 쐬러', loc: '바다', ago: '2주 전', likes: 96, comments: [{ user: 'yunou._.u', text: '사진 잘 나왔다' }], tint: '#d6ecff' },
+  { id: 'ps3', user: '_starhwa_', photo: 'food', text: '🍚', loc: '', ago: '1주 전', likes: 57, comments: [{ user: 'no1likeme8_8', text: 'ㅋㅋㅋㅋ' }], tint: '#fff4cc' },
 ]
 
 // 계정 프로필 (사진 키 / 소개 / 팔로워·팔로잉 수)
 export const SNS_ACCOUNTS = {
+  '_starhwa_': { name: '박성화', photo: 'daily', bio: '', followers: 294, following: 303 },
+  'no1likeme8_8': { name: '김홍중', photo: 'street', bio: '아이돌', followers: 0, following: 0 },
+  'wooyounggg__': { name: '정우영', photo: 'food', bio: '', followers: 0, following: 0 },
+  'yunou._.u': { name: '정윤호', photo: 'travel', bio: '', followers: 0, following: 0 },
+  'oldschool_friend': { name: '고등학교 동창', photo: 'daily', bio: '', followers: 0, following: 0 },
+  'afterwork_friend': { name: '회사에서 알게 된 사람', photo: 'cafe', bio: '', followers: 0, following: 0 },
+  'samevibe_daily': { name: '일상 기록', photo: 'land', bio: '', followers: 0, following: 0 },
   cafe_seoul_log: { photo: 'cafe', bio: '서울 카페 기록 ☕', followers: 1204, following: 88 },
   han_river_walk: { photo: 'land', bio: '한강 산책 메모', followers: 3520, following: 210 },
   coffee_day: { photo: 'cafe', bio: '매일 커피', followers: 642, following: 301 },
@@ -358,9 +363,7 @@ export const SNS_STORIES = {
 
 // 본인 프로필 하이라이트
 export const SNS_HIGHLIGHTS = [
-  { id: 'hl1', title: '일상', photo: 'daily', items: [{ photo: 'daily', text: '아침 공기' }, { photo: 'food', text: '점심 메뉴' }] },
-  { id: 'hl2', title: '여행', photo: 'travel', items: [{ photo: 'travel', text: '강릉' }] },
-  { id: 'hl3', title: '알바', photo: 'street', items: [{ photo: 'street', text: '퇴근 길' }] },
+  { id: 'hl1', title: '🍚', photo: 'food', items: [{ photo: 'food', text: '🍚' }] },
 ]
 
 export const INITIAL_PROFILE = { bio: '평범한 일상 기록' }
