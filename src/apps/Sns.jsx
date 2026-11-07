@@ -225,9 +225,14 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
             {post.loc && <i>{post.loc}</i>}
           </span>
         </button>
-        <button className="post-more" onClick={onMore} aria-label="더보기">
-          <Dots />
-        </button>
+        <span className="post-head-r">
+          {post.user !== ME_ID && !state.follows[post.user] && (
+            <button className="post-follow" onClick={() => actions.follow(post.user)}>팔로우</button>
+          )}
+          <button className="post-more" onClick={onMore} aria-label="더보기">
+            <Dots />
+          </button>
+        </span>
       </div>
       <div className="post-img" onDoubleClick={doubleTap}>
         <Photo photo={post.photo} tint={post.tint} w={900} h={1125} className="post-photo" alt={post.text} />
@@ -553,9 +558,15 @@ export default function Sns({ params }) {
           <div className="sns-top">
             <Back onClick={() => setTab('feed')} />
             <b>yoonho_j</b>
-            <span />
+            <span className="dm-compose" aria-label="새 메시지">
+              <Ico d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" size={22} />
+            </span>
           </div>
           <div className="scroll">
+            <label className="dm-search">
+              <Ico d={SEARCH} size={16} stroke="#8e8e93" sw={2.2} />
+              <span>검색</span>
+            </label>
             {dmRows.length === 0 && <div className="empty">메시지가 없습니다.</div>}
             {dmRows.map((id) => {
               const l = state.threads[id]
