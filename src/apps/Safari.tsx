@@ -28,13 +28,6 @@ const Spark = () => <Sv s={22}><path d="M12 2c.8 5.500 4.500 9.200 10 10-5.500.8
 const Pup = () => <svg viewBox="0 0 120 64" width="120" height="64"><path d="M4 64c2-24 14-36 34-36s28 12 30 36z" fill="#4a7ad0" /><circle cx="40" cy="22" r="11" fill="#5b3a2a" /><ellipse cx="78" cy="38" rx="22" ry="16" fill="#f0b83a" /><ellipse cx="66" cy="26" rx="6" ry="9" fill="#e8872a" /><circle cx="52" cy="36" r="3" fill="#222" /></svg>
 const QI = ({ bg, children }) => <i style={{ background: bg }}>{children}</i>
 
-/* 즐겨찾기 (네이버/구글만 동작, 나머지는 장식) */
-const FAV = [
-  ['(1)\nユメノ僕님(…', '#000', '@', 'th'], ['(1)\n@yh1999.…', '#000', '@', 'th'], ['GitHub', '#000', <Octo />], ['일회용 주소', '#fbea7b', <Mail c="#e8942a" s={34} />],
-  ['NAVER', 'linear-gradient(#6fe86f,#3cc664)', <NaverN />, 'naver'], ['포스타입 -\nPOSTYPE', '#000', 'TP'], ['Daum 카페', 'transparent', 'cafe', 'cafe'], ['홈 / 트위터', '#000', <XLogo />],
-  ['Google', '#fff', <GoogleG />, 'google'],
-]
-
 export default function Safari() {
   const { state, actions } = useGame()
   const [st, setSt] = useState({ h: [{ k: 'start' }], i: 0 })
@@ -79,15 +72,6 @@ export default function Safari() {
       </form>
 
       <div className="sf-body">
-        {isStart && (
-          <div className="sf-sc">
-            <div className="sf-sec"><h2>즐겨찾기</h2><span>간략히 보기 <Ic d="chev" s={16} w={2.4} /></span></div>
-            <div className="sf-grid">{FAV.map(([label, bg, ico, id], i) => (
-              <button key={i} className="sf-fav" onClick={id === 'naver' || id === 'google' ? () => open(SITE[id].url) : undefined}>
-                <i className={'ti ' + (id || '')} style={{ background: bg }}>{ico}</i><span>{label}</span>
-              </button>))}</div>
-          </div>
-        )}
 
         {view.k === 'site' && view.id === 'naver' && <Naver onSearch={search} history={history} />}
         {view.k === 'site' && view.id === 'google' && (
@@ -155,9 +139,8 @@ function Naver({ onSearch, history }) {
     )}
     <div className="sf-sc nvp">
       <div className="nh"><Ic d="menu" s={30} /><i className="pay">pay</i><span className="sp" /><span className="bw"><Ic d="bell" s={28} /><em>2</em></span><span className="pf"><Ic d="user" s={28} /></span></div>
-      <div className="mascot"><Pup /><b>국제 인간-동물 유대감의 날</b></div>
       <form className="nsr" onSubmit={(e) => { e.preventDefault(); onSearch(q) }}>
-        <NaverN c="#a285e8" /><input readOnly onFocus={() => setOv(true)} onClick={() => setOv(true)} /><i className="cam" /><span className="ai"><Spark />AI</span>
+        <input readOnly onFocus={() => setOv(true)} onClick={() => setOv(true)} /><i className="cam" />
       </form>
       <div className="nblank" />
       <div className="nq"><span><QI bg="#2ec36b"><Mail s={14} /></QI>메일</span><span><QI bg="#5ac35a"><Sv s={14} fill="#fff"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM16 9h2a2 2 0 0 1 0 5h-2z" /></Sv></QI>카페</span><span><QI bg="#5b3fd6"><Sv s={14} fill="#fff"><path d="M5 5h4l6 8V5h4v14h-4L9 11v8H5z" /></Sv></QI>쇼핑</span><u /><span>뉴스</span><span>엔터</span><span>지식</span><span>쇼핑</span></div>
