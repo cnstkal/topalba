@@ -7,7 +7,7 @@ const EXTRA_APPS = {
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
   twitter: { label: 'X', bg: '#000' },
-  maps: { label: '길벗', bg: 'linear-gradient(160deg,#5fd18a,#1fa45a)' },
+  maps: { label: '지도', bg: 'linear-gradient(160deg,#5fd18a,#1fa45a)' },
 }
 
 const EXTRA_GLYPHS = {
