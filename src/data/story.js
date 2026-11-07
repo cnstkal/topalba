@@ -109,6 +109,9 @@ export const EVENTS = [
           id: 'p1',
           user: 'seoul_walker',
           text: '오늘 날씨 너무 좋다. 점심 산책 굿',
+          photo: 'street',
+          loc: '서울 송파구',
+          ago: '방금',
           likes: 84,
           comments: [{ user: 'mint_tea', text: '저도 나가고 싶어요ㅎㅎ' }],
           tint: '#d6ecff',
@@ -120,6 +123,9 @@ export const EVENTS = [
           id: 'p2',
           user: 'daily_cafe_note',
           text: '새로 생긴 동네 빵집 줄이 너무 길어서 포기했어요',
+          photo: 'food',
+          loc: '동네 빵집',
+          ago: '방금',
           likes: 37,
           comments: [],
           tint: '#f5e6d3',
@@ -306,10 +312,56 @@ export const INITIAL_SENT = [
   },
 ]
 
+// ── SNS 데이터 ──
+// photo 값은 src/apps/Sns.jsx 의 PHOTOS 키 (cafe, food, travel, street, land, daily)
 export const INITIAL_POSTS = [
-  { id: 'p0a', user: 'cafe_seoul_log', text: '오늘의 커피', likes: 312, comments: [{ user: 'coffee_day', text: '맛있겠다' }], tint: '#f5e6d3' },
-  { id: 'p0b', user: 'han_river_walk', text: '퇴근길 하늘이 예뻐서', likes: 508, comments: [], tint: '#d6ecff' },
+  { id: 'p0a', user: 'cafe_seoul_log', photo: 'cafe', text: '오늘의 커피', loc: '서울 성수동', ago: '2시간 전', likes: 312, comments: [{ user: 'coffee_day', text: '맛있겠다' }], tint: '#f5e6d3' },
+  { id: 'p0b', user: 'han_river_walk', photo: 'land', text: '퇴근길 하늘이 예뻐서', loc: '여의도 한강공원', ago: '5시간 전', likes: 508, comments: [], tint: '#d6ecff' },
+  { id: 'py1', user: 'yoonho_j', photo: 'daily', text: '월요일 아침은 역시 편의점 김밥', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'mint_tea', text: '저도 그거 먹었어요ㅎㅎ' }], tint: '#e8f5e9' },
+  { id: 'py2', user: 'yoonho_j', photo: 'travel', text: '잠깐 떠났던 바다', loc: '강릉 안목해변', ago: '2주 전', likes: 96, comments: [{ user: 'hello_star', text: '바다 너무 좋다' }], tint: '#d6ecff' },
+  { id: 'py3', user: 'yoonho_j', photo: 'street', text: '알바 끝나고 걷는 길', loc: '서울 연남동', ago: '1주 전', likes: 57, comments: [], tint: '#e6e0ff' },
+  { id: 'py4', user: 'yoonho_j', photo: 'food', text: '사장님이 서비스로 주신 빵 😋', loc: '', ago: '4일 전', likes: 73, comments: [{ user: 'cafe_seoul_log', text: '빵 맛집 인정' }], tint: '#fff4cc' },
+  { id: 'py5', user: 'yoonho_j', photo: 'cafe', text: '시험 전날 밤, 카페 자리 확보 성공', loc: '서울 신촌', ago: '3주 전', likes: 129, comments: [], tint: '#f5e6d3' },
 ]
+
+// 계정 프로필 (사진 키 / 소개 / 팔로워·팔로잉 수)
+export const SNS_ACCOUNTS = {
+  cafe_seoul_log: { photo: 'cafe', bio: '서울 카페 기록 ☕', followers: 1204, following: 88 },
+  han_river_walk: { photo: 'land', bio: '한강 산책 메모', followers: 3520, following: 210 },
+  coffee_day: { photo: 'cafe', bio: '매일 커피', followers: 642, following: 301 },
+  hello_star: { photo: 'travel', bio: '주말마다 어딘가로', followers: 978, following: 415 },
+  seoul_walker: { photo: 'street', bio: '걷는 걸 좋아합니다', followers: 2210, following: 150 },
+  daily_cafe_note: { photo: 'food', bio: '동네 빵집 기록', followers: 412, following: 96 },
+  mint_tea: { photo: 'daily', bio: '', followers: 130, following: 240 },
+}
+
+// 계정별 스토리 (열람 전후 테두리 구분용 키는 계정 id)
+export const SNS_STORIES = {
+  cafe_seoul_log: [
+    { photo: 'cafe', text: '새 원두 도착' },
+    { photo: 'food', text: '브런치 세트' },
+  ],
+  han_river_walk: [
+    { photo: 'land', text: '노을 맛집' },
+    { photo: 'street', text: '산책 끝' },
+  ],
+  coffee_day: [{ photo: 'cafe', text: '오늘도 아메리카노' }],
+  hello_star: [
+    { photo: 'travel', text: '주말엔 어디든' },
+    { photo: 'daily', text: '좋아하는 노래 들으면서' },
+  ],
+}
+
+// 본인 프로필 하이라이트
+export const SNS_HIGHLIGHTS = [
+  { id: 'hl1', title: '일상', photo: 'daily', items: [{ photo: 'daily', text: '아침 공기' }, { photo: 'food', text: '점심 메뉴' }] },
+  { id: 'hl2', title: '여행', photo: 'travel', items: [{ photo: 'travel', text: '강릉' }] },
+  { id: 'hl3', title: '알바', photo: 'street', items: [{ photo: 'street', text: '퇴근 길' }] },
+]
+
+export const INITIAL_PROFILE = { bio: '평범한 일상 기록' }
+
+export const EXPLORE_TAGS = ['카페', '한강', '맛집', '여행', '일상', '서울']
 
 export const INITIAL_RECENTS = [
   { id: 'c1', from: 'nae', missed: false, ts: Date.now() - 2 * 86400000 },
