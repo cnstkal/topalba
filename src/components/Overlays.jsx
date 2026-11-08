@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../engine/store'
 import { CHARACTERS, initialOf } from '../data/characters'
 import { ENDINGS } from '../data/endings'
@@ -31,22 +31,51 @@ export function LockScreen({ onUnlock, leaving }) {
   )
 }
 
-// 알림 배너 (화면 상단에서 내려옴)
+// 알림 배너 (화면 상단에서 내려옴, 위로 밀어 올리면 사라짐)
 export function Banner({ onOpen }) {
   const { state, actions } = useGame()
   const b = state.banner
+  const [dy, setDy] = useState(0)
+  const [drag, setDrag] = useState(false)
+  const [out, setOut] = useState(false)
+  const y0 = useRef(null)
+  const moved = useRef(false)
+  const leave = () => { setOut(true); setTimeout(() => actions.dismissBanner(), 280) }
   useEffect(() => {
+    setDy(0); setDrag(false); setOut(false); y0.current = null; moved.current = false
     if (!b) return
-    const id = setTimeout(() => actions.dismissBanner(), 4200)
+    const id = setTimeout(leave, 4200)
     return () => clearTimeout(id)
   }, [b?.id])
   if (!b) return null
   const a = APPS[b.app]
+  const down = (e) => { if (out) return; y0.current = e.clientY; moved.current = false; setDrag(true); try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) { /* 무시 */ } }
+  const move = (e) => {
+    if (y0.current == null) return
+    const d = e.clientY - y0.current
+    if (Math.abs(d) > 6) moved.current = true
+    setDy(d < 0 ? d : d * 0.2)
+  }
+  const up = () => {
+    if (y0.current == null) return
+    y0.current = null; setDrag(false)
+    if (dy < -28) leave(); else setDy(0)
+  }
   return (
     <button
       key={b.id}
       className="banner"
+      style={{
+        transform: out ? 'translateY(-140px) scale(.96)' : `translateY(${dy}px)`,
+        opacity: out ? 0 : 1,
+        transition: drag ? 'none' : 'transform .28s cubic-bezier(.3,.8,.3,1), opacity .28s',
+      }}
+      onPointerDown={down}
+      onPointerMove={move}
+      onPointerUp={up}
+      onPointerCancel={up}
       onClick={() => {
+        if (moved.current || out) return
         actions.dismissBanner()
         onOpen(b.app, { thread: b.thread })
       }}
