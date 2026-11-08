@@ -255,14 +255,14 @@
 .app:has(.phone-app-call) ~ .home-bar-zone .home-bar { background: #fff; }
 
 /* 발신 화면: 초록빛 배경 + 3x2 글래스 버튼 */
-.page.phone-app.phone-app-call { background: linear-gradient(180deg, #43584f 0%, #354841 55%, #2e4440 100%); padding: 100px 16px 40px; }
+.page.phone-app.phone-app-call { background: linear-gradient(180deg, #43584f 0%, #354841 55%, #2e4440 100%); padding: 70px 22px 36px; }
 .page.phone-app.phone-app-call .phone-app-call-bg { display: none; }
-.phone-app-call-head { gap: 8px; padding-top: 40px; }
-.phone-app-call-state { font-size: 28px; color: rgba(255,255,255,.55); }
-.phone-app-call-name { font-size: 60px; font-weight: 700; letter-spacing: -1px; text-shadow: none; }
-.phone-app-call-place { font-size: 28px; color: rgba(255,255,255,.55); }
-.phone-app-call-grid { max-width: 100%; gap: 22px 0; padding: 0 6px; }
-.phone-app-call-opt { gap: 10px; font-size: 17px; font-weight: 400; }
-.phone-app-call-opt button, .phone-app-end2 { width: 92px; height: 92px; border-radius: 50%; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -8px 16px rgba(0,0,0,.12); }
+.phone-app-call-head { gap: 6px; padding-top: 20px; }
+.phone-app-call-state { font-size: 20px; color: rgba(255,255,255,.55); }
+.phone-app-call-name { font-size: 40px; font-weight: 700; letter-spacing: -1px; text-shadow: none; }
+.phone-app-call-place { font-size: 20px; color: rgba(255,255,255,.55); }
+.phone-app-call-grid { max-width: 100%; gap: 18px 0; padding: 0; }
+.phone-app-call-opt { gap: 8px; font-size: 14px; font-weight: 400; }
+.phone-app-call-opt button, .phone-app-end2 { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); color: #fff; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -8px 16px rgba(0,0,0,.12); }
 .phone-app-end2 { background: #c8281f; border-color: rgba(255,120,110,.6); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
 .phone-app-end2:active { transform: scale(.94); background: #a82019; }
