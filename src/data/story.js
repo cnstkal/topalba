@@ -332,14 +332,14 @@ export const INITIAL_SENT = [
 export const INITIAL_POSTS = [
   { id: 'p0a', user: 'cafe_seoul_log', photo: 'cafe', text: '오늘의 커피', loc: '서울 성수동', ago: '2시간 전', likes: 312, comments: [{ user: 'coffee_day', text: '맛있겠다' }], tint: '#f5e6d3' },
   { id: 'p0b', user: 'han_river_walk', photo: 'land', text: '퇴근길 하늘이 예뻐서', loc: '여의도 한강공원', ago: '5시간 전', likes: 508, comments: [], tint: '#d6ecff' },
-  { id: 'ps1', user: '_starhwa_', photo: 'daily', text: '쉬는 날 기록', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'wooyounggg__', text: '뭐야 여기 좋네' }], tint: '#e8f5e9' },
-  { id: 'ps2', user: '_starhwa_', photo: 'travel', text: '잠깐 바람 쐬러', loc: '바다', ago: '2주 전', likes: 96, comments: [{ user: 'yunou._.u', text: '사진 잘 나왔다' }], tint: '#d6ecff' },
-  { id: 'ps3', user: '_starhwa_', photo: 'food', text: '🍚', loc: '', ago: '1주 전', likes: 57, comments: [{ user: 'no1likeme8_8', text: 'ㅋㅋㅋㅋ' }], tint: '#fff4cc' },
+  { id: 'ps1', user: '_starhwa_', photo: '/images/instagram/My/Post/1/IMG_9370.jpeg', text: '쉬는 날 기록', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'wooyounggg__', text: '뭐야 여기 좋네' }], tint: '#e8f5e9' },
+  { id: 'ps2', user: '_starhwa_', photo: '/images/instagram/My/Post/2/IMG_9027.jpeg', text: '잠깐 바람 쐬러', loc: '바다', ago: '2주 전', likes: 96, comments: [{ user: 'yunou._.u', text: '사진 잘 나왔다' }], tint: '#d6ecff' },
+  { id: 'ps3', user: '_starhwa_', photo: '/images/instagram/My/Post/3/IMG_6727.jpeg', text: '🍚', loc: '', ago: '1주 전', likes: 57, comments: [{ user: 'no1likeme8_8', text: 'ㅋㅋㅋㅋ' }], tint: '#fff4cc' },
 ]
 
 // 계정 프로필 (사진 키 / 소개 / 팔로워·팔로잉 수)
 export const SNS_ACCOUNTS = {
-  '_starhwa_': { name: '박성화', photo: 'daily', bio: '', followers: 294, following: 303 },
+  '_starhwa_': { name: '박성화', photo: '/images/instagram/My/Profile/IMG_1562.jpeg', bio: '', followers: 294, following: 303 },
   'no1likeme8_8': { name: '김홍중', photo: 'street', bio: '아이돌', followers: 0, following: 0 },
   'wooyounggg__': { name: '정우영', photo: 'food', bio: '', followers: 0, following: 0 },
   'yunou._.u': { name: '정윤호', photo: 'travel', bio: '', followers: 0, following: 0 },

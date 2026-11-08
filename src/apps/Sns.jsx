@@ -18,7 +18,8 @@ const PHOTOS = {
   land: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
   daily: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88',
 }
-const photoUrl = (key, w, h) => `${PHOTOS[key]}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
+// '/'로 시작하면 public 폴더의 로컬 사진 (base 경로 반영)
+const photoUrl = (key, w, h) => (key.startsWith('/') ? `${import.meta.env.BASE_URL}${key.slice(1)}` : `${PHOTOS[key]}?w=${w}&h=${h}&fit=crop&auto=format&q=80`)
 
 const Ico = ({ d, fill, size = 26, stroke = '#000', sw = 1.8 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={fill || 'none'} stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
