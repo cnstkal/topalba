@@ -118,6 +118,8 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
   const [liked, setLiked] = useState(false)
   const [floats, setFloats] = useState([])
   const [cmOpen, setCmOpen] = useState(false) // 스토리 댓글 시트
+  // 같은 뷰어를 유지한 채 계정만 바뀌므로, 계정이 바뀌면 처음 사진부터 다시 시작
+  useEffect(() => { setIdx(0); setLiked(false); setFloats([]) }, [owner])
   const n = slides.length
   const paused = hold || focus || cmOpen
   // 사진(슬라이드)마다 댓글을 붙일 수 있고, 없으면 스토리 주인 기준 데이터 사용
@@ -173,7 +175,7 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
         {slides.map((_, i) => (
           <div key={i} className="story-bar">
             <i
-              key={i === idx ? `cur${idx}` : `o${i}`}
+              key={i === idx ? `cur${owner}${idx}` : `o${i}`}
               className={i < idx ? 'done' : i === idx ? 'run' : ''}
               style={i === idx ? { animationPlayState: paused ? 'paused' : 'running' } : undefined}
               onAnimationEnd={i === idx ? next : undefined}
@@ -551,7 +553,7 @@ export default function Sns({ params }) {
   const finishStory = () => {
     const keys = STORY_TRAY.filter((t) => !t.mine).map((t) => t.key)
     const i = keys.indexOf(story.key)
-    const nxt = keys.find((k, j) => j > i && !state.storySeen[k])
+    const nxt = keys.find((k, j) => j > i && SNS_STORIES[k] && SNS_STORIES[k].length)
     if (story.key !== 'me') actions.storySeen(story.key)
     setStory(nxt ? buildStory(nxt) : null)
   }
@@ -920,7 +922,7 @@ export default function Sns({ params }) {
         </div>
       )}
 
-      {story && <StoryViewer key={story.key} title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} />}
+      {story && <StoryViewer key="story-viewer" title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} />}
       {hl && <StoryViewer title={hl.title} owner={ME_ID} when={hl.date || ""} slides={hl.items} onClose={() => setHl(null)} onToast={flash} />}
 
       {toast && <div className="sns-toast">{toast}</div>}
