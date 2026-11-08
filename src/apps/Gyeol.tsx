@@ -29,6 +29,7 @@ const MSGS = [['오늘 뭐 했어요?','야근하고 이제 퇴근이요 ㅠ','�
 
 const rnd = (i, n) => (i * 7919 + n * 104729) % 9973
 const pick = (a, i, n) => a[rnd(i, n) % a.length]
+const HEIGHT_EDITS = { '달콤커피': 165 }
 const AGE_EDITS = { '달콤커피': 26, '시월': 20, 'Noah': 23, '새벽감성': 22, 'Kai': 29, '밤산책': 31, 'jun_k': 35, 'Dex': 27, '호두': 19, 'mochi': 25 }
 const NICK_RENAME = { '민트초코': 'Alex' }
 const mkUsers = () => NICKS.map((nick, i) => ({
@@ -36,7 +37,7 @@ const mkUsers = () => NICKS.map((nick, i) => ({
   online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: nick === '럭키원' ? 170 : nick === '검은고양이냐옹' ? 171 : nick === '유유' ? 186 : 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: ['럭키원', '검은고양이냐옹'].includes(nick) ? '올라운더' : nick === '유유' ? '바텀' : pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
   photos: nick === '럭키원' ? [] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PROFILE_POOL[PROFILE_USERS.indexOf(nick)] ? [PROFILE_POOL[PROFILE_USERS.indexOf(nick)]] : []),
-})).map((u) => ({ ...u, nick: NICK_RENAME[u.nick] ?? u.nick, age: AGE_EDITS[u.nick] ?? u.age }))
+})).map((u) => ({ ...u, nick: NICK_RENAME[u.nick] ?? u.nick, age: AGE_EDITS[u.nick] ?? u.age, height: HEIGHT_EDITS[u.nick] ?? u.height }))
 const mkState = () => {
   const users = mkUsers()
   const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 4, 5, 6, 8, 9, 10, 11, 13, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
@@ -165,9 +166,10 @@ export default function Gyeol() {
 function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   // 나를 먼저 좋아한 사람(아직 매칭 전)을 덱 앞쪽에 배치 — 좋아요를 누르면 바로 매칭 연출이 보이도록
   const pending = (id: number) => s.likedMe.includes(id) && !s.matches.includes(id)
-  const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)).sort((a, b) => (b.photos?.length > 0 ? 1 : 0) - (a.photos?.length > 0 ? 1 : 0)), [s])
-  const u = queue[0]
-  const next = queue[1]
+  const queue = useMemo(() => { const base = s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)); return (base.length ? base : s.users.filter(ok)) }, [s])
+  const sorted = useMemo(() => queue.slice().sort((a, b) => (b.photos?.length > 0 ? 1 : 0) - (a.photos?.length > 0 ? 1 : 0)), [s])
+  const u = sorted[0]
+  const next = sorted[1]
   const [dx, setDx] = useState(0)
   const [drag, setDrag] = useState(false)
   const [fly, setFly] = useState<null | 'like' | 'pass'>(null)
@@ -205,7 +207,7 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
             <h2>{u.nick} <em>{u.age}</em></h2>
             <p>{u.online && <i className="gyeol-on" />}{u.online ? '접속 중' : u.last} · {u.area} · {u.dist}km</p>
             <p className="gyeol-sub">{u.bio}</p>
-            <p className="gyeol-sub">{u.height}cm · {u.job} · {u.goal}</p>
+            <p className="gyeol-sub">{u.height}cm · {u.goal}</p>
           </div>
         </div>
       </div>
