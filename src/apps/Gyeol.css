@@ -74,7 +74,7 @@
 .gyeol-dbody{padding:16px;display:flex;flex-direction:column;gap:10px}
 .gyeol-dbody dl{display:grid;grid-template-columns:80px 1fr;gap:6px;margin:0;font-size:14px}.gyeol-dbody dt{color:var(--mute)}.gyeol-dbody dd{margin:0}
 .gyeol-safety{display:flex;gap:14px}.gyeol-safety button{display:flex;gap:4px;align-items:center;color:var(--mute);font-size:12px}
-.gyeol-dbar{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;padding:12px;background:var(--bg);border-top:1px solid var(--line)}
+.gyeol-dbar{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;padding:12px;background:var(--bg)}
 .gyeol-sheetbg{position:absolute;inset:0;z-index:30;background:rgba(0,0,0,.6);display:flex;align-items:flex-end}
 .gyeol-sheet{width:100%;background:var(--panel);border-radius:16px 16px 0 0;padding:18px;display:flex;flex-direction:column;gap:14px}
 .gyeol-sheet h3{margin:0}.gyeol-sheet label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--mute)}
