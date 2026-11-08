@@ -74,13 +74,13 @@ const pad = (n: number) => String(n).padStart(2, '0')
 const fmtT = (t: number) => { const d = new Date(t); const h = d.getHours(); return `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}:${pad(d.getMinutes())}` }
 const HJ_MSGS: Msg[] = [
   { id: 8001, who: '김홍중', text: '안녕하세요', t: new Date('2023-07-15T19:00:00+09:00').getTime() },
-  { id: 8002, who: '김홍중', text: '어플에서 보고 연락드립니다', t: new Date('2023-07-15T19:01:00+09:00').getTime() },
+  { id: 8002, who: '김홍중', text: '어플에서 보고 연락드립니다', t: new Date('2023-07-15T19:00:00+09:00').getTime() },
   { id: 8003, who: 'me', text: '넵 지금 당장요?', t: new Date('2023-07-15T19:03:00+09:00').getTime() },
   { id: 8004, who: '김홍중', text: '가능하면요', t: new Date('2023-07-15T19:04:00+09:00').getTime() },
   { id: 8005, who: 'me', text: '주소 찍으세요', t: new Date('2023-07-15T19:05:00+09:00').getTime() },
 
   { id: 8010, who: '김홍중', text: '자주 볼 것 같은데', t: new Date('2023-07-22T20:10:00+09:00').getTime() },
-  { id: 8011, who: '김홍중', text: '말 편하게 해도 돼요', t: new Date('2023-07-22T20:11:00+09:00').getTime() },
+  { id: 8011, who: '김홍중', text: '말 편하게 해도 돼요', t: new Date('2023-07-22T20:10:00+09:00').getTime() },
   { id: 8012, who: 'me', text: '넵ㅋㅋ', t: new Date('2023-07-22T20:13:00+09:00').getTime() },
 
   { id: 8020, who: '김홍중', text: '뭐해', t: new Date('2023-07-29T18:20:00+09:00').getTime() },
@@ -96,16 +96,16 @@ const HJ_MSGS: Msg[] = [
   { id: 8100, who: 'me', text: '너 아이돌이었냐?', t: new Date('2025-03-12T18:21:00+09:00').getTime() },
   { id: 8101, who: '김홍중', text: '몰랐어?', t: new Date('2025-03-12T18:23:00+09:00').getTime() },
   { id: 8102, who: 'me', text: '어', t: new Date('2025-03-12T18:24:00+09:00').getTime() },
-  { id: 8103, who: 'me', text: '지하철 광고판에 너 있던데?', t: new Date('2025-03-12T18:25:00+09:00').getTime() },
+  { id: 8103, who: 'me', text: '지하철 광고판에 너 있던데?', t: new Date('2025-03-12T18:24:00+09:00').getTime() },
   { id: 8104, who: '김홍중', text: '오랜만에 연락와서 한다는 말이 그거냐', t: new Date('2025-03-12T18:27:00+09:00').getTime() },
   { id: 8105, who: 'me', text: '그럼 무슨 말해', t: new Date('2025-03-12T18:29:00+09:00').getTime() },
   { id: 8106, who: '김홍중', text: '밥이나 한 번 먹자', t: new Date('2025-03-12T18:31:00+09:00').getTime() },
 
-  { id: 8110, who: '김홍중', text: '바빠?', t: new Date('2025-03-22T20:14:00+09:00').getTime() },
+  { id: 8110, who: '김홍중', text: '바빠?', t: new Date('2025-03-12T18:31:00+09:00').getTime() },
   { id: 8111, who: 'me', text: 'ㄴㄴ', t: new Date('2025-03-22T20:16:00+09:00').getTime() },
-  { id: 8112, who: 'me', text: '넌', t: new Date('2025-03-22T20:17:00+09:00').getTime() },
+  { id: 8112, who: 'me', text: '넌', t: new Date('2025-03-22T20:16:00+09:00').getTime() },
   { id: 8113, who: '김홍중', text: '조금 바쁘네', t: new Date('2025-03-22T20:19:00+09:00').getTime() },
-  { id: 8114, who: '김홍중', text: '곧 컴백이라 그런가', t: new Date('2025-03-22T20:20:00+09:00').getTime() },
+  { id: 8114, who: '김홍중', text: '곧 컴백이라 그런가', t: new Date('2025-03-22T20:19:00+09:00').getTime() },
   { id: 8115, who: 'me', text: '힘내라', t: new Date('2025-03-22T20:22:00+09:00').getTime() },
 
   { id: 8120, who: 'date', t: new Date('2025-03-23T00:00:00+09:00').getTime() },
@@ -119,22 +119,22 @@ const HJ_MSGS: Msg[] = [
   { id: 8205, who: 'me', text: '엉', t: new Date('2026-10-18T19:49:00+09:00').getTime() },
 
   { id: 9005, who: '김홍중', text: '잠깐 볼래', t: new Date('2026-11-08T20:10:00+09:00').getTime() },
-  { id: 9006, who: '김홍중', text: '스케줄 지금 끝났어', t: new Date('2026-11-08T20:11:00+09:00').getTime() },
+  { id: 9006, who: '김홍중', text: '스케줄 지금 끝났어', t: new Date('2026-11-08T20:10:00+09:00').getTime() },
   { id: 9007, who: 'me', text: '어디로?', t: new Date('2026-11-08T20:13:00+09:00').getTime() },
   { id: 9008, who: '김홍중', text: 'XX모텔로 올래?', t: new Date('2026-11-08T20:14:00+09:00').getTime() },
   { id: 9009, who: 'me', text: '헐~', t: new Date('2026-11-08T20:15:00+09:00').getTime() },
-  { id: 9010, who: 'me', text: '대스타가 이래도 되나 ㅋㅋ', t: new Date('2026-11-08T20:16:00+09:00').getTime() },
+  { id: 9010, who: 'me', text: '대스타가 이래도 되나 ㅋㅋ', t: new Date('2026-11-08T20:15:00+09:00').getTime() },
   { id: 9011, who: '김홍중', text: '오기싫음 말고', t: new Date('2026-11-08T20:17:00+09:00').getTime() },
   { id: 9012, who: 'me', text: '지금 출발', t: new Date('2026-11-08T20:18:00+09:00').getTime() },
 ]
 
 const YH_MSGS = [
   { id: 9100, who: '정윤호', text: 'SY 오피스텔 302호예요', t: new Date('2026-07-08T19:02:00+09:00').getTime() },
-  { id: 9101, who: '정윤호', text: '한시간에 20 맞죠', t: new Date('2026-07-08T19:03:00+09:00').getTime() },
+  { id: 9101, who: '정윤호', text: '한시간에 20 맞죠', t: new Date('2026-07-08T19:02:00+09:00').getTime() },
   { id: 9102, who: 'me', text: 'ㅇㅇ 곧 가요', t: new Date('2026-07-08T19:05:00+09:00').getTime() },
   { id: 9103, who: '정윤호', text: '잘들어가셨어요?', t: new Date('2026-07-08T23:05:00+09:00').getTime() },
   { id: 9104, who: 'me', text: 'ㅇㅇ', t: new Date('2026-07-08T23:40:00+09:00').getTime() },
-  { id: 9105, who: 'me', text: '다음에 또 필요하면 연락 ㄱ', t: new Date('2026-07-08T23:41:00+09:00').getTime() },
+  { id: 9105, who: 'me', text: '다음에 또 필요하면 연락 ㄱ', t: new Date('2026-07-08T23:40:00+09:00').getTime() },
 
   { id: 9110, who: '정윤호', text: '오늘 돼요?', t: new Date('2026-07-12T21:10:00+09:00').getTime() },
   { id: 9111, who: 'me', text: 'ㅇㅇ', t: new Date('2026-07-12T21:40:00+09:00').getTime() },
@@ -150,12 +150,12 @@ const YH_MSGS = [
 
   { id: 9150, who: '정윤호', text: '우리 사귀는 거 맞죠?', t: new Date('2026-07-29T20:50:00+09:00').getTime() },
   { id: 9151, who: 'me', text: '?', t: new Date('2026-07-29T20:51:00+09:00').getTime() },
-  { id: 9152, who: 'me', text: 'ㄴㄴ', t: new Date('2026-07-29T20:52:00+09:00').getTime() },
+  { id: 9152, who: 'me', text: 'ㄴㄴ', t: new Date('2026-07-29T20:51:00+09:00').getTime() },
   { id: 9153, who: '정윤호', text: '왜요?', t: new Date('2026-07-29T20:53:00+09:00').getTime() },
   { id: 9154, who: 'me', text: '고객이랑은 안사귐', t: new Date('2026-07-29T20:54:00+09:00').getTime() },
   { id: 9155, who: '정윤호', text: '고객 안하면 되잖아요', t: new Date('2026-07-29T20:55:00+09:00').getTime() },
-  { id: 9156, who: '정윤호', text: '책임지세요', t: new Date('2026-07-29T20:56:00+09:00').getTime() },
-  { id: 9157, who: '정윤호', text: '형이 저 이렇게 만들었잖아요', t: new Date('2026-07-29T20:57:00+09:00').getTime() },
+  { id: 9156, who: '정윤호', text: '책임지세요', t: new Date('2026-07-29T20:55:00+09:00').getTime() },
+  { id: 9157, who: '정윤호', text: '형이 저 이렇게 만들었잖아요', t: new Date('2026-07-29T20:55:00+09:00').getTime() },
   { id: 9158, who: 'me', text: '???', t: new Date('2026-07-29T20:58:00+09:00').getTime() },
   { id: 9159, who: '정윤호', text: '😡😡', t: new Date('2026-07-29T20:59:00+09:00').getTime() },
 
@@ -165,20 +165,20 @@ const YH_MSGS = [
   { id: 9300, who: '정윤호', text: '일어났어용?', t: new Date('2026-11-08T07:42:00+09:00').getTime() },
   { id: 9301, who: 'me', text: 'ㅇㅇ', t: new Date('2026-11-08T07:50:00+09:00').getTime() },
   { id: 9302, who: '정윤호', text: '오늘 추워용 따듯하게 입어야 돼용', t: new Date('2026-11-08T07:51:00+09:00').getTime() },
-  { id: 9303, who: '정윤호', text: '아침 먹었어용?', t: new Date('2026-11-08T08:20:00+09:00').getTime() },
-  { id: 9304, who: '정윤호', text: '저는 편의점 김밥 먹었어요 ㅠ 노맛', t: new Date('2026-11-08T08:21:00+09:00').getTime() },
+  { id: 9303, who: '정윤호', text: '아침 먹었어용?', t: new Date('2026-11-08T07:51:00+09:00').getTime() },
+  { id: 9304, who: '정윤호', text: '저는 편의점 김밥 먹었어요 ㅠ 노맛', t: new Date('2026-11-08T07:51:00+09:00').getTime() },
   { id: 9305, who: 'me', text: '안 먹음', t: new Date('2026-11-08T08:40:00+09:00').getTime() },
-  { id: 9306, who: 'me', text: '일 가야함', t: new Date('2026-11-08T08:41:00+09:00').getTime() },
+  { id: 9306, who: 'me', text: '일 가야함', t: new Date('2026-11-08T08:40:00+09:00').getTime() },
   { id: 9307, who: '정윤호', text: '힘내여', t: new Date('2026-11-08T08:42:00+09:00').getTime() },
 
-  { id: 9308, who: '정윤호', text: '점심 뭐 먹었어용? 사진 보내줘요', t: new Date('2026-11-08T12:15:00+09:00').getTime() },
+  { id: 9308, who: '정윤호', text: '점심 뭐 먹었어용? 사진 보내줘요', t: new Date('2026-11-08T08:42:00+09:00').getTime() },
   { id: 9309, who: 'me', text: '사진 안 찍음', t: new Date('2026-11-08T12:30:00+09:00').getTime() },
   { id: 9310, who: '정윤호', text: '그럼 말이라두 ㅠ', t: new Date('2026-11-08T12:31:00+09:00').getTime() },
   { id: 9311, who: 'me', text: '국밥', t: new Date('2026-11-08T12:32:00+09:00').getTime() },
   { id: 9312, who: '정윤호', text: '국밥 좋아하는구나!', t: new Date('2026-11-08T12:33:00+09:00').getTime() },
-  { id: 9313, who: '정윤호', text: '다음에 같이 가용', t: new Date('2026-11-08T12:34:00+09:00').getTime() },
+  { id: 9313, who: '정윤호', text: '다음에 같이 가용', t: new Date('2026-11-08T12:33:00+09:00').getTime() },
 
-  { id: 9314, who: '정윤호', text: '오늘 몇 시에 끝나여?', t: new Date('2026-11-08T18:05:00+09:00').getTime() },
+  { id: 9314, who: '정윤호', text: '오늘 몇 시에 끝나여?', t: new Date('2026-11-08T12:33:00+09:00').getTime() },
   { id: 9315, who: 'me', text: '9시', t: new Date('2026-11-08T18:20:00+09:00').getTime() },
   { id: 9316, who: '정윤호', text: '그럼 근처 편의점에서 기다릴게여', t: new Date('2026-11-08T18:21:00+09:00').getTime() },
   { id: 9317, who: 'me', text: 'ㄴㄴ 오지마', t: new Date('2026-11-08T18:23:00+09:00').getTime() },
@@ -187,30 +187,30 @@ const YH_MSGS = [
 
 const WY_MSGS: Msg[] = [
   { id: 9401, who: '정우영', text: '님', t: new Date('2025-05-10T18:00:00+09:00').getTime() },
-  { id: 9402, who: '정우영', text: '저랑 친구하실래요?', t: new Date('2025-05-10T18:01:00+09:00').getTime() },
+  { id: 9402, who: '정우영', text: '저랑 친구하실래요?', t: new Date('2025-05-10T18:00:00+09:00').getTime() },
   { id: 9403, who: 'me', text: '왜요?', t: new Date('2025-05-10T18:03:00+09:00').getTime() },
   { id: 9404, who: '정우영', text: '사실 제가 이쪽 친구가 없거든여', t: new Date('2025-05-10T18:05:00+09:00').getTime() },
-  { id: 9405, who: '정우영', text: '어디서 만나야 될 지도 잘 모르겠고', t: new Date('2025-05-10T18:06:00+09:00').getTime() },
+  { id: 9405, who: '정우영', text: '어디서 만나야 될 지도 잘 모르겠고', t: new Date('2025-05-10T18:05:00+09:00').getTime() },
   { id: 9406, who: 'me', text: '고민좀', t: new Date('2025-05-10T18:09:00+09:00').getTime() },
 
   { id: 9410, who: '정우영', text: '저 신림동 사는데', t: new Date('2025-05-13T17:20:00+09:00').getTime() },
-  { id: 9411, who: '정우영', text: '어디 사세요?', t: new Date('2025-05-13T17:21:00+09:00').getTime() },
+  { id: 9411, who: '정우영', text: '어디 사세요?', t: new Date('2025-05-13T17:20:00+09:00').getTime() },
   { id: 9412, who: 'me', text: '왜요?', t: new Date('2025-05-13T17:23:00+09:00').getTime() },
   { id: 9413, who: '정우영', text: '동네친구 ㅋㅋ', t: new Date('2025-05-13T17:24:00+09:00').getTime() },
   { id: 9414, who: 'me', text: '신림이요', t: new Date('2025-05-13T17:26:00+09:00').getTime() },
   { id: 9415, who: '정우영', text: '헐 완전 운명', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
-  { id: 9416, who: '정우영', text: '나오세요 ㄱㄱ 밥 사드림', t: new Date('2025-05-13T17:28:00+09:00').getTime() },
+  { id: 9416, who: '정우영', text: '나오세요 ㄱㄱ 밥 사드림', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
 
-  { id: 9420, who: '정우영', text: '뭐함요', t: new Date('2025-05-24T22:10:00+09:00').getTime() },
+  { id: 9420, who: '정우영', text: '뭐함요', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
   { id: 9421, who: 'me', text: '알바끝', t: new Date('2025-05-24T22:12:00+09:00').getTime() },
   { id: 9422, who: '정우영', text: '진짜 일? 아님 정신노동', t: new Date('2025-05-24T22:13:00+09:00').getTime() },
   { id: 9423, who: 'me', text: '정신노동', t: new Date('2025-05-24T22:15:00+09:00').getTime() },
 
   { id: 9430, who: '정우영', text: '우리 좀 잘맞는 거 같아요', t: new Date('2025-06-01T16:08:00+09:00').getTime() },
-  { id: 9431, who: '정우영', text: 'ㅇㅈ?', t: new Date('2025-06-01T16:09:00+09:00').getTime() },
+  { id: 9431, who: '정우영', text: 'ㅇㅈ?', t: new Date('2025-06-01T16:08:00+09:00').getTime() },
   { id: 9432, who: 'me', text: '?', t: new Date('2025-06-01T16:11:00+09:00').getTime() },
   { id: 9433, who: '정우영', text: '말편하게할게', t: new Date('2025-06-01T16:12:00+09:00').getTime() },
-  { id: 9434, who: '정우영', text: '형 맞지?', t: new Date('2025-06-01T16:13:00+09:00').getTime() },
+  { id: 9434, who: '정우영', text: '형 맞지?', t: new Date('2025-06-01T16:12:00+09:00').getTime() },
   { id: 9435, who: 'me', text: '어떻게 알아', t: new Date('2025-06-01T16:15:00+09:00').getTime() },
   { id: 9436, who: '정우영', text: '잘 때 지갑봄', t: new Date('2025-06-01T16:16:00+09:00').getTime() },
   { id: 9437, who: 'me', text: '연락하지마라', t: new Date('2025-06-01T16:18:00+09:00').getTime() },
@@ -218,7 +218,7 @@ const WY_MSGS: Msg[] = [
 
   { id: 9440, who: 'me', text: '저녁에 뭐함', t: new Date('2025-06-14T18:20:00+09:00').getTime() },
   { id: 9441, who: '정우영', text: '피방 갈건데', t: new Date('2025-06-14T18:22:00+09:00').getTime() },
-  { id: 9442, who: '정우영', text: '올 거?', t: new Date('2025-06-14T18:23:00+09:00').getTime() },
+  { id: 9442, who: '정우영', text: '올 거?', t: new Date('2025-06-14T18:22:00+09:00').getTime() },
   { id: 9443, who: 'me', text: 'ㅇㅇ 한시간 뒤에 감', t: new Date('2025-06-14T18:25:00+09:00').getTime() },
 
   { id: 9450, who: '정우영', text: '노래방 갈 사람 없는데 오늘 ㄱ?', t: new Date('2025-07-05T19:10:00+09:00').getTime() },
@@ -229,17 +229,17 @@ const WY_MSGS: Msg[] = [
   { id: 9461, who: 'gap', text: ['•', '•', '•', '•'].join('\n'), t: new Date('2025-07-06T12:00:00+09:00').getTime() },
 
   { id: 9470, who: '정우영', text: '오늘 뭐함', t: new Date('2026-03-21T17:48:00+09:00').getTime() },
-  { id: 9471, who: '정우영', text: '저녁에 한잔?', t: new Date('2026-03-21T17:49:00+09:00').getTime() },
+  { id: 9471, who: '정우영', text: '저녁에 한잔?', t: new Date('2026-03-21T17:48:00+09:00').getTime() },
   { id: 9472, who: 'me', text: '내일 일찍 일어나야 됨', t: new Date('2026-03-21T17:52:00+09:00').getTime() },
   { id: 9473, who: '정우영', text: '한 잔은 괜찬자너', t: new Date('2026-03-21T17:54:00+09:00').getTime() },
   { id: 9474, who: 'me', text: 'ㅇㅋ', t: new Date('2026-03-21T17:56:00+09:00').getTime() },
 
   { id: 9480, who: '정우영', text: '피방 갈 사람 구함', t: new Date('2026-08-08T15:21:00+09:00').getTime() },
   { id: 9481, who: 'me', text: '나 지금 집인데', t: new Date('2026-08-08T15:26:00+09:00').getTime() },
-  { id: 9482, who: 'me', text: '좀 이따 갈게', t: new Date('2026-08-08T15:27:00+09:00').getTime() },
+  { id: 9482, who: 'me', text: '좀 이따 갈게', t: new Date('2026-08-08T15:26:00+09:00').getTime() },
   { id: 9483, who: '정우영', text: '오케이 자리 맡아놓음', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
 
-  { id: 9490, who: '정우영', text: 'ㅁㅎㅁㅎ', t: new Date('2026-11-08T19:15:00+09:00').getTime() },
+  { id: 9490, who: '정우영', text: 'ㅁㅎㅁㅎ', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
 
 
 const dayKey = (t: number) => { const d = new Date(t); return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일` }
