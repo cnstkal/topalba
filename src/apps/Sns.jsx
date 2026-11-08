@@ -136,8 +136,10 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
       <div className="story-who">
         <AccountAvatar id={owner} size={28} />
         <div className="story-name">
-          <b>{title}</b>
-          {when && <span>{when}</span>}
+          <b>
+            {title}
+            {when && <span className="story-date">{when}</span>}
+          </b>
         </div>
       </div>
       <div className="story-head-r">

@@ -398,7 +398,7 @@ export const STORY_MY_REPLY = {
 
 // 본인 프로필 하이라이트
 export const SNS_HIGHLIGHTS = [
-  { id: 'hl2', title: 'Bob', date: '11월 8일', photo: '/images/instagram/My/Bob/IMG_1514.jpeg', items: [{ photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/86AF75B4-3C23-4238-B53A-513C36E033A9.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/IMG_1514.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },
+  { id: 'hl2', title: 'Bob', date: '11월 8일', photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', items: [{ photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/86AF75B4-3C23-4238-B53A-513C36E033A9.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/IMG_1514.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },
 ]
 
 export const INITIAL_PROFILE = { bio: '', name: '박성화', username: '_starhwa_', followers: 294, following: 303, posts: 3 }
