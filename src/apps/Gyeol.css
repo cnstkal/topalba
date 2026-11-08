@@ -228,3 +228,8 @@
 .gyeol-match h1{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 22px rgba(253,38,122,.5))}
 .gyeol-match-photos>div{border-color:#fff}.gyeol-match-photos span{background:var(--grad);color:#fff}
 .gyeol-burst i{background:#fd267a}.gyeol-burst i.h{background:#ff6036}
+
+/* ── 매칭 화면 버튼: 두껍고 큼직하게 ── */
+.gyeol-match .gyeol-match-in .gyeol-btn{width:100%;max-width:300px;min-height:64px;padding:20px 28px;font-size:18px;font-weight:800;border-radius:999px;gap:10px}
+.gyeol-match .gyeol-match-in .gyeol-btn svg{width:22px;height:22px}
+.gyeol-match .gyeol-match-in .gyeol-btn.ghost{border:1.5px solid rgba(255,255,255,.35)!important;background:transparent!important}
