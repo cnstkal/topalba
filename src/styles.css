@@ -1689,7 +1689,6 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .story-cm-reply b { font-size: 14px; font-weight: 700; }
 .story-cm-reply p { margin: 2px 0 0; font-size: 15px; }
 
-.st-row.off { pointer-events: none; opacity: .45; }
 .bt-back { flex: none; margin: 4px 0 8px 14px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #000; border: .5px solid rgba(60,60,67,.18); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .bt-card { padding: 16px 16px 4px; border-radius: 22px; }
 .bt-ic { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 14px; background: linear-gradient(#4e9bff,#2f6fed); }

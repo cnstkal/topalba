@@ -131,8 +131,7 @@ export default function Settings() {
             <p>음악 스트리밍, 전화 통화 및 게임과 같은 활동에 사용할 수 있는 액세서리에 연결하십시오. <a>더 알아보기…</a></p>
             <div className="bt-sw-row"><span>Bluetooth</span><div className={`st-sw ${d.bt ? 'on' : ''}`} role="switch" aria-checked={d.bt} onClick={() => dev.set({ bt: !d.bt })}><i /></div></div>
           </div>
-          {d.bt && (
-            <>
+          <>
               <div className="st-group bt-allow"><button className="st-row plain">새로운 연결 허용</button></div>
               <p className="bt-note">제어 센터에서 새로운 Bluetooth에 연결하는 기능이 꺼져 있습니다.</p>
               <div className="bt-h">나의 기기</div>
@@ -143,8 +142,7 @@ export default function Settings() {
               </div>
               <div className="bt-h">다른 기기 <span className="bt-spin" /></div>
               <p className="bt-note">Apple Watch를 iPhone과 페어링하려면, <a>Apple Watch 앱</a>(으)로 이동하십시오.</p>
-            </>
-          )}
+          </>
         </div>
       </div>
     )
@@ -169,7 +167,7 @@ export default function Settings() {
         {ROWS.map((g, i) => (
           <div key={i} className="st-group">
             {g.map(([c, label, v]) => (
-              <button key={label} className={`st-row ${v === 'about' || v === 'bt' || v === 'toggle' ? '' : 'off'}`} onClick={() => { if (v === 'about') setAbout(true); else if (v === 'bt') setBt(true) }}>
+              <button key={label} className="st-row" onClick={() => { if (v === 'about') setAbout(true); else if (v === 'bt') setBt(true) }}>
                 <i className="st-ic" style={{ background: c }}>
                   <svg width="20" height="20" viewBox="0 0 24 24">{GLYPH[label]}</svg>
                 </i>
