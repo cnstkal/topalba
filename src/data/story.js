@@ -278,8 +278,9 @@ export const INITIAL_SENT = [
 // ── SNS 데이터 ──
 // photo 값은 src/apps/Sns.jsx 의 PHOTOS 키 (cafe, food, travel, street, land, daily)
 export const INITIAL_POSTS = [
-  { id: 'p0a', user: 'cafe_seoul_log', photo: 'cafe', text: '오늘의 커피', loc: '서울 성수동', ago: '2시간 전', likes: 312, comments: [{ user: 'coffee_day', text: '맛있겠다' }], tint: '#f5e6d3' },
-  { id: 'p0b', user: 'han_river_walk', photo: 'land', text: '퇴근길 하늘이 예뻐서', loc: '여의도 한강공원', ago: '5시간 전', likes: 508, comments: [], tint: '#d6ecff' },
+  { id: 'pw1', user: 'wooyounggg__', photo: 'food', text: '점심 뭐 먹지', loc: '', ago: '4시간 전', likes: 21, comments: [], tint: '#ffe9c7' },
+  { id: 'pk1', user: 'no1likeme8_8', photo: 'street', text: '퇴근길', loc: '', ago: '6시간 전', likes: 34, comments: [], tint: '#e8e8ef' },
+  { id: 'py1', user: 'yunou._.u', photo: 'travel', text: '주말 나들이', loc: '', ago: '1일 전', likes: 57, comments: [], tint: '#d9f0e6' },
   { id: 'ps1', user: '_starhwa_', photo: '/images/instagram/My/Post/1/IMG_9370.jpeg', photos: ['/images/instagram/My/Post/1/IMG_9370.jpeg', '/images/instagram/My/Post/1/IMG_9371.jpeg'], text: '쉬는 날 기록', loc: '', ago: '3일 전', likes: 41, comments: [{ user: 'wooyounggg__', text: '뭐야 여기 좋네' }], tint: '#e8f5e9' },
   { id: 'ps2', user: '_starhwa_', photo: '/images/instagram/My/Post/2/IMG_9027.jpeg', photos: ['/images/instagram/My/Post/2/IMG_9027.jpeg', '/images/instagram/My/Post/2/IMG_9028.jpeg'], text: '잠깐 바람 쐬러', loc: '바다', ago: '2주 전', likes: 96, comments: [{ user: 'yunou._.u', text: '사진 잘 나왔다' }], tint: '#d6ecff' },
   { id: 'ps3', user: '_starhwa_', photo: '/images/instagram/My/Post/3/IMG_6727.jpeg', photos: ['/images/instagram/My/Post/3/IMG_6727.jpeg', '/images/instagram/My/Post/3/IMG_6728.jpeg'], text: '🍚', loc: '', ago: '1주 전', likes: 57, comments: [{ user: 'no1likeme8_8', text: 'ㅋㅋㅋㅋ' }], tint: '#fff4cc' },
@@ -287,7 +288,7 @@ export const INITIAL_POSTS = [
 
 // 계정 프로필 (사진 키 / 소개 / 팔로워·팔로잉 수)
 export const SNS_ACCOUNTS = {
-  '_starhwa_': { name: '박성화', photo: '/images/instagram/My/Profile/IMG_1562.jpeg', bio: '', followers: 294, following: 303 },
+  '_starhwa_': { name: '박성화', photo: '/images/instagram/My/Profile/IMG_1562.jpeg', bio: '', followers: 572, following: 54 },
   'no1likeme8_8': { name: '김홍중', photo: 'street', bio: '아이돌', followers: 0, following: 0 },
   'wooyounggg__': { name: '정우영', photo: 'food', bio: '', followers: 0, following: 0 },
   'yunou._.u': { name: '정윤호', photo: 'travel', bio: '', followers: 0, following: 0 },
@@ -314,19 +315,9 @@ export const SNS_FOLLOWING = {
 
 // 계정별 스토리 (열람 전후 테두리 구분용 키는 계정 id)
 export const SNS_STORIES = {
-  cafe_seoul_log: [
-    { photo: 'cafe', text: '새 원두 도착' },
-    { photo: 'food', text: '브런치 세트' },
-  ],
-  han_river_walk: [
-    { photo: 'land', text: '노을 맛집' },
-    { photo: 'street', text: '산책 끝' },
-  ],
-  coffee_day: [{ photo: 'cafe', text: '오늘도 아메리카노' }],
-  hello_star: [
-    { photo: 'travel', text: '주말엔 어디든' },
-    { photo: 'daily', text: '좋아하는 노래 들으면서' },
-  ],
+  'yunou._.u': [{ photo: 'travel', text: '주말 나들이' }],
+  no1likeme8_8: [{ photo: 'street', text: '퇴근길' }],
+  wooyounggg__: [{ photo: 'food', text: '점심 뭐 먹지' }],
 }
 
 // ════════════════════════════════════════════════════════════
@@ -354,7 +345,7 @@ export const SNS_HIGHLIGHTS = [
       }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },
 ]
 
-export const INITIAL_PROFILE = { bio: '', name: '박성화', username: '_starhwa_', followers: 294, following: 303, posts: 3 }
+export const INITIAL_PROFILE = { bio: '', name: '박성화', username: '_starhwa_', followers: 572, following: 54, posts: 3 }
 
 export const EXPLORE_TAGS = ['카페', '한강', '맛집', '여행', '일상', '서울']
 

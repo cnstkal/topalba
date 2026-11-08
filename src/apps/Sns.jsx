@@ -399,8 +399,8 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
   const acc = SNS_ACCOUNTS[uid]
   const list = state.posts.filter((p) => p.user === uid)
   const following = !!state.follows[uid]
-  const followers = mine ? 294 : acc.followers + (following ? 1 : 0)
-  const followingCount = mine ? 303 : acc.following
+  const followers = mine ? 572 : acc.followers + (following ? 1 : 0)
+  const followingCount = mine ? 54 : acc.following
   const name = mine ? '박성화' : (acc.name || uid)
   const bio = mine ? state.profile.bio : acc.bio
 
