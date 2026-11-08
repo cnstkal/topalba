@@ -1729,3 +1729,11 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .post.detail .post-meta b { font-size: 15px; }
 .cm { font-size: 13px; }
 .cm-input input { font-size: 14px; }
+
+/* 수신 화면: 옵션 버튼 제거, 응답/거절 축소 + 글래스모피즘 */
+.ring2-call { width: 92px; }
+.ring2-call i { width: 76px; height: 76px; -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%); border: 1px solid rgba(255,255,255,.28); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 10px 26px rgba(0,0,0,.22); }
+.ring2-call i.red { background: linear-gradient(145deg, rgba(255,110,96,.62), rgba(214,58,46,.52)); }
+.ring2-call i.green { background: linear-gradient(145deg, rgba(120,226,126,.62), rgba(56,170,66,.52)); }
+.ring2-call i svg { width: 30px; height: 30px; }
+.ring2-bottom { padding-bottom: 84px; }

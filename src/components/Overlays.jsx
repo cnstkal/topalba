@@ -109,16 +109,6 @@ export function IncomingCall() {
         <div className="ring2-name">{c.name}</div>
       </div>
       <div className="ring2-bottom">
-        <div className="ring2-opts">
-          <button className="ring2-opt" onClick={reject}>
-            <i><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.300 1.200 4.300 3.200 5.800L4.500 21l4.400-2.200c1 .2 2 .3 3.100.3 5.500 0 10-3.600 10-8S17.500 3 12 3z" /></svg></i>
-            <span>메시지 보내기</span>
-          </button>
-          <button className="ring2-opt" onClick={reject}>
-            <i><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="13" r="7.500" /><path d="M12 9v4l2.500 1.500M3.500 6.500L6.500 4M20.500 6.500L17.500 4" /></svg></i>
-            <span>나중에 보기</span>
-          </button>
-        </div>
         <div className="ring2-main">
           <button className="ring2-call" onClick={reject}>
             <i className="red"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff" style={{ transform: 'rotate(135deg)' }}><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.37 2.300.57 3.600.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.2 2.450.57 3.570a1 1 0 0 1-.25 1z" /></svg></i>
