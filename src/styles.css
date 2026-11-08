@@ -1634,3 +1634,15 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .prof-tabs.me { justify-content: space-around; padding: 0; }
 .prof-tabs.me span { flex: 1; display: flex; justify-content: center; padding: 11px 0; color: #8e8e93; border-bottom: 2px solid transparent; }
 .prof-tabs.me span.on { color: #000; border-bottom-color: #000; }
+
+.me-top { border-bottom: none; }
+.me-top > b { font-size: 26px; }
+.prof-grid .grid-cell { aspect-ratio: 3 / 4; }
+.grid-multi { position: absolute; top: 8px; right: 8px; display: flex; filter: drop-shadow(0 0 2px rgba(0,0,0,.4)); }
+.post-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.post-track::-webkit-scrollbar { display: none; }
+.post-slide { flex: 0 0 100%; height: 100%; scroll-snap-align: center; }
+.post-count { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(40,40,40,.65); color: #fff; font-size: 13px; }
+.post-dots { display: flex; justify-content: center; gap: 5px; padding: 10px 0 0; }
+.post-dots i { width: 6px; height: 6px; border-radius: 50%; background: #c7c7cc; }
+.post-dots i.on { background: #3b5bfd; }

@@ -230,6 +230,8 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
   const saved = !!state.saved[post.id]
   const [pop, setPop] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const [pi, setPi] = useState(0)
+  const imgs = post.photos || [post.photo]
   const timer = useRef(null)
   useEffect(() => () => clearTimeout(timer.current), [])
 
@@ -265,13 +267,27 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
         </span>
       </div>
       <div className="post-img" onDoubleClick={doubleTap}>
-        <Photo photo={post.photo} tint={post.tint} w={900} h={1125} className="post-photo" alt={post.text} />
+        {imgs.length > 1 ? (
+          <div className="post-track" onScroll={(e) => setPi(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}>
+            {imgs.map((u) => (
+              <div className="post-slide" key={u}>
+                <Photo photo={u} tint={post.tint} w={900} h={1125} className="post-photo" alt={post.text} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Photo photo={post.photo} tint={post.tint} w={900} h={1125} className="post-photo" alt={post.text} />
+        )}
+        {imgs.length > 1 && <span className="post-count">{pi + 1}/{imgs.length}</span>}
         {pop && (
           <span className="heart-pop">
             <Ico d={HEART} fill="#fff" stroke="#fff" size={96} />
           </span>
         )}
       </div>
+      {imgs.length > 1 && (
+        <div className="post-dots">{imgs.map((u, i) => <i key={u} className={i === pi ? 'on' : ''} />)}</div>
+      )}
       <div className="post-actions">
         <button className="act" onClick={() => actions.like(post.id)} aria-label="좋아요">
           <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#000'} size={26} />
@@ -329,7 +345,6 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
         <div className="sns-top me-top">
           <Ico d="M12 5v14M5 12h14" size={28} sw={2.2} />
           <b>{ME_ID}<Ico d="M6 9l6 6 6-6" size={16} sw={2.4} /></b>
-          <span className="me-th"><Ico d="M17 8.5C16 5.800 13 4 10 4.500 6.500 5 4 8 4 12c0 4 2.500 7.500 7 7.500 3.500 0 6-2 6-4.500 0-2.500-2-4-4.500-4-2 0-3.500 1-3.500 2.500 0 1.200 1 2 2.200 2 2 0 3-1.800 3-5" size={30} sw={2} /><i /></span>
           <Ico d="M4 7h16M4 12h16M4 17h16" size={28} sw={2.2} />
         </div>
       ) : (
@@ -411,6 +426,9 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
             {list.map((p) => (
               <button key={p.id} className="grid-cell" onClick={() => onPost(p.id)} aria-label={p.text}>
                 <Photo photo={p.photo} tint={p.tint} w={300} h={300} className="grid-img" alt={p.text} />
+                {p.photos?.length > 1 && (
+                  <span className="grid-multi"><Ico d="M8 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2M4 10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#fff" stroke="#fff" size={22} sw={1.6} /></span>
+                )}
               </button>
             ))}
           </div>
