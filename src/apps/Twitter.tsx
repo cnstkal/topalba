@@ -29,6 +29,21 @@ const MY_POST_IMAGES = {
   2: `${import.meta.env.BASE_URL}images/twitter/my/post/2/06b5fbbcbe1a9bb2d5f059ea9644654c.jpg`,
   3: `${import.meta.env.BASE_URL}images/twitter/my/post/3/25870163289db1d47f79e03e7a35c296.jpg`,
 }
+const TWITTER_PROFILE_IMAGES = {
+  q: `${import.meta.env.BASE_URL}images/twitter/profile/q/2467a8605cd07ba1ac99958377fd4532.jpg`,
+  miri: `${import.meta.env.BASE_URL}images/twitter/profile/miri/57ec2f48416d660a3db1b40556804c44.jpg`,
+}
+const TWITTER_POST_IMAGES = {
+  miri: `${import.meta.env.BASE_URL}images/twitter/post/miri/a855c56fa66453c89fe5abd272d6ea09.jpg`,
+  '듀댕이': `${import.meta.env.BASE_URL}images/twitter/post/듀댕이/어두운 방의 플래티넘 블론드 셀카.png`,
+}
+const AccountAv = ({ name, c, s = 48, black }) => {
+  if (name === '듀댕이') return <span className="av" style={{ display: 'block', width: s, height: s, borderRadius: '50%', background: '#fff', flex: 'none' }} />
+  const src = TWITTER_PROFILE_IMAGES[name]
+  return src
+    ? <span className="myav" style={{ width: s, height: s }}><img src={src} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }} /></span>
+    : <Av c={c} black={black} s={s} />
+}
 const MyAv = ({ s = 48 }) => <span className="myav" style={{ width: s, height: s }}><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }} /></span>
 
 /* 아바타 (전부 벡터) */
@@ -48,8 +63,8 @@ const TL = [
   { name: '현준', h: '1645612', t: '12분', text: '이제 슬슬 붕어빵 나오네', c: '#000000', black: 1, rts: 0, lk: 5, vw: 78 },
   { name: 'q', h: 'fptmxkdl', t: '1시간', text: '점메추좀', c: '#8b9b78', rp: 4, rts: 0, lk: 2, vw: 140 },
   { name: '쫑', h: 'jjong_444', t: '3시간', text: '지금 번개할 사람? 신림쪽인데', c: '#7d8797', rp: 8, rts: 4, lk: 48, vw: 402 },
-  { name: 'miri', h: 'myluvno1_', t: '5시간', text: '아그만해아진짜반해버리기전에그만하라고', c: '#9b7d9f', rts: 204, lk: 583, vw: 3052, media: 1 },
-  { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
+  { name: 'miri', h: 'myluvno1_', t: '5시간', text: '아그만해아진짜반해버리기전에그만하라고', c: '#9b7d9f', rts: 204, lk: 583, vw: 3052, media: 1, postImage: 'miri' },
+  { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1, postImage: '듀댕이' },
 ]
 const PROF = [
   { text: '', imageId: 3, t: '2025. 3. 2.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
@@ -201,11 +216,11 @@ export default function Twitter() {
         <div className="tabs"><span className="on">추천 <Ic n="down" s={16} w={2.4} /></span><span>팔로우 중</span><Ic n="plus" s={24} w={2.2} /></div>
         <div className="sc">
           {[...mine.map((m) => ({ ...m, name: 'ㅅㅎ', h: 'cnsjbqH72w', my: 1 })), ...TL].map((t, i) => (
-            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc">{t.my ? <MyAv s={48} /> : <Av c={t.c} def={t.def} corgi={t.corgi} black={t.black} s={48} />}</div>
+            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc">{t.my ? <MyAv s={48} /> : <AccountAv name={t.name} c={t.c} black={t.black} s={48} />}</div>
               <div className="m">
                 <p className="n"><b>{t.name}</b> <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
                 {t.text && <p className="x"><TweetText text={t.text} /></p>}
-                {t.media && <div className="med"><img src={MY_POST_IMAGES[t.imageId]} alt="" /></div>}
+                {t.media && <div className="med"><img src={t.postImage ? TWITTER_POST_IMAGES[t.postImage] : MY_POST_IMAGES[t.imageId]} alt="" /></div>}
                 {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x"><TweetText text={t.q.text} /></p></div>}
                 <Act r={t.rts} l={t.lk} v={t.vw} rp={t.rp} />
               </div></div>
