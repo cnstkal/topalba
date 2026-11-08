@@ -12,6 +12,7 @@ import {
   SNS_FOLLOWING,
 } from '../data/story'
 import { judgeEnding } from '../data/endings'
+import { dev } from './device'
 import { ME } from '../data/characters'
 
 const KEY = 'private-save-v1'
@@ -103,8 +104,9 @@ function applyEffect(s, fx) {
       break
     }
     case 'notify':
+      // 집중 모드 중에는 배너를 띄우지 않고 알림 센터에만 조용히 쌓는다
       s.notifs = [{ id: `n${s.uid++}`, app: fx.app, title: fx.title, body: fx.body, thread: fx.thread, ts: now, read: false }, ...s.notifs]
-      s.banner = s.notifs[0]
+      if (dev.get().focus === null) s.banner = s.notifs[0]
       break
     case 'post':
       s.posts = [{ ...fx.post, ts: now }, ...s.posts]
@@ -119,6 +121,13 @@ function applyEffect(s, fx) {
       s.recents = [{ id: `c${s.uid++}`, from: fx.from, missed: !!fx.missed, ts: now }, ...s.recents]
       break
     case 'ring':
+      // 집중 모드 중에는 전화가 울리지 않고 자동 거절되어 부재중 기록으로만 남는다 (거절 흐름과 동일)
+      if (dev.get().focus !== null) {
+        s.triggered = [...new Set([...s.triggered, ...(fx.onDecline || [])])]
+        s.recents = [{ id: `c${s.uid}`, from: fx.from, missed: true, ts: now }, ...s.recents]
+        s.uid += 1
+        break
+      }
       s.ringing = { from: fx.from, onAccept: fx.onAccept || [], onDecline: fx.onDecline || [] }
       break
     case 'flag':
