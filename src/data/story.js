@@ -9,7 +9,7 @@
 // effects : 실행되는 효과 목록
 //
 // 효과(t) 종류
-// msg, notify, post, snsnotif, mail, call, ring, flag, unlock, ending
+// msg, notify, post, snsnotif, call, ring, flag, unlock, ending
 //
 // 선택지(choices) 구조: { label, text?, flags?, score?, unlock? }
 //
@@ -74,18 +74,6 @@ export const EVENTS = [
     id: 'e_mail0',
     delay: 34000,
     effects: [
-      {
-        t: 'mail',
-        mail: {
-          id: 'mail_notice',
-          from: '카드사',
-          addr: 'card@bank.example',
-          subject: '[안내] 11월 결제 예정 금액 안내',
-          preview: '이번 달 결제 예정 금액을 안내드립니다.',
-          body: '안녕하세요, 고객님.\n\n11월 결제 예정 금액을 안내드립니다. 결제일 전에 잔액을 확인해 주시기 바랍니다.\n\n감사합니다.',
-        },
-      },
-      { t: 'notify', app: 'mail', title: '카드사', body: '[안내] 11월 결제 예정 금액 안내' },
     ],
   },
 
@@ -155,18 +143,6 @@ export const EVENTS = [
     delay: 10000,
     after: ['e_sns1'],
     effects: [
-      {
-        t: 'mail',
-        mail: {
-          id: 'mail_gym',
-          from: '○○ 헬스장',
-          addr: 'help@gym.example',
-          subject: '[안내] 회원권 갱신 안내',
-          preview: '회원권 갱신 기간이 다가왔습니다.',
-          body: '안녕하세요, ○○ 헬스장입니다.\n\n회원권 갱신 기간이 다가와 안내드립니다. 기간 내 갱신하시면 기존 혜택을 그대로 이용하실 수 있습니다.\n\n감사합니다.',
-        },
-      },
-      { t: 'notify', app: 'mail', title: '○○ 헬스장', body: '[안내] 회원권 갱신 안내' },
     ],
   },
 
