@@ -112,9 +112,6 @@ function applyEffect(s, fx) {
     case 'snsnotif':
       s.snsNotifs = [{ id: `sn${s.uid++}`, user: fx.user, text: fx.text, ts: now }, ...s.snsNotifs]
       break
-    case 'mail':
-      s.mails = [{ ...fx.mail, ts: now, read: false }, ...s.mails]
-      break
     case 'call':
       s.recents = [{ id: `c${s.uid++}`, from: fx.from, missed: !!fx.missed, ts: now }, ...s.recents]
       break
