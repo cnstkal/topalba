@@ -507,9 +507,68 @@ const DM_ROWS = [
   { id: 'yunou._.u', name: '정윤호', text: '새 메시지 3개+', ago: '1일', unread: true, ring: true },
   { id: 'wooyounggg__', name: '정우영', text: '야 뭐함 ㅋㅋ', ago: '3일' },
   { id: 'no1likeme8_8', name: '김홍중', text: '이거 봐 ㅋㅋㅋㅋ', ago: '5일', unread: true },
-  { id: 'wooyounggg__', name: '정윤호, 정우영', text: '정우영님이 릴스를 보냈습니다', ago: '1주' },
+  { id: 'wooyounggg__', name: '정윤호, 정우영', text: '정우영님이 릴스를 보냈습니다', ago: '1주', group: true },
   { id: 'no1likeme8_8', name: '김홍중', text: '전송됨', ago: '2주', ring: true },
 ]
+
+// DM 대화 내용 (t=시간 구분선, m=내 메시지, o=상대 메시지)
+const DM_MSGS = [
+  [['t', '11월 7일 오후 9:12'], ['o', '형 오늘 시간 괜찮아요?'], ['m', '응 왜'], ['o', '저녁에 밥 먹을래요'], ['o', '새로 생긴 데 있는데'], ['m', '어디'], ['o', '성수쪽이요 ㅋㅋ'], ['m', '좋아 몇시'], ['t', '11월 8일 오후 6:40'], ['o', '7시 반 어때요'], ['o', '예약해둘게요'], ['m', 'ㅇㅋ 늦지마']],
+  [['t', '11월 6일 오후 2:03'], ['o', '야 뭐함 ㅋㅋ'], ['m', '그냥 누워있음'], ['o', '나가자 심심해'], ['m', '귀찮은데'], ['o', '치킨 쏜다'], ['m', '지금 나감ㅋㅋㅋ'], ['o', 'ㅋㅋㅋㅋ 빠르네']],
+  [['t', '11월 4일 오후 11:21'], ['o', '이거 봐 ㅋㅋㅋㅋ'], ['o', '진짜 웃김'], ['m', '뭔데'], ['o', '릴스 보냈음'], ['m', 'ㅋㅋㅋㅋㅋ 미쳤다'], ['m', '나도 보내줄게'], ['o', 'ㅇㅇ']],
+  [['t', '11월 2일 오후 8:15'], ['o', '이번 주말에 다 같이 보자'], ['m', '나 가능'], ['o', '나도 ㅇㅇ'], ['o', '장소는 내가 정할게'], ['m', '굳']],
+  [['t', '10월 26일 오전 1:36'], ['m', '자냐'], ['o', '아직'], ['m', '내일 몇시에 만나'], ['o', '점심쯤?'], ['m', 'ㅇㅋ']],
+]
+
+function DmChat({ row, onBack }) {
+  const [msgs, setMsgs] = useState(() => DM_MSGS[row.idx])
+  const [txt, setTxt] = useState('')
+  const endRef = useRef(null)
+  useEffect(() => {
+    if (endRef.current) endRef.current.scrollIntoView()
+  }, [msgs])
+  const send = () => {
+    const v = txt.trim()
+    if (!v) return
+    setMsgs((p) => [...p, ['m', v]])
+    setTxt('')
+  }
+  return (
+    <div className="page sns dc">
+      <div className="dc-head">
+        <button className="dc-round" onClick={onBack} aria-label="뒤로"><Ico d="M15 5l-7 7 7 7" size={24} sw={2.2} /></button>
+        <div className="dc-who">
+          <AccountAvatar id={row.id} size={46} />
+          <span><b>{row.name} <i>›</i></b><em>{row.group ? '' : row.id}</em></span>
+        </div>
+        <button className="dc-round" aria-label="통화"><Ico d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" size={22} sw={2} /></button>
+        <button className="dc-round" aria-label="영상통화"><Ico d="M3 7h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3zM16 11l5-3v8l-5-3z" size={24} sw={2} /></button>
+      </div>
+      <div className="dc-body">
+        {msgs.map((m, i) => {
+          if (m[0] === 't') return <div key={i} className="dc-time">{m[1]}</div>
+          const mine = m[0] === 'm'
+          const nextSame = msgs[i + 1] && msgs[i + 1][0] === m[0]
+          return (
+            <div key={i} className={`dc-line ${mine ? 'me' : 'ot'} ${nextSame ? 'tight' : ''}`}>
+              {!mine && <span className="dc-av">{!nextSame && <AccountAvatar id={row.id} size={32} />}</span>}
+              <span className="dc-bub">{m[1]}</span>
+            </div>
+          )
+        })}
+        <div ref={endRef} />
+      </div>
+      <div className="dc-input">
+        <span className="dc-cam"><Ico d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" size={22} stroke="#fff" sw={2} /></span>
+        <input value={txt} onChange={(e) => setTxt(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && send()} placeholder="메시지 보내기..." />
+        <Ico d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM6 11a6 6 0 0 0 12 0M12 17v4" size={26} sw={2} />
+        <Ico d="M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4" size={26} sw={2} />
+        <Ico d="M12 21a9 9 0 1 1 9-9l-9 9zM8.5 10h.01M14.5 10h.01M8 14c1.2 1.4 4 1.6 6 0" size={26} sw={2} />
+        <Ico d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v8M8 12h8" size={28} sw={2} />
+      </div>
+    </div>
+  )
+}
 
 const STORY_TRAY = [
   { key: 'me', name: '내 스토리', mine: true, when: '' },
@@ -521,6 +580,7 @@ export default function Sns({ params }) {
   const initialDm = params?.thread && params.thread.startsWith('dm:') ? params.thread : null
   const [tab, setTab] = useState(initialDm ? 'dm' : 'feed')
   const [dmId, setDmId] = useState(initialDm)
+  const [chat, setChat] = useState(null)
   const [sheet, setSheet] = useState(null) // { kind: 'comments' | 'more' | 'edit', id? }
   const [draft, setDraft] = useState('')
   const [bioDraft, setBioDraft] = useState('')
@@ -546,6 +606,7 @@ export default function Sns({ params }) {
   const newsOut = !!state.flags.newsOut
   const closeSheet = () => setSheet(null)
 
+  if (chat) return <DmChat row={chat} onBack={() => setChat(null)} />
   if (dmId) return <Thread id={dmId} dm onBack={() => setDmId(null)} />
 
   const buildStory = (key) => ({ key, title: key, owner: key, when: '3시간 전', slides: SNS_STORIES[key] })
@@ -732,8 +793,8 @@ export default function Sns({ params }) {
               </div>
             </div>
             <div className="dm-sec"><b>메시지</b><span>요청</span></div>
-            {DM_ROWS.map((r) => (
-              <button key={r.name} className="dm-row" onClick={() => {}}>
+            {DM_ROWS.map((r, idx) => (
+              <button key={idx} className="dm-row" onClick={() => setChat({ ...r, idx })}>
                 <span className={`dm-ring ${r.ring ? 'on' : ''}`}>
                   <AccountAvatar id={r.id} size={r.ring ? 60 : 64} />
                 </span>
