@@ -22,31 +22,40 @@ const Lock = () => <svg viewBox="0 0 24 24" width="15" height="15" className="lk
 const TweetText = ({ text = '' }) => text.split(/(#[가-힣A-Za-z0-9_]+)/g).map((part, i) => part.startsWith('#') ? <span key={i} className="lnk">{part}</span> : <span key={i}>{part}</span>)
 const Vf = () => <svg viewBox="0 0 24 24" width="17" height="17" className="lk"><circle cx="12" cy="12" r="10" fill="#1d9bf0" /><path d="m7.500 12.500 3 3 6-6.500" stroke="#fff" strokeWidth="2.400" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
 
+/* 내 프로필 및 게시글 이미지 */
+const MY_PROFILE_IMAGE = `${import.meta.env.BASE_URL}images/twitter/my/profile/DKi8pCTUEAA6X-o.webp`
+const MY_POST_IMAGES = {
+  1: `${import.meta.env.BASE_URL}images/twitter/my/post/1/00481b9f8659a8778f09b8638a60a0f5.jpg`,
+  2: `${import.meta.env.BASE_URL}images/twitter/my/post/2/06b5fbbcbe1a9bb2d5f059ea9644654c.jpg`,
+  3: `${import.meta.env.BASE_URL}images/twitter/my/post/3/25870163289db1d47f79e03e7a35c296.jpg`,
+}
+const MyAv = ({ s = 48 }) => <span className="myav"><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }} /></span>
+
 /* 아바타 (전부 벡터) */
-const Av = ({ c = '#8aa', s = 48, def, corgi }) => (
+const Av = ({ c = '#8aa', s = 48, def, corgi, black }) => (
   <svg viewBox="0 0 48 48" width={s} height={s} className="av">
     <defs><clipPath id={'c' + s}><circle cx="24" cy="24" r="24" /></clipPath></defs>
     <g clipPath={`url(#c${s})`}>
-      {corgi ? (<><rect width="48" height="48" fill="#35383f" /><path d="M8 18 6 5l11 5zM40 18 42 5 31 10z" fill="#d98a3b" /><circle cx="24" cy="25" r="15" fill="#e8a24a" /><path d="M24 14c5 0 7 4 7 9l-3 9h-8l-3-9c0-5 2-9 7-9z" fill="#fff" /><ellipse cx="24" cy="31" rx="7" ry="5.500" fill="#fff" /><circle cx="18" cy="23" r="2" fill="#222" /><circle cx="30" cy="23" r="2" fill="#222" /><ellipse cx="24" cy="29" rx="2.800" ry="2" fill="#222" /><path d="M12 12h24l-2-6H14z" fill="#b97a45" /></>)
+      {black ? <rect width="48" height="48" fill="#000000" /> : corgi ? (<><rect width="48" height="48" fill="#35383f" /><path d="M8 18 6 5l11 5zM40 18 42 5 31 10z" fill="#d98a3b" /><circle cx="24" cy="25" r="15" fill="#e8a24a" /><path d="M24 14c5 0 7 4 7 9l-3 9h-8l-3-9c0-5 2-9 7-9z" fill="#fff" /><ellipse cx="24" cy="31" rx="7" ry="5.500" fill="#fff" /><circle cx="18" cy="23" r="2" fill="#222" /><circle cx="30" cy="23" r="2" fill="#222" /><ellipse cx="24" cy="29" rx="2.800" ry="2" fill="#222" /><path d="M12 12h24l-2-6H14z" fill="#b97a45" /></>)
         : (<><rect width="48" height="48" fill={def ? '#cfd9de' : c} /><circle cx="24" cy="19" r="8" fill={def ? '#5b7083' : 'rgba(255,255,255,.55)'} /><path d="M6 48c1-12 8-16 18-16s17 4 18 16z" fill={def ? '#5b7083' : 'rgba(255,255,255,.55)'} /></>)}
     </g>
   </svg>
 )
-const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av c="#3a4a78" s={s} /></button>
+const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><MyAv s={s} /></button>
 
 /* 데이터 */
 const TL = [
-  { name: '현준', h: '1645612', t: '12분', text: '이제 슬슬 붕어빵 나오네', c: '#b58b72', rts: 0, lk: 5, vw: 78 },
+  { name: '현준', h: '1645612', t: '12분', text: '이제 슬슬 붕어빵 나오네', c: '#000000', black: 1, rts: 0, lk: 5, vw: 78 },
   { name: 'q', h: 'fptmxkdl', t: '1시간', text: '점메추좀', c: '#8b9b78', rp: 4, rts: 0, lk: 2, vw: 140 },
   { name: '쫑', h: 'jjong_444', t: '3시간', text: '지금 번개할 사람? 신림쪽인데', c: '#7d8797', rp: 8, rts: 4, lk: 48, vw: 402 },
   { name: 'miri', h: 'myluvno1_', t: '5시간', text: '아그만해아진짜반해버리기전에그만하라고', c: '#9b7d9f', rts: 204, lk: 583, vw: 3052, media: 1 },
   { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
 ]
 const PROF = [
-  { text: '#ㄱㅊㅅ', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
-  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
+  { text: '#ㄱㅊㅅ', imageId: 1, t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
+  { text: '', imageId: 2, t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
   { text: '날씨 좋네', t: '2024. 12. 21.', rp: 12, rts: 6, lk: 273, vw: 2021 },
-  { text: '', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
+  { text: '', imageId: 3, t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
 ]
 const DM = [
   ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
@@ -152,7 +161,7 @@ export default function Twitter() {
     body = (
       <div className="sc pf">
         <div className="ban"><button className="rb" onClick={back}><Ic n="back" s={24} w={2.4} /></button><button className="rb"><Ic n="search" s={22} w={2.4} /></button></div>
-        <div className="pav"><Av corgi s={80} /></div>
+        <div className="pav"><MyAv s={80} /></div>
         <h1>ㅅㅎ</h1><p className="hd">@cnsjbqH72w</p>
         <p className="ml"><span><Ic n="bag" s={18} />기업가</span></p>
         <p className="ml"><span><Ic n="cal" s={18} />2023년 7월에 가입함 <Ic n="right" s={14} /></span></p>
@@ -160,8 +169,8 @@ export default function Twitter() {
         <div className="pb"><span>프로필 공유</span><span>프로필 수정</span></div>
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
         {[...mine, ...PROF].map((p, i) => (
-          <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
-            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><i /></div>}
+          <div key={i} className="tw"><div className="lc"><MyAv s={48} />{p.thread && <u />}</div>
+            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><img src={MY_POST_IMAGES[p.imageId]} alt="" /></div>}
               <Act r={p.rts} l={p.lk} v={p.vw} rp={p.rp} /></div></div>
         ))}
         <button className="fab" onClick={() => to('compose')}><Ic n="plus" s={30} w={2.2} /></button>
@@ -191,12 +200,12 @@ export default function Twitter() {
         <div className="th hm"><Me s={32} onClick={() => to('profile')} /><X s={30} /><span className="sp" /></div>
         <div className="tabs"><span className="on">추천 <Ic n="down" s={16} w={2.4} /></span><span>팔로우 중</span><Ic n="plus" s={24} w={2.2} /></div>
         <div className="sc">
-          {[...mine.map((m) => ({ ...m, name: 'ㅅㅎ', h: 'cnsjbqH72w', corgi: 1 })), ...TL].map((t, i) => (
-            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc"><Av c={t.c} def={t.def} corgi={t.corgi} s={48} /></div>
+          {[...mine.map((m) => ({ ...m, name: 'ㅅㅎ', h: 'cnsjbqH72w', my: 1 })), ...TL].map((t, i) => (
+            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc">{t.my ? <MyAv s={48} /> : <Av c={t.c} def={t.def} corgi={t.corgi} black={t.black} s={48} />}</div>
               <div className="m">
                 <p className="n"><b>{t.name}</b> <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
                 {t.text && <p className="x"><TweetText text={t.text} /></p>}
-                {t.media && <div className="med"><i /></div>}
+                {t.media && <div className="med"><img src={MY_POST_IMAGES[t.imageId]} alt="" /></div>}
                 {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x"><TweetText text={t.q.text} /></p></div>}
                 <Act r={t.rts} l={t.lk} v={t.vw} rp={t.rp} />
               </div></div>
