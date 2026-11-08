@@ -18,6 +18,7 @@ const PHOTOS = [
   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900',
 ]
 const NICKS = ['mochi','jun_k','곰돌이','Theo','새벽감성','달콤커피','ryu','밤산책','시월','Kai','soda_pop','건빵','호두','Noah','한강러너','민트초코','Dex','은빛','범블비','정글','Leo','찬바람','이든','주말농부','Mingu','해바라기','로이','다람쥐','Jay','석양','준비물','Ian','무지개','Han','럭키원','유유','검은고양이냐옹','현수막','규리','재즈','시온','태양','준마','도토리','승냥이','지구인','성냥','우유빛']
+const PROFILE_USERS = NICKS.filter(nick => !['럭키원', '유유', '검은고양이냐옹'].includes(nick))
 const AREAS = ['홍대','이태원','강남','성수','종로','신촌','잠실','해방촌','합정','건대']
 const GOALS = ['가벼운 만남','데이트','진지한 관계','친구','대화 상대']
 const JOBS = ['디자이너','개발자','바리스타','사진작가','간호사','대학원생','요리사','마케터','트레이너','에디터']
@@ -32,7 +33,7 @@ const mkUsers = () => NICKS.map((nick, i) => ({
   id: i + 1, nick, age: nick === '럭키원' ? 29 : (nick === '검은고양이냐옹' || nick === '유유') ? 28 : 22 + (rnd(i, 1) % 20), area: pick(AREAS, i, 2), dist: +(0.4 + (rnd(i, 3) % 180) / 10).toFixed(1),
   online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: nick === '럭키원' ? 170 : nick === '검은고양이냐옹' ? 171 : nick === '유유' ? 186 : 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: ['럭키원', '검은고양이냐옹'].includes(nick) ? '올라운더' : nick === '유유' ? '바텀' : pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
-  photos: nick === '럭키원' ? [] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : PROFILE_POOL.length ? [PROFILE_POOL[(i % Math.max(1, NICKS.length - 3)) % PROFILE_POOL.length]] : (PHOTOS[i] ? [PHOTOS[i]] : []),
+  photos: nick === '럭키원' ? [] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PROFILE_POOL[PROFILE_USERS.indexOf(nick)] ? [PROFILE_POOL[PROFILE_USERS.indexOf(nick)]] : []),
 }))
 const mkState = () => {
   const users = mkUsers()
@@ -73,7 +74,7 @@ const mkState = () => {
   return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 14, 25, 20, 22, 27, 9, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
     me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [MY_PROFILE_PHOTO] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: fresh.nick === '럭키원' ? [] : PROFILE_PHOTOS[fresh.nick] ? [PROFILE_PHOTOS[fresh.nick]] : PROFILE_POOL.length ? fresh.photos : (u.photos || fresh.photos) }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', photos: s.me?.photos?.length ? s.me.photos : [MY_PROFILE_PHOTO] } } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: fresh.photos }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', photos: s.me?.photos?.length ? s.me.photos : [MY_PROFILE_PHOTO] } } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
