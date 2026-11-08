@@ -119,7 +119,7 @@ export default function Gyeol() {
   const pass = (id) => upd((o) => ({ passed: [...o.passed, id] }))
   const doBlock = (id) => { setPendingBlock(null); upd((o) => ({ blocked: [...o.blocked, id], liked: o.liked.filter((x) => x !== id), matches: o.matches.filter((x) => x !== id) })); setDetail(null); setRoom(null) }
   const f = s.filter
-  const ok = (u) => !s.blocked.includes(u.id) && u.age >= f.min && u.age <= f.max && u.dist <= f.dist && (f.goal === '전체' || u.goal === f.goal)
+  const ok = (u) => u.photos?.length > 0 && !s.blocked.includes(u.id) && u.age >= f.min && u.age <= f.max && u.dist <= f.dist && (f.goal === '전체' || u.goal === f.goal)
   const matched = (id) => s.matches.includes(id)
   const openChat = (id) => { upd((o) => ({ unread: { ...o.unread, [id]: 0 } })); setDetail(null); setRoom(id); setTab('chat') }
   const block = (id) => setPendingBlock(id)
