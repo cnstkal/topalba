@@ -266,7 +266,7 @@ function Panel({ closing, onClose, onOpenApp }) {
     const dy = e.clientY - s[1]
     if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) {
       moved.current = true
-      setPage((p) => Math.max(0, Math.min(2, p + (dy < 0 ? 1 : -1))))
+      setPage((p) => Math.max(0, Math.min(1, p + (dy < 0 ? 1 : -1))))
     } else if (Math.abs(dx) + Math.abs(dy) > 10) moved.current = true
     else if (e.target === e.currentTarget || e.target.classList.contains('cc-vp') || e.target.classList.contains('cc-page') || e.target.classList.contains('cc-pages') || e.target.classList.contains('cc-g')) onClose()
   }
@@ -286,11 +286,6 @@ function Panel({ closing, onClose, onOpenApp }) {
   return (
     <div className={`cc ${closing ? 'closing' : ''}`} onPointerDown={down} onPointerUp={up} onPointerCancel={() => (drag.current = null)} onClickCapture={(e) => { if (moved.current) { e.stopPropagation(); moved.current = false } }}>
       <div className={`cc-hint ${hint ? 'on' : ''}`}>{hint}</div>
-
-      <div className="cc-top" data-nodrag>
-        <button className="cc-gl" onClick={() => say('시뮬레이터에서는 편집할 수 없어요')} aria-label="추가">{I.plus(26)}</button>
-        <button className="cc-gl" onClick={() => say('시뮬레이터에서는 사용할 수 없어요')} aria-label="전원">{I.power(26)}</button>
-      </div>
 
       <div className="cc-vp">
         <div className="cc-pages" style={{ transform: `translateY(${-page * 100}%)` }}>
@@ -332,29 +327,10 @@ function Panel({ closing, onClose, onOpenApp }) {
           {/* 2. 음악 */}
           <section className="cc-page"><MediaBig d={d} /></section>
 
-          {/* 3. 연결 */}
-          <section className="cc-page">
-            <div className="cc-cn">
-              {[
-                ['air', I.air, '비행기 모드', d.air ? '켬' : '끔', d.air, 'air', airTap, null, 'full'],
-                ['wifi', I.wifi, 'Wi-Fi', net, d.wifi, 'blue', wifiTap, () => setDetail('wifi'), 'half'],
-                ['ad', I.airdrop, 'AirDrop', ['수신 끔', '연락처만', '모든 사람'][d.airdrop], d.airdrop > 0, 'blue', airdropTap, () => setDetail('airdrop'), 'half'],
-                ['cell', I.cell, '셀룰러 데이터', d.cell ? '켬' : '끔', d.cell, 'cell', cellTap, null, 'half'],
-                ['bt', I.bt, 'Bluetooth', d.bt ? d.btDev || '켬' : '연결 안 됨', d.bt, 'blue', btTap, () => setDetail('bt'), 'half'],
-                ['hot', I.link, '개인용 핫스팟', d.hotspot ? '켬' : '끔', d.hotspot, 'cell', hotTap, null, 'full dim'],
-                ['vpn', I.globe, 'VPN', d.vpn ? '켬' : '끔', d.vpn, 'blue', () => dev.set({ vpn: !d.vpn }), null, 'full dim'],
-              ].map(([k, ic, t, sub, on, col, tap, long, sz]) => (
-                <Press key={k} className={`cc-t cc-cr ${sz} ${on ? 'on' : ''}`} onTap={tap} onLong={long} label={t}>
-                  <span className={`cc-c ${on ? col : ''}`}>{ic(26)}</span>
-                  <span className="tx"><b>{t}</b><small>{sub}{long ? ' ⌃⌄' : ''}</small></span>
-                </Press>
-              ))}
-            </div>
-          </section>
         </div>
       </div>
 
-      <div className="cc-dots" data-nodrag>{[I.heart, I.note, I.ant].map((ic, i) => <button key={i} className={page === i ? 'on' : ''} onClick={() => setPage(i)} aria-label={`${i + 1}페이지`}>{ic(26)}</button>)}</div>
+      <div className="cc-dots" data-nodrag>{[I.heart, I.note].map((ic, i) => <button key={i} className={page === i ? 'on' : ''} onClick={() => setPage(i)} aria-label={`${i + 1}페이지`}>{ic(26)}</button>)}</div>
 
       <div
         className="cc-close"
