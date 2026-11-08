@@ -11,11 +11,11 @@ type Store = { me: Me; rooms: Room[]; openRooms: Room[]; collapsed: boolean }
 const KEY = 'kakaotalk-v2'
 
 const FRIENDS: [string, string][] = [
-  ['엄마', '밥은 먹었니?'], ['아빠', '필요한 거 있으면 연락해'], ['형', '집 들어올 때 연락해'],
-  ['김홍중', '오늘 일정 끝났어'], ['정윤호', '형 오늘 시간 괜찮으세요?'], ['정우영', '야 뭐함 ㅋㅋ'],
-  ['서나은', '이번 주 근무표 확인 부탁해요'], ['도윤', '오늘 탑 근무 들어가?'],
-  ['민석', '주소 보내줘'], ['지훈', '오늘 방 비어 있어?'],
-  ['고등학교 동창', '오랜만이다 잘 지내?'], ['동창 단톡', '다들 잘 지내지?'],
+  ['엄마', ''], ['아빠', ''], ['형', ''],
+  ['김홍중', ''], ['정윤호', ''], ['정우영', ''],
+  ['서나은', ''], ['도윤', ''],
+  ['민석', ''], ['지훈', ''],
+  ['고등학교 동창', ''], ['동창 단톡', ''],
 ]
 const MUSIC: Record<string, string> = {
   이서연: 'Love Dive - IVE', 박지호: 'Perfect Night - LE SSERAFIM', 정다은: 'Spicy - aespa', 조수빈: 'Super Shy - NewJeans',
@@ -581,30 +581,15 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
                 <button aria-label="더보기" onClick={soon}><Ic n="dots" s={24} /></button>
               </div>
             </div>
-            <div className="kakaotalk-scroll kakaotalk-pscroll">
-              <div className="kakaotalk-phero">
-                <Avatar name={f[0]} size={64} />
-                <h2>{f[0]}</h2>
-                {f[1] && <p>{f[1]}</p>}
-                {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
-                <div className="kakaotalk-pbar">
-                  <button onClick={() => openDM(f[0])}><Ic n="chat" s={21} />채팅</button>
-                  <button onClick={soon}><Ic n="phone" s={21} />통화</button>
-                  <button onClick={soon}><Ic n="video" s={24} />페이스톡</button>
-                </div>
-              </div>
-              <div className="kakaotalk-pgrid">
-                <div className="kakaotalk-pin">
-                  <div className="kakaotalk-pinhead"><PinSolid /></div>
-                  <div className="kakaotalk-pinbody">
-                    <div className="kakaotalk-pinrow">
-                      <Avatar name={f[0]} size={18} />
-                      <div><b>{f[0]}<i>3일</i></b><p>{f[1]}</p></div>
-                    </div>
-                  </div>
-                </div>
-                {Array.from({ length: 8 }, (_, k) => <Pic key={k} src={`https://picsum.photos/seed/kp${hash(f[0])}${k}/400/533`} className="kakaotalk-pcell" />)}
-              </div>
+            <div className="kakaotalk-pcenter">
+              <Avatar name={f[0]} size={96} />
+              <h2>{f[0]}</h2>
+              {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
+            </div>
+            <div className="kakaotalk-pactions">
+              <button onClick={() => openDM(f[0])}><span><Ic n="chat" s={22} /></span>채팅</button>
+              <button onClick={soon}><span><Ic n="phone" s={22} /></span>통화</button>
+              <button onClick={soon}><span><Ic n="video" s={24} /></span>페이스톡</button>
             </div>
           </div>
         )
