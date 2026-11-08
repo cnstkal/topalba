@@ -109,6 +109,7 @@ const ICONS = {
   micOff: ['M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z', 'M6 11a6 6 0 0 0 12 0', 'M12 17v4', 'M4 4l16 16'],
   speaker: ['M4 9.5v5h4l5 4v-13l-5 4z', 'M16.5 9a4 4 0 0 1 0 6', 'M19 6.5a8 8 0 0 1 0 11'],
   video: ['M4 7.5h10a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 15V9A1.5 1.5 0 0 1 4 7.5z', 'M15.5 11l6-3.5v9l-6-3.5'],
+  dots: ['M5.5 12h.01', 'M12 12h.01', 'M18.5 12h.01'],
   backspace: ['M9 5h11.5v14H9l-6.5-7z', 'M12.5 9.5l5 5M17.5 9.5l-5 5'],
   trash: ['M5 7h14M10 7V4.5h4V7', 'M7 7l1 13h8l1-13', 'M10.5 11v5M13.5 11v5'],
   up: ['M6 14l6-6 6 6'],
@@ -265,7 +266,7 @@ function OptBtn({ on, onClick, icon, label, disabled = false }) {
   return (
     <div className={`phone-app-call-opt ${disabled ? 'dis' : ''}`}>
       <button type="button" className={on ? 'on' : ''} onClick={onClick} aria-pressed={!!on} disabled={disabled}>
-        <Icon n={icon} size={30} sw={icon === 'keypad' ? 3.4 : 1.9} />
+        <Icon n={icon} size={34} sw={icon === 'keypad' ? 4.2 : icon === 'dots' ? 4.4 : 1.9} />
       </button>
       <span>{label}</span>
     </div>
@@ -305,10 +306,11 @@ function CallScreen({ target, contacts, onEnd }) {
       <div className="phone-app-call-bg" aria-hidden="true" />
 
       <div className="phone-app-call-head">
-        <div className="phone-app-call-name">{target.name}</div>
         <div className={`phone-app-call-state ${connected ? 'on' : ''}`}>
-          {connected ? fmtTimer(sec) : '통화 연결 중…'}
+          {connected ? fmtTimer(sec) : '연결 중...'}
         </div>
+        <div className="phone-app-call-name">{target.name}</div>
+        <div className="phone-app-call-place">{known ? '휴대전화' : '대한민국'}</div>
       </div>
 
       <div className="phone-app-call-mid">
@@ -339,19 +341,19 @@ function CallScreen({ target, contacts, onEnd }) {
           </div>
         ) : (
           <div className="phone-app-call-grid">
-            <OptBtn on={mute} onClick={() => setMute((v) => !v)} icon={mute ? 'micOff' : 'mic'} label="음소거" />
-            <OptBtn on={false} onClick={() => setPad(true)} icon="keypad" label="키패드" />
             <OptBtn on={speaker} onClick={() => setSpeaker((v) => !v)} icon="speaker" label="스피커" />
-            <OptBtn on={false} onClick={() => setList('통화 추가')} icon="plus" label="통화 추가" />
             <OptBtn on={false} onClick={() => undefined} icon="video" label="FaceTime" disabled />
-            <OptBtn on={false} onClick={() => setList('연락처')} icon="person" label="연락처" />
+            <OptBtn on={mute} onClick={() => setMute((v) => !v)} icon={mute ? 'micOff' : 'mic'} label="소리 끔" />
+            <OptBtn on={false} onClick={() => setList('연락처')} icon="dots" label="더 보기" />
+            <div className="phone-app-call-opt end">
+              <button type="button" className="phone-app-end2" onClick={end} aria-label="통화 종료"><PhoneGlyph size={38} rotate={135} /></button>
+              <span>종료</span>
+            </div>
+            <OptBtn on={false} onClick={() => setPad(true)} icon="keypad" label="키패드" />
           </div>
         )}
       </div>
 
-      <button type="button" className="phone-app-end" onClick={end} aria-label="통화 종료">
-        <PhoneGlyph size={34} rotate={135} />
-      </button>
     </div>
   )
 }
