@@ -201,7 +201,7 @@ const WY_MSGS: Msg[] = [
   { id: 9415, who: '정우영', text: '헐 완전 운명', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
   { id: 9416, who: '정우영', text: '나오세요 ㄱㄱ 밥 사드림', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
 
-  { id: 9420, who: '정우영', text: '뭐함요', t: new Date('2025-05-13T17:27:00+09:00').getTime() },
+  { id: 9420, who: '정우영', text: '뭐함요', t: new Date('2025-05-24T22:10:00+09:00').getTime() },
   { id: 9421, who: 'me', text: '알바끝', t: new Date('2025-05-24T22:12:00+09:00').getTime() },
   { id: 9422, who: '정우영', text: '진짜 일? 아님 정신노동', t: new Date('2025-05-24T22:13:00+09:00').getTime() },
   { id: 9423, who: 'me', text: '정신노동', t: new Date('2025-05-24T22:15:00+09:00').getTime() },
@@ -239,7 +239,7 @@ const WY_MSGS: Msg[] = [
   { id: 9482, who: 'me', text: '좀 이따 갈게', t: new Date('2026-08-08T15:26:00+09:00').getTime() },
   { id: 9483, who: '정우영', text: '오케이 자리 맡아놓음', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
 
-  { id: 9490, who: '정우영', text: 'ㅁㅎㅁㅎ', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
+  { id: 9490, who: '정우영', text: 'ㅁㅎㅁㅎ', t: new Date('2026-11-08T19:15:00+09:00').getTime() },
 
 
 const dayKey = (t: number) => { const d = new Date(t); return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일` }
