@@ -5,7 +5,7 @@ const EXTRA_APPS = {
   dating: { label: '결', bg: 'linear-gradient(155deg,#ff9a7b 0%,#e8548f 48%,#6a4cff 100%)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
-  twitter: { label: 'X', bg: 'radial-gradient(circle at 30% 20%,#3a3a3c 0%,#000 70%)' },
+  twitter: { label: 'X', bg: '#000' },
   maps: { label: '지도', bg: 'linear-gradient(160deg,#6fe3a0,#16a050)' },
 }
 
@@ -46,8 +46,10 @@ const EXTRA_GLYPHS = {
   ),
   twitter: (
     <svg viewBox="0 0 60 60" width="60" height="60">
-      <defs><linearGradient id="gxw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#c9ced6" /></linearGradient></defs>
-      <path d="M14 12h9.6l10.4 14 12.1-14h3.4L36.8 28.6 50 48h-9.6L29.8 33.8 16.9 48H13.5l14-16.2L14 12zm6.9 3.2 22.3 29.6h3.8L24.6 15.2h-3.7z" fill="url(#gxw)" />
+      <g fill="none" strokeLinecap="butt">
+        <path d="M16 12.5L43.5 47.5" stroke="#fff" strokeWidth="6.2" />
+        <path d="M44.5 12.5L28.8 32.6M25.2 37.2L16.5 48" stroke="#fff" strokeWidth="2.6" />
+      </g>
     </svg>
   ),
   kakao: (
@@ -75,7 +77,7 @@ export const APPS = {
   clock: { label: '시계', bg: '#000' },
   music: { label: '음악', bg: 'linear-gradient(#ff7a8e,#fa1f3d)' },
   appstore: { label: 'App Store', bg: 'linear-gradient(180deg,#1ccbfc 0%,#1a6ff0 100%)' },
-  weather: { label: '날씨', bg: 'linear-gradient(#58b8ff,#2874e8)' },
+  weather: { label: '날씨', bg: 'linear-gradient(#5fb2ff,#2f72dc)' },
   someone: { label: '썸원', bg: 'linear-gradient(#ffa9b9,#f04a78)' },
   ...EXTRA_APPS,
 }
@@ -164,15 +166,11 @@ export function Glyph({ id }) {
       return (
         <svg viewBox="0 0 60 60" width="60" height="60">
           <defs>
-            <radialGradient id="gwsun" cx=".35" cy=".3" r=".75"><stop offset="0" stopColor="#fff6c2" /><stop offset="1" stopColor="#ffb928" /></radialGradient>
-            <linearGradient id="gwcl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#d6e9ff" /></linearGradient>
+            <linearGradient id="gwcl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#cfe2fb" /></linearGradient>
+            <linearGradient id="gwsun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffd45c" /><stop offset="1" stopColor="#ffa726" /></linearGradient>
           </defs>
-          <g stroke="#ffd85a" strokeWidth="2.6" strokeLinecap="round" opacity=".9">
-            <path d="M39 4v4M52 11l-3 3M56 24h-4M26 11l3 3" />
-          </g>
-          <circle cx="39" cy="20" r="8.5" fill="url(#gwsun)" />
-          <path d="M15 42.5c-4.2 0-7.5-3.1-7.5-7 0-3.6 2.7-6.5 6.3-6.9 1.6-5.5 6.7-9.1 12.6-8.6 5.2.4 9.3 3.9 10.2 8.7.5-.1 1-.2 1.5-.2 4.8 0 8.4 3.5 8.4 7.7 0 4.1-3.4 7.3-7.7 7.3H15z" fill="url(#gwcl)" />
-          <path d="M16 41.5h29" stroke="#a9c9ef" strokeWidth="1.2" strokeLinecap="round" opacity=".7" />
+          <circle cx="39" cy="20" r="10" fill="url(#gwsun)" />
+          <path d="M14 43c-4.4 0-8-3.3-8-7.6 0-4 3-7.2 6.9-7.6 1.7-5.8 7-9.8 13.2-9.3 5.3.4 9.6 4.2 10.6 9.2.5-.1 1-.1 1.6-.1 5 0 9 3.6 9 8.1S42.6 43 38 43H14z" fill="url(#gwcl)" />
         </svg>
       )
     case 'someone':
