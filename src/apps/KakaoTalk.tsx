@@ -126,9 +126,8 @@ const YH_MSGS = [
   { id: 9158, who: 'me', text: '???', t: new Date('2026-07-29T20:58:00+09:00').getTime() },
   { id: 9159, who: '정윤호', text: '😡😡', t: new Date('2026-07-29T20:59:00+09:00').getTime() },
 
-  { id: 9198, who: 'date', t: new Date('2026-07-30T00:00:00+09:00').getTime() },
   { id: 9199, who: 'date', t: new Date('2026-08-01T00:00:00+09:00').getTime() },
-  { id: 9200, who: 'gap', text: '•\\n•\\n•\\n•', t: new Date('2026-08-02T23:00:00+09:00').getTime() },
+  { id: 9200, who: 'gap', text: ['•', '•', '•', '•'].join('\n'), t: new Date('2026-08-02T23:00:00+09:00').getTime() },
 
   { id: 9300, who: '정윤호', text: '일어났어용?', t: new Date('2026-11-08T07:42:00+09:00').getTime() },
   { id: 9301, who: 'me', text: 'ㅇㅇ', t: new Date('2026-11-08T07:50:00+09:00').getTime() },
