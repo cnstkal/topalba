@@ -39,7 +39,7 @@ const TL = [
   { name: 'q', h: 'fptmxkdl', t: '1시간', text: '점메추좀', c: '#8b9b78', rp: 4, rts: 0, lk: 2, vw: 140 },
   { name: '쫑', h: 'jjong_444', t: '3시간', text: '지금 번개할 사람? 신림쪽인데', c: '#7d8797', rp: 8, rts: 4, lk: 48, vw: 402 },
   { name: 'miri', h: 'myluvno1_', t: '5시간', text: '아그만해아진짜반해버리기전에그만하라고', c: '#9b7d9f', rts: 204, lk: 583, vw: 3052, media: 1 },
-  { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329 },
+  { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
 ]
 const PROF = [
   { text: '#ㄱㅊㅅ', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
@@ -60,6 +60,12 @@ const DM = [
   ['bluehour', '1주', '답장 가능하실까요', '#776b8a'],
   ['no_name', '2주', '혹시 어디 사세요?', '#8c6f72'],
   ['새벽감성', '3주', '친해지고 싶어서 연락드렸어요', '#6b7d8d'],
+  ['하루살이', '4주', '어디 사세요? 저 근처인데 우연히 마주칠 수도ㅎㅎ', '#7f6a8e'],
+  ['꿀떡_s', '1개월', '사진 프로필 진짜 예뻐요 혹시 몇 살이에요', '#b07d6c'],
+  ['sunny.side', '1개월', '저랑 친구 해요! 취미 얘기하고 싶어요', '#6f8c74'],
+  ['ㅇㅇ_mm', '2개월', '어디야?', '#5f6b7a'],
+  ['달빛산책러', '2개월', '혹시 서울 사세요? 같이 밥 먹을래요', '#4f6b8f'],
+  ['익명의고양이', '3개월', '연락 좀 받아주시면 안 돼요?ㅠ', '#8a7a6a'],
 ]
 const CHAT = [
   ['r', '안녕하세요! 친해지고 싶어서 디엠했어요'],
@@ -71,7 +77,7 @@ const CHAT = [
 ]
 
 const Act = ({ r, l, v, rp, bm = 1 }) => (
-  <div className="act"><span><Ic n="reply" s={19} />{rp || ''}</span><span className={r === 0 ? 'dim' : ''}><Ic n="rt" s={19} />{r || ''}</span><span><Ic n="heart" s={19} />{l || ''}</span><span><Ic n="views" s={19} />{v || ''}</span>{bm && <Ic n="mark" s={19} />}<Ic n="share" s={19} /></div>
+  <div className="act"><span><Ic n="reply" s={19} />{rp || ''}</span><span><Ic n="rt" s={19} />{r || ''}</span><span><Ic n="heart" s={19} />{l || ''}</span><span><Ic n="views" s={19} />{v || ''}</span>{bm && <Ic n="mark" s={19} />}<Ic n="share" s={19} /></div>
 )
 
 export default function Twitter() {
