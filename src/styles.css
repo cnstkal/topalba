@@ -1790,3 +1790,27 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .post-cap, .post-prev, .post-cm, .cm, .cm b, .post .cm { font-size: 12.5px !important; }
 .post-meta b { font-size: 15px !important; }
 .post-meta i { font-size: 13px !important; }
+
+/* 인스타 DM 목록 */
+.dm-head { flex: none; height: 56px; padding: 0 16px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; background: #fff; }
+.dm-head b { display: flex; align-items: center; gap: 4px; font-size: 24px; font-weight: 700; letter-spacing: -.4px; }
+.dm-head .dm-compose { justify-self: end; }
+.dm-search { margin: 6px 16px 14px; height: 46px; border-radius: 23px; padding: 0 16px; font-size: 18px; }
+.dm-notes { display: flex; gap: 22px; padding: 26px 16px 6px; overflow-x: auto; scrollbar-width: none; }
+.dm-note { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: none; width: 96px; }
+.dm-note em { font-style: normal; font-size: 13px; color: #8e8e93; }
+.dm-bubble { position: absolute; top: -26px; left: -8px; z-index: 2; background: #fff; border-radius: 18px; padding: 8px 14px; font-size: 13px; color: #8e8e93; box-shadow: 0 1px 8px rgba(0,0,0,.14); }
+.dm-map { width: 92px; height: 92px; border-radius: 50%; background: radial-gradient(circle at 35% 40%, #8fd18c 0 22%, transparent 23%), radial-gradient(circle at 62% 62%, #a7d98a 0 18%, transparent 19%), #9fd0ef; }
+.dm-sec { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 16px 10px; }
+.dm-sec b { font-size: 20px; font-weight: 700; }
+.dm-sec span { font-size: 16px; font-weight: 600; color: #6e6e73; }
+.dm-row { display: flex; align-items: center; gap: 14px; width: 100%; padding: 10px 16px; text-align: left; }
+.dm-ring { flex: none; width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.dm-ring.on { background: conic-gradient(#feda75, #fa7e1e, #d62976, #962fbf, #feda75); }
+.dm-ring.on .sns-av { border: 3px solid #fff; }
+.dm-main { flex: 1; min-width: 0; }
+.dm-main b { display: block; font-size: 18px; font-weight: 500; }
+.dm-main b.u { font-weight: 700; }
+.dm-main p { margin: 4px 0 0; font-size: 16px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dm-main p.u { color: #000; font-weight: 700; }
+.dm-row .unread-dot { width: 12px; height: 12px; background: #5b6cf2; }

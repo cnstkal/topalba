@@ -503,6 +503,14 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
   )
 }
 
+const DM_ROWS = [
+  { id: 'yunou._.u', name: '정윤호', text: '새 메시지 3개+', ago: '1일', unread: true, ring: true },
+  { id: 'wooyounggg__', name: '정우영', text: '야 뭐함 ㅋㅋ', ago: '3일' },
+  { id: 'no1likeme8_8', name: '김홍중', text: '이거 봐 ㅋㅋㅋㅋ', ago: '5일', unread: true },
+  { id: 'wooyounggg__', name: '정윤호, 정우영', text: '정우영님이 릴스를 보냈습니다', ago: '1주' },
+  { id: 'no1likeme8_8', name: '김홍중', text: '전송됨', ago: '2주', ring: true },
+]
+
 const STORY_TRAY = [
   { key: 'me', name: '내 스토리', mine: true, when: '' },
   ...Object.keys(SNS_STORIES).map((id) => ({ key: id, name: id, when: '3시간 전' })),
@@ -700,39 +708,42 @@ export default function Sns({ params }) {
 
       {tab === 'dm' && (
         <>
-          <div className="sns-top">
-            <Back onClick={() => setTab('feed')} />
-            <b>yoonho_j</b>
+          <div className="dm-head">
+            <span />
+            <b>{ME_ID}<Ico d="M6 9l6 6 6-6" size={18} sw={2.4} /></b>
             <span className="dm-compose" aria-label="새 메시지">
-              <Ico d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" size={22} />
+              <Ico d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" size={26} sw={2} />
             </span>
           </div>
           <div className="scroll">
             <label className="dm-search">
-              <Ico d={SEARCH} size={16} stroke="#8e8e93" sw={2.2} />
+              <Ico d={SEARCH} size={20} stroke="#8e8e93" sw={2.2} />
               <span>검색</span>
             </label>
-            {dmRows.length === 0 && <div className="empty">메시지가 없습니다.</div>}
-            {dmRows.map((id) => {
-              const l = state.threads[id]
-              const last = l[l.length - 1]
-              const unread = l.some((m) => m.unread)
-              return (
-                <button key={id} className="msg-row" onClick={() => setDmId(id)}>
-                  <Avatar id={THREAD_META[id].members[0]} size={52} />
-                  <div className="msg-main">
-                    <div className="msg-top">
-                      <b style={{ fontWeight: unread ? 700 : 500 }}>{THREAD_META[id].title}</b>
-                      <span>{fmtTime(last.ts)}</span>
-                    </div>
-                    <div className="msg-prev" style={{ color: unread ? '#000' : undefined }}>
-                      {last.text}
-                    </div>
-                  </div>
-                  {unread && <i className="unread-dot" />}
-                </button>
-              )
-            })}
+            <div className="dm-notes">
+              <div className="dm-note">
+                <span className="dm-bubble">메모...</span>
+                <AccountAvatar id={ME_ID} size={92} />
+                <em>내 메모</em>
+              </div>
+              <div className="dm-note">
+                <span className="dm-map" />
+                <em>지도</em>
+              </div>
+            </div>
+            <div className="dm-sec"><b>메시지</b><span>요청</span></div>
+            {DM_ROWS.map((r) => (
+              <button key={r.name} className="dm-row" onClick={() => {}}>
+                <span className={`dm-ring ${r.ring ? 'on' : ''}`}>
+                  <AccountAvatar id={r.id} size={r.ring ? 60 : 64} />
+                </span>
+                <div className="dm-main">
+                  <b className={r.unread ? 'u' : ''}>{r.name}</b>
+                  <p className={r.unread ? 'u' : ''}>{r.text} · {r.ago}</p>
+                </div>
+                {r.unread && <i className="unread-dot" />}
+              </button>
+            ))}
           </div>
         </>
       )}
