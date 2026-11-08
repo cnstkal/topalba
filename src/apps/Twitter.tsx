@@ -52,10 +52,10 @@ const TL = [
   { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
 ]
 const PROF = [
-  { text: '#ㄱㅊㅅ', imageId: 1, t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
+  { text: '', imageId: 3, t: '2025. 3. 2.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
   { text: '', imageId: 2, t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
   { text: '날씨 좋네', t: '2024. 12. 21.', rp: 12, rts: 6, lk: 273, vw: 2021 },
-  { text: '', imageId: 3, t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
+  { text: '#ㄱㅊㅅ', imageId: 1, t: '2024. 8. 9.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
 ]
 const DM = [
   ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
