@@ -180,7 +180,7 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   const act = (kind: 'like' | 'pass') => {
     if (fly) return
     setFly(kind); setDrag(false); start.current = null
-    setTimeout(() => { kind === 'like' ? like(u.id) : pass(u.id) }, 280)
+    setTimeout(() => { kind === 'like' ? like(u.id) : pass(u.id); setFly(null); setDx(0) }, 280)
   }
   const end = () => { setDrag(false); if (start.current == null) return; if (dx > 90) act('like'); else if (dx < -90) act('pass'); else setDx(0); start.current = null }
   const n = Math.max(u.photos.length, 1)
