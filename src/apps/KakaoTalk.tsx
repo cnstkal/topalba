@@ -134,6 +134,51 @@ const YH_MSGS = [
   { id: 9317, who: '정윤호', text: '알겠어요 그래도 갈게요 ㅎ', t: new Date('2026-11-08T15:44:00+09:00').getTime() },
   { id: 9318, who: '정윤호', text: '형 오늘 돼요?', t: new Date('2026-11-08T18:40:00+09:00').getTime() },
 ]
+
+const WY_MSGS: Msg[] = [
+  { id: 9401, who: '정우영', text: '안녕하세요 ㅋㅋ 저번에 가게 갔던 사람인데요', t: new Date('2025-05-10T18:42:00+09:00').getTime() },
+  { id: 9402, who: 'me', text: '아 ㅋㅋ 안녕하세요 무슨 일이에요?', t: new Date('2025-05-10T18:49:00+09:00').getTime() },
+  { id: 9403, who: '정우영', text: '그냥 잘 들어갔나 해서요. 그때 얘기 재밌었어요', t: new Date('2025-05-10T19:03:00+09:00').getTime() },
+  { id: 9404, who: 'me', text: 'ㅋㅋㅋ 저도요 다음에 또 오세요', t: new Date('2025-05-10T19:08:00+09:00').getTime() },
+  { id: 9405, who: '정우영', text: '그럼요 근처라 자주 갈 듯', t: new Date('2025-05-10T19:11:00+09:00').getTime() },
+  { id: 9406, who: 'me', text: '근처 사는구나', t: new Date('2025-05-13T20:16:00+09:00').getTime() },
+  { id: 9407, who: '정우영', text: '네 생각보다 가까워요 ㅋㅋ 나중에 밥 한번 먹어요', t: new Date('2025-05-13T20:19:00+09:00').getTime() },
+  { id: 9408, who: 'me', text: '좋죠 시간 맞으면 먹어요', t: new Date('2025-05-13T20:24:00+09:00').getTime() },
+  { id: 9409, who: '정우영', text: '오늘 뭐 하세요? 저녁 먹었어요?', t: new Date('2025-05-24T18:31:00+09:00').getTime() },
+  { id: 9410, who: 'me', text: '아직요 알바 끝나고 먹으려고요', t: new Date('2025-05-24T18:40:00+09:00').getTime() },
+  { id: 9411, who: '정우영', text: '그럼 끝나고 간단하게 먹을래요? 저도 근처예요', t: new Date('2025-05-24T18:43:00+09:00').getTime() },
+  { id: 9412, who: 'me', text: 'ㅇㅋ 뭐 먹을까요', t: new Date('2025-05-24T18:47:00+09:00').getTime() },
+  { id: 9413, who: '정우영', text: '아무거나요 ㅋㅋ 편한 거 먹죠', t: new Date('2025-05-24T18:50:00+09:00').getTime() },
+  { id: 9414, who: '정우영', text: '오늘 재밌었어요 ㅋㅋ 다음엔 술 한잔해요', t: new Date('2025-05-24T23:16:00+09:00').getTime() },
+  { id: 9415, who: 'me', text: 'ㅋㅋㅋ 그래요 조심히 들어가요', t: new Date('2025-05-24T23:20:00+09:00').getTime() },
+  { id: 9416, who: '정우영', text: '우리 은근 잘 맞는 것 같은데 그냥 친구처럼 지내요 편하게', t: new Date('2025-06-01T16:08:00+09:00').getTime() },
+  { id: 9417, who: 'me', text: '나도 그게 좋음 ㅋㅋ 동네 친구 생겼네', t: new Date('2025-06-01T16:13:00+09:00').getTime() },
+  { id: 9418, who: '정우영', text: 'ㅋㅋㅋ 인정 심심하면 불러요', t: new Date('2025-06-01T16:17:00+09:00').getTime() },
+  { id: 9419, who: 'me', text: '오늘 저녁에 뭐함?', t: new Date('2025-06-14T17:22:00+09:00').getTime() },
+  { id: 9420, who: '정우영', text: '피시방 갈 건데 올래요?', t: new Date('2025-06-14T17:24:00+09:00').getTime() },
+  { id: 9421, who: 'me', text: 'ㅇㅇ 한 시간 뒤에 감', t: new Date('2025-06-14T17:27:00+09:00').getTime() },
+  { id: 9422, who: '정우영', text: '밥부터 먹고 가요 배고픔', t: new Date('2025-06-14T17:29:00+09:00').getTime() },
+  { id: 9423, who: 'me', text: '맨날 배고프대 ㅋㅋ', t: new Date('2025-06-14T17:31:00+09:00').getTime() },
+  { id: 9424, who: '정우영', text: '노래방 갈 사람 없는데 오늘 ㄱ?', t: new Date('2025-07-05T20:11:00+09:00').getTime() },
+  { id: 9425, who: 'me', text: '목 아파서 노래는 못 부름 듣기만 할게', t: new Date('2025-07-05T20:15:00+09:00').getTime() },
+  { id: 9426, who: '정우영', text: '그럼 내가 다 부르면 되겠네 ㅋㅋ', t: new Date('2025-07-05T20:18:00+09:00').getTime() },
+  { id: 9427, who: 'me', text: '그건 좀 무서운데', t: new Date('2025-07-05T20:20:00+09:00').getTime() },
+  { id: 9428, who: '정우영', text: '저녁 먹을래요? 새로 생긴 데 가보자', t: new Date('2025-09-19T18:04:00+09:00').getTime() },
+  { id: 9429, who: 'me', text: '거기 웨이팅 길다던데', t: new Date('2025-09-19T18:09:00+09:00').getTime() },
+  { id: 9430, who: '정우영', text: '일단 가보고 길면 다른 데 가죠 ㅋㅋ', t: new Date('2025-09-19T18:12:00+09:00').getTime() },
+  { id: 9431, who: 'me', text: 'ㅇㅋ 나갈 때 연락할게', t: new Date('2025-09-19T18:15:00+09:00').getTime() },
+  { id: 9432, who: '정우영', text: '형 오늘 뭐함 저녁에 한잔?', t: new Date('2026-03-21T17:48:00+09:00').getTime() },
+  { id: 9433, who: 'me', text: '내일 일찍 일어나야 돼서 한 잔만', t: new Date('2026-03-21T17:52:00+09:00').getTime() },
+  { id: 9434, who: '정우영', text: '한 잔이 두 잔 되는 거 알죠 ㅋㅋ', t: new Date('2026-03-21T17:55:00+09:00').getTime() },
+  { id: 9435, who: 'me', text: '너랑 마시면 맨날 늦게 들어가잖아', t: new Date('2026-03-21T17:58:00+09:00').getTime() },
+  { id: 9436, who: '정우영', text: '오늘 피시방 갈 사람 구함', t: new Date('2026-08-08T15:21:00+09:00').getTime() },
+  { id: 9437, who: 'me', text: '나 지금 집인데 좀 이따 갈게', t: new Date('2026-08-08T15:26:00+09:00').getTime() },
+  { id: 9438, who: '정우영', text: '오케이 자리 잡아놓을게요', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
+  { id: 9439, who: 'me', text: '밥도 먹고 가자', t: new Date('2026-08-08T15:30:00+09:00').getTime() },
+  { id: 9440, who: '정우영', text: '콜 제가 맛있는 거 찾아봄', t: new Date('2026-08-08T15:32:00+09:00').getTime() },
+  { id: 9441, who: '정우영', text: '야 오늘 뭐함 ㅋㅋ', t: new Date('2026-11-08T19:15:00+09:00').getTime() },
+]
+
 const dayKey = (t: number) => { const d = new Date(t); return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일` }
 const dayLabel = (t: number) => `${dayKey(t)} ${'일월화수목금토'[new Date(t).getDay()]}요일`
 const listT = (t: number) => { const d = new Date(), x = new Date(t); return d.toDateString() === x.toDateString() ? fmtT(t) : `${x.getMonth() + 1}월 ${x.getDate()}일` }
@@ -175,7 +220,7 @@ function seed(): Store {
     { id: 'r-bro', name: '형', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9004, who: '형', text: '집에 택배 왔던데 네 거냐', t: now - 7200000 }] },
     { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: HJ_MSGS },
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
-    { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: [{ id: 9007, who: '정우영', text: '야 오늘 뭐함 ㅋㅋ', t: now - 900000 }] },
+    { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: WY_MSGS },
     { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
   ], openRooms: seedOpen(), collapsed: false }
 }
@@ -185,9 +230,9 @@ function load(): Store {
     if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs)))
       const seeded = seed()
       const mergedRooms = s.rooms.map((room: Room) => {
-        if (room.id !== 'r-hj') return room
+        if (room.id !== 'r-hj' && room.id !== 'r-wy') return room
         const existingIds = new Set(room.msgs.map(m => m.id))
-        const history = (seeded.rooms.find(r => r.id === 'r-hj')?.msgs ?? []).filter(m => !existingIds.has(m.id))
+        const history = (seeded.rooms.find(r => r.id === room.id)?.msgs ?? []).filter(m => !existingIds.has(m.id))
         return { ...room, msgs: [...room.msgs, ...history].sort((a, b) => a.t - b.t) }
       })
       return { ...s, rooms: mergedRooms, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
