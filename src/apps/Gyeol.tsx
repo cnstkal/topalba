@@ -40,44 +40,25 @@ const mkUsers = () => NICKS.map((nick, i) => ({
 })).map((u) => ({ ...u, nick: NICK_RENAME[u.nick] ?? u.nick, age: AGE_EDITS[u.nick] ?? u.age, height: HEIGHT_EDITS[u.nick] ?? u.height }))
 const mkState = () => {
   const users = mkUsers()
-  const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 4, 5, 6, 8, 9, 10, 11, 13, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+  const matchIds = [38, 39, 40, 41, 42, 45, 46, 48, 3, 7, 18, 4]
   const chats = {}
   const seed = (id, lines, gap = 1) => { chats[id] = lines.map((text, j) => ({ me: j % 2 === 1, text, t: Date.now() - (lines.length - j) * gap * 3600e3 })) }
-  seed(35, ['오늘 끝나고 시간 돼?', '오늘은 좀 늦게 끝날 듯', '그럼 끝나고 연락해. 밥이라도 먹자', 'ㅇㅋ 끝나면 연락할게'], 7)
-  seed(36, ['어제 집 잘 들어갔어?', '응ㅋㅋ 너는', '나도. 다음에 그쪽에서 보자', '이번 주 중에 시간 맞춰볼게'], 11)
-  seed(37, ['이번 주말 뭐 해', '아직 별일 없어', '그럼 토요일에 볼래?', '콜 몇 시쯤?'], 18)
-  seed(3, ['고생했네요. 맥주 한잔?', 'ㅋㅋ 오늘은 패스', '담에 보자'], 26)
+  seed(38, ['알바 하시나요', '네 일정이랑 위치 보내주세요', 'https://open.kakao.com/o/s7mQ2xYf'], 3)
+  seed(39, ['탑 알바 문의드려요', '가능한 날짜랑 시간 먼저 보내주세요', '이번 주 금요일 가능할까요?', 'https://open.kakao.com/o/s7mQ2xYf'], 5)
+  seed(40, ['지금 당장 가능하신가요', 'ㄴㄴ 어려워요'], 8)
+  seed(41, ['안녕하세요 조건 문의하고 싶어요', 'https://open.kakao.com/o/s7mQ2xYf'], 12)
+  seed(42, ['알바 보고 연락드렸습니다', '가능한 날짜 보내주세요 https://open.kakao.com/o/s7mQ2xYf'], 16)
+  seed(45, ['프로필 보고 연락드려요', '넵', 'sm플레이가 꿈인데 가능하실까요..?', 'ㄴㄴ'], 35)
+  seed(46, ['이번 주 일정 알 수 있을까요?', 'https://open.kakao.com/o/s7mQ2xYf'], 42)
+  seed(48, ['안녕하세요 번호 받을 수잇나요', 'https://open.kakao.com/o/s7mQ2xYf'], 58)
+  seed(3, ['지금 만나실래요?', '밖이라 좀 어려운데', '나중에 다시 연락 드릴게요'], 26)
   seed(7, ['지금 어디야', '이태원 쪽', '나도 근처인데 잠깐 볼래?'], 32)
-  seed(12, ['오늘 뭐 먹었어', '아직 안 먹었어', '그럼 끝나고 간단히 먹자'], 40)
-  seed(18, ['오랜만이네 잘 지내?', '그럭저럭 지내지 뭐', '시간 되면 얼굴 보자'], 52)
-  seed(1, ['오늘도 출근?', '응 이제 나가', '고생해라'], 60)
-  seed(2, ['스토리 봤어ㅋㅋ', '아 그거 별거 아님', 'ㅋㅋ 알겠음'], 70)
-  seed(4, ['이번 주는 바빠?', '조금. 왜?', '그냥 물어봤어'], 82)
-  seed(5, ['잘 지내지?', 'ㅇㅇ 너도?', '그럼그럼'], 95)
-  seed(6, ['담에 술 한잔하자', '시간 맞으면 보자'], 110)
-  seed(8, ['근처 갈 일 있는데', '오면 연락해'], 125)
-  seed(9, ['ㅋㅋㅋㅋ 그건 좀 웃겼다', '인정'], 140)
-  seed(10, ['요즘 바빠서 연락 늦었네', '괜찮아'], 155)
-  seed(11, ['이번 달 안에 한번 보자', 'ㅇㅋ 일정 보고 연락할게'], 170)
-  seed(13, ['혹시 오늘 가능해요?', '오늘은 어려워요', '네 다음에 연락드릴게요'], 185)
-  seed(14, ['안녕하세요 프로필 보고 연락드려요', '네 무슨 일이세요?', '그냥 근처라서요'], 200)
-  seed(15, ['지금 뭐 하세요?', '일하는 중이에요', '아 넵'], 215)
-  seed(16, ['오랜만이에요', '그러게요 잘 지냈어요?'], 230)
-  seed(38, ['안녕하세요 알바 아직 구하시나요?', '네 일정 맞으면 가능합니다', '카톡 아이디 드릴게요. mars403으로 연락 주세요', '네 카톡으로 연락드릴게요!'], 3)
-  seed(39, ['탑 알바 문의드려요', '가능한 날짜랑 시간 먼저 보내주세요', '이번 주 금요일 가능할까요?', '카톡 아이디 남길게요. mars403으로 연락 주세요'], 5)
-  seed(40, ['혹시 오늘 급하게 가능하세요?', '오늘은 마감됐어요. 카톡 아이디로 문의 주세요', '카톡 아이디 mars403 추가하고 연락 주세요'], 8)
-  seed(41, ['안녕하세요 조건 문의하고 싶어요', '네 카톡 아이디로 연락 주시면 자세히 안내할게요', '카톡 아이디 mars403 입니다'], 12)
-  seed(42, ['알바 보고 연락드렸습니다', '가능한 날짜 보내주세요. 카톡으로 안내할게요', '010-4827-1936'], 16)
-  seed(43, ['안녕하세요 혹시 아직 구하세요?', '네, 자세한 내용은 카톡으로 부탁드려요', '010-4827-1936 입니다'], 22)
-  seed(44, ['오늘 밤 가능하신가요?', '시간 확인해보고 번호로 답 드릴게요'], 28)
-  seed(45, ['프로필 보고 연락드려요', '어떤 문의세요?', '알바 관련이요. 카톡으로 여쭤봐도 될까요?'], 35)
-  seed(46, ['이번 주 일정 알 수 있을까요?', '가능한 날짜 정리해서 카톡으로 보내주세요'], 42)
-  seed(47, ['안녕하세요', '네 안녕하세요', '혹시 알바 문의 가능할까요?'], 50)
-  seed(48, ['혹시 번호 받을 수 있을까요?', '네 카톡 아이디 mars403 으로 연락 주세요'], 58)
+  seed(18, ['너 아직도 이거 하는구나', 'ㄴㄱ?'], 52)
+  seed(4, ['이번 주는 바빠?', '왜', '그냥 물어봤어'], 82)
   return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 14, 25, 20, 22, 27, 9, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
     me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [MY_PROFILE_PHOTO] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: fresh.photos }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', photos: s.me?.photos?.length ? s.me.photos : [MY_PROFILE_PHOTO] } } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: fresh.photos }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; [38,39,40,41,42,45,46,48,3,7,18,4].forEach(id => { chats[id] = seed.chats[id] || [] }); Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: seed.matches, likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', photos: s.me?.photos?.length ? s.me.photos : [MY_PROFILE_PHOTO] } } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
