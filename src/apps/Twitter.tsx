@@ -29,7 +29,7 @@ const MY_POST_IMAGES = {
   2: `${import.meta.env.BASE_URL}images/twitter/my/post/2/06b5fbbcbe1a9bb2d5f059ea9644654c.jpg`,
   3: `${import.meta.env.BASE_URL}images/twitter/my/post/3/25870163289db1d47f79e03e7a35c296.jpg`,
 }
-const MyAv = ({ s = 48 }) => <span className="myav"><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }} /></span>
+const MyAv = ({ s = 48 }) => <span className="myav" style={{ width: s, height: s }}><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="" onError={(e) => { e.currentTarget.style.display = 'none' }} /></span>
 
 /* 아바타 (전부 벡터) */
 const Av = ({ c = '#8aa', s = 48, def, corgi, black }) => (
