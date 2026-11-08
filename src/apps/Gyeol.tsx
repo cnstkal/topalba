@@ -3,6 +3,7 @@ import { Compass, MapPin, Heart, MessageCircle, User, X, Star, SlidersHorizontal
 import './Gyeol.css'
 
 // 사진 URL을 여기에 채우세요 (사용자마다 서로 다른 사진). 없으면 모노그램으로 표시됩니다.
+const MY_PROFILE_PHOTO = `${import.meta.env.BASE_URL}images/gyeol/profile/mars/c6433842160cbcad8fd17217706faeb5.jpg`
 const PROFILE_PHOTOS = {
   '유유': `${import.meta.env.BASE_URL}images/gyeol/profile/yuyu/1daa7f6d8e9f989dfabf4a00a7945d67.jpg`,
   '검은고양이냐옹': `${import.meta.env.BASE_URL}images/gyeol/profile/검은고양이다야옹/f96a31a507278c2b8e116b65536fe060.jpg`,
@@ -67,9 +68,9 @@ const mkState = () => {
   seed(47, ['안녕하세요', '네 안녕하세요', '혹시 알바 문의 가능할까요?'], 50)
   seed(48, ['혹시 번호 받을 수 있을까요?', '네 카톡 아이디 mars403 으로 연락 주세요'], 58)
   return { users, liked: [5, 9, 21], starred: [], likedMe: [2, 14, 25, 20, 22, 27, 9, 3, 7, 12, 18], matches: matchIds, passed: [], blocked: [], chats, unread: { 7: 1, 12: 2, 35: 1, 38: 1, 40: 2 },
-    me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
+    me: { nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', visible: true, photos: [MY_PROFILE_PHOTO] }, filter: { min: 18, max: 50, dist: 30, goal: '전체' } }
 }
-const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: PROFILE_PHOTOS[fresh.nick] ? [PROFILE_PHOTOS[fresh.nick]] : fresh.nick === '럭키원' ? [] : (u.photos || fresh.photos) }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구' } } } } catch (e) {} return mkState() }
+const load = () => { try { const s = JSON.parse(localStorage.getItem('gyeol-state')); if (s && s.users) { const seed = mkState(); const known = new Set(s.users.map(u => u.id)); const nickById = { 35: '럭키원', 36: '유유', 37: '검은고양이냐옹' }; const users = [...s.users.map((u) => { const fresh = seed.users.find((x) => x.id === u.id) || u; return { ...u, nick: fresh.nick, age: fresh.age, height: fresh.height, position: fresh.position, photos: PROFILE_PHOTOS[fresh.nick] ? [PROFILE_PHOTOS[fresh.nick]] : fresh.nick === '럭키원' ? [] : (u.photos || fresh.photos) }; }), ...seed.users.filter(u => !known.has(u.id))]; const chats = { ...seed.chats, ...(s.chats || {}) }; Object.keys(chats).forEach(id => { chats[id] = (chats[id] || []).map(m => ({ ...m, text: typeof m.text === 'string' ? m.text.replace(/010-4827-1936/g, '카톡 아이디 mars403') : m.text })) }); return { ...seed, ...s, users, matches: [...new Set([...(s.matches || []), ...seed.matches])], likedMe: [...new Set([...(s.likedMe || []), ...seed.likedMe])], chats, unread: { ...seed.unread, ...(s.unread || {}) }, starred: s.starred || [], me: { ...s.me, nick: 'mars', age: 29, bio: '178 18 / 탑 / 알바 필요하시면 따로 문의', tags: [], goal: '친구', photos: s.me?.photos?.length ? s.me.photos : [MY_PROFILE_PHOTO] } } } } catch (e) {} return mkState() }
 
 function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
@@ -317,7 +318,7 @@ function Me({ s, upd }) {
       <section className="gyeol-profile-card">
         <div className="gyeol-profile-cover"><span>MY PROFILE</span></div>
         <div className="gyeol-profile-main">
-          <div className="gyeol-profile-avatar"><img src={m.photos[0] || PHOTOS[0]} alt="" /></div>
+          <div className="gyeol-profile-avatar"><img src={m.photos[0] || MY_PROFILE_PHOTO} alt="mars 프로필" /></div>
           <span className="gyeol-profile-status">PROFILE ACTIVE</span>
           <h2>{m.nick}</h2>
           <p className="gyeol-profile-meta">{m.age}세 · {m.goal}</p>
