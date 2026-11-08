@@ -11,18 +11,18 @@ const usePersist = (k, init) => sharedPersist(k, init, 'phone-app:v2:')
 /* ───────── 초기(가상) 데이터 ───────── */
 // [연락처, 종류(in|out|missed), 몇 분 전, 통화 시간(초)]
 const SEED_CALLS = [
-  // 홍중은 드물게 먼저 전화하지만 한 번 통화하면 길게 이어짐
-  ['hj', 'in', 95, 312], ['hj', 'in', 1500, 1840], ['hj', 'out', 4200, 960],
-  // 윤호는 자주 짧게 통화
-  ['yh', 'in', 35, 72], ['yh', 'out', 180, 48], ['yh', 'in', 420, 95], ['yh', 'out', 900, 61],
-  ['yh', 'in', 1800, 84], ['yh', 'out', 2600, 55], ['yh', 'in', 3900, 112],
-  // 우영은 가끔 짧게
-  ['wy', 'in', 1100, 58], ['wy', 'out', 5200, 83],
-  // 아빠와 형은 연락이 드묾
-  ['dad', 'missed', 9000, 0], ['dad', 'out', 18000, 74], ['bro', 'in', 26000, 0],
-  // 단골손님, 광고성 번호, 친구, 알바 관련
-  ['regular', 'in', 600, 135], ['nae', 'out', 2400, 92], ['boss', 'missed', 5600, 0],
-  ['friend', 'out', 7200, 210], ['regular', 'missed', 10800, 0],
+  // 저장된 사람들 (여러 명이 고르게)
+  ['mom', 'in', 40, 402], ['nae', 'out', 75, 130], ['yh', 'in', 95, 72], ['regular', 'missed', 140, 0],
+  ['bro', 'in', 210, 46], ['hj', 'in', 300, 312], ['friend', 'out', 360, 210], ['boss', 'missed', 420, 0],
+  ['wy', 'in', 600, 58], ['mom', 'out', 780, 180], ['dad', 'missed', 900, 0], ['nae', 'in', 1020, 94],
+  ['yh', 'out', 1300, 61], ['regular', 'in', 1500, 135], ['hj', 'out', 1800, 960], ['friend', 'in', 2100, 26],
+  ['boss', 'out', 2400, 88], ['bro', 'missed', 2700, 0], ['wy', 'out', 3000, 83], ['mom', 'in', 3300, 65],
+  ['dad', 'out', 3900, 74], ['yh', 'in', 4500, 95], ['nae', 'missed', 5100, 0], ['regular', 'out', 5600, 40],
+  ['friend', 'missed', 6200, 0], ['hj', 'in', 7000, 1840], ['boss', 'in', 7800, 52], ['mom', 'missed', 8500, 0],
+  // 저장 안 된 번호 (뒷 4자리 가림)
+  [null, 'in', 55, 38, '01027381946'], [null, 'missed', 260, 0, '01066204519'], [null, 'in', 510, 121, '01027381946'],
+  [null, 'out', 1260, 0, '0220418377'], [null, 'missed', 1950, 0, '01098556201'], [null, 'in', 2850, 27, '01066204519'],
+  [null, 'missed', 4000, 0, '01027381946'], [null, 'in', 6800, 14, '0319527740'], [null, 'out', 9200, 63, '01054917283'],
 ]
 const SEED_VOICEMAIL = [
   ['boss', 60 * 5, 38, '이번 주 근무 시간 확인되면 답 주세요.'],
@@ -33,8 +33,8 @@ const SEED_VOICEMAIL = [
 ]
 const makeCalls = () => {
   const now = Date.now()
-  return SEED_CALLS.map(([cid, dir, min, dur], i) => ({
-    id: 'seed' + i, cid, number: null, dir, ts: now - min * 60000, dur,
+  return SEED_CALLS.map(([cid, dir, min, dur, number], i) => ({
+    id: 'seed' + i, cid, number: number || null, dir, ts: now - min * 60000, dur,
   }))
 }
 const makeVoicemail = () => {
@@ -51,6 +51,11 @@ function formatPhone(raw) {
   if (/[*#+]/.test(d) || d.length <= 3) return d
   if (d.length <= 7) return `${d.slice(0, 3)}-${d.slice(3)}`
   return `${d.slice(0, 3)}-${d.slice(3, d.length - 4)}-${d.slice(-4)}`
+}
+const maskPhone = (raw) => {
+  const d = digitsOf(raw)
+  if (d.length < 8) return formatPhone(d)
+  return `${d.slice(0, 3)}-${d.slice(3, 7)}-****`
 }
 const pad2 = (n) => String(n).padStart(2, '0')
 function clock(d) {
@@ -297,14 +302,13 @@ function CallScreen({ target, contacts, onEnd }) {
 
   return (
     <div className="page phone-app phone-app-call" style={{ '--tint': tintOf(target.cid) } as any}>
-      <div className="phone-app-call-bg" aria-hidden="true">{known ? initialOf(target.cid) : ''}</div>
+      <div className="phone-app-call-bg" aria-hidden="true" />
 
       <div className="phone-app-call-head">
         <div className="phone-app-call-name">{target.name}</div>
         <div className={`phone-app-call-state ${connected ? 'on' : ''}`}>
           {connected ? fmtTimer(sec) : '통화 연결 중…'}
         </div>
-        {target.name !== target.number && <div className="phone-app-call-num">{target.number}</div>}
       </div>
 
       <div className="phone-app-call-mid">
@@ -358,7 +362,7 @@ function Detail({ ctx }) {
   const c = top.cid ? byId(top.cid) : byNumber(top.number)
   const cid = c?.id || null
   const number = c ? c.phone : formatPhone(top.number || '')
-  const name = c ? c.name : number
+  const name = c ? c.name : maskPhone(number)
   const [edit, setEdit] = useState(false)
   const [nm, setNm] = useState(name)
   const [ph, setPh] = useState(number)
@@ -579,7 +583,7 @@ export default function PhoneApp() {
   )
   const byId = (id) => contacts.find((c) => c.id === id)
   const byNumber = (n) => contacts.find((c) => digitsOf(c.phone) === digitsOf(n))
-  const nameOf = (r) => byId(r.cid)?.name || (r.number ? formatPhone(r.number) : '알 수 없음')
+  const nameOf = (r) => byId(r.cid)?.name || (r.number ? maskPhone(r.number) : '알 수 없음')
 
   const sorted = useMemo(
     () => [...contacts].sort((a, b) => a.name.localeCompare(b.name, 'ko')),
@@ -617,7 +621,7 @@ export default function PhoneApp() {
     setTarget({
       cid: c ? c.id : null,
       number: c ? c.phone : formatPhone(number),
-      name: c ? c.name : formatPhone(number),
+      name: c ? c.name : maskPhone(number),
       raw: c ? null : number,
       ts: Date.now(),
     })
