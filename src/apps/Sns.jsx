@@ -325,14 +325,27 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
 
   return (
     <>
-      <div className="sns-top">
-        {mine ? <span /> : <Back onClick={onBack} />}
-        <b>{mine ? ME_ID : uid}</b>
-        <span />
-      </div>
+      {mine ? (
+        <div className="sns-top me-top">
+          <Ico d="M12 5v14M5 12h14" size={28} sw={2.2} />
+          <b>{ME_ID}<Ico d="M6 9l6 6 6-6" size={16} sw={2.4} /></b>
+          <span className="me-th"><Ico d="M17 8.5C16 5.800 13 4 10 4.500 6.500 5 4 8 4 12c0 4 2.500 7.500 7 7.500 3.500 0 6-2 6-4.500 0-2.500-2-4-4.500-4-2 0-3.500 1-3.500 2.500 0 1.200 1 2 2.200 2 2 0 3-1.800 3-5" size={30} sw={2} /><i /></span>
+          <Ico d="M4 7h16M4 12h16M4 17h16" size={28} sw={2.2} />
+        </div>
+      ) : (
+        <div className="sns-top">
+          <Back onClick={onBack} />
+          <b>{uid}</b>
+          <span />
+        </div>
+      )}
       <div className="scroll">
-        <div className="prof">
-          <AccountAvatar id={uid} size={80} />
+        <div className={`prof ${mine ? 'me' : ''}`}>
+          {mine ? (
+            <span className="me-av"><AccountAvatar id={uid} size={100} /><i>+</i></span>
+          ) : (
+            <AccountAvatar id={uid} size={80} />
+          )}
           <div className="prof-stats">
             <div>
               <b>{list.length}</b>게시물
@@ -345,20 +358,25 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
             </div>
           </div>
         </div>
-        <div className="prof-bio">
-          <b>{name}</b>
-          {bio && (
-            <>
-              <br />
-              {bio}
-            </>
-          )}
-        </div>
+        {mine ? (
+          <div className="me-pill"><Ico d="M17 8.500C16 5.800 13 4 10 4.500 6.500 5 4 8 4 12c0 4 2.500 7.500 7 7.500 3.500 0 6-2 6-4.500 0-2.500-2-4-4.500-4-2 0-3.500 1-3.500 2.500 0 1.200 1 2 2.200 2 2 0 3-1.800 3-5" size={16} sw={2.4} />{ME_ID}</div>
+        ) : (
+          <div className="prof-bio">
+            <b>{name}</b>
+            {bio && (
+              <>
+                <br />
+                {bio}
+              </>
+            )}
+          </div>
+        )}
         <div className="prof-btns">
           {mine ? (
             <>
               <span onClick={onEdit}>프로필 편집</span>
               <span onClick={onShare}>프로필 공유</span>
+              <span className="me-add"><Ico d="M15 20v-1.500a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20M9 11a3.500 3.500 0 1 0 0-7 3.500 3.500 0 0 0 0 7zM19 8v6M16 11h6" size={22} sw={2.2} /></span>
             </>
           ) : (
             <>
@@ -381,8 +399,10 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
             ))}
           </div>
         )}
-        <div className="prof-tabs">
-          <Ico d={GRID} size={22} />
+        <div className={`prof-tabs ${mine ? 'me' : ''}`}>
+          <span className="on"><Ico d={GRID} size={24} /></span>
+          {mine && <span><Ico d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3" size={24} sw={1.8} /></span>}
+          {mine && <span><Ico d="M4 8a2 2 0 0 1 2-2h2l1.500-2h5L16 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM12 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" size={24} sw={1.8} /></span>}
         </div>
         {list.length === 0 ? (
           <div className="empty">게시물이 없습니다.</div>

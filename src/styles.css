@@ -1618,3 +1618,19 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 @keyframes isl-spin { to { transform: rotate(360deg); } }
 @keyframes isl-bar { from { height: 4px; } to { height: 18px; } }
 @keyframes isl-col { 0%, 100% { background: var(--c1); } 33% { background: var(--c2); } 66% { background: var(--c3); } }
+
+/* 내 프로필: 실제 인스타그램 프로필 모양 */
+.me-top { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+.me-top > b { display: flex; align-items: center; gap: 2px; font-size: 22px; font-weight: 800; }
+.me-th { position: relative; display: flex; }
+.me-th i { position: absolute; top: -6px; right: -8px; width: 16px; height: 16px; border-radius: 50%; background: #ff3040; }
+.prof.me { padding: 10px 16px 8px; gap: 22px; }
+.me-av { position: relative; display: flex; }
+.me-av i { position: absolute; right: -2px; bottom: 0; width: 26px; height: 26px; border-radius: 50%; background: #262626; color: #fff; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 20px; line-height: 1; }
+.prof.me .prof-stats { font-size: 15px; }
+.prof.me .prof-stats b { font-size: 19px; }
+.me-pill { display: inline-flex; align-items: center; gap: 4px; margin: 6px 16px 14px; padding: 6px 12px; border: 1px solid #e6e6e6; border-radius: 999px; font-size: 14px; font-weight: 600; }
+.prof-btns .me-add { flex: 0 0 42px; display: flex; align-items: center; justify-content: center; padding: 7px 0; }
+.prof-tabs.me { justify-content: space-around; padding: 0; }
+.prof-tabs.me span { flex: 1; display: flex; justify-content: center; padding: 11px 0; color: #8e8e93; border-bottom: 2px solid transparent; }
+.prof-tabs.me span.on { color: #000; border-bottom-color: #000; }

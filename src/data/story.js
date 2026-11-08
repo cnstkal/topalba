@@ -383,7 +383,6 @@ export const SNS_STORIES = {
 
 // 본인 프로필 하이라이트
 export const SNS_HIGHLIGHTS = [
-  { id: 'hl1', title: '🍚', photo: 'food', items: [{ photo: 'food', text: '🍚' }] },
   { id: 'hl2', title: 'Bob', photo: '/images/instagram/My/Bob/IMG_1514.jpeg', items: [{ photo: '/images/instagram/My/Bob/IMG_1514.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/86AF75B4-3C23-4238-B53A-513C36E033A9.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },
 ]
 
