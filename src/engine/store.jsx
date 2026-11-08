@@ -146,6 +146,8 @@ function reducer(state, a) {
   switch (a.type) {
     case 'UNLOCK_PHONE':
       return { ...state, unlocked: true }
+    case 'LOCK_PHONE':
+      return { ...state, unlocked: false }
     case 'RUN': {
       const ev = EVENT_MAP[a.id]
       if (!ev || state.done.includes(a.id)) return state
@@ -309,6 +311,7 @@ export function GameProvider({ children }) {
   const actions = useMemo(
     () => ({
       unlockPhone: () => dispatch({ type: 'UNLOCK_PHONE' }),
+      lockPhone: () => dispatch({ type: 'LOCK_PHONE' }),
       choose: (thread, msgId, index) => {
         dispatch({ type: 'CHOOSE', thread, msgId, index })
         setTimeout(() => dispatch({ type: 'OUT_READ', thread }), 1800)

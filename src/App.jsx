@@ -88,7 +88,13 @@ function Phone() {
   }
 
   const closeApp = () => {
-    if (!cur || cur.closing) return
+    if (!cur) {
+      // 홈 화면에서 홈 바를 누르면 잠금 화면으로 돌아감
+      setLeaving(false)
+      actions.lockPhone()
+      return
+    }
+    if (cur.closing) return
     setCur({ ...cur, closing: true })
     setTimeout(() => setCur(null), 320)
   }
