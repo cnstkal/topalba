@@ -95,7 +95,7 @@ const YH_MSGS = [
   { id: 9118, who: 'me', text: 'ㅇㅇ', t: new Date('2026-08-01T20:33:00+09:00').getTime() },
   { id: 9119, who: '정윤호', text: '저 형이 좋아요', t: new Date('2026-08-02T22:15:00+09:00').getTime() },
   { id: 9120, who: '정윤호', text: '사귀고싶어요', t: new Date('2026-08-02T22:16:00+09:00').getTime() },
-  { id: 9200, who: 'gap', text: '• • • •', t: new Date('2026-08-02T23:00:00+09:00').getTime() },
+  { id: 9200, who: 'gap', text: '•\n•\n•\n•', t: new Date('2026-08-02T23:00:00+09:00').getTime() },
   { id: 9300, who: '정윤호', text: '형 일어났어요?', t: new Date('2026-11-08T07:42:00+09:00').getTime() },
   { id: 9301, who: 'me', text: 'ㅇㅇ', t: new Date('2026-11-08T07:50:00+09:00').getTime() },
   { id: 9302, who: '정윤호', text: '오늘 날씨 추운데 따뜻하게 입고 다녀요', t: new Date('2026-11-08T07:51:00+09:00').getTime() },

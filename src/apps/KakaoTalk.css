@@ -197,4 +197,4 @@
 /* 채팅 입력창 아래 안전영역도 입력창 배경과 자연스럽게 연결 */
 .kakaotalk-room .kakaotalk-input{margin-bottom:calc(-1 * var(--kt-bottom));padding-bottom:calc(8px + var(--kt-bottom));background:#fff}
 
-.kakaotalk-gap{text-align:center;margin:18px 0 12px;font-size:15px;letter-spacing:4px;color:#8e8e93}
+.kakaotalk-gap{text-align:center;margin:18px 0 12px;font-size:15px;line-height:1.1;letter-spacing:0;color:#8e8e93;white-space:pre}
