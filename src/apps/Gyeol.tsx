@@ -3,6 +3,10 @@ import { Compass, MapPin, Heart, MessageCircle, User, X, Star, SlidersHorizontal
 import './Gyeol.css'
 
 // 사진 URL을 여기에 채우세요 (사용자마다 서로 다른 사진). 없으면 모노그램으로 표시됩니다.
+const PROFILE_PHOTOS = {
+  '유유': `${import.meta.env.BASE_URL}images/gyeol/profile/yuyu/1daa7f6d8e9f989dfabf4a00a7945d67.jpg`,
+  '검은고양이냐옹': `${import.meta.env.BASE_URL}images/gyeol/profile/검은고양이다야옹/f96a31a507278c2b8e116b65536fe060.jpg`,
+}
 const PHOTOS = [
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900',
   'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900',
@@ -24,7 +28,7 @@ const mkUsers = () => NICKS.map((nick, i) => ({
   id: i + 1, nick, age: 22 + (rnd(i, 1) % 20), area: pick(AREAS, i, 2), dist: +(0.4 + (rnd(i, 3) % 180) / 10).toFixed(1),
   online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
-  photos: PHOTOS[i] ? [PHOTOS[i]] : [],
+  photos: PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PHOTOS[i] ? [PHOTOS[i]] : []),
 }))
 const mkState = () => {
   const users = mkUsers()
@@ -71,7 +75,7 @@ function Photo({ u, i = 0, cls = '' }) {
   const [bad, setBad] = useState(false)
   const src = u.photos[i]
   return src && !bad ? <img className={`gyeol-photo ${cls}`} src={src} alt={u.nick} onError={() => setBad(true)} draggable={false} />
-    : <div className={`gyeol-photo gyeol-mono ${cls}`}>{(u.nick || '?')[0].toUpperCase()}</div>
+    : <div className={`gyeol-photo gyeol-mono ${u.nick === '럭키원' ? 'gyeol-solid-black' : ''} ${cls}`}>{u.nick === '럭키원' ? '' : (u.nick || '?')[0].toUpperCase()}</div>
 }
 
 // 사진이 옆으로 부드럽게 밀려 넘어가는 스트립 (key={u.id}로 사람이 바뀔 때는 새로 그려 애니메이션 없이 시작)
