@@ -251,7 +251,7 @@ function Panel({ closing, onClose, onOpenApp }) {
     const id = setTimeout(() => setHint(''), 1600)
     return () => clearTimeout(id)
   }, [hint])
-  const say = (t) => setHint(t)
+  const say = () => {} // 탭 시 안내 문구(토스트) 표시 안 함
 
   /* 세로 스와이프 = 페이지 이동, 빈 곳을 탭 = 닫기 (슬라이더·패널은 data-nodrag) */
   const down = (e) => {
@@ -307,7 +307,7 @@ function Panel({ closing, onClose, onOpenApp }) {
               <T cls="sq rotc" on={d.rot} onTap={() => tog('rot', (v) => `세로 방향 고정: ${v ? '켬' : '끔'}`)} label="회전 잠금">{I.rot(38)}</T>
               <T cls={`sq ${d.cell ? 'grn' : ''}`} on={d.cell} onTap={cellTap} label="셀룰러">{I.cell(38)}</T>
               <div className="cc-t cc-sltile">
-                <Slider vertical value={d.bright} onChange={(v) => dev.set({ bright: v })} icon={I.sun(30)} label="화면 밝기" />
+                <Slider vertical value={100} onChange={() => undefined} icon={I.sun(30)} label="화면 밝기" />
               </div>
               <div className="cc-t cc-sltile vol">
                 <Slider vertical value={d.vol} onChange={(v) => dev.set({ vol: v })} icon={d.vol === 0 ? I.mute(30) : I.vol(30)} label="음량" />

@@ -20,11 +20,12 @@ const KEY = 'device-sim-v1'
 const SAVED = ['air', 'cell', 'wifi', 'bt', 'hotspot', 'airdrop', 'net', 'btDev', 'bright', 'vol', 'dark', 'low', 'rot', 'focus', 'focusLast', 'prevWifi', 'prevBt']
 const DEF = {
   air: false, cell: true, wifi: true, bt: true, hotspot: false, airdrop: 1, net: 'topalba-5G', btDev: 'AirPods Pro',
-  bright: 85, vol: 60, dark: false, low: false, rot: false, focus: null, focusLast: 0, prevWifi: true, prevBt: true,
+  bright: 100, vol: 60, dark: false, low: false, rot: false, focus: null, focusLast: 0, prevWifi: true, prevBt: true,
   flash: false, rec: false, mirror: null,
 }
 
 let s = { ...DEF }
+s.bright = 100
 try {
   const r = JSON.parse(localStorage.getItem(KEY))
   if (r && typeof r === 'object') SAVED.forEach((k) => r[k] !== undefined && (s[k] = r[k]))
@@ -47,7 +48,7 @@ const save = () => {
 export const dev = {
   get: () => s,
   set(patch) {
-    s = { ...s, ...patch }
+    s = { ...s, ...patch, bright: 100 } // 화면 밝기는 항상 100으로 고정
     save()
     emit()
   },
