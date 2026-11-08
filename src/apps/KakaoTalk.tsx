@@ -4,9 +4,9 @@ import { Settings as Gear } from 'lucide-react'
 import './KakaoTalk.css'
 
 type Msg = { id: number; who: string; text?: string; img?: string; t: number; reply?: string }
-type Room = { id: string; name: string; group: boolean; members: number; pinned: boolean; muted: boolean; unread: number; msgs: Msg[] }
+type Room = { id: string; name: string; group: boolean; members: number; pinned: boolean; muted: boolean; unread: number; msgs: Msg[]; open?: boolean; img?: string; desc?: string; tags?: string[] }
 type Me = { name: string; status: string; music: string; photo?: string; bg?: string }
-type Store = { me: Me; rooms: Room[]; collapsed: boolean }
+type Store = { me: Me; rooms: Room[]; openRooms: Room[]; collapsed: boolean }
 
 const KEY = 'kakaotalk-v2'
 
@@ -35,7 +35,6 @@ const photoOf = (name: string) => {
   const p = PHOTO[name] ?? `${hash(name) % 2 ? 'men' : 'women'}/${(hash(name + 'x') % 40) + 50}`
   return `https://randomuser.me/api/portraits/${p}.jpg`
 }
-const bgOf = (name: string) => `https://picsum.photos/seed/kt${hash(name)}/800/1200`
 
 const OPEN: readonly [string, string, number, string, string[]][] = [
   ['아이돌 직캠 수다방', '아이돌 / 팬덤', 8421, '무대 직캠 같이 보고 이야기해요', ['#직캠', '#팬덤']],
@@ -116,6 +115,30 @@ const dayKey = (t: number) => { const d = new Date(t); return `${d.getFullYear()
 const dayLabel = (t: number) => `${dayKey(t)} ${'일월화수목금토'[new Date(t).getDay()]}요일`
 const listT = (t: number) => { const d = new Date(), x = new Date(t); return d.toDateString() === x.toDateString() ? fmtT(t) : `${x.getMonth() + 1}월 ${x.getDate()}일` }
 
+/* 오픈채팅방별 시드 대화 (닉네임 기반) */
+const OPEN_MSGS: [string, string][][] = [
+  [['덕질러', '어제 새 무대 직캠 보셨어요?'], ['me', '아직요 어떤 영상이에요?'], ['직캠장인', '센터 파트 진짜 대박이에요'], ['덕질러', '링크 올려드릴게요 ㅋㅋ']],
+  [['라떼러버', '성수 새로 생긴 카페 가보신 분?'], ['me', '저 지난주에 갔는데 크로플 맛있어요'], ['디저트헌터', '웨이팅 길던데 평일 추천해요'], ['라떼러버', '오 평일 오전에 가봐야겠다']],
+  [['한강러너', '이번 주 일요일 7시 반포 집결입니다'], ['페이스메이커', '저는 5km 천천히 뛸게요'], ['me', '저도 참석할게요!'], ['한강러너', '좋아요 끝나고 같이 아침 먹어요']],
+  [['정글러', '실버 듀오 구합니다 서폿 가능하신 분'], ['me', '저 서폿 가능해요 오늘 저녁 어때요?'], ['정글러', '좋아요 9시에 접속할게요'], ['탑솔러', '저도 끼면 안 될까요 ㅋㅋ']],
+  [['새내기A', '교양 추천 좀 해주세요 ㅠㅠ'], ['복학생B', '출석 안 부르는 강의가 꿀이에요'], ['me', '심리학개론 과제 적고 시험 쉬워요'], ['새내기A', '감사합니다 바로 담을게요']],
+  [['배낭여행자', '다음 달 후쿠오카 혼자 가요'], ['me', '숙소는 하카타역 근처가 편해요'], ['뚜벅이', '라멘집 줄 서는 곳 꼭 가보세요'], ['배낭여행자', '정보 감사합니다!']],
+  [['맛잘알', '전주 가면 현지인 콩나물국밥집 추천해요'], ['me', '혹시 위치 알려주실 수 있어요?'], ['맛잘알', '객사 근처인데 지도에 올려둘게요'], ['먹방요정', '저도 지난달에 갔는데 진짜 맛있었어요']],
+  [['3대500가자', '오늘 데드 140 성공했습니다'], ['me', '대박이네요 저는 아직 120이에요'], ['근육맨', '자세 먼저 잡고 중량 올리세요'], ['3대500가자', '맞아요 부상 조심하세요']],
+  [['분당맘', '소아과 주말에 하는 곳 아시는 분 계세요?'], ['정자동맘', '정자역 쪽에 일요일도 하는 곳 있어요'], ['me', '저도 궁금했는데 감사합니다'], ['분당맘', '쪽지 드릴게요']],
+  [['퇴근요정', '오늘도 야근 ㅠㅠ 다들 퇴근하셨나요'], ['me', '저는 방금 퇴근했어요'], ['야근러', '부럽네요 저는 아직 사무실이에요'], ['퇴근요정', '힘내요 우리!']],
+  [['영화광', '이번에 개봉한 영화 보신 분 계세요?'], ['me', '어제 봤는데 결말이 좀 아쉬웠어요'], ['시네필', '저는 연출이 좋았어요'], ['영화광', '스포 없이 얘기해봐요 ㅋㅋ']],
+  [['부산갈매기', '이번 주말 광안리 번개 하실 분'], ['me', '저 참석 가능해요! 몇 시예요?'], ['해운대사는사람', '저도요 저녁 6시 어떠세요'], ['부산갈매기', '좋아요 6시에 모여요']],
+]
+function seedOpen(): Room[] {
+  const now = Date.now()
+  return OPEN.map((o, i) => {
+    let t = now - (i + 1) * 40 * 60e3 - OPEN_MSGS[i].length * 6 * 60e3
+    const msgs = OPEN_MSGS[i].map(([who, text], k) => { t += (3 + ((i * 5 + k * 7) % 9)) * 60e3; return { id: 50000 + i * 100 + k, who, text, t } })
+    return { id: 'o' + i, name: o[0], group: true, members: o[2], pinned: false, muted: false, unread: i % 3 === 0 ? i + 2 : 0, msgs, open: true, img: `https://picsum.photos/seed/ko${hash(o[0])}/160/160`, desc: o[3], tags: o[4] }
+  })
+}
+
 function seed(): Store {
   const now = Date.now()
   const rooms: Room[] = ROOMS.map((r, i) => {
@@ -131,12 +154,13 @@ function seed(): Store {
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
     { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: [{ id: 9007, who: '정우영', text: '야 오늘 뭐함 ㅋㅋ', t: now - 900000 }] },
     { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
-  ], collapsed: false }
+  ], openRooms: seedOpen(), collapsed: false }
 }
 function load(): Store {
   try {
     const s = JSON.parse(localStorage.getItem(KEY) || 'null')
-    if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs))) return s
+    if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs)))
+      return { ...s, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
   } catch { /* 손상된 데이터는 새로 시작 */ }
   return seed()
 }
@@ -169,6 +193,10 @@ const P: Record<string, ReactNode> = {
   edit: <path d="M4 20l1-4L16 5l3 3L8 19z" />,
   user: <><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></>,
   chat: <path d="M12 4c-4.4 0-8 3-8 6.8 0 2.3 1.4 4.4 3.5 5.6L6.7 20l4-2.5c.4.1.9.1 1.3.1 4.4 0 8-3 8-6.8S16.4 4 12 4z" />,
+  phone: <path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 0 0 5.5 5.5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A15 15 0 0 1 4.5 6a2 2 0 0 1 2-2z" />,
+  video: <><rect x="3" y="7" width="12" height="10" rx="2" /><path d="M15 11l5-3v8l-5-3" /></>,
+  won: <><circle cx="12" cy="12" r="9" /><path d="M6.8 9.5l2.2 5.5 3-5.5 3 5.5 2.2-5.5M7 12.2h10" /></>,
+  dots: <><circle cx="5" cy="12" r="1.7" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.7" fill="currentColor" stroke="none" /></>,
 }
 const Ic = ({ n, s = 24, w = 1.8 }: { n: string; s?: number; w?: number }) => (
   <svg viewBox="0 0 24 24" width={s} height={s} fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{P[n]}</svg>
@@ -186,6 +214,8 @@ const TabIc = ({ k, on }: { k: string; on: boolean }) => {
     </svg>
   )
 }
+
+const PinSolid = () => <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M8 3h8l-1 7 3.5 3.5V15h-5.7v6h-1.6v-6H5.5v-1.5L9 10z" /></svg>
 
 /* ───────── 벡터 이모티콘(스티커) ───────── */
 const INK = '#3a2a14'
@@ -238,6 +268,7 @@ const roomMembers = (r: Room) => {
   return set.slice(0, 4)
 }
 function RoomAvatar({ room, size = 50 }: { room: Room; size?: number }) {
+  if (room.open && room.img) return <div className="kakaotalk-open-img" style={{ width: size, height: size, borderRadius: '36%' }}><Pic src={room.img} className="kakaotalk-fill" /></div>
   if (!room.group) return <Avatar name={room.name} size={size} />
   const mem = roomMembers(room)
   const n = Math.min(mem.length, room.members >= 4 ? 4 : Math.max(2, room.members))
@@ -280,7 +311,7 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
   useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(st)) } catch { /* quota */ } }, [st])
   const say = (m: string) => { setToast(m); clearTimeout(tt.current); tt.current = window.setTimeout(() => setToast(''), 1600) }
 
-  const patchRoom = (id: string, f: (r: Room) => Room) => setSt(s => ({ ...s, rooms: s.rooms.map(r => (r.id === id ? f(r) : r)) }))
+  const patchRoom = (id: string, f: (r: Room) => Room) => setSt(s => ({ ...s, rooms: s.rooms.map(r => (r.id === id ? f(r) : r)), openRooms: s.openRooms.map(r => (r.id === id ? f(r) : r)) }))
   const openDM = (name: string) => {
     let r = st.rooms.find(x => !x.group && x.name === name)
     if (!r) {
@@ -292,12 +323,13 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
   }
   const switchTab = (k: 'friends' | 'chats' | 'open') => { setTab(k); setQ(''); setSearching(false) }
 
-  const rooms = useMemo(() => st.rooms.filter(r => r.name.includes(q)).sort((a, b) => Number(b.pinned) - Number(a.pinned) || (b.msgs.at(-1)?.t ?? 0) - (a.msgs.at(-1)?.t ?? 0)), [st.rooms, q])
+  const byRecent = (a: Room, b: Room) => Number(b.pinned) - Number(a.pinned) || (b.msgs.at(-1)?.t ?? 0) - (a.msgs.at(-1)?.t ?? 0)
+  const rooms = useMemo(() => st.rooms.filter(r => r.name.includes(q)).sort(byRecent), [st.rooms, q])
+  const openRooms = useMemo(() => st.openRooms.filter(r => !q || r.name.includes(q) || r.desc?.includes(q) || r.tags?.some(t => t.includes(q))).sort(byRecent), [st.openRooms, q])
   const friends = FRIENDS.filter(([n, s]) => n.includes(q) || s.includes(q))
   const fav = friends.slice(0, 3)
   const bday = friends.find(f => f[0] === FRIENDS[4][0])
-  const open = OPEN.filter(o => !q || o[0].includes(q) || o[3].includes(q) || o[4].some(t => t.includes(q)))
-  const room = view?.t === 'room' ? st.rooms.find(r => r.id === view.id) : undefined
+  const room = view?.t === 'room' ? [...st.rooms, ...st.openRooms].find(r => r.id === view.id) : undefined
   const totalUnread = st.rooms.reduce((a, r) => a + (r.muted ? 0 : r.unread), 0)
 
   const title = tab === 'friends' ? '친구' : tab === 'chats' ? '채팅' : '오픈채팅'
@@ -309,6 +341,29 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
       {MUSIC[n] && <MusicChip text={MUSIC[n]} />}
     </div>
   )
+  const renderRoom = (r: Room) => {
+    const l = r.msgs.at(-1)
+    return (
+      <div key={r.id} className="kakaotalk-row kakaotalk-chatrow" onClick={() => { patchRoom(r.id, x => ({ ...x, unread: 0 })); setView({ t: 'room', id: r.id }) }}>
+        <RoomAvatar room={r} />
+        <div className="kakaotalk-grow">
+          <div className="kakaotalk-nameline">
+            <b>{r.name}</b>
+            {r.group && <i>{r.members.toLocaleString()}</i>}
+            {r.muted && <span className="kakaotalk-ico"><Ic n="bellOff" s={13} w={2} /></span>}
+          </div>
+          <p>{l ? preview(l) : '대화를 시작해 보세요'}</p>
+        </div>
+        <div className="kakaotalk-meta">
+          <span>{l ? listT(l.t) : ''}</span>
+          <div className="kakaotalk-badges">
+            {r.pinned && <span className="kakaotalk-ico"><Ic n="pin" s={14} w={2} /></span>}
+            {r.unread > 0 && <em>{r.unread > 99 ? '99+' : r.unread}</em>}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="kakaotalk">
@@ -348,49 +403,14 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
           )}
           {tab === 'chats' && (
             <>
-              {rooms.map(r => {
-                const l = r.msgs.at(-1)
-                return (
-                  <div key={r.id} className="kakaotalk-row kakaotalk-chatrow" onClick={() => { patchRoom(r.id, x => ({ ...x, unread: 0 })); setView({ t: 'room', id: r.id }) }}>
-                    <RoomAvatar room={r} />
-                    <div className="kakaotalk-grow">
-                      <div className="kakaotalk-nameline">
-                        <b>{r.name}</b>
-                        {r.group && <i>{r.members}</i>}
-                        {r.muted && <span className="kakaotalk-ico"><Ic n="bellOff" s={13} w={2} /></span>}
-                      </div>
-                      <p>{l ? preview(l) : '대화를 시작해 보세요'}</p>
-                    </div>
-                    <div className="kakaotalk-meta">
-                      <span>{l ? listT(l.t) : ''}</span>
-                      <div className="kakaotalk-badges">
-                        {r.pinned && <span className="kakaotalk-ico"><Ic n="pin" s={14} w={2} /></span>}
-                        {r.unread > 0 && <em>{r.unread > 99 ? '99+' : r.unread}</em>}
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
+              {rooms.map(renderRoom)}
               {rooms.length === 0 && <div className="kakaotalk-empty">검색 결과가 없어요</div>}
             </>
           )}
           {tab === 'open' && (
             <>
-              {['인기 오픈채팅', '추천 오픈채팅'].map((h, k) => {
-                const list = open.slice(k * 6, k * 6 + 6)
-                return list.length ? (
-                  <div key={h}>
-                    <div className="kakaotalk-sec"><span>{h}</span></div>
-                    {list.map(o => (
-                      <div key={o[0]} className="kakaotalk-row kakaotalk-static">
-                        <div className="kakaotalk-open-img"><Pic src={`https://picsum.photos/seed/ko${hash(o[0])}/160/160`} className="kakaotalk-fill" /></div>
-                        <div className="kakaotalk-grow"><b>{o[0]}</b><p>{o[3]}</p><small>{o[1]} · {o[2].toLocaleString()}명 · {o[4].join(' ')}</small></div>
-                      </div>
-                    ))}
-                  </div>
-                ) : null
-              })}
-              {open.length === 0 && <div className="kakaotalk-empty">검색 결과가 없어요</div>}
+              {openRooms.map(renderRoom)}
+              {openRooms.length === 0 && <div className="kakaotalk-empty">검색 결과가 없어요</div>}
             </>
           )}
         </div>
@@ -409,24 +429,47 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
       {view?.t === 'profile' && (() => {
         const f = FRIENDS.find(x => x[0] === view.id)
         if (!f) return null
+        const soon = () => say('아직 지원하지 않아요')
         return (
           <div className="kakaotalk-page kakaotalk-profile">
-            <Pic src={bgOf(f[0])} className="kakaotalk-pbg" />
-            <div className="kakaotalk-pshade" />
-            <button className="kakaotalk-x" aria-label="닫기" onClick={() => setView(null)}><Ic n="close" s={26} w={2} /></button>
-            <div className="kakaotalk-pcenter">
-              <Avatar name={f[0]} size={104} />
-              <h2>{f[0]}</h2><p>{f[1]}</p>
-              {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
+            <div className="kakaotalk-ptop">
+              <button className="kakaotalk-pround" aria-label="닫기" onClick={() => setView(null)}><Ic n="close" s={24} w={2} /></button>
+              <div className="kakaotalk-ppill">
+                <button aria-label="선물하기" onClick={soon}><Ic n="gift" s={24} /></button>
+                <button aria-label="카카오페이" onClick={soon}><Ic n="won" s={26} /></button>
+                <button aria-label="더보기" onClick={soon}><Ic n="dots" s={24} /></button>
+              </div>
             </div>
-            <div className="kakaotalk-pactions">
-              <button onClick={() => openDM(f[0])}><span><Ic n="chat" s={22} /></span>1:1 채팅</button>
+            <div className="kakaotalk-scroll kakaotalk-pscroll">
+              <div className="kakaotalk-phero">
+                <Avatar name={f[0]} size={64} />
+                <h2>{f[0]}</h2>
+                {f[1] && <p>{f[1]}</p>}
+                {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
+                <div className="kakaotalk-pbar">
+                  <button onClick={() => openDM(f[0])}><Ic n="chat" s={21} />채팅</button>
+                  <button onClick={soon}><Ic n="phone" s={21} />통화</button>
+                  <button onClick={soon}><Ic n="video" s={24} />페이스톡</button>
+                </div>
+              </div>
+              <div className="kakaotalk-pgrid">
+                <div className="kakaotalk-pin">
+                  <div className="kakaotalk-pinhead"><PinSolid /></div>
+                  <div className="kakaotalk-pinbody">
+                    <div className="kakaotalk-pinrow">
+                      <Avatar name={f[0]} size={18} />
+                      <div><b>{f[0]}<i>3일</i></b><p>{f[1]}</p></div>
+                    </div>
+                  </div>
+                </div>
+                {Array.from({ length: 8 }, (_, k) => <Pic key={k} src={`https://picsum.photos/seed/kp${hash(f[0])}${k}/400/533`} className="kakaotalk-pcell" />)}
+              </div>
             </div>
           </div>
         )
       })()}
       {view?.t === 'edit' && <EditProfile me={st.me} onSave={me => { setSt({ ...st, me }); setView(null) }} onBack={() => setView(null)} />}
-      {room && <ChatRoom key={room.id} room={room} onBack={() => setView(null)} patch={f => patchRoom(room.id, f)} onLeave={() => { setSt(s => ({ ...s, rooms: s.rooms.filter(r => r.id !== room.id) })); setView(null) }} />}
+      {room && <ChatRoom key={room.id} room={room} onBack={() => setView(null)} patch={f => patchRoom(room.id, f)} onLeave={() => { setSt(s => ({ ...s, rooms: s.rooms.filter(r => r.id !== room.id), openRooms: s.openRooms.filter(r => r.id !== room.id) })); setView(null) }} />}
 
       {gear && (
         <div className="kakaotalk-scrim" onClick={() => setGear(false)}>
@@ -509,7 +552,7 @@ function ChatRoom({ room, onBack, patch, onLeave }: { room: Room; onBack: () => 
     <div className="kakaotalk-page kakaotalk-room" style={kb ? { bottom: kb, paddingBottom: 0 } : undefined}>
       <div className="kakaotalk-nav">
         <button aria-label="뒤로" onClick={onBack}><Ic n="back" s={26} w={2} /></button>
-        <h1><span>{room.name}</span>{room.group && <i>{room.members}</i>}{room.muted && <span className="kakaotalk-ico"><Ic n="bellOff" s={14} w={2} /></span>}</h1>
+        <h1><span>{room.name}</span>{room.group && <i>{room.members.toLocaleString()}</i>}{room.muted && <span className="kakaotalk-ico"><Ic n="bellOff" s={14} w={2} /></span>}</h1>
         <button aria-label="검색" onClick={() => setSq(sq === null ? '' : null)}><Ic n="search" /></button>
         <button aria-label="메뉴" onClick={() => setMore(!more)}><Ic n="menu" /></button>
       </div>
