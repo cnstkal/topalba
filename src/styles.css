@@ -1737,3 +1737,81 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .ring2-call i.green { background: linear-gradient(145deg, rgba(120,226,126,.62), rgba(56,170,66,.52)); }
 .ring2-call i svg { width: 30px; height: 30px; }
 .ring2-bottom { padding-bottom: 84px; }
+
+
+/* 수신 전화 화면: 선명한 컬러 + 강한 글래스모피즘 버튼 */
+.ring2 {
+  background:
+    radial-gradient(70% 38% at 50% 3%, rgba(117, 145, 190, .34) 0%, transparent 100%),
+    radial-gradient(55% 38% at 8% 82%, rgba(58, 116, 190, .22) 0%, transparent 100%),
+    radial-gradient(55% 38% at 92% 82%, rgba(125, 77, 174, .2) 0%, transparent 100%),
+    linear-gradient(155deg, #343b4b 0%, #252d3c 48%, #303644 100%);
+}
+.ring2-call {
+  gap: 12px;
+  color: rgba(255,255,255,.96);
+  text-shadow: 0 1px 8px rgba(0,0,0,.28);
+}
+.ring2-call i {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  width: 82px;
+  height: 82px;
+  border: 1.5px solid rgba(255,255,255,.48);
+  -webkit-backdrop-filter: blur(32px) saturate(230%);
+  backdrop-filter: blur(32px) saturate(230%);
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.52),
+    inset 0 -9px 18px rgba(12,20,35,.16),
+    0 12px 28px rgba(0,0,0,.3),
+    0 0 22px rgba(255,255,255,.12);
+  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+}
+.ring2-call i::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.08) 38%, rgba(255,255,255,.02) 62%, rgba(0,0,0,.12) 100%);
+}
+.ring2-call i::after {
+  content: "";
+  position: absolute;
+  top: 7%;
+  left: 13%;
+  width: 74%;
+  height: 38%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,.36), rgba(255,255,255,0));
+  filter: blur(5px);
+  pointer-events: none;
+}
+.ring2-call i.red {
+  background: linear-gradient(145deg, rgba(255,105,111,.96), rgba(222,43,68,.76) 55%, rgba(166,28,58,.82));
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.58),
+    inset 0 -9px 18px rgba(112,12,35,.24),
+    0 12px 28px rgba(0,0,0,.32),
+    0 0 26px rgba(255,73,92,.28);
+}
+.ring2-call i.green {
+  background: linear-gradient(145deg, rgba(91,230,151,.96), rgba(28,190,119,.8) 55%, rgba(12,133,91,.84));
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.58),
+    inset 0 -9px 18px rgba(0,87,57,.24),
+    0 12px 28px rgba(0,0,0,.32),
+    0 0 26px rgba(44,224,143,.28);
+}
+.ring2-call i svg {
+  position: relative;
+  z-index: 1;
+  width: 31px;
+  height: 31px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.18));
+}
+.ring2-call:active i {
+  transform: scale(.93);
+  filter: brightness(1.12) saturate(1.08);
+}
