@@ -1836,3 +1836,6 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .dc-input { flex: none; margin: 6px 12px 22px; height: 52px; border-radius: 26px; background: #e6e6ea; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 6px; }
 .dc-cam { width: 40px; height: 40px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; background: #5b4bf0; }
 .dc-input input { flex: 1; min-width: 0; border: 0; background: transparent; outline: 0; font-size: 16px; }
+
+/* 인스타 공통: "댓글 N개 모두 보기"는 캡션보다 크게 */
+.post-cm { font-size: 14.5px !important; }
