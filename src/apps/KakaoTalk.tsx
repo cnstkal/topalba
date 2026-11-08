@@ -72,6 +72,29 @@ const ROOMS: { n: string; g: number; m: [string, string][] }[] = [
 
 const pad = (n: number) => String(n).padStart(2, '0')
 const fmtT = (t: number) => { const d = new Date(t); const h = d.getHours(); return `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}:${pad(d.getMinutes())}` }
+const HJ_MSGS: Msg[] = [
+  { id: 8001, who: '김홍중', text: '안녕. 소개받고 연락해', t: new Date('2023-07-15T20:12:00+09:00').getTime() },
+  { id: 8002, who: 'me', text: '안녕하세요 ㅋㅋ', t: new Date('2023-07-15T20:18:00+09:00').getTime() },
+  { id: 8003, who: '김홍중', text: '생각보다 말 편하게 해도 될 것 같은데', t: new Date('2023-07-22T21:04:00+09:00').getTime() },
+  { id: 8004, who: 'me', text: '그럼 편하게 할게요 ㅋㅋ', t: new Date('2023-07-22T21:10:00+09:00').getTime() },
+  { id: 8005, who: '김홍중', text: '이번 주는 뭐 하고 지냈어?', t: new Date('2023-07-29T19:35:00+09:00').getTime() },
+  { id: 8099, who: 'gap', text: '•\n•\n•', t: new Date('2023-08-05T00:00:00+09:00').getTime() },
+  { id: 8100, who: 'me', text: '너 아이돌이었냐?', t: new Date('2025-03-12T18:21:00+09:00').getTime() },
+  { id: 8101, who: '김홍중', text: '몰랐어?', t: new Date('2025-03-12T18:23:00+09:00').getTime() },
+  { id: 8102, who: 'me', text: '그쪽은 관심 없어서;;', t: new Date('2025-03-12T18:25:00+09:00').getTime() },
+  { id: 8103, who: '김홍중', text: 'ㅋㅋㅋㅋ 너무 단호한 거 아니냐', t: new Date('2025-03-12T18:27:00+09:00').getTime() },
+  { id: 8104, who: 'me', text: '몰랐으니까 물어보지', t: new Date('2025-03-12T18:30:00+09:00').getTime() },
+  { id: 8105, who: '김홍중', text: '잘 지냈어? 요즘은 뭐 하고 지내', t: new Date('2025-03-22T20:14:00+09:00').getTime() },
+  { id: 8106, who: 'me', text: '그냥 똑같지 뭐. 너는 바쁘겠네', t: new Date('2025-03-22T20:20:00+09:00').getTime() },
+  { id: 8107, who: '김홍중', text: '바쁘긴 한데 잘 지내고 있어', t: new Date('2025-04-06T17:42:00+09:00').getTime() },
+  { id: 8199, who: 'gap', text: '•\n•\n•', t: new Date('2025-04-07T00:00:00+09:00').getTime() },
+  { id: 8200, who: '김홍중', text: '오랜만이네. 잘 지냈어?', t: new Date('2026-10-18T19:32:00+09:00').getTime() },
+  { id: 8201, who: 'me', text: '그러게ㅋㅋ 너는 잘 지냈고?', t: new Date('2026-10-18T19:40:00+09:00').getTime() },
+  { id: 8202, who: '김홍중', text: '그럭저럭. 요즘은 뭐 하고 지내?', t: new Date('2026-10-25T21:08:00+09:00').getTime() },
+  { id: 8203, who: 'me', text: '그냥 학교 다니고 알바하고 그러지', t: new Date('2026-10-25T21:16:00+09:00').getTime() },
+  { id: 9005, who: '김홍중', text: '오늘 촬영 끝났어. 너 알바 끝나면 연락해', t: new Date('2026-11-08T19:30:00+09:00').getTime() },
+]
+
 const YH_MSGS = [
   { id: 9100, who: '정윤호', text: 'SY 오피스텔 302호예요', t: new Date('2026-07-08T19:02:00+09:00').getTime() },
   { id: 9101, who: 'me', text: 'ㅇㅇ 곧 가요', t: new Date('2026-07-08T19:03:00+09:00').getTime() },
@@ -150,7 +173,7 @@ function seed(): Store {
     { id: 'r-family-mom', name: '엄마', group: false, members: 2, pinned: true, muted: false, unread: 0, msgs: [{ id: 9001, who: '엄마', text: '성화야 밥은 먹었니?', t: now - 3600000 }, { id: 9002, who: 'me', text: '응 먹었어. 걱정 마', t: now - 3500000 }] },
     { id: 'r-family-dad', name: '아빠', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9003, who: '아빠', text: '차 조심하고 늦으면 연락해라', t: now - 86400000 }] },
     { id: 'r-bro', name: '형', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9004, who: '형', text: '집에 택배 왔던데 네 거냐', t: now - 7200000 }] },
-    { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: [{ id: 9005, who: '김홍중', text: '오늘 촬영 끝났어. 너 알바 끝나면 연락해', t: now - 1800000 }] },
+    { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: HJ_MSGS },
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
     { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: [{ id: 9007, who: '정우영', text: '야 오늘 뭐함 ㅋㅋ', t: now - 900000 }] },
     { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
@@ -160,7 +183,14 @@ function load(): Store {
   try {
     const s = JSON.parse(localStorage.getItem(KEY) || 'null')
     if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs)))
-      return { ...s, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
+      const seeded = seed()
+      const mergedRooms = s.rooms.map((room: Room) => {
+        if (room.id !== 'r-hj') return room
+        const existingIds = new Set(room.msgs.map(m => m.id))
+        const history = (seeded.rooms.find(r => r.id === 'r-hj')?.msgs ?? []).filter(m => !existingIds.has(m.id))
+        return { ...room, msgs: [...room.msgs, ...history].sort((a, b) => a.t - b.t) }
+      })
+      return { ...s, rooms: mergedRooms, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
   } catch { /* 손상된 데이터는 새로 시작 */ }
   return seed()
 }
