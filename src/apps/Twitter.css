@@ -7,3 +7,9 @@
 
 .xapp .cp textarea{scroll-margin:0;}
 .xapp .cp{left:0;right:0;width:100%}
+
+/* 업로드된 트위터 이미지 */
+.xapp .myav{display:inline-block;position:relative;width:var(--avatar-size,48px);height:var(--avatar-size,48px);flex:none;border-radius:50%;overflow:hidden;vertical-align:middle}
+.xapp .myav>.av{width:100%;height:100%}
+.xapp .myav>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.xapp .med>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:14px}
