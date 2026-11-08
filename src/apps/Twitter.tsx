@@ -31,7 +31,10 @@ const Av = ({ c = '#8aa', s = 48, def, corgi }) => (
     </g>
   </svg>
 )
-const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av c="#3a4a78" s={s} /></button>
+const MY_PROFILE_IMAGE = `${import.meta.env.BASE_URL}images/twitter/my/profile/profile.png`
+const MY_POST_IMAGE = (id) => `${import.meta.env.BASE_URL}images/twitter/my/post/${id}/1.jpg`
+const MyAv = ({ s = 48 }) => <span className="myav" style={{ width: s, height: s }}><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="내 프로필" onError={(e) => { e.currentTarget.style.display = "none" }} /></span>
+const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><MyAv s={s} /></button>
 
 /* 데이터 */
 const TL = [
@@ -42,10 +45,10 @@ const TL = [
   { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
 ]
 const PROF = [
-  { text: '#ㄱㅊㅅ', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
-  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
+  { text: '', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1, imageId: 3 },
+  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1, imageId: 2 },
   { text: '날씨 좋네', t: '2024. 12. 21.', rp: 12, rts: 6, lk: 273, vw: 2021 },
-  { text: '', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
+  { text: '#ㄱㅊㅅ', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1, imageId: 1 },
 ]
 const DM = [
   ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
@@ -107,7 +110,7 @@ export default function Twitter() {
     body = (
       <div className="sc pf">
         <div className="ban"><button className="rb" onClick={back}><Ic n="back" s={24} w={2.4} /></button><button className="rb"><Ic n="search" s={22} w={2.4} /></button></div>
-        <div className="pav"><Av corgi s={80} /></div>
+        <div className="pav"><MyAv s={80} /></div>
         <h1>ㅅㅎ</h1><p className="hd">@cnsjbqH72w</p>
         <p className="ml"><span><Ic n="bag" s={18} />기업가</span></p>
         <p className="ml"><span><Ic n="cal" s={18} />2023년 7월에 가입함 <Ic n="right" s={14} /></span></p>
@@ -115,8 +118,8 @@ export default function Twitter() {
         <div className="pb"><span>프로필 공유</span><span>프로필 수정</span></div>
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
         {PROF.map((p, i) => (
-          <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
-            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><i /></div>}
+          <div key={i} className="tw"><div className="lc"><MyAv s={48} />{p.thread && <u />}</div>
+            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><img src={MY_POST_IMAGE(p.imageId)} alt={`내 게시글 ${p.imageId} 이미지`} onError={(e) => { e.currentTarget.style.display = "none" }} /><i /></div>}
               <Act r={p.rts} l={p.lk} v={p.vw} rp={p.rp} /></div></div>
         ))}
         <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
