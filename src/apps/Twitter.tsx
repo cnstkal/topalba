@@ -13,6 +13,7 @@ const P = {
   phone: 'M6 3h3l2 5-2 1.500a11 11 0 0 0 5.500 5.500L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z', video: 'M3 7h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3zM16 11l5-3v8l-5-3',
   mic: 'M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM6 11a6 6 0 0 0 12 0M12 17v4', newchat: 'M12 3.500c4.700 0 8.500 3.200 8.500 7.500S16.700 18.500 12 18.500c-1 0-2-.15-2.900-.45L4.500 20l1.100-3.700C4.500 15 3.500 13.100 3.500 11c0-4.300 3.800-7.500 8.500-7.500zM17 2v5M14.500 4.500h5',
   bag: 'M4 8h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zM9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2', pin: 'M12 21s-6-5.500-6-11a6 6 0 0 1 12 0c0 5.500-6 11-6 11z', cal: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
+  img: 'M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4M15 9.500h.01', poll: 'M5 7h8M5 12h14M5 17h10', globe: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3.500 3.500 3.500 14.500 0 18M12 3c-3.500 3.500-3.500 14.500 0 18', x: 'M6 6l12 12M18 6 6 18',
   post: 'M5 4h14v16H5zM9 9h6M9 13h4', reply: 'M12 3.500c4.700 0 8.500 3.200 8.500 7.500S16.700 18.500 12 18.500c-1 0-2-.15-2.900-.45L4.500 20l1.100-3.700C4.500 15 3.500 13.100 3.500 11c0-4.300 3.800-7.500 8.500-7.500z', media: 'M4 5h16v14H4zM10 9l5 3-5 3z',
 }
 const Ic = ({ n, s = 22, f, w = 1.8 }) => <svg viewBox="0 0 24 24" width={s} height={s} fill={f ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={n === 'dots' ? 3 : w} strokeLinecap="round" strokeLinejoin="round"><path d={P[n]} /></svg>
@@ -31,10 +32,7 @@ const Av = ({ c = '#8aa', s = 48, def, corgi }) => (
     </g>
   </svg>
 )
-const MY_PROFILE_IMAGE = `${import.meta.env.BASE_URL}images/twitter/my/profile/profile.png`
-const MY_POST_IMAGE = (id) => `${import.meta.env.BASE_URL}images/twitter/my/post/${id}/1.jpg`
-const MyAv = ({ s = 48 }) => <span className="myav" style={{ width: s, height: s }}><Av corgi s={s} /><img src={MY_PROFILE_IMAGE} alt="내 프로필" onError={(e) => { e.currentTarget.style.display = "none" }} /></span>
-const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><MyAv s={s} /></button>
+const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av c="#3a4a78" s={s} /></button>
 
 /* 데이터 */
 const TL = [
@@ -45,10 +43,10 @@ const TL = [
   { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329, media: 1 },
 ]
 const PROF = [
-  { text: '', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1, imageId: 3 },
-  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1, imageId: 2 },
+  { text: '#ㄱㅊㅅ', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
+  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
   { text: '날씨 좋네', t: '2024. 12. 21.', rp: 12, rts: 6, lk: 273, vw: 2021 },
-  { text: '#ㄱㅊㅅ', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1, imageId: 1 },
+  { text: '', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
 ]
 const DM = [
   ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
@@ -85,13 +83,57 @@ const Act = ({ r, l, v, rp, bm = 1 }) => (
 
 export default function Twitter() {
   const [sc, setSc] = useState('home'), [st, setSt] = useState([])
+  const [draft, setDraft] = useState(''), [pic, setPic] = useState(false), [mine, setMine] = useState([]), [toast, setToast] = useState(false), [sheet, setSheet] = useState(false)
+  const wl = [...draft].reduce((a, c) => a + (c.charCodeAt(0) > 0x10ff ? 2 : 1), 0), rem = 280 - wl
+  const can = (draft.trim() || pic) && rem >= 0
+  const post = () => {
+    if (!can) return
+    setMine([{ text: draft.trim(), t: '방금', media: pic ? 1 : 0, me: 1 }, ...mine])
+    setDraft(''); setPic(false); setSt([]); setSc('home'); setToast(true); setTimeout(() => setToast(false), 3500)
+  }
+  const cancel = () => (draft.trim() || pic ? setSheet(true) : back())
   const to = (s) => { setSt([...st, sc]); setSc(s) }
   const back = () => { const p = st[st.length - 1] || 'home'; setSt(st.slice(0, -1)); setSc(p) }
   const tab = (s) => { setSt([]); setSc(s) }
   const Head = ({ title, left, right }) => <div className="th">{left || <button onClick={back}><Ic n="back" s={26} w={2.4} /></button>}<b>{title}</b>{right || <Ic n="dots" s={22} />}</div>
 
   let body
-  if (sc === 'detail') {
+  if (sc === 'compose') {
+    const col = rem < 0 ? '#f4212e' : rem <= 20 ? '#ffd400' : '#1d9bf0'
+    body = (
+      <div className="cp">
+        <div className="cph"><button onClick={cancel}>취소</button><button className={'pst' + (can ? '' : ' off')} onClick={post}>게시하기</button></div>
+        <div className="cpb sc">
+          <Av corgi s={40} />
+          <div className="cpm">
+            <span className="aud">모든 사람 <Ic n="down" s={14} w={2.6} /></span>
+            <textarea autoFocus rows={6} value={draft} placeholder="무슨 일이 일어나고 있나요?" onChange={(e) => setDraft(e.target.value)} />
+            {pic && <div className="med cpp"><i /><button onClick={() => setPic(false)}><Ic n="x" s={18} w={2.6} /></button><em>ALT 추가</em></div>}
+          </div>
+        </div>
+        <div className="rpl"><Ic n="globe" s={18} w={2} />모든 사람이 답글을 달 수 있습니다</div>
+        <div className="cpt">
+          <button onClick={() => setPic(true)}><Ic n="img" s={23} /></button>
+          <button><b className="gif">GIF</b></button>
+          <button><Ic n="poll" s={23} /></button>
+          <button><Ic n="pin" s={23} /></button>
+          <span className="sp" />
+          {wl > 0 && (
+            <svg viewBox="0 0 28 28" width="28" height="28" className="ring"><circle cx="14" cy="14" r="10" fill="none" stroke="#eff3f4" strokeWidth="2.5" /><circle cx="14" cy="14" r="10" fill="none" stroke={col} strokeWidth="2.5" strokeDasharray={`${Math.min(wl / 280, 1) * 62.83} 62.83`} transform="rotate(-90 14 14)" strokeLinecap="round" />{rem <= 20 && <text x="14" y="18" textAnchor="middle" fontSize="10" fill={rem < 0 ? col : '#536471'}>{rem}</text>}</svg>
+          )}
+          <i className="pl"><Ic n="plus" s={20} w={2.4} /></i>
+        </div>
+        {sheet && (
+          <div className="shd" onClick={() => setSheet(false)}><div className="sht" onClick={(e) => e.stopPropagation()}>
+            <p>게시물을 저장하시겠어요?</p><small>나중에 보내려면 임시 보관함에 저장하세요.</small>
+            <button onClick={() => { setDraft(''); setPic(false); setSheet(false); back() }} className="dl">삭제</button>
+            <button onClick={() => { setSheet(false); back() }}>임시 보관함에 저장</button>
+            <button onClick={() => setSheet(false)} className="ln">취소</button>
+          </div></div>
+        )}
+      </div>
+    )
+  } else if (sc === 'detail') {
     const t = TL[3]
     body = (
       <>
@@ -110,19 +152,19 @@ export default function Twitter() {
     body = (
       <div className="sc pf">
         <div className="ban"><button className="rb" onClick={back}><Ic n="back" s={24} w={2.4} /></button><button className="rb"><Ic n="search" s={22} w={2.4} /></button></div>
-        <div className="pav"><MyAv s={80} /></div>
+        <div className="pav"><Av corgi s={80} /></div>
         <h1>ㅅㅎ</h1><p className="hd">@cnsjbqH72w</p>
         <p className="ml"><span><Ic n="bag" s={18} />기업가</span></p>
         <p className="ml"><span><Ic n="cal" s={18} />2023년 7월에 가입함 <Ic n="right" s={14} /></span></p>
         <p className="fw"><b>12</b> 팔로잉 <b>1972</b> 팔로워</p>
         <div className="pb"><span>프로필 공유</span><span>프로필 수정</span></div>
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
-        {PROF.map((p, i) => (
-          <div key={i} className="tw"><div className="lc"><MyAv s={48} />{p.thread && <u />}</div>
-            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><img src={MY_POST_IMAGE(p.imageId)} alt={`내 게시글 ${p.imageId} 이미지`} onError={(e) => { e.currentTarget.style.display = "none" }} /><i /></div>}
+        {[...mine, ...PROF].map((p, i) => (
+          <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
+            <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><i /></div>}
               <Act r={p.rts} l={p.lk} v={p.vw} rp={p.rp} /></div></div>
         ))}
-        <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
+        <button className="fab" onClick={() => to('compose')}><Ic n="plus" s={30} w={2.2} /></button>
       </div>
     )
   } else if (sc === 'chat') {
@@ -149,8 +191,8 @@ export default function Twitter() {
         <div className="th hm"><Me s={32} onClick={() => to('profile')} /><X s={30} /><span className="sp" /></div>
         <div className="tabs"><span className="on">추천 <Ic n="down" s={16} w={2.4} /></span><span>팔로우 중</span><Ic n="plus" s={24} w={2.2} /></div>
         <div className="sc">
-          {TL.map((t, i) => (
-            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc"><Av c={t.c} def={t.def} s={48} /></div>
+          {[...mine.map((m) => ({ ...m, name: 'ㅅㅎ', h: 'cnsjbqH72w', corgi: 1 })), ...TL].map((t, i) => (
+            <div key={i} className="tw" onClick={t.detail ? () => to('detail') : undefined}><div className="lc"><Av c={t.c} def={t.def} corgi={t.corgi} s={48} /></div>
               <div className="m">
                 <p className="n"><b>{t.name}</b> <span>@{t.h} · {t.t}</span><em><X s={20} /></em></p>
                 {t.text && <p className="x"><TweetText text={t.text} /></p>}
@@ -160,18 +202,19 @@ export default function Twitter() {
               </div></div>
           ))}
         </div>
-        <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
+        <button className="fab" onClick={() => to('compose')}><Ic n="plus" s={30} w={2.2} /></button>
       </>
     )
   }
   return (
     <div className="xapp">
       {body}
-      <nav className="tb2">{[['home'], ['search'], ['grok'], ['bell'], ['chat']].map(([i], x) => (
+      {toast && <div className="toast">게시물을 전송했습니다<button onClick={() => { setSt(['home']); setSc('profile'); setToast(false) }}>보기</button></div>}
+      {sc !== 'compose' && <nav className="tb2">{[['home'], ['search'], ['grok'], ['bell'], ['chat']].map(([i], x) => (
         <button key={x} onClick={x === 0 ? () => tab('home') : x === 4 ? () => tab('dm') : undefined}>
           <Ic n={i} s={27} w={2} f={(x === 0 && ['home', 'profile', 'detail'].includes(sc)) || (x === 4 && ['dm', 'chat'].includes(sc))} />
           {x === 0 && sc !== 'dm' && sc !== 'chat' && <u />}{x === 2 && <b>1</b>}
-        </button>))}</nav>
+        </button>))}</nav>}
     </div>
   )
 }
