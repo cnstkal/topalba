@@ -152,7 +152,10 @@ export default function App() {
           sessionStorage.setItem(key, data.version)
         } else if (current !== data.version) {
           sessionStorage.setItem(key, data.version)
-          window.location.reload()
+          // GitHub Pages처럼 응답 헤더 설정이 제한된 호스트에서도 새 HTML을 받도록 URL에 버전값 추가
+          const freshUrl = new URL(window.location.href)
+          freshUrl.searchParams.set('__appv', data.version)
+          window.location.replace(freshUrl.toString())
         }
       } catch {
         // 네트워크가 불안정하면 다음 확인 시 다시 시도
