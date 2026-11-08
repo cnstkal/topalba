@@ -255,10 +255,6 @@ export const EVENT_MAP = Object.fromEntries(EVENTS.map((e) => [e.id, e]))
 // ── 초기 데이터 (게임 시작 시점에 이미 있는 내용) ──────────────
 
 export const INITIAL_THREADS = {
-  'msg:hj': [
-    { id: 'i1', from: 'sh', text: '그때 탑알바에서 처음 봤을 땐 진짜 그냥 일반인인 줄 알았는데', ts: Date.now() - 86400000, read: true },
-    { id: 'i2', from: 'hj', text: 'ㅋㅋㅋ 그땐 아무도 몰랐지. 지금도 너는 똑같이 대해줘서 편하고', ts: Date.now() - 86000000 },
-  ],
 }
 
 export const INITIAL_NOTES = [

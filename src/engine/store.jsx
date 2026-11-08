@@ -87,8 +87,11 @@ function load() {
   return freshState()
 }
 
+// 윤호·홍중·우영은 카카오톡으로만 연락하므로 메시지/DM 앱 대화는 만들지 않음
+const KAKAO_ONLY = ['msg:hj', 'msg:yh', 'dm:wy']
 function applyEffect(s, fx) {
   const now = Date.now()
+  if ((fx.t === 'msg' || fx.t === 'notify') && KAKAO_ONLY.includes(fx.thread)) return s
   switch (fx.t) {
     case 'msg': {
       const list = [...(s.threads[fx.thread] || [])]

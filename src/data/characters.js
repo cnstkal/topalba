@@ -43,14 +43,11 @@ export const CONTACTS = [
 // 대화방 메타 정보 (메시지 / DM)
 // 각 관계는 독립된 대화방으로 유지합니다. 그룹방은 두지 않습니다.
 export const THREAD_META = {
-  'msg:hj': { app: 'messages', title: '김홍중', members: ['hj'] },
   'msg:bro': { app: 'messages', title: '형', members: ['bro'] },
   'msg:mom': { app: 'messages', title: '엄마', members: ['mom'] },
   'msg:dad': { app: 'messages', title: '아빠', members: ['dad'] },
   'msg:ads': { app: 'messages', title: '광고 알림', members: ['unknown'] },
   'msg:regular': { app: 'messages', title: '단골손님', members: ['regular'] },
-  'dm:wy': { app: 'dm', title: '정우영', members: ['wy'] },
-  'msg:yh': { app: 'messages', title: '정윤호', members: ['yh'] },
   'msg:nae': { app: 'messages', title: '서나은', members: ['nae'] },
   'msg:boss': { app: 'messages', title: '사장님', members: ['boss'] },
 }
