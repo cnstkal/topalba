@@ -163,7 +163,7 @@ export default function Gyeol() {
 function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   // 나를 먼저 좋아한 사람(아직 매칭 전)을 덱 앞쪽에 배치 — 좋아요를 누르면 바로 매칭 연출이 보이도록
   const pending = (id: number) => s.likedMe.includes(id) && !s.matches.includes(id)
-  const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)).sort((a, b) => (Number(pending(b.id)) - Number(pending(a.id))) || ((b.photos?.length > 0 ? 1 : 0) - (a.photos?.length > 0 ? 1 : 0))), [s])
+  const queue = useMemo(() => s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)).sort((a, b) => (b.photos?.length > 0 ? 1 : 0) - (a.photos?.length > 0 ? 1 : 0)), [s])
   const u = queue[0]
   const next = queue[1]
   const [dx, setDx] = useState(0)
