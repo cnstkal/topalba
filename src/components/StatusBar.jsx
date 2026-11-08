@@ -64,7 +64,7 @@ export default function StatusBar({ onOpenCC }) {
               <div className="isl-in">
                 <i className="isl-art" />
                 <span className="isl-bars">
-                  {Array.from({ length: 7 }, (_, i) => (
+                  {Array.from({ length: 5 }, (_, i) => (
                     <i key={i} style={{ animationDuration: `${0.5 + ((i * 7) % 5) * 0.13}s, 4.5s`, animationDelay: `${-i * 0.21}s, ${-i * 0.55}s` }} />
                   ))}
                 </span>
