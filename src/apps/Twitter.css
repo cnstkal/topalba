@@ -13,3 +13,6 @@
 .xapp .myav>.av{width:100%;height:100%}
 .xapp .myav>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
 .xapp .med>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:14px}
+/* 트윗 이미지: 원본 비율 유지, 고정 높이·크롭 제한 없음 */
+.xapp .med:has(>img){height:auto;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+.xapp .med>img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:center;border-radius:14px}
