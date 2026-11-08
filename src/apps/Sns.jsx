@@ -123,6 +123,8 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
   // 사진(슬라이드)마다 댓글을 붙일 수 있고, 없으면 스토리 주인 기준 데이터 사용
   const cmList = slides[idx]?.comments || STORY_COMMENTS[owner] || []
   const myReply = slides[idx]?.myReply ?? STORY_MY_REPLY[owner]
+  // 스토리 왼쪽 아래 말풍선: 첫 번째 댓글(작성자 프로필 + 내용), 없으면 내 답장
+  const bubble = cmList[0] || (myReply ? { user: ME_ID, text: myReply } : null)
 
   const next = () => (idx < n - 1 ? setIdx(idx + 1) : (onDone || onClose)())
   const prev = () => idx > 0 && setIdx(idx - 1)
@@ -232,10 +234,10 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
       </div>
 
       {/* ★ [스토리 댓글] 내 답장 말풍선 (STORY_MY_REPLY) */}
-      {myReply && (
+      {bubble && (
         <div className="story-myreply">
-          <AccountAvatar id={ME_ID} size={36} />
-          <span>{myReply}</span>
+          <AccountAvatar id={bubble.user} size={36} />
+          <span>{bubble.text}</span>
         </div>
       )}
 
