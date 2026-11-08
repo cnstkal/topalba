@@ -244,26 +244,19 @@ function seed(): Store {
 }
 function load(): Store {
   try {
-    const s = JSON.parse(localStorage.getItem(KEY) || 'null')
-    if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs)))
+    const saved = JSON.parse(localStorage.getItem(KEY) || 'null')
+    if (saved && typeof saved === 'object' && Array.isArray(saved.rooms) && saved.me && typeof saved.me === 'object' && saved.rooms.every((r: any) => r && Array.isArray(r.msgs))) {
       const seeded = seed()
-      const mergedRooms = s.rooms.map((room: Room) => {
-        if (room.id !== 'r-hj' && room.id !== 'r-wy' && room.id !== 'r-yh') return room
-        // 윤호 채팅의 2026년 8월 1일 메시지 두 개만 제거하고 날짜 구분선은 seed 데이터로 유지
-        const keptMsgs = room.id === 'r-yh'
-          ? room.msgs.filter(m => {
-              const d = new Date(m.t)
-              const day = d.getFullYear() === 2026 && d.getMonth() === 6 && [8, 12, 16, 20, 25, 29].includes(d.getDate())
-              const nov8 = d.getFullYear() === 2026 && d.getMonth() === 10 && d.getDate() === 8
-              const oldAug1Messages = d.getFullYear() === 2026 && d.getMonth() === 7 && d.getDate() === 1 && (m.text === '오늘 돼요?' || m.text === 'ㅇㅇ')
-              return !(day || nov8 || oldAug1Messages)
-            })
-          : room.msgs
-        const existingIds = new Set(keptMsgs.map(m => m.id))
-        const history = (seeded.rooms.find(r => r.id === room.id)?.msgs ?? []).filter(m => !existingIds.has(m.id))
-        return { ...room, msgs: [...keptMsgs, ...history].sort((a, b) => a.t - b.t) }
+      // 대본으로 관리하는 채팅방은 저장된 과거 메시지를 병합하지 않고 seed 대본으로 완전히 교체
+      // 이전 대본이 남아 중복되거나 삭제한 문장이 다시 나타나는 문제 방지
+      const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh'])
+      const rooms = saved.rooms.map((room: Room) => {
+        if (!scriptedRoomIds.has(room.id)) return room
+        const currentScript = seeded.rooms.find(r => r.id === room.id)
+        return currentScript ? { ...room, msgs: [...currentScript.msgs] } : room
       })
-      return { ...s, rooms: mergedRooms, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
+      return { ...saved, rooms, openRooms: Array.isArray(saved.openRooms) && saved.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? saved.openRooms : seeded.openRooms }
+    }
   } catch { /* 손상된 데이터는 새로 시작 */ }
   return seed()
 }
