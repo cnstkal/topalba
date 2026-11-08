@@ -5,7 +5,7 @@ const EXTRA_APPS = {
   dating: { label: '결', bg: 'linear-gradient(155deg,#ff9a7b 0%,#e8548f 48%,#6a4cff 100%)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
-  twitter: { label: 'X', bg: '#000' },
+  twitter: { label: 'X', bg: 'radial-gradient(circle at 30% 20%,#3a3a3c 0%,#000 70%)' },
   maps: { label: '지도', bg: 'linear-gradient(160deg,#6fe3a0,#16a050)' },
 }
 
@@ -46,7 +46,8 @@ const EXTRA_GLYPHS = {
   ),
   twitter: (
     <svg viewBox="0 0 60 60" width="60" height="60">
-      <path d="M13 12h10.5l11.1 14.8L47.5 12H51L36.2 29.2 52 48H41.5L29.7 32.2 16 48h-3.5l15.7-18.3L13 12zm6.8 3 23.2 30h3.2L23 15h-3.2z" fill="#fff" />
+      <defs><linearGradient id="gxw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#c9ced6" /></linearGradient></defs>
+      <path d="M14 12h9.6l10.4 14 12.1-14h3.4L36.8 28.6 50 48h-9.6L29.8 33.8 16.9 48H13.5l14-16.2L14 12zm6.9 3.2 22.3 29.6h3.8L24.6 15.2h-3.7z" fill="url(#gxw)" />
     </svg>
   ),
   kakao: (
@@ -160,7 +161,20 @@ export function Glyph({ id }) {
         </svg>
       )
     case 'weather':
-      return <svg viewBox="0 0 60 60" width="60" height="60"><circle cx="39" cy="20" r="9" fill="#ffd85a" /><path d="M14 39c0-6 5-10 11-9 2-8 14-10 19-3 7 0 10 5 10 11 0 5-4 8-9 8H23c-5 0-9-3-9-7z" fill="#fff" /></svg>
+      return (
+        <svg viewBox="0 0 60 60" width="60" height="60">
+          <defs>
+            <radialGradient id="gwsun" cx=".35" cy=".3" r=".75"><stop offset="0" stopColor="#fff6c2" /><stop offset="1" stopColor="#ffb928" /></radialGradient>
+            <linearGradient id="gwcl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#d6e9ff" /></linearGradient>
+          </defs>
+          <g stroke="#ffd85a" strokeWidth="2.6" strokeLinecap="round" opacity=".9">
+            <path d="M39 4v4M52 11l-3 3M56 24h-4M26 11l3 3" />
+          </g>
+          <circle cx="39" cy="20" r="8.5" fill="url(#gwsun)" />
+          <path d="M15 42.5c-4.2 0-7.5-3.1-7.5-7 0-3.6 2.7-6.5 6.3-6.9 1.6-5.5 6.7-9.1 12.6-8.6 5.2.4 9.3 3.9 10.2 8.7.5-.1 1-.2 1.5-.2 4.8 0 8.4 3.5 8.4 7.7 0 4.1-3.4 7.3-7.7 7.3H15z" fill="url(#gwcl)" />
+          <path d="M16 41.5h29" stroke="#a9c9ef" strokeWidth="1.2" strokeLinecap="round" opacity=".7" />
+        </svg>
+      )
     case 'someone':
       return (
         <svg viewBox="0 0 60 60" width="60" height="60">
