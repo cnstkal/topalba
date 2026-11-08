@@ -113,6 +113,7 @@ const YH_MSGS = [
   { id: 9114, who: 'me', text: 'ㅇㅇ', t: new Date('2026-07-25T19:50:00+09:00').getTime() },
   { id: 9115, who: '정윤호', text: '오늘은요?', t: new Date('2026-07-29T21:00:00+09:00').getTime() },
   { id: 9116, who: 'me', text: 'ㅇㅇ', t: new Date('2026-07-29T21:40:00+09:00').getTime() },
+  { id: 9199, who: 'date', t: new Date('2026-08-01T00:00:00+09:00').getTime() },
   { id: 9200, who: 'gap', text: '•\n•\n•\n•', t: new Date('2026-08-02T23:00:00+09:00').getTime() },
   { id: 9300, who: '정윤호', text: '형 일어났어요?', t: new Date('2026-11-08T07:42:00+09:00').getTime() },
   { id: 9301, who: 'me', text: 'ㅇㅇ', t: new Date('2026-11-08T07:50:00+09:00').getTime() },
@@ -230,10 +231,18 @@ function load(): Store {
     if (s && typeof s === 'object' && Array.isArray(s.rooms) && s.me && typeof s.me === 'object' && s.rooms.every((r: any) => r && Array.isArray(r.msgs)))
       const seeded = seed()
       const mergedRooms = s.rooms.map((room: Room) => {
-        if (room.id !== 'r-hj' && room.id !== 'r-wy') return room
-        const existingIds = new Set(room.msgs.map(m => m.id))
+        if (room.id !== 'r-hj' && room.id !== 'r-wy' && room.id !== 'r-yh') return room
+        // 윤호 채팅의 2026년 8월 1일 메시지 두 개만 제거하고 날짜 구분선은 seed 데이터로 유지
+        const keptMsgs = room.id === 'r-yh'
+          ? room.msgs.filter(m => {
+              const d = new Date(m.t)
+              const isTargetDate = d.getFullYear() === 2026 && d.getMonth() === 7 && d.getDate() === 1
+              return !(isTargetDate && (m.text === '오늘 돼요?' || m.text === 'ㅇㅇ'))
+            })
+          : room.msgs
+        const existingIds = new Set(keptMsgs.map(m => m.id))
         const history = (seeded.rooms.find(r => r.id === room.id)?.msgs ?? []).filter(m => !existingIds.has(m.id))
-        return { ...room, msgs: [...room.msgs, ...history].sort((a, b) => a.t - b.t) }
+        return { ...room, msgs: [...keptMsgs, ...history].sort((a, b) => a.t - b.t) }
       })
       return { ...s, rooms: mergedRooms, openRooms: Array.isArray(s.openRooms) && s.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? s.openRooms : seedOpen() }
   } catch { /* 손상된 데이터는 새로 시작 */ }
@@ -652,6 +661,7 @@ function ChatRoom({ room, onBack, patch, onLeave }: { room: Room; onBack: () => 
         {msgs.map((m, i) => {
           const prev = msgs[i - 1], next = msgs[i + 1]
           const mine = m.who === 'me'
+          if (m.who === 'date') return <div key={m.id} className="kakaotalk-day">{dayLabel(m.t)}</div>
           if (m.who === 'gap') return <div key={m.id} className="kakaotalk-gap">{m.text}</div>
           const newDay = !prev || dayKey(prev.t) !== dayKey(m.t)
           const head = newDay || prev.who !== m.who || fmtT(prev.t) !== fmtT(m.t)
