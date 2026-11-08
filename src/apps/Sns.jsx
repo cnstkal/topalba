@@ -120,8 +120,9 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
   const [cmOpen, setCmOpen] = useState(false) // 스토리 댓글 시트
   const n = slides.length
   const paused = hold || focus || cmOpen
-  const cmList = STORY_COMMENTS[owner] || []
-  const myReply = STORY_MY_REPLY[owner]
+  // 사진(슬라이드)마다 댓글을 붙일 수 있고, 없으면 스토리 주인 기준 데이터 사용
+  const cmList = slides[idx]?.comments || STORY_COMMENTS[owner] || []
+  const myReply = slides[idx]?.myReply ?? STORY_MY_REPLY[owner]
 
   const next = () => (idx < n - 1 ? setIdx(idx + 1) : (onDone || onClose)())
   const prev = () => idx > 0 && setIdx(idx - 1)
