@@ -4,7 +4,6 @@ import {
   EVENT_MAP,
   INITIAL_THREADS,
   INITIAL_NOTES,
-  INITIAL_MAILS,
   INITIAL_SENT,
   INITIAL_POSTS,
   INITIAL_RECENTS,
@@ -46,7 +45,6 @@ function freshState() {
     notifs: [],
     snsNotifs: [],
     posts: JSON.parse(JSON.stringify(INITIAL_POSTS)),
-    mails: JSON.parse(JSON.stringify(INITIAL_MAILS)),
     sent: JSON.parse(JSON.stringify(INITIAL_SENT)),
     recents: JSON.parse(JSON.stringify(INITIAL_RECENTS)),
     notes: JSON.parse(JSON.stringify(INITIAL_NOTES)),
@@ -79,7 +77,7 @@ function load() {
         return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
       })
       const extra = old.filter((p) => !initIds.has(p.id))
-      const merged = { ...freshState(), ...saved, mails: JSON.parse(JSON.stringify(INITIAL_MAILS)), follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
+      const merged = { ...freshState(), ...saved, follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
       if (!Array.isArray(merged.calEvents)) merged.calEvents = seedCalEvents()
       return merged
     }
@@ -191,8 +189,7 @@ function reducer(state, a) {
     case 'MAIL_READ':
       return {
         ...state,
-        mails: state.mails.map((m) => (m.id === a.id ? { ...m, read: true } : m)),
-        notifs: state.notifs.map((n) => (n.app === 'mail' && !n.thread && state.mails.find((m) => m.id === a.id)?.subject === n.body ? { ...n, read: true } : n)),
+        notifs: state.notifs,
       }
     case 'APP_SEEN':
       return {
@@ -317,7 +314,6 @@ export function GameProvider({ children }) {
         setTimeout(() => dispatch({ type: 'OUT_READ', thread }), 1800)
       },
       markRead: (thread) => dispatch({ type: 'MARK_READ', thread }),
-      mailRead: (id) => dispatch({ type: 'MAIL_READ', id }),
       appSeen: (app) => dispatch({ type: 'APP_SEEN', app }),
       dismissBanner: () => dispatch({ type: 'DISMISS_BANNER' }),
       answer: (accepted) => dispatch({ type: 'ANSWER', accepted }),
@@ -363,7 +359,6 @@ export function unreadCount(state, app) {
     return Object.entries(state.threads).filter(([id]) => id.startsWith('msg:')).reduce((n, [, l]) => n + l.filter((m) => m.unread).length, 0)
   if (app === 'sns')
     return Object.entries(state.threads).filter(([id]) => id.startsWith('dm:')).reduce((n, [, l]) => n + l.filter((m) => m.unread).length, 0)
-  if (app === 'mail') return state.mails.filter((m) => !m.read).length
   if (app === 'phone') return state.recents.filter((c) => c.missed && !c.seen).length
   return 0
 }
