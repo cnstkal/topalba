@@ -329,9 +329,7 @@ function Me({ s, upd }) {
           <p className="gyeol-profile-bio">{m.bio}</p>
           <div className="gyeol-profile-tags">{m.tags.map((tag) => <span key={tag}>#{tag}</span>)}</div>
         </div>
-        <div className="gyeol-profile-foot"><span>결에서 만나는 나</span><b>GYEOL MEMBER</b></div>
       </section>
-      <p className="gyeol-note">내 프로필 미리보기 · 가상 프로필</p>
     </div>
   )
 }
