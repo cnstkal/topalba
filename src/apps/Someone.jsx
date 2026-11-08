@@ -144,7 +144,6 @@ const ptDone = (date, today) => PT_DONE_DATES.has(date) || (date === today ? has
 
 /* ───────── 반려몽 성장 단계 ───────── */
 const STEPS = [1, 3, 7, 14]
-const STAGE = ['잠자는 알', '똑똑, 금이 갔어요', '껍질 밖이 궁금해요', '갓 태어난 몽', '쑥쑥 자란 몽']
 
 /* ───────── 아이콘 (손그림 느낌: 둥근 선 + 살짝 흔들린 획) ───────── */
 const Ic = ({ children, size = 26, w = 1.7 }) => (
@@ -161,87 +160,29 @@ const ICON = {
   gear: <Ic size={23}><circle cx="12" cy="12" r="3" /><path d="M12 3.6v2.2M12 18.2v2.2M3.6 12h2.2M18.2 12h2.2M6.1 6.1l1.6 1.6M16.3 16.3l1.6 1.6M17.9 6.1l-1.6 1.6M7.7 16.3l-1.6 1.6" /></Ic>,
   back: <Ic size={22} w={2}><path d="M14.6 5.4 8 12l6.6 6.6" /></Ic>,
   pen: <Ic size={18}><path d="M4.6 19.4l.8-4.1L15.9 4.8c.8-.8 2-.8 2.8 0l.5.5c.8.8.8 2 0 2.8L8.7 18.6l-4.1.8zM13.8 6.9l3.3 3.3" /></Ic>,
+  stone: <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><path d="M5 17c0-5 4-9 9-9s9 4 9 9c0 3-3 5-9 5s-9-2-9-5z" fill="#e9e3d6" stroke="#b9ad98" strokeWidth="1.4" /><circle cx="11" cy="15" r=".9" fill="#8a7d68" /><circle cx="16" cy="15" r=".9" fill="#8a7d68" /><path d="M12 17.5q1.5 1 3 0" stroke="#8a7d68" strokeWidth="1" strokeLinecap="round" /></svg>,
+  roller: <Ic size={24}><path d="M6 4.5h12c.8 0 1.2.4 1.2 1.2v3.1c0 .8-.4 1.2-1.2 1.2H6c-.8 0-1.2-.4-1.2-1.2V5.7c0-.8.4-1.2 1.2-1.2zM12 10v3.2M9 13.2h6v2H9zM10.5 15.2v5h3v-5" /></Ic>,
+  cal: <Ic size={24}><path d="M5 6.5h14v13H5zM5 10.5h14M9 4.5v3M15 4.5v3" /></Ic>,
+  check: <Ic size={24} w={2}><path d="M5 12.8l4.6 4.6L19 7.6" /></Ic>,
+  mail: <svg width="38" height="30" viewBox="0 0 38 30" fill="none" stroke="#c9b48e" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"><path d="M3 5h32v20H3zM3 6l16 11L35 6" fill="#f6efe0" /></svg>,
   heart: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.6C5.6 16.2 3 12.9 3 9.7 3 7.2 4.9 5.4 7.2 5.4c1.9 0 3.7 1.1 4.8 3 1.1-1.9 2.9-3 4.8-3C19.1 5.4 21 7.2 21 9.7c0 3.2-2.6 6.5-9 10.9z" /></svg>,
 }
 
 /* ───────── 반려몽 (달걀 캐릭터) ───────── */
-function Egg({ stage, happy, both }) {
-  const E = '#fff1de'
-  const L = '#7a5a48'
-  const eyes = (y, x1 = 82, x2 = 118) =>
-    happy ? (
-      <g fill="none" stroke={L} strokeWidth="3" strokeLinecap="round">
-        <path d={`M${x1 - 6} ${y + 2}q6 -8 12 0`} />
-        <path d={`M${x2 - 6} ${y + 2}q6 -8 12 0`} />
-      </g>
-    ) : stage === 0 ? (
-      <g fill="none" stroke={L} strokeWidth="3" strokeLinecap="round">
-        <path d={`M${x1 - 6} ${y}q6 6 12 0`} />
-        <path d={`M${x2 - 6} ${y}q6 6 12 0`} />
-      </g>
-    ) : (
-      <g className="sm-blink" fill={L}>
-        <ellipse cx={x1} cy={y} rx="4" ry="5" />
-        <ellipse cx={x2} cy={y} rx="4" ry="5" />
-      </g>
-    )
-  const blush = (y, x1 = 70, x2 = 130) => (
-    <g fill="#f4b3a8" opacity={happy ? 0.85 : 0.5}>
-      <ellipse cx={x1} cy={y} rx="9" ry="5.5" />
-      <ellipse cx={x2} cy={y} rx="9" ry="5.5" />
-    </g>
-  )
-  const mouth = (y) => <path d={happy ? `M92 ${y}q8 9 16 0` : `M95 ${y + 2}q5 4 10 0`} fill="none" stroke={L} strokeWidth="3" strokeLinecap="round" />
-
+function Egg({ stage, happy }) {
+  const L = '#a08b6e'
   return (
-    <svg className="sm-egg-svg" viewBox="0 0 200 230" width="220" height="253">
-      <ellipse cx="100" cy="214" rx="58" ry="9" fill="#e6d3b8" opacity=".7" />
-      {stage <= 2 && (
+    <svg className="sm-egg-svg" viewBox="0 0 120 140" width="120" height="140">
+      <ellipse cx="60" cy="126" rx="30" ry="6" fill="#d8d3c8" opacity=".85" />
+      <path d="M60 8C84 8 98 48 98 80c0 28-18 42-38 42S22 108 22 80C22 48 36 8 60 8z" fill="#fff" stroke={L} strokeWidth="3" strokeLinejoin="round" />
+      {stage >= 1 && <path d="M42 24l8 9-6 6 8 7" fill="none" stroke={L} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />}
+      {stage >= 2 && <path d="M80 30l-6 8 8 5" fill="none" stroke={L} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />}
+      {happy ? (
+        <path d="M42 84q4-5 8 0M70 84q4-5 8 0M54 92q6 6 12 0" fill="none" stroke={L} strokeWidth="2.4" strokeLinecap="round" />
+      ) : (
         <g>
-          <path d="M100 20C150 20 172 100 172 142c0 42-30 64-72 64s-72-22-72-64C28 100 50 20 100 20z" fill={E} stroke={L} strokeWidth="3" strokeLinejoin="round" />
-          <g fill="#f8d9bd" opacity=".8">
-            <circle cx="64" cy="70" r="6" />
-            <circle cx="138" cy="92" r="5" />
-            <circle cx="120" cy="52" r="3.5" />
-          </g>
-          {stage === 1 && <path d="M80 36l10 12-8 9 12 10" fill="none" stroke={L} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />}
-          {stage === 2 && (
-            <g fill="none" stroke={L} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M62 62l14 12-10 11 16 10-8 8" />
-              <path d="M128 50l-8 12 12 7-6 10" />
-            </g>
-          )}
-          {eyes(stage === 0 ? 126 : 128)}
-          {blush(140)}
-          {mouth(142)}
-          {stage === 0 && !happy && (
-            <text className="sm-zzz" x="140" y="62" fontSize="20" fill="#c9a98c" fontWeight="700">
-              z z
-            </text>
-          )}
-        </g>
-      )}
-      {stage >= 3 && (
-        <g>
-          <circle cx="100" cy="118" r="54" fill="#ffe9a6" stroke={L} strokeWidth="3" />
-          <path className="sm-wing l" d="M48 118c-14 2-18 14-8 22 8-2 14-10 8-22z" fill="#ffe09a" stroke={L} strokeWidth="3" strokeLinejoin="round" />
-          <path className="sm-wing r" d="M152 118c14 2 18 14 8 22-8-2-14-10-8-22z" fill="#ffe09a" stroke={L} strokeWidth="3" strokeLinejoin="round" />
-          {eyes(110, 82, 118)}
-          {blush(124, 68, 132)}
-          <path d="M92 120h16l-8 10z" fill="#f6a56b" stroke={L} strokeWidth="2.5" strokeLinejoin="round" />
-          <path d="M92 150l12-14 14 14 14-14 14 14 12-12c4 30-12 50-52 58-40-8-56-28-52-58z" fill="none" />
-          <path d="M44 156l12-10 12 12 12-12 12 12 12-12 12 12 12-12 12 12 8-8c2 30-14 52-52 52s-54-22-52-52z" fill={E} stroke={L} strokeWidth="3" strokeLinejoin="round" />
-          {stage === 4 && (
-            <g>
-              <path d="M100 66c-2-10 2-16 8-18M100 66c-6-8-14-8-18-4" fill="none" stroke="#8fae7a" strokeWidth="4" strokeLinecap="round" />
-              <path className="sm-heart" d="M160 60c-5-4-9 0-7 4 2 3 7 6 7 6s5-3 7-6c2-4-2-8-7-4z" fill="#f2a6a0" />
-            </g>
-          )}
-        </g>
-      )}
-      {both && (
-        <g className="sm-heart" fill="#f2a6a0">
-          <path d="M30 64c-4-3-7 0-5.5 3 1.5 2.5 5.5 5 5.5 5s4-2.5 5.5-5c1.5-3-1.5-6-5.5-3z" />
+          <g className="sm-blink" fill={L}><circle cx="47" cy="84" r="2.3" /><circle cx="73" cy="84" r="2.3" /></g>
+          <path d="M56 92q4 2.500 8 0" fill="none" stroke={L} strokeWidth="2.4" strokeLinecap="round" />
         </g>
       )}
     </svg>
@@ -329,19 +270,32 @@ export default function Someone() {
   if (view && view.t === 'edit') body = <Edit {...ctx} date={view.date} onSave={save} onBack={() => setView(null)} />
   else if (view && view.t === 'detail') body = <Detail {...ctx} date={view.date} onBack={() => setView(null)} />
   else {
+    const home = tab === 'home'
+    const TITLE = { list: 'List', record: 'Diary', couple: 'Couple' }
     body = (
       <>
         <div className="sm-top">
-          <div className="sm-logo">
-            썸원<span>{ICON.heart}</span>
-          </div>
-          <div className="sm-top-r">
-            <button aria-label="알림" onClick={() => setBell(!bell)}>
-              {ICON.bell}
-              {!mine(today) && <i className="sm-dot" />}
-            </button>
-            <button aria-label="설정" onClick={() => setTab('couple')}>{ICON.gear}</button>
-          </div>
+          {home ? (
+            <>
+              <span className="sm-coin">{ICON.stone}<b>{count}</b></span>
+              <div className="sm-logo">SumOne</div>
+              <div className="sm-top-r">
+                <button aria-label="알림" onClick={() => setBell(!bell)}>
+                  {ICON.bell}
+                  {!mine(today) && <i className="sm-dot" />}
+                </button>
+                <button aria-label="설정" onClick={() => setTab('couple')}>{ICON.roller}</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <span />
+              <div className="sm-logo t">{TITLE[tab]}</div>
+              <div className="sm-top-r">
+                <button aria-label="전환" onClick={() => setTab(tab === 'list' ? 'record' : 'list')}>{tab === 'list' ? ICON.cal : ICON.list}</button>
+              </div>
+            </>
+          )}
         </div>
         {bell && (
           <div className="sm-pop" onClick={() => setBell(false)}>
@@ -358,9 +312,8 @@ export default function Someone() {
         </div>
         <div className="sm-tabs">
           {TABS.map(([k, t]) => (
-            <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>
-              {ICON[k === 'list' ? 'list' : k]}
-              <span>{t}</span>
+            <button key={k} className={tab === k ? 'on' : ''} aria-label={t} onClick={() => setTab(k)}>
+              {ICON[k]}
             </button>
           ))}
         </div>
@@ -376,111 +329,37 @@ export default function Someone() {
 }
 
 /* ───────── 공통 조각 ───────── */
-function Chips({ s, date, today, mine }) {
-  const pd = ptDone(date, today)
-  return (
-    <div className="sm-chips">
-      <span className={mine(date) ? 'ok' : ''}>{s.me} {mine(date) ? '완료' : '전'}</span>
-      <span className={pd ? 'ok' : ''}>{s.pt} {pd ? '완료' : '대기 중'}</span>
-    </div>
-  )
-}
-
 function Home(c) {
-  const { s, today, qOf, mine, stage, count, dday, setView, setTab } = c
-  const q = qOf(today)
+  const { s, today, qOf, mine, stage, dday, setView } = c
   const done = !!mine(today)
-  const pd = ptDone(today, today)
-  const [wob, setWob] = useState(false)
-  const next = STEPS[stage]
-  const prev = stage ? STEPS[stage - 1] : 0
-  const pct = next ? ((count - prev) / (next - prev)) * 100 : 100
-  const msg = done
-    ? pd ? `${s.pt}님 답변도 도착했어! 함께 확인해 봐` : '답변 고마워! 상대방을 기다리는 중이야'
-    : stage === 0 ? '따뜻하게 품어 줘… 오늘의 질문에 답해 줄래?' : '오늘의 질문에 답해 주면 쑥쑥 자라!'
+  const q = qOf(today)
   return (
-    <div className="sm-pad">
-      <div className="sm-couple">
-        <div className="sm-who">
-          <Avatar img={s.meImg} who="me" />
-          <span>{s.me}</span>
-        </div>
-        <button className="sm-dd" onClick={() => !s.start && setTab('couple')}>
-          <small>{s.start ? '함께한 지' : '사귄 날짜를'}</small>
-          <b>{s.start ? `D+${dday}` : '설정하기'}</b>
-          <i>{ICON.heart}</i>
-        </button>
-        <div className="sm-who">
-          <Avatar img={s.ptImg} who="pt" />
-          <span>{s.pt}</span>
-        </div>
-      </div>
-
-      <div className="sm-egg">
-        <div className="sm-bubble">{msg}</div>
-        <button className={wob ? 'wob' : ''} onClick={() => { setWob(true); setTimeout(() => setWob(false), 700) }} aria-label="반려몽">
-          <Egg stage={stage} happy={done} both={done && pd} />
-        </button>
-        <div className="sm-stage">
-          <b>{STAGE[stage]}</b>
-          <div className="sm-bar"><i style={{ width: `${pct}%` }} /></div>
-          <small>{next ? `다음 단계까지 답변 ${next - count}번` : '다 자랐어요! 계속 함께해요'}</small>
-        </div>
-      </div>
-
-      <div className="sm-card sm-today">
-        <div className="sm-meta">
-          <span className="sm-tag">오늘의 질문</span>
-          <em>#{q.n} · {label(today)}</em>
-        </div>
-        <p className="sm-q">{QS[q.qi][1]}</p>
-        <Chips s={s} date={today} today={today} mine={mine} />
-        <button className="sm-btn" onClick={() => setView({ t: done ? 'detail' : 'edit', date: today })}>
-          {done ? '답변 확인하기' : '답변 쓰러 가기'}
-        </button>
-      </div>
+    <div className="sm-home">
+      <div className="sm-names">{s.me} <i>{ICON.heart}</i> {s.pt}</div>
+      <div className="sm-days">사랑한 지 <b>{dday}</b> 일 째</div>
+      <button className="sm-center" aria-label="오늘의 질문" onClick={() => q && setView({ t: done ? 'detail' : 'edit', date: today })}>
+        {!done && <span className="sm-mail">{ICON.mail}<i>1</i></span>}
+        <Egg stage={Math.min(stage, 2)} happy={done} />
+        <p>{done ? '오늘의 답변을 남겼어요' : '오늘의 질문이 도착했어요'}</p>
+      </button>
     </div>
   )
 }
 
 function List(c) {
-  const { s, today, qOf, mine, allDates, setView } = c
-  const [f, setF] = useState('all')
-  const rows = [...allDates].reverse().filter((d) => (f === 'all' ? true : f === 'done' ? !!mine(d) : !mine(d)))
-  const total = allDates.length
-  const done = allDates.filter((d) => mine(d)).length
-  const pageSize = 20
-  const pageCount = Math.max(1, Math.ceil(rows.length / pageSize))
-  const visibleRows = rows.slice(0, pageSize)
+  const { allDates, qOf, setView } = c
   return (
-    <div className="sm-pad">
-      <h2 className="sm-h">질문 목록</h2>
-      <p className="sm-sub">지금까지 {total}개의 질문 중 {done}개에 답했어요</p>
-      <div className="sm-seg">
-        {[['all', '전체'], ['done', '답변 완료'], ['todo', '아직 안 함']].map(([k, t]) => (
-          <button key={k} className={f === k ? 'on' : ''} onClick={() => setF(k)}>{t}</button>
-        ))}
-      </div>
-      {rows.length === 0 && <div className="sm-empty">해당하는 질문이 없어요</div>}
-      {visibleRows.map((d) => {
+    <div className="sm-list">
+      {[...allDates].reverse().map((d) => {
         const q = qOf(d)
         if (!q) return null
         return (
-          <button key={d} className="sm-card sm-row" onClick={() => setView({ t: 'detail', date: d })}>
-            <div className="sm-meta">
-              <span className="sm-no">Q{q.n}</span>
-              <em>{QS[q.qi][0]} · {label(d)}</em>
-            </div>
-            <p>{QS[q.qi][1]}</p>
-            <Chips s={s} date={d} today={today} mine={mine} />
+          <button key={d} className="sm-li" onClick={() => setView({ t: 'detail', date: d })}>
+            <em>#{pad(q.n)}</em>
+            <span>{QS[q.qi][1]}</span>
           </button>
         )
       })}
-      <div className="sm-pagination" aria-label="페이지">
-        <button type="button" disabled aria-label="이전 페이지">‹</button>
-        <span>1 / {pageCount}</span>
-        <button type="button" disabled aria-label="다음 페이지">›</button>
-      </div>
     </div>
   )
 }
@@ -502,7 +381,6 @@ function Record(c) {
   const m = mine(sel)
   return (
     <div className="sm-pad">
-      <h2 className="sm-h">우리의 기록</h2>
       <div className="sm-card sm-cal">
         <div className="sm-cal-h">
           <button onClick={() => go(-1)} aria-label="이전 달">‹</button>
@@ -583,7 +461,6 @@ function Couple(c) {
   const nextIdx = list.findIndex(([, d]) => d >= today)
   return (
     <div className="sm-pad">
-      <h2 className="sm-h">우리 커플</h2>
       <div className="sm-card sm-prof">
         {[['me', 'meImg', '나'], ['pt', 'ptImg', '상대방']].map(([w, im, t]) => (
           <div key={w} className="sm-pf">
@@ -628,25 +505,27 @@ function Couple(c) {
 }
 
 /* ───────── 상세 / 작성 화면 ───────── */
+const dot = (d) => d.replace(/-/g, '.')
+
 function Detail({ s, today, qOf, mine, date, setView, onBack }) {
   const q = qOf(date)
   const m = mine(date)
   const pd = ptDone(date, today)
-  if (!q) return <Wrap onBack={onBack} title="기록"><p className="sm-none">기록이 없어요</p></Wrap>
+  if (!q) return <Wrap onBack={onBack}><p className="sm-none">기록이 없어요</p></Wrap>
+  const edit = () => setView({ t: 'edit', date })
   return (
-    <Wrap onBack={onBack} title={`Q${q.n}`}>
-      <div className="sm-meta"><span className="sm-tag">{QS[q.qi][0]}</span><em>{label(date)}</em></div>
+    <Wrap onBack={onBack} right={m ? <button aria-label="수정" onClick={edit}>{ICON.pen}</button> : null}>
+      <div className="sm-qn">#{q.n}번째 질문 <span>{dot(date)}</span></div>
       <p className="sm-q big">{QS[q.qi][1]}</p>
-      <div className="sm-paper">
-        <div className="sm-who-a"><b>{s.me}</b>{m && <button onClick={() => setView({ t: 'edit', date })}>{ICON.pen}수정</button>}</div>
-        <p className={`sm-a ${m ? '' : 'none'}`}>{m ? m.text : '아직 답변하지 않았어요'}</p>
+      <div className="sm-ans">
+        <b>{s.me}</b>
+        <p className={m ? '' : 'none'}>{m ? m.text : '아직 답변하지 않았어요'}</p>
       </div>
-      <div className="sm-paper pt">
-        <div className="sm-who-a"><b>{s.pt}</b></div>
-        <p className={`sm-a ${m && pd ? '' : 'none'}`}>{pd && QS[q.qi][2] ? QS[q.qi][2] : !pd ? `${s.pt}님은 아직 답변 전이에요 (대기 중)` : '내 답변을 완료하면 서로의 답변을 볼 수 있어요'}</p>
+      <div className="sm-ans">
+        <b>{s.pt}</b>
+        <p className={m && pd ? '' : 'none'}>{pd && QS[q.qi][2] ? (m ? QS[q.qi][2] : '내 답변을 완료하면 볼 수 있어요') : '아직 답변 전이에요'}</p>
       </div>
-      {!m && <button className="sm-btn" onClick={() => setView({ t: 'edit', date })}>답변 쓰기</button>}
-      <p className="sm-note c">상대방 답변은 시뮬레이션이에요.</p>
+      {!m && <button className="sm-under" onClick={edit}>답변 쓰기</button>}
     </Wrap>
   )
 }
@@ -654,27 +533,24 @@ function Detail({ s, today, qOf, mine, date, setView, onBack }) {
 function Edit({ s, qOf, mine, date, onSave, onBack }) {
   const q = qOf(date)
   const [t, setT] = useState(() => (mine(date) ? mine(date).text : ''))
-  if (!q) return <Wrap onBack={onBack} title="답변"><p className="sm-none">작성할 수 없는 날짜예요</p></Wrap>
+  if (!q) return <Wrap onBack={onBack}><p className="sm-none">작성할 수 없는 날짜예요</p></Wrap>
   return (
-    <Wrap onBack={onBack} title={mine(date) ? '답변 수정' : '답변 쓰기'}>
-      <div className="sm-meta"><span className="sm-tag">Q{q.n}</span><em>{label(date)}</em></div>
+    <Wrap onBack={onBack} right={<button aria-label="저장" disabled={!t.trim()} onClick={() => onSave(date, t)}>{ICON.check}</button>}>
+      <div className="sm-qn">#{q.n}번째 질문 <span>{dot(date)}</span></div>
       <p className="sm-q big">{QS[q.qi][1]}</p>
-      <div className="sm-paper">
-        <textarea autoFocus value={t} maxLength={300} onChange={(e) => setT(e.target.value)} placeholder={`${s.me}의 이야기를 적어 보세요`} />
-        <small>{t.length}/300</small>
-      </div>
-      <button className="sm-btn" disabled={!t.trim()} onClick={() => onSave(date, t)}>저장하기</button>
+      <textarea className="sm-ta" autoFocus value={t} maxLength={80} onChange={(e) => setT(e.target.value)} placeholder="답변을 입력해 주세요." />
+      <small className="sm-cnt">{t.length} / 80</small>
     </Wrap>
   )
 }
 
-function Wrap({ onBack, title, children }) {
+function Wrap({ onBack, right, children }) {
   return (
     <>
-      <div className="sm-top sub">
+      <div className="sm-top">
         <button className="sm-bk" onClick={onBack} aria-label="뒤로">{ICON.back}</button>
-        <b>{title}</b>
-        <span style={{ width: 36 }} />
+        <span />
+        <div className="sm-top-r">{right}</div>
       </div>
       <div className="sm-scroll"><div className="sm-pad">{children}</div></div>
     </>
