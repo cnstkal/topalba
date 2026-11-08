@@ -1720,3 +1720,12 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .ring2-call i.red { background: #ee5444; }
 .ring2-call i.green { background: #62cd66; }
 .ring2-call:active i, .ring2-opt:active i { filter: brightness(.88); }
+
+/* 인스타 본문/댓글 글자 크기 축소 */
+.post-cap, .post-prev, .post-cm, .post-more-txt { font-size: 13px !important; }
+.post-likes { font-size: 13px; }
+.post-meta b { font-size: 13px; }
+.post.detail .post-cap { font-size: 14px !important; }
+.post.detail .post-meta b { font-size: 15px; }
+.cm { font-size: 13px; }
+.cm-input input { font-size: 14px; }
