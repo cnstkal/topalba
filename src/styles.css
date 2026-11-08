@@ -1785,3 +1785,8 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
   transform: scale(.93);
   filter: brightness(1.12) saturate(1.08);
 }
+
+/* 인스타 피드: 캡션·댓글은 작게, 작성자 정보는 크게 */
+.post-cap, .post-prev, .post-cm, .cm, .cm b, .post .cm { font-size: 12.5px !important; }
+.post-meta b { font-size: 15px !important; }
+.post-meta i { font-size: 13px !important; }
