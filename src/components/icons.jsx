@@ -1,7 +1,6 @@
 import { DAYS } from '../utils'
 
 const EXTRA_APPS = {
-  reminders: { label: '미리알림', bg: '#fff' },
   moabank: { label: '토스뱅크', bg: '#0064FF' },
   dating: { label: '결', bg: 'linear-gradient(155deg,#ff9a7b 0%,#e8548f 48%,#6a4cff 100%)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
@@ -21,16 +20,6 @@ const EXTRA_GLYPHS = {
       <ellipse cx="30" cy="46" rx="6" ry="1.8" fill="#000" opacity=".18" />
       <path d="M30 44c-7-7-10-11-10-16a10 10 0 0 1 20 0c0 5-3 9-10 16z" fill="url(#gbp)" />
       <circle cx="30" cy="28" r="3.8" fill="#fff" />
-    </svg>
-  ),
-  reminders: (
-    <svg viewBox="0 0 60 60" width="60" height="60">
-      {[['#ff9500', 16], ['#34c759', 30], ['#007aff', 44]].map(([c, y]) => (
-        <g key={y}>
-          <circle cx="15" cy={y} r="4.5" fill="none" stroke={c} strokeWidth="2.2" />
-          <rect x="25" y={y - 1.5} width="23" height="3" rx="1.5" fill="#d1d1d6" />
-        </g>
-      ))}
     </svg>
   ),
   moabank: (

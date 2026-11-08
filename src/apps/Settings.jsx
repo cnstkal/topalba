@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useGame } from '../engine/store'
+import { dev, useDevice } from '../engine/device'
 import Back from '../components/Back'
 
 /* iOS 설정 앱 스타일 심볼 (흰색 글리프, 24x24 기준) */
@@ -60,7 +61,7 @@ const GLYPH = {
 }
 
 const ROWS = [
-  [['#ff9500', '에어플레인 모드', 'toggle'], ['#007aff', 'Wi-Fi', 'Home-WiFi'], ['#007aff', 'Bluetooth', '켬'], ['#34c759', '셀룰러', '']],
+  [['#ff9500', '에어플레인 모드', 'toggle'], ['#007aff', 'Wi-Fi', 'Home-WiFi'], ['#007aff', 'Bluetooth', 'bt'], ['#34c759', '셀룰러', '']],
   [['#ff3b30', '알림', ''], ['#ff2d55', '사운드 및 햅틱', ''], ['#5856d6', '집중 모드', ''], ['#5856d6', '스크린 타임', '']],
   [['#8e8e93', '일반', 'about'], ['#8e8e93', '제어 센터', ''], ['#007aff', '디스플레이 및 밝기', ''], ['#32ade6', '배경화면', '']],
 ]
@@ -75,6 +76,8 @@ export default function Settings() {
   const { actions } = useGame()
   const [air, setAir] = useState(false)
   const [about, setAbout] = useState(false)
+  const [bt, setBt] = useState(false)
+  const d = useDevice()
   const [confirm, setConfirm] = useState(false)
 
   if (about) {
@@ -115,6 +118,38 @@ export default function Settings() {
     )
   }
 
+  if (bt) {
+    return (
+      <div className="page gray st bt">
+        <button className="bt-back" onClick={() => setBt(false)} aria-label="뒤로">
+          <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2L2 10l8 8" /></svg>
+        </button>
+        <div className="scroll st-scroll">
+          <div className="st-group bt-card">
+            <i className="bt-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 7.5l11 9-5.5 4.5V3l5.5 4.5-11 9" /></svg></i>
+            <h1>Bluetooth</h1>
+            <p>음악 스트리밍, 전화 통화 및 게임과 같은 활동에 사용할 수 있는 액세서리에 연결하십시오. <a>더 알아보기…</a></p>
+            <div className="bt-sw-row"><span>Bluetooth</span><div className={`st-sw ${d.bt ? 'on' : ''}`} role="switch" aria-checked={d.bt} onClick={() => dev.set({ bt: !d.bt })}><i /></div></div>
+          </div>
+          {d.bt && (
+            <>
+              <div className="st-group bt-allow"><button className="st-row plain">새로운 연결 허용</button></div>
+              <p className="bt-note">제어 센터에서 새로운 Bluetooth에 연결하는 기능이 꺼져 있습니다.</p>
+              <div className="bt-h">나의 기기</div>
+              <div className="st-group">
+                {['AirPods', 'Bluetooth Keyboard'].map((n) => (
+                  <div key={n} className="st-row plain"><span className="st-lb">{n}</span><em className="st-val">연결 안 됨</em><i className="bt-info">i</i></div>
+                ))}
+              </div>
+              <div className="bt-h">다른 기기 <span className="bt-spin" /></div>
+              <p className="bt-note">Apple Watch를 iPhone과 페어링하려면, <a>Apple Watch 앱</a>(으)로 이동하십시오.</p>
+            </>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="page gray st">
       <div className="st-title">설정</div>
@@ -134,7 +169,7 @@ export default function Settings() {
         {ROWS.map((g, i) => (
           <div key={i} className="st-group">
             {g.map(([c, label, v]) => (
-              <button key={label} className="st-row" onClick={() => v === 'about' && setAbout(true)}>
+              <button key={label} className={`st-row ${v === 'about' || v === 'bt' || v === 'toggle' ? '' : 'off'}`} onClick={() => { if (v === 'about') setAbout(true); else if (v === 'bt') setBt(true) }}>
                 <i className="st-ic" style={{ background: c }}>
                   <svg width="20" height="20" viewBox="0 0 24 24">{GLYPH[label]}</svg>
                 </i>
@@ -143,7 +178,7 @@ export default function Settings() {
                   <div className={`st-sw ${air ? 'on' : ''}`} role="switch" aria-checked={air} onClick={(e) => { e.stopPropagation(); setAir(!air) }}><i /></div>
                 ) : (
                   <>
-                    {v !== 'about' && v && <em className="st-val">{v}</em>}
+                    {v === 'bt' ? <em className="st-val">{d.bt ? '켬' : '끔'}</em> : v !== 'about' && v && <em className="st-val">{v}</em>}
                     <Chev />
                   </>
                 )}

@@ -25,7 +25,6 @@ import Gyeol from './apps/Gyeol'
 import Netflix from './apps/Netflix'
 import KakaoTalk from './apps/KakaoTalk'
 import Twitter from './apps/Twitter.tsx'
-import Reminders from './apps/Reminders'
 import Stub from './apps/Stub'
 
 const COMPONENTS = {
@@ -43,7 +42,6 @@ const COMPONENTS = {
   weather: Weather,
   someone: Someone,
   maps: Maps,
-  reminders: Reminders,
   moabank: MoaBank,
   dating: Gyeol,
   netflix: Netflix,

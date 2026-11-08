@@ -1688,3 +1688,18 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .story-cm-reply { display: flex; gap: 8px; margin-top: 12px; }
 .story-cm-reply b { font-size: 14px; font-weight: 700; }
 .story-cm-reply p { margin: 2px 0 0; font-size: 15px; }
+
+.st-row.off { pointer-events: none; opacity: .45; }
+.bt-back { flex: none; margin: 4px 0 8px 14px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #000; border: .5px solid rgba(60,60,67,.18); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.bt-card { padding: 16px 16px 4px; border-radius: 22px; }
+.bt-ic { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 14px; background: linear-gradient(#4e9bff,#2f6fed); }
+.bt-card h1 { margin: 14px 0 6px; font-size: 27px; font-weight: 700; letter-spacing: -.4px; }
+.bt-card p { margin: 0 0 12px; color: #8e8e93; font-size: 17px; line-height: 1.5; }
+.bt-card a, .bt-note a { color: #007aff; }
+.bt-sw-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-top: .5px solid rgba(60,60,67,.18); font-size: 17px; }
+.bt-allow .st-row { color: #007aff; border-radius: 22px; }
+.bt-note { margin: -10px 16px 18px; color: #8e8e93; font-size: 13px; line-height: 1.4; }
+.bt-h { margin: 6px 16px 8px; color: #8e8e93; font-size: 19px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.bt-info { flex: none; width: 24px; height: 24px; border: 1.6px solid #007aff; border-radius: 50%; color: #007aff; font: italic 600 15px/21px serif; text-align: center; }
+.bt-spin { width: 18px; height: 18px; border: 2.2px solid #c7c7cc; border-top-color: #8e8e93; border-radius: 50%; animation: btSpin 1s linear infinite; }
+@keyframes btSpin { to { transform: rotate(360deg); } }
