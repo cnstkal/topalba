@@ -73,6 +73,8 @@ export default function Safari() {
 
       <div className="sf-body">
 
+        {isStart && <div className="sf-sc sf-start"><div className="sf-sec"><h2>즐겨찾기</h2></div><div className="sf-grid"><button className="sf-fav" onClick={() => open('naver.com')}><i className="ti naver" style={{ background: '#03c75a' }}><NaverN /></i><span>네이버</span></button></div></div>}
+
         {view.k === 'site' && view.id === 'naver' && <Naver onSearch={search} history={history} />}
         {view.k === 'site' && view.id === 'google' && (
           <div className="sf-sc gg"><div className="gl"><b style={{ color: '#4285f4' }}>G</b><b style={{ color: '#ea4335' }}>o</b><b style={{ color: '#fbbc05' }}>o</b><b style={{ color: '#4285f4' }}>g</b><b style={{ color: '#34a853' }}>l</b><b style={{ color: '#ea4335' }}>e</b></div>
