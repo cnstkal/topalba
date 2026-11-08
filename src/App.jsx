@@ -137,6 +137,41 @@ function Phone() {
 }
 
 export default function App() {
+  // 새 배포 버전을 감지하면 앱 코드를 자동 갱신한다. 사용자 저장 데이터(localStorage)는 건드리지 않는다.
+  useEffect(() => {
+    let active = true
+    const checkForUpdate = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.BASE_URL}version.json?t=${Date.now()}`, { cache: 'no-store' })
+        if (!response.ok) return
+        const data = await response.json()
+        if (!data.version || !active) return
+        const key = 'topalba-deployed-version'
+        const current = sessionStorage.getItem(key)
+        if (!current) {
+          sessionStorage.setItem(key, data.version)
+        } else if (current !== data.version) {
+          sessionStorage.setItem(key, data.version)
+          window.location.reload()
+        }
+      } catch {
+        // 네트워크가 불안정하면 다음 확인 시 다시 시도
+      }
+    }
+    checkForUpdate()
+    const interval = window.setInterval(checkForUpdate, 60_000)
+    const onFocus = () => checkForUpdate()
+    const onVisibility = () => { if (document.visibilityState === 'visible') checkForUpdate() }
+    window.addEventListener('focus', onFocus)
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      active = false
+      window.clearInterval(interval)
+      window.removeEventListener('focus', onFocus)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [])
+
   const [scale, setScale] = useState(1)
   useEffect(() => {
     const fit = () => {
