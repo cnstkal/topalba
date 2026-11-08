@@ -29,12 +29,14 @@ const MSGS = [['오늘 뭐 했어요?','야근하고 이제 퇴근이요 ㅠ','�
 
 const rnd = (i, n) => (i * 7919 + n * 104729) % 9973
 const pick = (a, i, n) => a[rnd(i, n) % a.length]
+const AGE_EDITS = { '달콤커피': 26, '시월': 20, 'Noah': 23, '새벽감성': 22, 'Kai': 29, '밤산책': 31, 'jun_k': 35, 'Dex': 27, '호두': 19, 'mochi': 25 }
+const NICK_RENAME = { '민트초코': 'Alex' }
 const mkUsers = () => NICKS.map((nick, i) => ({
   id: i + 1, nick, age: nick === '럭키원' ? 29 : (nick === '검은고양이냐옹' || nick === '유유') ? 28 : 22 + (rnd(i, 1) % 20), area: pick(AREAS, i, 2), dist: +(0.4 + (rnd(i, 3) % 180) / 10).toFixed(1),
   online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: nick === '럭키원' ? 170 : nick === '검은고양이냐옹' ? 171 : nick === '유유' ? 186 : 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: ['럭키원', '검은고양이냐옹'].includes(nick) ? '올라운더' : nick === '유유' ? '바텀' : pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
   photos: nick === '럭키원' ? [] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PROFILE_POOL[PROFILE_USERS.indexOf(nick)] ? [PROFILE_POOL[PROFILE_USERS.indexOf(nick)]] : []),
-}))
+})).map((u) => ({ ...u, nick: NICK_RENAME[u.nick] ?? u.nick, age: AGE_EDITS[u.nick] ?? u.age }))
 const mkState = () => {
   const users = mkUsers()
   const matchIds = [35, 36, 37, 3, 7, 12, 18, 1, 4, 5, 6, 8, 9, 10, 11, 13, 15, 16, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
