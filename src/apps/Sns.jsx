@@ -252,6 +252,15 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
                     <b>{c.user}</b>
                     <p>{c.text.split(/(@[\w._]+)/).map((t, j) => (t.startsWith('@') ? <em key={j}>{t}</em> : t))}</p>
                     <small>답글 달기</small>
+                    {(c.replies || []).map((r, k) => (
+                      <div key={k} className="story-cm-reply">
+                        <AccountAvatar id={r.user} size={28} />
+                        <div>
+                          <b>{r.user}</b>
+                          <p>{r.text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}

@@ -1685,3 +1685,6 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .story-cm-box { flex: 1; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.28); border-radius: 24px; padding: 11px 14px; font-size: 15px; color: rgba(255,255,255,.75); }
 .story-cm-box i { font-style: normal; font-size: 12px; font-weight: 800; border: 2px solid #fff; border-radius: 6px; padding: 1px 4px; color: #fff; }
 .story-name b .story-date { font-size: 13px; font-weight: 400; color: #a8a8ad; margin-left: 6px; }
+.story-cm-reply { display: flex; gap: 8px; margin-top: 12px; }
+.story-cm-reply b { font-size: 14px; font-weight: 700; }
+.story-cm-reply p { margin: 2px 0 0; font-size: 15px; }

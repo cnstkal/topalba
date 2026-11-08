@@ -401,10 +401,7 @@ export const SNS_HIGHLIGHTS = [
   { id: 'hl2', title: 'Bob', date: '11월 8일', photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', items: [{ photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/86AF75B4-3C23-4238-B53A-513C36E033A9.jpeg', text: '' }, {
         photo: '/images/instagram/My/Bob/IMG_1514.jpeg', text: '',
         comments: [
-          { user: '_dhhyeok', text: "@a1.nze_ 14일날가서 아이돌들을 보고 친구와재밌는추억남겨서 평생간직하고싶어요!" },
-          { user: 'honey_badger1107', text: "11/14 let's go c'mon @luv_0303 gogogogogo" },
-          { user: 'yuhamung', text: "@j.t021x 14일 하츠투하츠 진심 보러가야해요!!!!!!!!!!! ㅈㅂ요 ㅠㅠㅠㅠ 간절함 뿅!!!!!ㅠㅠㅠ 좋은 추억으로 남을꺼같고 행복할꺼같아요 고척돔 뚜껑 다 날릴꺼에요 응원으로!!!!" },
-          { user: '_dhhyck', text: "14일 원하구요 @a1.nze_ 이 친구와 가는 걸 원해요 가서 수많은 아이돌들을 보고 재밌는 추억남겨서 평생기억하고 싶네요! 💚👸" },
+          { user: 'wooyounggg__', text: '남친?ㅋㅋ', replies: [{ user: '_starhwa_', text: 'ㅗ' }] },
         ],
         myReply: '우왕',
       }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },
