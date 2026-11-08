@@ -240,7 +240,7 @@ const WY_MSGS: Msg[] = [
   { id: 9483, who: '정우영', text: '오케이 자리 맡아놓음', t: new Date('2026-08-08T15:28:00+09:00').getTime() },
 
   { id: 9490, who: '정우영', text: 'ㅁㅎㅁㅎ', t: new Date('2026-11-08T19:15:00+09:00').getTime() },
-
+]
 
 const dayKey = (t: number) => { const d = new Date(t); return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일` }
 const dayLabel = (t: number) => `${dayKey(t)} ${'일월화수목금토'[new Date(t).getDay()]}요일`
