@@ -166,7 +166,8 @@ export default function Gyeol() {
 function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   // 나를 먼저 좋아한 사람(아직 매칭 전)을 덱 앞쪽에 배치 — 좋아요를 누르면 바로 매칭 연출이 보이도록
   const pending = (id: number) => s.likedMe.includes(id) && !s.matches.includes(id)
-  const queue = useMemo(() => { const base = s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)); return (base.length ? base : s.users.filter(ok)) }, [s])
+  const [cur, setCur] = useState(0)
+  const queue = useMemo(() => { const base = s.users.filter((u) => ok(u) && !s.liked.includes(u.id) && !s.passed.includes(u.id)); if (base.length) return base; const all = s.users.filter(ok); const k = all.length ? cur % all.length : 0; return all.slice(k).concat(all.slice(0, k)) }, [s, cur])
   const sorted = useMemo(() => queue.slice().sort((a, b) => (b.photos?.length > 0 ? 1 : 0) - (a.photos?.length > 0 ? 1 : 0)), [s])
   const u = sorted[0]
   const next = sorted[1]
@@ -180,7 +181,7 @@ function Explore({ s, like, star, pass, ok, setDetail, upd }) {
   const act = (kind: 'like' | 'pass') => {
     if (fly) return
     setFly(kind); setDrag(false); start.current = null
-    setTimeout(() => { kind === 'like' ? like(u.id) : pass(u.id); setFly(null); setDx(0) }, 280)
+    setTimeout(() => { kind === 'like' ? like(u.id) : pass(u.id); setFly(null); setDx(0); setCur((c) => c + 1) }, 280)
   }
   const end = () => { setDrag(false); if (start.current == null) return; if (dx > 90) act('like'); else if (dx < -90) act('pass'); else setDx(0); start.current = null }
   const n = Math.max(u.photos.length, 1)
