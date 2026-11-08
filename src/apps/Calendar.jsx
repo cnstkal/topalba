@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import Back from '../components/Back'
 import { DAYS } from '../utils'
 import { useGame } from '../engine/store'
+import './Calendar.css'
 
-const HOUR = 48
+const HOUR = 57
 const COLORS = [
   { c: '#ff3b30', n: '중요' },
   { c: '#ff9500', n: '업무' },
@@ -21,12 +22,17 @@ const ALERTS = [
   ['60', '1시간 전'],
   ['1440', '1일 전'],
 ]
-const VIEWS = [
-  ['month', '월'],
-  ['week', '주'],
-  ['day', '일'],
-  ['list', '목록'],
-]
+// 월요일 시작 (아이폰 한국어 캘린더와 동일), 2026~2027 공휴일 (읽기 전용 표시)
+const HOL_COLOR = '#af52de'
+const HOLIDAYS = {
+  '2026-01-01': '신정', '2026-02-16': '설날 연휴', '2026-02-17': '설날', '2026-02-18': '설날 연휴',
+  '2026-03-01': '삼일절', '2026-03-02': '대체공휴일', '2026-05-05': '어린이날', '2026-05-24': '부처님오신날',
+  '2026-05-25': '대체공휴일', '2026-06-03': '전국동시지방선거', '2026-06-06': '현충일', '2026-08-15': '광복절',
+  '2026-08-17': '대체공휴일', '2026-09-24': '추석 연휴', '2026-09-25': '추석', '2026-09-26': '추석 연휴',
+  '2026-10-03': '개천절', '2026-10-05': '대체공휴일', '2026-10-09': '한글날', '2026-12-25': '크리스마스',
+  '2027-01-01': '신정',
+}
+
 
 /* ───────── 날짜 유틸 (모두 'YYYY-MM-DD' / 'HH:mm' 문자열 기준) ───────── */
 const pad = (n) => String(n).padStart(2, '0')
@@ -158,96 +164,237 @@ function Groups({ items, onOpen, empty, todayKey }) {
   ))
 }
 
-/* ───────── 주간·일간 시간표 ───────── */
-function TimeGrid({ days, events, todayKey, selKey, onOpen, onPickDay }) {
+/* ───────── 아이콘 (아이폰 캘린더 스타일) ───────── */
+const Svg = ({ children, size = 24, sw = 2.1 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    {children}
+  </svg>
+)
+const IcChev = () => (
+  <Svg size={22} sw={2.6}>
+    <path d="M15 4l-8 8 8 8" />
+  </Svg>
+)
+const IcStack = () => (
+  <Svg>
+    <rect x="3.5" y="3.5" width="17" height="7" rx="2.2" />
+    <rect x="3.5" y="13.5" width="17" height="7" rx="2.2" />
+    <path d="M7 7h6M7 17h6" />
+  </Svg>
+)
+const IcDayList = () => (
+  <Svg>
+    <rect x="6.5" y="3.5" width="14" height="17" rx="2.5" />
+    <path d="M3.2 7.5h.01M3.2 12h.01M3.2 16.5h.01" strokeWidth="3" />
+    <path d="M6.5 9h14" />
+  </Svg>
+)
+const IcCal = () => (
+  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="20" height="18" rx="3" fill="currentColor" stroke="none" opacity=".9" />
+    <path d="M3 9h20" stroke="#fff" strokeWidth="1.6" />
+    <g fill="#fff" stroke="none">
+      {[8, 11.5, 15, 18.5].map((x) => [13, 16, 19].map((y) => <circle key={`${x}-${y}`} cx={x} cy={y} r=".9" />))}
+    </g>
+  </svg>
+)
+const IcInbox = () => (
+  <Svg size={26}>
+    <path d="M3.5 13.5l2.4-7.2A2 2 0 017.8 5h8.4a2 2 0 011.9 1.3l2.4 7.2" />
+    <path d="M3.5 13.5h5.2a3.3 3.3 0 006.6 0h5.2v4.7A2.3 2.3 0 0118.2 20.5H5.8a2.3 2.3 0 01-2.3-2.3z" />
+  </Svg>
+)
+const IcStar = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2.8l2.8 6 6.5.8-4.8 4.5 1.3 6.5L12 17.4 6.2 20.6l1.3-6.5L2.7 9.6l6.5-.8z" />
+  </svg>
+)
+
+/* ───────── 연간 보기 ───────── */
+function YearView({ Y, todayKey, onPickMonth }) {
+  return (
+    <div className="c2-year">
+      {Array.from({ length: 12 }, (_, m) => {
+        const first = (new Date(Y, m, 1).getDay() + 6) % 7
+        const dim = new Date(Y, m + 1, 0).getDate()
+        const isNow = todayKey.startsWith(`${Y}-${pad(m + 1)}-`)
+        return (
+          <button key={m} className="c2-mm" onClick={() => onPickMonth(m)}>
+            <h4 className={isNow ? 'now' : ''}>{m + 1}월</h4>
+            <div className="c2-mm-g">
+              {Array.from({ length: first }, (_, i) => (
+                <i key={`b${i}`} />
+              ))}
+              {Array.from({ length: dim }, (_, i) => {
+                const k = `${Y}-${pad(m + 1)}-${pad(i + 1)}`
+                return (
+                  <span key={k} className={k === todayKey ? 'today' : ''}>
+                    {i + 1}
+                  </span>
+                )
+              })}
+            </div>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+/* ───────── 월간 보기 ───────── */
+function MonthView({ Y, M, events, todayKey, onPick }) {
+  const first = (new Date(Y, M, 1).getDay() + 6) % 7
+  const dim = new Date(Y, M + 1, 0).getDate()
+  const weeks = Math.ceil((first + dim) / 7)
+  const cells = Array.from({ length: weeks * 7 }, (_, i) => {
+    const d = i - first + 1
+    return d >= 1 && d <= dim ? keyOf(new Date(Y, M, d)) : null
+  })
+  return (
+    <>
+      <div className="c2-wkh">
+        {['월', '화', '수', '목', '금', '토', '일'].map((d, i) => (
+          <span key={d} className={i >= 5 ? 'wk' : ''}>
+            {d}
+          </span>
+        ))}
+      </div>
+      <div className="c2-mgrid" style={{ gridTemplateRows: `repeat(${weeks}, 1fr)` }}>
+        {cells.map((k, i) => {
+          if (!k) return <i key={`e${i}`} className="c2-cell" />
+          const chips = []
+          if (HOLIDAYS[k]) chips.push({ id: 'h', t: HOLIDAYS[k], c: HOL_COLOR })
+          dayEvents(events, k).forEach((e) => chips.push({ id: e.id, t: e.title, c: e.color }))
+          return (
+            <button key={k} className="c2-cell" onClick={() => onPick(k)}>
+              <span className={`c2-num ${k === todayKey ? 'today' : ''} ${i % 7 >= 5 ? 'wk' : ''}`}>{parseKey(k).getDate()}</span>
+              <span className="c2-chips">
+                {chips.slice(0, 3).map((c) => (
+                  <em key={c.id} style={{ background: `${c.c}2e`, color: `color-mix(in srgb, ${c.c} 55%, #000)` }}>
+                    {c.t}
+                  </em>
+                ))}
+                {chips.length > 3 && <small>+{chips.length - 3}</small>}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+/* ───────── 일간 보기 (주간 스트립 + 시간표) ───────── */
+const HourLabel = ({ h }) =>
+  h === 12 ? (
+    <span className="noon">정오</span>
+  ) : h === 0 ? (
+    <span>자정</span>
+  ) : (
+    <span>
+      <small>{h < 12 ? '오전' : '오후'}</small>
+      <em>{h % 12 || 12}</em>
+      <small>시</small>
+    </span>
+  )
+
+function DayView({ sel, events, todayKey, onOpen, onPick }) {
+  const cur = parseKey(sel)
+  const weekStart = addDays(sel, -((cur.getDay() + 6) % 7))
+  const week = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+  const hol = HOLIDAYS[sel]
+  const allDay = events.filter((e) => e.allDay && onDay(e, sel))
+  const items = events
+    .filter((e) => !e.allDay && onDay(e, sel))
+    .map((e) => {
+      const s = e.startDate < sel ? 0 : toMin(e.startTime)
+      let en = e.endDate > sel ? 1440 : toMin(e.endTime)
+      if (en <= s) en = s + 30
+      return { e, s, en }
+    })
+    .sort((a, b) => a.s - b.s)
   const ref = useRef(null)
   useEffect(() => {
-    if (ref.current) ref.current.scrollTop = 7 * HOUR
+    if (ref.current) ref.current.scrollTop = 7 * HOUR - 10
   }, [])
-  const cols = { gridTemplateColumns: `44px repeat(${days.length}, 1fr)` }
-  const hasAllDay = days.some((k) => events.some((e) => e.allDay && onDay(e, k)))
   const now = new Date()
   const nowTop = ((now.getHours() * 60 + now.getMinutes()) / 60) * HOUR
 
   return (
     <>
-      <div className="cal-wk-head" style={cols}>
-        <span />
-        {days.map((k) => {
+      <div className="c2-strip">
+        {week.map((k) => {
           const d = parseKey(k)
           return (
-            <button key={k} className={d.getDay() === 0 ? 'sun' : ''} onClick={() => onPickDay(k)}>
+            <button key={k} className={`${d.getDay() === 0 || d.getDay() === 6 ? 'wk' : ''} ${k === sel ? 'sel' : ''} ${k === todayKey ? 'today' : ''}`} onClick={() => onPick(k)}>
               <span>{DAYS[d.getDay()]}</span>
-              <span className={`cal-n ${k === todayKey ? 'today' : ''} ${k === selKey && k !== todayKey ? 'pick' : ''}`}>{d.getDate()}</span>
+              <b>{d.getDate()}</b>
             </button>
           )
         })}
       </div>
-      {hasAllDay && (
-        <div className="cal-ad" style={cols}>
-          <span className="cal-ad-l">종일</span>
-          {days.map((k) => (
-            <div key={k}>
-              {events
-                .filter((e) => e.allDay && onDay(e, k))
-                .map((e) => (
-                  <button key={e.id} style={{ background: e.color }} onClick={() => onOpen(e, k)}>
-                    {e.title}
-                  </button>
-                ))}
-            </div>
-          ))}
+      <div className="c2-daytitle">{fmtDate(sel, true)}</div>
+      {(hol || allDay.length > 0) && (
+        <div className="c2-allday">
+          <span className="c2-adl">
+            하루
+            <br />
+            종일
+          </span>
+          <div>
+            {hol && (
+              <div className="c2-chip hol">
+                <span className="c2-ic">
+                  <IcStar />
+                </span>
+                {hol}
+              </div>
+            )}
+            {allDay.map((e) => (
+              <button key={e.id} className="c2-chip" style={{ background: `${e.color}2e`, color: `color-mix(in srgb, ${e.color} 55%, #000)` }} onClick={() => onOpen(e, sel)}>
+                <span className="c2-ic" style={{ background: e.color }} />
+                {e.title}
+              </button>
+            ))}
+          </div>
         </div>
       )}
-      <div className="cal-tg" ref={ref}>
-        <div className="cal-tg-in" style={{ height: 24 * HOUR }}>
+      <div className="c2-tl" ref={ref}>
+        <div className="c2-tl-in" style={{ height: 24 * HOUR + 100 }}>
           {Array.from({ length: 24 }, (_, h) => (
-            <div key={h} className="cal-hl" style={{ top: h * HOUR }}>
-              {h > 0 && <span>{fmtHour(h)}</span>}
+            <div key={h} className="c2-hl" style={{ top: h * HOUR + 12 }}>
+              <HourLabel h={h} />
+              <i />
             </div>
           ))}
-          <div className="cal-cols" style={{ gridTemplateColumns: `repeat(${days.length}, 1fr)` }}>
-            {days.map((k) => {
-              const items = events
-                .filter((e) => !e.allDay && onDay(e, k))
-                .map((e) => {
-                  const s = e.startDate < k ? 0 : toMin(e.startTime)
-                  let en = e.endDate > k ? 1440 : toMin(e.endTime)
-                  if (en <= s) en = s + 30
-                  return { e, s, en }
-                })
-                .sort((a, b) => a.s - b.s)
-              return (
-                <div key={k} className="cal-col">
-                  {layout(items).map(({ e, s, en, lane, lanes }) => (
-                    <button
-                      key={e.id}
-                      className="cal-evb"
-                      onClick={() => onOpen(e, k)}
-                      style={{
-                        top: (s / 60) * HOUR,
-                        height: Math.max(((en - s) / 60) * HOUR - 1, 20),
-                        left: `${(lane / lanes) * 100}%`,
-                        width: `${100 / lanes}%`,
-                        background: `${e.color}26`,
-                        borderColor: e.color,
-                        color: e.color,
-                      }}
-                    >
-                      <b>{e.title}</b>
-                      {en - s >= 45 && <span>{fmtTime(e.startTime)}</span>}
-                    </button>
-                  ))}
-                  {k === todayKey && <i className="cal-now" style={{ top: nowTop }} />}
-                </div>
-              )
-            })}
+          <div className="c2-evs" style={{ top: 12 }}>
+            {layout(items).map(({ e, s, en, lane, lanes }) => (
+              <button
+                key={e.id}
+                className="c2-evb"
+                onClick={() => onOpen(e, sel)}
+                style={{
+                  top: (s / 60) * HOUR,
+                  height: Math.max(((en - s) / 60) * HOUR - 1, 22),
+                  left: `${(lane / lanes) * 100}%`,
+                  width: `${100 / lanes}%`,
+                  background: `${e.color}2e`,
+                  borderColor: e.color,
+                  color: `color-mix(in srgb, ${e.color} 55%, #000)`,
+                }}
+              >
+                <b>{e.title}</b>
+                {en - s >= 45 && <span>{fmtTime(e.startTime)}</span>}
+              </button>
+            ))}
+            {sel === todayKey && <i className="c2-now" style={{ top: nowTop }} />}
           </div>
         </div>
       </div>
     </>
   )
 }
+
 
 /* ───────── 검색 ───────── */
 function Search({ events, todayKey, onClose, onOpen }) {
@@ -424,14 +571,15 @@ export default function Calendar() {
   const events = Array.isArray(state.calEvents) ? state.calEvents : []
   const todayKey = keyOf(new Date())
 
-  const [view, setView] = useState('month')
+  const [view, setView] = useState('month') // year | month | day | list
   const [sel, setSel] = useState(todayKey)
   const [dir, setDir] = useState(1)
   const [detail, setDetail] = useState(null)
   const [edit, setEdit] = useState(null) // { id } — id가 null이면 새 일정
   const [searching, setSearching] = useState(false)
   const [confirmDel, setConfirmDel] = useState(null)
-  const touchX = useRef(null)
+  const drag = useRef(null)
+  const swiped = useRef(false)
 
   const cur = parseKey(sel)
   const Y = cur.getFullYear()
@@ -441,16 +589,16 @@ export default function Calendar() {
     setDir(k >= sel ? 1 : -1)
     setSel(k)
   }
+  const clampDate = (y, m, day) => new Date(y, m, Math.min(day, new Date(y, m + 1, 0).getDate()))
   const move = (n) => {
     const d = parseKey(sel)
-    if (view === 'month') {
-      const day = d.getDate()
-      d.setDate(1)
-      d.setMonth(d.getMonth() + n)
-      d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()))
-    } else d.setDate(d.getDate() + n * (view === 'week' ? 7 : 1))
+    let next
+    if (view === 'year') next = clampDate(d.getFullYear() + n, d.getMonth(), d.getDate())
+    else if (view === 'month') next = clampDate(d.getFullYear(), d.getMonth() + n, d.getDate())
+    else if (view === 'day') next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n)
+    else return
     setDir(n)
-    setSel(keyOf(d))
+    setSel(keyOf(next))
   }
   const openEv = (e, k) => {
     if (k) setSel(k)
@@ -474,6 +622,35 @@ export default function Calendar() {
     setDetail(null)
   }
 
+  // 좌우로 밀어 넘기기 (터치·마우스 공용). 넘긴 직후에 발생하는 클릭은 무시
+  const swipe = {
+    onPointerDown: (e) => {
+      drag.current = { x: e.clientX, y: e.clientY }
+      swiped.current = false
+    },
+    onPointerUp: (e) => {
+      const d = drag.current
+      drag.current = null
+      if (!d) return
+      const dx = e.clientX - d.x
+      const dy = e.clientY - d.y
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        swiped.current = true
+        move(dx < 0 ? 1 : -1)
+      }
+    },
+    onPointerCancel: () => {
+      drag.current = null
+    },
+    onClickCapture: (e) => {
+      if (swiped.current) {
+        e.stopPropagation()
+        e.preventDefault()
+        swiped.current = false
+      }
+    },
+  }
+
   const ev = detail ? events.find((e) => e.id === detail) : null
   const editInit = edit ? (edit.id ? events.find((e) => e.id === edit.id) : blank()) : null
 
@@ -483,32 +660,31 @@ export default function Calendar() {
   } else if (ev) {
     body = <Detail ev={ev} backLabel={`${M + 1}월`} onBack={() => setDetail(null)} onEdit={() => setEdit({ id: ev.id })} onDelete={setConfirmDel} />
   } else {
-    // 달력 계산
-    const first = new Date(Y, M, 1).getDay()
-    const dim = new Date(Y, M + 1, 0).getDate()
-    const weeks = Math.ceil((first + dim) / 7)
-    const cells = Array.from({ length: weeks * 7 }, (_, i) => keyOf(new Date(Y, M, 1 - first + i)))
-    const weekStart = addDays(sel, -cur.getDay())
-    const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
-    const selEvs = dayEvents(events, sel)
     const upcoming = events
       .filter((e) => e.endDate >= todayKey)
       .map((e) => ({ k: e.startDate > todayKey ? e.startDate : todayKey, e }))
       .sort((a, b) => a.k.localeCompare(b.k) || evMin(a.e, a.k) - evMin(b.e, b.k))
-
-    const title =
-      view === 'month' ? `${M + 1}월` : view === 'week' ? `${M + 1}월` : view === 'day' ? `${M + 1}월 ${cur.getDate()}일` : '예정된 일정'
-    const sub = view === 'day' ? `${DAYS[cur.getDay()]}요일` : ''
+    const backLabel = view === 'month' ? `${Y}년` : `${M + 1}월`
+    const goBack = () => setView(view === 'month' ? 'year' : 'month')
+    const toggleLayout = () => setView(view === 'month' ? 'day' : 'month')
 
     body = (
-      <div className="page cal">
-        <div className="nav">
-          {view === 'month' || view === 'list' ? (
-            <span className="red-txt">{Y}년</span>
+      <div className="page cal c2">
+        <div className="c2-top">
+          {view === 'year' ? (
+            <span />
           ) : (
-            <Back onClick={() => setView('month')}>{M + 1}월</Back>
+            <button className="c2-pill c2-back" onClick={goBack}>
+              <IcChev />
+              {backLabel}
+            </button>
           )}
-          <div className="cal-nav-r">
+          <div className="c2-pill c2-tools">
+            {(view === 'month' || view === 'day') && (
+              <button onClick={toggleLayout} aria-label="보기 전환">
+                {view === 'month' ? <IcStack /> : <IcDayList />}
+              </button>
+            )}
             <button onClick={() => setSearching(true)} aria-label="검색">
               <IcSearch />
             </button>
@@ -517,87 +693,59 @@ export default function Calendar() {
             </button>
           </div>
         </div>
-        <div className="cal-title-row">
-          <div className="large-title">
-            {title}
-            {sub && <small>{sub}</small>}
-          </div>
-          {view !== 'list' && (
-            <div className="cal-arrows">
-              <button onClick={() => move(-1)} aria-label="이전">
-                ‹
-              </button>
-              <button onClick={() => move(1)} aria-label="다음">
-                ›
-              </button>
+
+        <div className="c2-body" {...swipe}>
+          {view === 'year' && (
+            <div key={`y${Y}`} className={`c2-pane ${dir > 0 ? 'in-n' : 'in-p'}`}>
+              <div className="c2-ytitle">{Y}년</div>
+              <YearView
+                Y={Y}
+                todayKey={todayKey}
+                onPickMonth={(m) => {
+                  setSel(keyOf(todayKey.startsWith(`${Y}-${pad(m + 1)}-`) ? new Date() : new Date(Y, m, 1)))
+                  setView('month')
+                }}
+              />
+            </div>
+          )}
+          {view === 'month' && (
+            <div key={`m${Y}-${M}`} className={`c2-pane ${dir > 0 ? 'in-n' : 'in-p'}`}>
+              <div className="c2-mtitle">{M + 1}월</div>
+              <MonthView
+                Y={Y}
+                M={M}
+                events={events}
+                todayKey={todayKey}
+                onPick={(k) => {
+                  setSel(k)
+                  setView('day')
+                }}
+              />
+            </div>
+          )}
+          {view === 'day' && <DayView sel={sel} events={events} todayKey={todayKey} onOpen={openEv} onPick={pick} />}
+          {view === 'list' && (
+            <div className="c2-pane">
+              <div className="c2-mtitle">예정된 일정</div>
+              <div className="scroll">
+                <Groups items={upcoming} onOpen={openEv} empty="예정된 일정 없음" todayKey={todayKey} />
+              </div>
             </div>
           )}
         </div>
-        <div className="seg">
-          {VIEWS.map(([v, l]) => (
-            <button key={v} className={view === v ? 'on' : ''} onClick={() => setView(v)}>
-              {l}
+
+        <div className="c2-bottom">
+          <button className="c2-pill c2-today" onClick={() => pick(todayKey)}>
+            오늘
+          </button>
+          <div className="c2-pill c2-tools">
+            <button className={view !== 'list' ? 'on' : ''} onClick={() => setView('month')} aria-label="캘린더">
+              <IcCal />
             </button>
-          ))}
-        </div>
-
-        {view === 'month' && (
-          <>
-            <div className="cal-week">
-              {DAYS.map((d, i) => (
-                <span key={d} style={{ color: i === 0 ? '#ff3b30' : undefined }}>
-                  {d}
-                </span>
-              ))}
-            </div>
-            <div
-              className="cal-mgrid"
-              onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
-              onTouchEnd={(e) => {
-                if (touchX.current == null) return
-                const dx = e.changedTouches[0].clientX - touchX.current
-                touchX.current = null
-                if (Math.abs(dx) > 60) move(dx < 0 ? 1 : -1)
-              }}
-            >
-              <div key={`${Y}-${M}`} className={`cal-grid ${dir > 0 ? 'cal-slide-n' : 'cal-slide-p'}`}>
-                {cells.map((k, i) => {
-                  const d = parseKey(k)
-                  const out = d.getMonth() !== M
-                  const colors = [...new Set(events.filter((e) => onDay(e, k)).map((e) => e.color))].slice(0, 3)
-                  return (
-                    <button key={k} onClick={() => pick(k)} className={k === sel ? 'sel' : ''}>
-                      <span className={`cal-n ${k === todayKey ? 'today' : ''} ${i % 7 === 0 ? 'sun' : ''} ${out ? 'out' : ''}`}>{d.getDate()}</span>
-                      <span className="cal-dots">
-                        {colors.map((c) => (
-                          <i key={c} style={{ background: c }} />
-                        ))}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-            <div className="cal-list-h">{fmtDate(sel)}</div>
-            <div className="scroll">
-              {selEvs.length === 0 && <div className="empty">일정 없음</div>}
-              {selEvs.map((e) => (
-                <EvRow key={e.id} e={e} k={sel} onOpen={openEv} />
-              ))}
-            </div>
-          </>
-        )}
-
-        {view === 'week' && <TimeGrid key="week" days={weekDays} events={events} todayKey={todayKey} selKey={sel} onOpen={openEv} onPickDay={(k) => { pick(k); setView('day') }} />}
-        {view === 'day' && <TimeGrid key={`day-${sel}`} days={[sel]} events={events} todayKey={todayKey} selKey={sel} onOpen={openEv} onPickDay={pick} />}
-        {view === 'list' && (
-          <div className="scroll">
-            <Groups items={upcoming} onOpen={openEv} empty="예정된 일정 없음" todayKey={todayKey} />
+            <button className={view === 'list' ? 'on' : ''} onClick={() => setView('list')} aria-label="예정된 일정">
+              <IcInbox />
+            </button>
           </div>
-        )}
-
-        <div className="cal-bar">
-          <button onClick={() => pick(todayKey)}>오늘</button>
         </div>
       </div>
     )
