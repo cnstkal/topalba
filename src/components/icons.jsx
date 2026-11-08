@@ -3,7 +3,7 @@ import { DAYS } from '../utils'
 const EXTRA_APPS = {
   reminders: { label: '미리알림', bg: '#fff' },
   moabank: { label: '토스', bg: '#0064FF' },
-  dating: { label: '결', bg: 'linear-gradient(150deg,#2b2a4c,#6a4cff 70%,#ff7a59)' },
+  dating: { label: '결', bg: 'linear-gradient(155deg,#ff9a7b 0%,#e8548f 48%,#6a4cff 100%)' },
   netflix: { label: 'NETFLIX', bg: '#000' },
   kakao: { label: '카카오톡', bg: '#fee500' },
   twitter: { label: 'X', bg: '#000' },
@@ -36,8 +36,13 @@ const EXTRA_GLYPHS = {
   ),
   dating: (
     <svg viewBox="0 0 60 60" width="60" height="60">
-      <path d="M12 38c6-14 14-14 18-4 4-10 12-10 18 4" fill="none" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" />
-      <path d="M12 46c6-14 14-14 18-4 4-10 12-10 18 4" fill="none" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" opacity=".45" />
+      <defs>
+        <clipPath id="gyA"><circle cx="23.500" cy="30" r="14.500" /></clipPath>
+        <linearGradient id="gyL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffb199" /><stop offset="1" stopColor="#ff5e8a" /></linearGradient>
+      </defs>
+      <circle cx="23.500" cy="30" r="14.500" fill="#fff" opacity=".95" />
+      <circle cx="36.500" cy="30" r="14.500" fill="#fff" opacity=".38" />
+      <circle cx="36.500" cy="30" r="14.500" fill="url(#gyL)" clipPath="url(#gyA)" />
     </svg>
   ),
   netflix: (
@@ -75,7 +80,7 @@ export const APPS = {
   settings: { label: '설정', bg: 'linear-gradient(#c7c7cc,#8e8e93)' },
   clock: { label: '시계', bg: '#000' },
   music: { label: '음악', bg: 'linear-gradient(#ff6b81,#fa233b)' },
-  appstore: { label: 'App Store', bg: 'linear-gradient(#3fb9fc,#1578f5)' },
+  appstore: { label: 'App Store', bg: 'linear-gradient(180deg,#1ccbfc 0%,#1a6ff0 100%)' },
   weather: { label: '날씨', bg: 'linear-gradient(#58b8ff,#2874e8)' },
   someone: { label: '썸원', bg: 'linear-gradient(#ff9aab,#f35b82)' },
   ...EXTRA_APPS,
@@ -169,7 +174,11 @@ export function Glyph({ id }) {
     case 'appstore':
       return (
         <svg viewBox="0 0 60 60" width="60" height="60">
-          <path d="M30 14l-3 5M30 14l3 5M22 40l12-22M38 40L26 18M19 33h22" {...S} strokeWidth="3.400" transform="translate(0 2)" />
+          <g fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 44L33.500 16.500" strokeWidth="4.200" />
+            <path d="M41 44L26.500 16.500" strokeWidth="4.200" />
+            <path d="M15.500 36.500H44.500" strokeWidth="4.200" />
+          </g>
         </svg>
       )
     default:
