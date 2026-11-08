@@ -1702,3 +1702,21 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .bt-info { flex: none; width: 24px; height: 24px; border: 1.6px solid #007aff; border-radius: 50%; color: #007aff; font: italic 600 15px/21px serif; text-align: center; }
 .bt-spin { width: 18px; height: 18px; border: 2.2px solid #c7c7cc; border-top-color: #8e8e93; border-radius: 50%; animation: btSpin 1s linear infinite; }
 @keyframes btSpin { to { transform: rotate(360deg); } }
+
+.ring2 { background: radial-gradient(120% 70% at 50% 0%, #565c63 0%, #4a4e54 45%, #3f4247 100%); color: #fff; justify-content: flex-start; padding: 0; align-items: stretch; }
+.ring2-wave { position: absolute; top: 62px; left: 22px; color: rgba(255,255,255,.4); }
+.ring2-info { position: absolute; top: 60px; right: 20px; color: #fff; }
+.ring2-top { margin-top: 118px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.ring2-sub { font-size: 20px; color: rgba(255,255,255,.55); }
+.ring2-name { font-size: 40px; font-weight: 400; letter-spacing: -.5px; color: rgba(255,255,255,.88); }
+.ring2-bottom { margin-top: auto; padding: 0 28px 76px; display: flex; flex-direction: column; gap: 30px; }
+.ring2-opts, .ring2-main { display: flex; justify-content: space-between; }
+.ring2-opts { padding: 0 6px; }
+.ring2-opt, .ring2-call { display: flex; flex-direction: column; align-items: center; gap: 10px; color: #fff; font-size: 16px; background: none; border: 0; }
+.ring2-opt { width: 130px; }
+.ring2-opt i { width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.22); }
+.ring2-call { width: 110px; }
+.ring2-call i { width: 100px; height: 100px; border-radius: 50%; display: grid; place-items: center; }
+.ring2-call i.red { background: #ee5444; }
+.ring2-call i.green { background: #62cd66; }
+.ring2-call:active i, .ring2-opt:active i { filter: brightness(.88); }

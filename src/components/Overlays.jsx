@@ -99,29 +99,35 @@ export function IncomingCall() {
   const r = state.ringing
   if (!r) return null
   const c = CHARACTERS[r.from]
+  const reject = () => actions.answer(false)
   return (
-    <div className="ring">
-      <div className="ring-top">
-        <Avatar id={r.from} size={84} />
-        <div className="ring-name">{c.name}</div>
-        <div className="ring-sub">휴대전화</div>
+    <div className="ring ring2">
+      <svg className="ring2-wave" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 11v4M7 7v12M11 4v18M15 9v8" /><circle cx="20" cy="18" r="3.6" fill="currentColor" stroke="none" /></svg>
+      <svg className="ring2-info" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="15" cy="15" r="12" /><path d="M15 14v7" /><circle cx="15" cy="9.5" r=".9" fill="currentColor" /></svg>
+      <div className="ring2-top">
+        <div className="ring2-sub">휴대전화</div>
+        <div className="ring2-name">{c.name}</div>
       </div>
-      <div className="ring-actions">
-        <div>
-          <button className="ring-btn red" onClick={() => actions.answer(false)}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" style={{ transform: 'rotate(135deg)' }}>
-              <path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.37 2.300.57 3.600.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.2 2.450.57 3.570a1 1 0 0 1-.25 1z" />
-            </svg>
+      <div className="ring2-bottom">
+        <div className="ring2-opts">
+          <button className="ring2-opt" onClick={reject}>
+            <i><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.300 1.200 4.300 3.200 5.800L4.500 21l4.400-2.200c1 .2 2 .3 3.100.3 5.500 0 10-3.600 10-8S17.500 3 12 3z" /></svg></i>
+            <span>메시지 보내기</span>
           </button>
-          <span>거절</span>
+          <button className="ring2-opt" onClick={reject}>
+            <i><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="13" r="7.500" /><path d="M12 9v4l2.500 1.500M3.500 6.500L6.500 4M20.500 6.500L17.500 4" /></svg></i>
+            <span>나중에 보기</span>
+          </button>
         </div>
-        <div>
-          <button className="ring-btn green" onClick={() => actions.answer(true)}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff">
-              <path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.37 2.300.57 3.600.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.2 2.450.57 3.570a1 1 0 0 1-.25 1z" />
-            </svg>
+        <div className="ring2-main">
+          <button className="ring2-call" onClick={reject}>
+            <i className="red"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff" style={{ transform: 'rotate(135deg)' }}><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.37 2.300.57 3.600.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.2 2.450.57 3.570a1 1 0 0 1-.25 1z" /></svg></i>
+            <span>거절</span>
           </button>
-          <span>수락</span>
+          <button className="ring2-call" onClick={() => actions.answer(true)}>
+            <i className="green"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff"><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.25c1.100.37 2.300.57 3.600.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.2 2.450.57 3.570a1 1 0 0 1-.25 1z" /></svg></i>
+            <span>응답</span>
+          </button>
         </div>
       </div>
     </div>
