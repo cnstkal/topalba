@@ -117,13 +117,6 @@ export function Glyph({ id }) {
           <circle cx="39.5" cy="20.5" r="2" fill="#fff" />
         </svg>
       )
-    case 'mail':
-      return (
-        <svg viewBox="0 0 60 60" width="60" height="60">
-          <rect x="12" y="17" width="36" height="26" rx="4" fill="#fff" />
-          <path d="M13 20l17 13 17-13" fill="none" stroke="#2a7ff0" strokeWidth="2.6" strokeLinejoin="round" />
-        </svg>
-      )
     case 'photos':
       return (
         <svg viewBox="0 0 60 60" width="60" height="60">
