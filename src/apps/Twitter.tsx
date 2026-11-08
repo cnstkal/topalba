@@ -35,17 +35,17 @@ const Me = ({ s = 32, onClick }) => <button className="me" onClick={onClick}><Av
 
 /* 데이터 */
 const TL = [
-  { name: '퇴근하고싶다', h: 'afterwork_02', t: '12분', text: '오늘 퇴근길에 붕어빵 사먹음 겨울 다 왔다', c: '#b58b72', rts: 2, lk: 31, vw: 0 },
-  { name: '김밥한줄', h: 'gimbap_day', t: '1시간', text: '점심 뭐 먹지 매일 고민하는 것도 일이다', c: '#8b9b78', rts: 1, lk: 18, vw: 0 },
-  { name: '무채색', h: 'gray_mood7', t: '3시간', text: '주말에 아무것도 안 하고 누워있고 싶어', c: '#7d8797', rts: 3, lk: 42, vw: 0 },
-  { name: '홍중아카이브', h: 'hj_archive98', t: '5시간', text: '오늘도 무대 위 홍중 너무 좋다… 사진 정리하다가 또 멈춤', c: '#9b7d9f', rts: 20, lk: 186, vw: 0, media: 1 },
-  { name: '밤의친구', h: 'night_friend_', t: '어제', text: '#게친소\n편하게 일상 얘기하고 가끔 만날 친구 구해요\n서울 / 성인 / 공개계', c: '#607d86', rts: 4, lk: 29, vw: 0 },
+  { name: '현준', h: '1645612', t: '12분', text: '이제 슬슬 붕어빵 나오네', c: '#b58b72', rts: 0, lk: 5, vw: 78 },
+  { name: 'q', h: 'fptmxkdl', t: '1시간', text: '점메추좀', c: '#8b9b78', rp: 4, rts: 0, lk: 2, vw: 140 },
+  { name: '쫑', h: 'jjong_444', t: '3시간', text: '지금 번개할 사람? 신림쪽인데', c: '#7d8797', rp: 8, rts: 4, lk: 48, vw: 402 },
+  { name: 'miri', h: 'myluvno1_', t: '5시간', text: '아그만해아진짜반해버리기전에그만하라고', c: '#9b7d9f', rts: 204, lk: 583, vw: 3052, media: 1 },
+  { name: '듀댕이', h: 'duuuuuuuuu_y', t: '어제', text: '#게친소\n솔크 싫어', c: '#607d86', rts: 9, lk: 20, vw: 329 },
 ]
 const PROF = [
-  { text: '', t: '2025. 3. 2.', vw: 0, rts: 20, lk: 812, media: 1 },
-  { text: '요즘 날씨 좋네', t: '2025. 2. 14.', vw: 0, rts: 18, lk: 786 },
-  { text: '', t: '2024. 12. 21.', vw: 0, rts: 23, lk: 841, media: 1 },
-  { text: 'ㅎㅎ', t: '2024. 8. 9.', vw: 0, rts: 16, lk: 768 },
+  { text: '#ㄱㅊㅅ', t: '2025. 3. 2.', rp: 4, rts: 205, lk: 1057, vw: 5032, media: 1 },
+  { text: '', t: '2025. 2. 14.', rp: 29, rts: 504, lk: 2361, vw: 7801, media: 1 },
+  { text: '날씨 좋네', t: '2024. 12. 21.', rp: 12, rts: 6, lk: 273, vw: 2021 },
+  { text: '', t: '2024. 8. 9.', rp: 4, rts: 718, lk: 3047, vw: 9862, media: 1 },
 ]
 const DM = [
   ['모르는사람', '방금', '안녕하세요 친해지고 싶어요', '#9a5a5a'],
@@ -71,7 +71,7 @@ const CHAT = [
 ]
 
 const Act = ({ r, l, v, rp, bm = 1 }) => (
-  <div className="act"><span><Ic n="reply" s={19} />{rp || ''}</span><span className={r === 0 ? 'dim' : ''}><Ic n="rt" s={19} />{r}</span><span><Ic n="heart" s={19} />{l}</span><span><Ic n="views" s={19} />{v}</span>{bm && <Ic n="mark" s={19} />}<Ic n="share" s={19} /></div>
+  <div className="act"><span><Ic n="reply" s={19} />{rp || ''}</span><span className={r === 0 ? 'dim' : ''}><Ic n="rt" s={19} />{r || ''}</span><span><Ic n="heart" s={19} />{l || ''}</span><span><Ic n="views" s={19} />{v || ''}</span>{bm && <Ic n="mark" s={19} />}<Ic n="share" s={19} /></div>
 )
 
 export default function Twitter() {
@@ -105,13 +105,13 @@ export default function Twitter() {
         <h1>ㅅㅎ</h1><p className="hd">@cnsjbqH72w</p>
         <p className="ml"><span><Ic n="bag" s={18} />기업가</span></p>
         <p className="ml"><span><Ic n="cal" s={18} />2023년 7월에 가입함 <Ic n="right" s={14} /></span></p>
-        <p className="fw"><b>12</b> 팔로잉 <b>790</b> 팔로워</p>
+        <p className="fw"><b>12</b> 팔로잉 <b>1972</b> 팔로워</p>
         <div className="pb"><span>프로필 공유</span><span>프로필 수정</span></div>
         <div className="pt"><span className="on"><Ic n="post" s={22} /> 게시물 <Ic n="down" s={14} /></span><Ic n="reply" s={22} /><Ic n="rt" s={22} /><Ic n="media" s={22} /></div>
         {PROF.map((p, i) => (
           <div key={i} className="tw"><div className="lc"><Av corgi s={48} />{p.thread && <u />}</div>
             <div className="m"><p className="n"><b>ㅅㅎ</b> <span>@cnsjbqH72w · {p.t}</span><em><X s={20} /></em></p>{p.text && <p className="x"><TweetText text={p.text} /></p>}{p.media && <div className="med"><i /></div>}
-              <Act r={p.rts} l={p.lk} v="" rp="" /></div></div>
+              <Act r={p.rts} l={p.lk} v={p.vw} rp={p.rp} /></div></div>
         ))}
         <button className="fab"><Ic n="plus" s={30} w={2.2} /></button>
       </div>
@@ -147,7 +147,7 @@ export default function Twitter() {
                 {t.text && <p className="x"><TweetText text={t.text} /></p>}
                 {t.media && <div className="med"><i /></div>}
                 {t.q && <div className="qt"><p><Av def s={20} /> <b>{t.q.name}</b> <span>@{t.q.h} · {t.q.t}</span></p><p className="x"><TweetText text={t.q.text} /></p></div>}
-                <Act r={t.rts} l={t.lk} v={t.vw || ''} />
+                <Act r={t.rts} l={t.lk} v={t.vw} rp={t.rp} />
               </div></div>
           ))}
         </div>
