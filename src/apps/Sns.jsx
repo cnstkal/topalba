@@ -225,13 +225,14 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
 }
 
 // 게시물 카드 (피드 / 상세 화면 공용)
-function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) {
+function PostCard({ post, state, actions, onUser, onComment, onMore, onShare, detail }) {
   const liked = !!state.liked[post.id]
   const saved = !!state.saved[post.id]
   const [pop, setPop] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [pi, setPi] = useState(0)
   const imgs = post.photos || [post.photo]
+  const likers = [...new Set([...post.comments.map((c) => c.user), ...Object.keys(SNS_ACCOUNTS)])].filter((id) => id !== post.user).slice(0, 3)
   const timer = useRef(null)
   useEffect(() => () => clearTimeout(timer.current), [])
 
@@ -246,7 +247,7 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
   const longCaption = post.text.length > 26
 
   return (
-    <article className="post">
+    <article className={`post ${detail ? 'detail' : ''}`}>
       <div className="post-head">
         <button className="post-user" onClick={() => onUser(post.user)}>
           <AccountAvatar id={post.user} size={32} />
@@ -306,6 +307,14 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare }) 
           <Ico d={BOOKMARK} fill={saved ? '#000' : 'none'} size={26} />
         </button>
       </div>
+      {detail && (
+        <div className="post-liked">
+          <span className="pl-av">
+            {likers.map((id) => <AccountAvatar key={id} id={id} size={26} />)}
+          </span>
+          <span><b>{likers[0]}</b>님 외 <b>여러 명</b>이 좋아합니다</span>
+        </div>
+      )}
       <div className={`post-cap ${longCaption && !expanded ? 'clip' : ''}`}>
         <b>{post.user}</b> {post.text}
       </div>
@@ -748,13 +757,14 @@ export default function Sns({ params }) {
       {/* 게시물 상세 */}
       {postId && postOf(postId) && (
         <div className="sns-overlay">
-          <div className="sns-top">
+          <div className="sns-top det">
             <Back onClick={() => setPostId(null)} />
-            <b>게시물</b>
+            <div className="det-t"><b>게시물</b><span>{postOf(postId).user}</span></div>
             <span />
           </div>
           <div className="scroll">
             <PostCard
+              detail
               post={postOf(postId)}
               {...cardProps}
               onComment={() => setSheet({ kind: 'comments', id: postId })}

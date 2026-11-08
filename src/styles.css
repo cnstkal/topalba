@@ -1646,3 +1646,25 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .post-dots { display: flex; justify-content: center; gap: 5px; padding: 10px 0 0; }
 .post-dots i { width: 6px; height: 6px; border-radius: 50%; background: #c7c7cc; }
 .post-dots i.on { background: #3b5bfd; }
+
+/* 게시물 자세히 보기 */
+.sns-top.det { height: 60px; border-bottom: none; }
+.det-t { display: flex; flex-direction: column; align-items: center; line-height: 1.25; }
+.det-t b { font-size: 19px; font-weight: 700; }
+.det-t span { font-size: 14px; color: #262626; }
+.post.detail .post-head { padding: 10px 14px; }
+.post.detail .post-user { gap: 12px; }
+.post.detail .post-user .sns-av { width: 44px !important; height: 44px !important; }
+.post.detail .post-meta b { font-size: 17px; font-weight: 700; }
+.post.detail .post-meta i { font-size: 14px; }
+.post.detail .post-dots { padding: 12px 0 2px; }
+.post.detail .post-actions { padding: 12px 14px 4px; gap: 18px; }
+.post.detail .act span { font-size: 17px; font-weight: 600; }
+.post.detail .act svg, .post.detail .ic-btn svg { width: 29px; height: 29px; }
+.post-liked { display: flex; align-items: center; gap: 8px; padding: 8px 14px 0; font-size: 15px; }
+.post-liked b { font-weight: 700; }
+.pl-av { display: flex; }
+.pl-av .sns-av { border: 2px solid #fff; margin-left: -8px; }
+.pl-av .sns-av:first-child { margin-left: 0; }
+.post.detail .post-cap { padding: 6px 14px 0; font-size: 16px; }
+.post.detail .post-time { padding: 8px 14px 0; font-size: 14px; }
