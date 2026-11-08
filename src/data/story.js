@@ -381,6 +381,21 @@ export const SNS_STORIES = {
   ],
 }
 
+// ════════════════════════════════════════════════════════════
+// ★★★ [스토리 댓글] 데이터 — 요청한 내용만 여기에 추가 ★★★
+// 키 = 스토리 주인 계정 아이디 (예: cafe_seoul_log, _starhwa_)
+// ════════════════════════════════════════════════════════════
+// ① 댓글 시트에 보이는 댓글 목록 (@멘션은 파란색으로 표시됨)
+//   예) cafe_seoul_log: [{ user: 'coffee_day', text: '@hello_star 같이 가요!' }],
+export const STORY_COMMENTS = {
+}
+
+// ② 스토리 화면 왼쪽 아래에 떠 있는 "내 답장" 말풍선 (내 프로필 사진 + 말풍선)
+//   예) cafe_seoul_log: '우왕',
+export const STORY_MY_REPLY = {
+}
+// ════════════════════════════════════════════════════════════
+
 // 본인 프로필 하이라이트
 export const SNS_HIGHLIGHTS = [
   { id: 'hl2', title: 'Bob', photo: '/images/instagram/My/Bob/IMG_1514.jpeg', items: [{ photo: '/images/instagram/My/Bob/IMG_1514.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/13E4739C-530C-4EFD-AD1D-60ABD56E2B1A.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/86AF75B4-3C23-4238-B53A-513C36E033A9.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/D9723346-730D-4C2E-9C65-00B48688ED37.jpeg', text: '' }, { photo: '/images/instagram/My/Bob/F94BB374-E39B-4BB4-B9FE-50AAA3BAC4EC.jpeg', text: '' }] },

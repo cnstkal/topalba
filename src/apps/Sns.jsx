@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../engine/store'
 import { THREAD_META } from '../data/characters'
-import { SNS_ACCOUNTS, SNS_STORIES, SNS_HIGHLIGHTS, EXPLORE_TAGS } from '../data/story'
+import { SNS_ACCOUNTS, SNS_STORIES, SNS_HIGHLIGHTS, EXPLORE_TAGS, STORY_COMMENTS, STORY_MY_REPLY } from '../data/story'
 import { Avatar } from '../components/Overlays'
 import Thread from '../components/Thread'
 import { fmtTime } from '../utils'
@@ -117,8 +117,11 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
   const [reply, setReply] = useState('')
   const [liked, setLiked] = useState(false)
   const [floats, setFloats] = useState([])
+  const [cmOpen, setCmOpen] = useState(false) // 스토리 댓글 시트
   const n = slides.length
-  const paused = hold || focus
+  const paused = hold || focus || cmOpen
+  const cmList = STORY_COMMENTS[owner] || []
+  const myReply = STORY_MY_REPLY[owner]
 
   const next = () => (idx < n - 1 ? setIdx(idx + 1) : (onDone || onClose)())
   const prev = () => idx > 0 && setIdx(idx - 1)
@@ -216,10 +219,47 @@ function StoryViewer({ title, owner, when, slides, onClose, onDone, onToast }) {
         >
           <Ico d={HEART} fill={liked ? '#ff3040' : 'none'} stroke={liked ? '#ff3040' : '#fff'} size={28} />
         </button>
+        {/* ★ [스토리 댓글] 댓글 버튼 */}
+        <button className="story-like" onClick={() => setCmOpen(true)} aria-label="댓글">
+          <Ico d={BUBBLE} stroke="#fff" size={28} />
+        </button>
         <button className="story-like" onClick={() => onToast(`${title}님에게 공유했습니다`)} aria-label="공유">
           <Ico d={SEND} stroke="#fff" size={28} />
         </button>
       </div>
+
+      {/* ★ [스토리 댓글] 내 답장 말풍선 (STORY_MY_REPLY) */}
+      {myReply && (
+        <div className="story-myreply">
+          <AccountAvatar id={ME_ID} size={36} />
+          <span>{myReply}</span>
+        </div>
+      )}
+
+      {/* ★ [스토리 댓글] 댓글 시트 (STORY_COMMENTS) */}
+      {cmOpen && (
+        <div className="story-cm-wrap" onClick={() => setCmOpen(false)}>
+          <div className="story-cm" onClick={(e) => e.stopPropagation()}>
+            <div className="story-cm-grab" />
+            <div className="story-cm-list">
+              {cmList.map((c, i) => (
+                <div key={i} className="story-cm-item">
+                  <AccountAvatar id={c.user} size={44} />
+                  <div>
+                    <b>{c.user}</b>
+                    <p>{c.text.split(/(@[\w._]+)/).map((t, j) => (t.startsWith('@') ? <em key={j}>{t}</em> : t))}</p>
+                    <small>답글 달기</small>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="story-cm-in">
+              <AccountAvatar id={ME_ID} size={44} />
+              <div className="story-cm-box"><span>댓글을 달거나 친구를 @언급하세요...</span><i>GIF</i></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
