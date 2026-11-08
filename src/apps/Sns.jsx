@@ -907,7 +907,7 @@ export default function Sns({ params }) {
       )}
 
       {story && <StoryViewer key={story.key} title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} />}
-      {hl && <StoryViewer title={hl.title} owner={ME_ID} when="" slides={hl.items} onClose={() => setHl(null)} onToast={flash} />}
+      {hl && <StoryViewer title={hl.title} owner={ME_ID} when={hl.date || ""} slides={hl.items} onClose={() => setHl(null)} onToast={flash} />}
 
       {toast && <div className="sns-toast">{toast}</div>}
     </div>
