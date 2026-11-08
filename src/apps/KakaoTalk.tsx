@@ -73,26 +73,59 @@ const ROOMS: { n: string; g: number; m: [string, string][] }[] = [
 const pad = (n: number) => String(n).padStart(2, '0')
 const fmtT = (t: number) => { const d = new Date(t); const h = d.getHours(); return `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}:${pad(d.getMinutes())}` }
 const HJ_MSGS: Msg[] = [
-  { id: 8001, who: '김홍중', text: '안녕. 소개받고 연락해', t: new Date('2023-07-15T20:12:00+09:00').getTime() },
-  { id: 8002, who: 'me', text: '안녕하세요 ㅋㅋ', t: new Date('2023-07-15T20:18:00+09:00').getTime() },
-  { id: 8003, who: '김홍중', text: '생각보다 말 편하게 해도 될 것 같은데', t: new Date('2023-07-22T21:04:00+09:00').getTime() },
-  { id: 8004, who: 'me', text: '그럼 편하게 할게요 ㅋㅋ', t: new Date('2023-07-22T21:10:00+09:00').getTime() },
-  { id: 8005, who: '김홍중', text: '이번 주는 뭐 하고 지냈어?', t: new Date('2023-07-29T19:35:00+09:00').getTime() },
-  { id: 8099, who: 'gap', text: '•\n•\n•', t: new Date('2023-08-05T00:00:00+09:00').getTime() },
+  { id: 8001, who: '김홍중', text: '안녕하세요', t: new Date('2023-07-15T19:00:00+09:00').getTime() },
+  { id: 8002, who: '김홍중', text: '어플에서 보고 연락드립니다', t: new Date('2023-07-15T19:01:00+09:00').getTime() },
+  { id: 8003, who: 'me', text: '넵 지금 당장요?', t: new Date('2023-07-15T19:03:00+09:00').getTime() },
+  { id: 8004, who: '김홍중', text: '가능하면요', t: new Date('2023-07-15T19:04:00+09:00').getTime() },
+  { id: 8005, who: 'me', text: '주소 찍으세요', t: new Date('2023-07-15T19:05:00+09:00').getTime() },
+
+  { id: 8010, who: '김홍중', text: '자주 볼 것 같은데', t: new Date('2023-07-22T20:10:00+09:00').getTime() },
+  { id: 8011, who: '김홍중', text: '말 편하게 해도 돼요', t: new Date('2023-07-22T20:11:00+09:00').getTime() },
+  { id: 8012, who: 'me', text: '넵ㅋㅋ', t: new Date('2023-07-22T20:13:00+09:00').getTime() },
+
+  { id: 8020, who: '김홍중', text: '뭐해', t: new Date('2023-07-29T18:20:00+09:00').getTime() },
+  { id: 8021, who: 'me', text: '일하지', t: new Date('2023-07-29T18:21:00+09:00').getTime() },
+  { id: 8022, who: '김홍중', text: '무슨 일?', t: new Date('2023-07-29T18:22:00+09:00').getTime() },
+  { id: 8023, who: 'me', text: '쿠팡 지금 퇴근중', t: new Date('2023-07-29T18:24:00+09:00').getTime() },
+  { id: 8024, who: '김홍중', text: '멀쩡한 일도 하는구나', t: new Date('2023-07-29T18:25:00+09:00').getTime() },
+  { id: 8025, who: 'me', text: '나를 뭘로보는거야;;', t: new Date('2023-07-29T18:26:00+09:00').getTime() },
+
+  { id: 8030, who: 'date', t: new Date('2023-07-30T00:00:00+09:00').getTime() },
+  { id: 8031, who: 'gap', text: ['•', '•', '•', '•'].join('\n'), t: new Date('2023-07-30T12:00:00+09:00').getTime() },
+
   { id: 8100, who: 'me', text: '너 아이돌이었냐?', t: new Date('2025-03-12T18:21:00+09:00').getTime() },
   { id: 8101, who: '김홍중', text: '몰랐어?', t: new Date('2025-03-12T18:23:00+09:00').getTime() },
-  { id: 8102, who: 'me', text: '그쪽은 관심 없어서;;', t: new Date('2025-03-12T18:25:00+09:00').getTime() },
-  { id: 8103, who: '김홍중', text: 'ㅋㅋㅋㅋ 너무 단호한 거 아니냐', t: new Date('2025-03-12T18:27:00+09:00').getTime() },
-  { id: 8104, who: 'me', text: '몰랐으니까 물어보지', t: new Date('2025-03-12T18:30:00+09:00').getTime() },
-  { id: 8105, who: '김홍중', text: '잘 지냈어? 요즘은 뭐 하고 지내', t: new Date('2025-03-22T20:14:00+09:00').getTime() },
-  { id: 8106, who: 'me', text: '그냥 똑같지 뭐. 너는 바쁘겠네', t: new Date('2025-03-22T20:20:00+09:00').getTime() },
-  { id: 8107, who: '김홍중', text: '바쁘긴 한데 잘 지내고 있어', t: new Date('2025-04-06T17:42:00+09:00').getTime() },
-  { id: 8199, who: 'gap', text: '•\n•\n•', t: new Date('2025-04-07T00:00:00+09:00').getTime() },
-  { id: 8200, who: '김홍중', text: '오랜만이네. 잘 지냈어?', t: new Date('2026-10-18T19:32:00+09:00').getTime() },
-  { id: 8201, who: 'me', text: '그러게ㅋㅋ 너는 잘 지냈고?', t: new Date('2026-10-18T19:40:00+09:00').getTime() },
-  { id: 8202, who: '김홍중', text: '그럭저럭. 요즘은 뭐 하고 지내?', t: new Date('2026-10-25T21:08:00+09:00').getTime() },
-  { id: 8203, who: 'me', text: '그냥 학교 다니고 알바하고 그러지', t: new Date('2026-10-25T21:16:00+09:00').getTime() },
-  { id: 9005, who: '김홍중', text: '오늘 촬영 끝났어. 너 알바 끝나면 연락해', t: new Date('2026-11-08T19:30:00+09:00').getTime() },
+  { id: 8102, who: 'me', text: '어', t: new Date('2025-03-12T18:24:00+09:00').getTime() },
+  { id: 8103, who: 'me', text: '지하철 광고판에 너 있던데?', t: new Date('2025-03-12T18:25:00+09:00').getTime() },
+  { id: 8104, who: '김홍중', text: '오랜만에 연락와서 한다는 말이 그거냐', t: new Date('2025-03-12T18:27:00+09:00').getTime() },
+  { id: 8105, who: 'me', text: '그럼 무슨 말해', t: new Date('2025-03-12T18:29:00+09:00').getTime() },
+  { id: 8106, who: '김홍중', text: '밥이나 한 번 먹자', t: new Date('2025-03-12T18:31:00+09:00').getTime() },
+
+  { id: 8110, who: '김홍중', text: '바빠?', t: new Date('2025-03-22T20:14:00+09:00').getTime() },
+  { id: 8111, who: 'me', text: 'ㄴㄴ', t: new Date('2025-03-22T20:16:00+09:00').getTime() },
+  { id: 8112, who: 'me', text: '넌', t: new Date('2025-03-22T20:17:00+09:00').getTime() },
+  { id: 8113, who: '김홍중', text: '조금 바쁘네', t: new Date('2025-03-22T20:19:00+09:00').getTime() },
+  { id: 8114, who: '김홍중', text: '곧 컴백이라 그런가', t: new Date('2025-03-22T20:20:00+09:00').getTime() },
+  { id: 8115, who: 'me', text: '힘내라', t: new Date('2025-03-22T20:22:00+09:00').getTime() },
+
+  { id: 8120, who: 'date', t: new Date('2025-03-23T00:00:00+09:00').getTime() },
+  { id: 8121, who: 'gap', text: ['•', '•', '•', '•'].join('\n'), t: new Date('2025-03-23T12:00:00+09:00').getTime() },
+
+  { id: 8200, who: '김홍중', text: '잘 지내냐', t: new Date('2026-10-18T19:32:00+09:00').getTime() },
+  { id: 8201, who: 'me', text: 'ㅇㅇ', t: new Date('2026-10-18T19:40:00+09:00').getTime() },
+  { id: 8202, who: '김홍중', text: '요즘 뭐하고 살아', t: new Date('2026-10-18T19:42:00+09:00').getTime() },
+  { id: 8203, who: 'me', text: '똑같지 뭐', t: new Date('2026-10-18T19:45:00+09:00').getTime() },
+  { id: 8204, who: '김홍중', text: '밥이나 먹자', t: new Date('2026-10-18T19:47:00+09:00').getTime() },
+  { id: 8205, who: 'me', text: '엉', t: new Date('2026-10-18T19:49:00+09:00').getTime() },
+
+  { id: 9005, who: '김홍중', text: '잠깐 볼래', t: new Date('2026-11-08T20:10:00+09:00').getTime() },
+  { id: 9006, who: '김홍중', text: '스케줄 지금 끝났어', t: new Date('2026-11-08T20:11:00+09:00').getTime() },
+  { id: 9007, who: 'me', text: '어디로?', t: new Date('2026-11-08T20:13:00+09:00').getTime() },
+  { id: 9008, who: '김홍중', text: 'XX모텔로 올래?', t: new Date('2026-11-08T20:14:00+09:00').getTime() },
+  { id: 9009, who: 'me', text: '헐~', t: new Date('2026-11-08T20:15:00+09:00').getTime() },
+  { id: 9010, who: 'me', text: '대스타가 이래도 되나 ㅋㅋ', t: new Date('2026-11-08T20:16:00+09:00').getTime() },
+  { id: 9011, who: '김홍중', text: '오기싫음 말고', t: new Date('2026-11-08T20:17:00+09:00').getTime() },
+  { id: 9012, who: 'me', text: '지금 출발', t: new Date('2026-11-08T20:18:00+09:00').getTime() },
 ]
 
 const YH_MSGS = [
