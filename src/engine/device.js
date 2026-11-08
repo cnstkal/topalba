@@ -9,6 +9,8 @@ export const SONGS = [
   ['주말 오후', '가상 아티스트 D', '#fff4cc', 205],
   ['도시의 불빛', '가상 아티스트 E', '#d9f0f2', 232],
 ]
+// 앨범 커버 색상 (음악 앱 커버와 다이내믹 아일랜드 공용)
+export const COVER_PAL = [['#fa233b', '#150f10'], ['#17171a', '#fa233b'], ['#f3e9dc', '#c1121f'], ['#0b132b', '#5bc0be'], ['#ffd166', '#6a1b9a'], ['#e9e9ee', '#111114'], ['#2d6a4f', '#f1faee'], ['#ff7b54', '#2b2d42']]
 export const NETS = [['topalba-5G', true], ['Home_WiFi', true], ['Cafe_Free', false], ['Guest_2.4G', true]]
 export const BT_DEVS = ['AirPods Pro', '자동차 오디오', '무선 키보드']
 export const FOCUS = ['방해 금지', '수면', '업무', '개인 시간']

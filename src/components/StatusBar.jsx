@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { fmtStatus } from '../utils'
-import { useDevice } from '../engine/device'
+import { useDevice, SONGS, COVER_PAL } from '../engine/device'
+
+// 앨범 커버 색에서 밝기가 충분한 색만 골라 막대 색 순환에 사용
+const lum = (h) => { const n = parseInt(h.slice(1), 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255 }
+const coverColors = (i) => {
+  const c = [...COVER_PAL[i % COVER_PAL.length], SONGS[i][2]].filter((x) => lum(x) > 0.3)
+  return [c[0] || '#fa233b', c[1] || c[0] || '#5bc0be', c[2] || c[0] || '#ffd166']
+}
 
 export default function StatusBar({ onOpenCC }) {
   const d = useDevice()
@@ -47,7 +54,25 @@ export default function StatusBar({ onOpenCC }) {
           </svg>
         </span>
       </div>
-      <div className="island" />
+      {(() => {
+        const sg = d.song
+        const on = sg && sg.cur != null && sg.play && SONGS[sg.cur]
+        const [c1, c2, c3] = on ? coverColors(sg.cur) : []
+        return (
+          <div className={`island${on ? ' on' : ''}`} style={on ? { '--c1': c1, '--c2': c2, '--c3': c3 } : undefined}>
+            {on && (
+              <div className="isl-in">
+                <i className="isl-art" />
+                <span className="isl-bars">
+                  {Array.from({ length: 7 }, (_, i) => (
+                    <i key={i} style={{ animationDuration: `${0.5 + ((i * 7) % 5) * 0.13}s, 4.5s`, animationDelay: `${-i * 0.21}s, ${-i * 0.55}s` }} />
+                  ))}
+                </span>
+              </div>
+            )}
+          </div>
+        )
+      })()}
     </>
   )
 }

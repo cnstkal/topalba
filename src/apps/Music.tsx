@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { SONGS, dev, useDevice, useTick } from '../engine/device'
+import { COVER_PAL, SONGS, dev, useDevice, useTick } from '../engine/device'
 import './music.css'
 
 /* ───────── SVG 아이콘 (이모지·텍스트 기호 미사용) ───────── */
@@ -49,7 +49,7 @@ function Ic({ n, s = 24 }) {
 }
 
 /* ───────── 앨범 커버 (자체 제작 SVG, 항상 정사각형) ───────── */
-const PAL = [['#fa233b', '#150f10'], ['#17171a', '#fa233b'], ['#f3e9dc', '#c1121f'], ['#0b132b', '#5bc0be'], ['#ffd166', '#6a1b9a'], ['#e9e9ee', '#111114'], ['#2d6a4f', '#f1faee'], ['#ff7b54', '#2b2d42']]
+const PAL = COVER_PAL
 function Cover({ seed = 0, color = '#ffd1dc', label = '' }) {
   const [a, b] = PAL[seed % PAL.length]
   const c = color

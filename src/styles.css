@@ -1605,3 +1605,16 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .pd-img.pd-in-p { animation: pd-in-p .3s cubic-bezier(.22,.8,.3,1); }
 @keyframes pd-in-n { from { transform: translateX(60%); opacity: .3; } to { transform: translateX(0); opacity: 1; } }
 @keyframes pd-in-p { from { transform: translateX(-60%); opacity: .3; } to { transform: translateX(0); opacity: 1; } }
+
+/* 다이내믹 아일랜드: 음악 재생 중 확장, 앨범 커버 색으로 변하는 이퀄라이저 */
+.island { transition: width .45s cubic-bezier(.3,1.35,.5,1), margin-left .45s cubic-bezier(.3,1.35,.5,1), height .3s; }
+.island.on { width: 236px; margin-left: -118px; height: 37px; }
+.island.on::after { opacity: 0; }
+.isl-in { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 16px 0 8px; opacity: 0; animation: isl-fade .3s .22s forwards; }
+.isl-art { width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(var(--c1), var(--c2), var(--c3), var(--c1)); animation: isl-spin 7s linear infinite; box-shadow: 0 0 10px color-mix(in srgb, var(--c1) 50%, transparent); }
+.isl-bars { display: flex; align-items: center; gap: 3px; height: 24px; }
+.isl-bars i { width: 3.5px; height: 5px; border-radius: 2px; background: var(--c1); animation: isl-bar .7s ease-in-out infinite alternate, isl-col 4.5s linear infinite; }
+@keyframes isl-fade { to { opacity: 1; } }
+@keyframes isl-spin { to { transform: rotate(360deg); } }
+@keyframes isl-bar { from { height: 4px; } to { height: 22px; } }
+@keyframes isl-col { 0%, 100% { background: var(--c1); } 33% { background: var(--c2); } 66% { background: var(--c3); } }
