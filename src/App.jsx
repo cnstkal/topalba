@@ -8,7 +8,6 @@ import HomeScreen from './components/HomeScreen'
 import { LockScreen, Banner, IncomingCall, EndingScreen } from './components/Overlays'
 import Messages from './apps/Messages.tsx'
 import Sns from './apps/Sns'
-import Mail from './apps/Mail'
 import Photos from './apps/Photos'
 import Calendar from './apps/Calendar'
 import Notes from './apps/Notes'
@@ -32,7 +31,6 @@ import Stub from './apps/Stub'
 const COMPONENTS = {
   messages: Messages,
   sns: Sns,
-  mail: Mail,
   photos: Photos,
   calendar: Calendar,
   notes: Notes,
