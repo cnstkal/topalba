@@ -72,7 +72,7 @@ const Back = ({ onClick }) => (
 // 사진 로딩 실패 또는 사진 없음 → 색상 배경 + 카메라 아이콘(또는 지정된 대체 글자)
 function Photo({ photo, tint = '#e5e5ea', w = 900, h = 900, className = '', alt = '', fallback }) {
   const [failed, setFailed] = useState(false)
-  if (!photo || !PHOTOS[photo] || failed) {
+  if (!photo || (!photo.startsWith('/') && !PHOTOS[photo]) || failed) {
     return (
       <div className={`ph-fallback ${className}`} style={{ background: tint }} role="img" aria-label={alt}>
         {fallback ?? <Ico d={CAMERA} size={Math.max(20, Math.min(w, h) * 0.18)} stroke="#8e8e93" sw={1.4} />}
