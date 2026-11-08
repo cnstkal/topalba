@@ -32,7 +32,7 @@ const mkUsers = () => NICKS.map((nick, i) => ({
   id: i + 1, nick, age: nick === '럭키원' ? 29 : (nick === '검은고양이냐옹' || nick === '유유') ? 28 : 22 + (rnd(i, 1) % 20), area: pick(AREAS, i, 2), dist: +(0.4 + (rnd(i, 3) % 180) / 10).toFixed(1),
   online: rnd(i, 4) % 3 === 0, last: `${1 + (rnd(i, 5) % 23)}시간 전`, height: nick === '럭키원' ? 170 : nick === '검은고양이냐옹' ? 171 : nick === '유유' ? 186 : 168 + (rnd(i, 6) % 20), job: pick(JOBS, i, 7), position: ['럭키원', '검은고양이냐옹'].includes(nick) ? '올라운더' : nick === '유유' ? '바텀' : pick(POSITIONS, i, 8),
   goal: pick(GOALS, i, 9), tags: [pick(TAGS, i, 10), pick(TAGS, i, 11), pick(TAGS, i, 12)], bio: pick(BIOS, i, 13),
-  photos: PROFILE_POOL.length ? [PROFILE_POOL[(i * 7 + 3) % PROFILE_POOL.length]] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PHOTOS[i] ? [PHOTOS[i]] : []),
+  photos: PROFILE_POOL.length ? [PROFILE_POOL[i % PROFILE_POOL.length]] : PROFILE_PHOTOS[nick] ? [PROFILE_PHOTOS[nick]] : (PHOTOS[i] ? [PHOTOS[i]] : []),
 }))
 const mkState = () => {
   const users = mkUsers()
