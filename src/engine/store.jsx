@@ -21,41 +21,42 @@ const calKey = (d) =>
 
 // 기존 임시 일정 4건: 최초 로드 시점의 오늘을 기준으로 실제 날짜로 고정해 저장
 function seedCalEvents() {
-  const today = new Date()
-  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
-  const at = (offset) => calKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + offset))
   const base = { alert: '10', note: '' }
-
-  // 주마다 1~2회, 요일이 고정되지 않도록 불규칙하게 배치한 알바 일정
-  // 이번 주부터 12주간 생성하며 한 주에 최대 2회만 등록
-  const weeklyDays = [
-    [3, 5], [1], [2, 6], [0, 4], [1, 5], [3],
-    [0, 2], [4, 6], [1], [2, 5], [0, 3], [4],
-  ]
-  const workEvents = weeklyDays.flatMap((days, week) => days
-    .map((day, index) => {
-      const date = at(week * 7 + day)
-      return {
+  // 2026년 1월부터 2027년 1월까지 매주 불규칙하게 배치
+  // 평소에는 주 1~2회, 연말연초 성수기(12월 중순~1월 중순)는 주 2회 중심
+  const first = new Date(2026, 0, 1)
+  const last = new Date(2027, 1, 1)
+  const monday = new Date(first)
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
+  const dates = []
+  const ordinary = [[1], [0, 4], [2], [1, 5], [3], [0, 2], [4], [1, 6], [2, 5], [0], [3, 6], [1, 4]]
+  const peak = [[1, 4], [0, 3], [2, 5], [1, 6], [0, 4], [2, 5], [1, 3], [0, 6]]
+  let week = 0
+  for (let mondayDate = new Date(monday); mondayDate < last; mondayDate.setDate(mondayDate.getDate() + 7), week++) {
+    const isPeak = (mondayDate.getMonth() === 11 && mondayDate.getDate() >= 14) ||
+      (mondayDate.getMonth() === 0 && mondayDate.getDate() <= 18)
+    const days = (isPeak ? peak : ordinary)[week % (isPeak ? peak.length : ordinary.length)]
+    days.forEach((day, index) => {
+      const date = new Date(mondayDate.getFullYear(), mondayDate.getMonth(), mondayDate.getDate() + day)
+      if (date < first || date >= last) return
+      const key = calKey(date)
+      const hour = isPeak ? (index === 0 ? '13:00' : '15:00') : (index === 0 ? '14:00' : '16:00')
+      dates.push({
         ...base,
-        id: `work-${date}`,
+        id: `work-${key}`,
         title: '알바',
-        startDate: date,
-        endDate: date,
-        startTime: '14:00',
-        endTime: '21:00',
+        startDate: key,
+        endDate: key,
+        startTime: hour,
+        endTime: isPeak ? '22:00' : '21:00',
         allDay: false,
         place: '탑알바',
+        note: '',
         color: '#ff9500',
-      }
-    }))
-
-  return [
-    ...workEvents,
-    { ...base, id: 'ev2', title: '홍중이랑 저녁 약속', startDate: at(1), endDate: at(1), startTime: '19:00', endTime: '21:00', allDay: false, place: '가게 근처', color: '#007aff' },
-    { ...base, id: 'ev3', title: '엄마랑 장보기', startDate: at(3), endDate: at(3), startTime: '16:00', endTime: '17:00', allDay: false, place: '동네 마트', note: '집에 필요한 것 사기', color: '#34c759', alert: '60' },
-    { ...base, id: 'ev4', title: '휴대폰 사진 정리', startDate: at(9), endDate: at(9), startTime: '20:00', endTime: '21:00', allDay: false, place: '집', color: '#af52de', alert: '30' },
-  ]
+      })
+    })
+  }
+  return dates
 }
 
 function freshState() {
@@ -110,6 +111,7 @@ function load() {
         // 기존 버전에서 자동 생성된 직장인 콘셉트 기본 일정만 새 생활 설정으로 교체
         const refreshed = seedCalEvents()
         const defaults = new Set(['ev1', 'ev2', 'ev3', 'ev4'])
+        // 기존에 자동 생성된 알바 일정은 새 연간 일정표로 교체하고 사용자가 만든 일정은 보존
         merged.calEvents = [...merged.calEvents.filter((e) => !defaults.has(e.id) && !String(e.id).startsWith('work-')), ...refreshed]
       }
       return merged
