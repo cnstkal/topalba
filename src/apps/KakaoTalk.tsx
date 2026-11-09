@@ -36,6 +36,7 @@ const LOCAL_PHOTO: Record<string, string> = {
   '박성화': '박성화/IMG_0253.jpeg',
   '김홍중': '김홍중/IMG_0252.jpeg',
   '정우영': '정우영/IMG_0254.jpeg',
+  '정윤호': '정윤호/profile.jpg',
   '형': '김홍중/IMG_0252.jpeg', // 형 프사는 홍중 프사와 동일
 }
 const localPhotoOf = (name: string) => {
