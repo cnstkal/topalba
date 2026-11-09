@@ -288,6 +288,7 @@ export default function Maps({ close }) {
   }
   const onDown = (e) => {
     stopAnim()
+    moved.current = false
     const p = rel(e)
     ptrs.current.set(e.pointerId, p)
     const v = vref.current
@@ -339,11 +340,14 @@ export default function Maps({ close }) {
   useEffect(() => {
     const el = box.current
     const wheel = (e) => {
+      // 트랙패드의 일반 두 손가락 스크롤이나 마우스 휠로 지도가 멋대로 확대되지 않게 함
+      // 데스크톱에서 Ctrl/⌘ 키를 누른 명시적 제스처만 휠 확대 허용
+      if (!e.ctrlKey && !e.metaKey) return
       e.preventDefault()
       stopAnim()
       const p = rel(e)
       const v = vref.current
-      const k = clamp(v.k * Math.exp(-e.deltaY * 0.0016), KMIN, KMAX)
+      const k = clamp(v.k * Math.exp(-e.deltaY * 0.0012), KMIN, KMAX)
       const wx = v.x + (p.x - w / 2) / v.k, wy = v.y + (p.y - h / 2) / v.k
       setV({ x: wx - (p.x - w / 2) / k, y: wy - (p.y - h / 2) / k, k })
     }
