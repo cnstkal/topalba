@@ -298,6 +298,10 @@ const FAMILY_MSGS = (): Msg[] => ([
   ['2026-11-02 22:30', '엄마', '그래 기대할게~'],
 ] as [string, string, string][]).map(([at, who, text], k) => ({ id: 9100 + k, who, text, t: new Date(at.replace(' ', 'T') + ':00+09:00').getTime() }))
 
+/* 1:1 대화방 메시지 (시간은 고정 날짜, 한국 시간 기준) */
+const DM = (rows: [string, string, string][], base: number): Msg[] =>
+  rows.map(([at, who, text], k) => ({ id: base + k, who, text, t: new Date(at.replace(' ', 'T') + ':00+09:00').getTime() }))
+
 function seed(): Store {
   const now = Date.now()
   const rooms: Room[] = ROOMS.map((r, i) => {
@@ -306,14 +310,13 @@ function seed(): Store {
     return { id: 'r' + i, name: r.n, group: r.g > 0, members: r.g || 2, pinned: i < 2, muted: false, unread: i % 4 === 1 ? (i % 3) + 1 : 0, msgs }
   })
   return { me: { name: '박성화', status: '', music: '' }, rooms: [
-    { id: 'r-family-mom', name: '엄마', group: false, members: 2, pinned: true, muted: false, unread: 0, msgs: [{ id: 9001, who: '엄마', text: '성화야 밥은 먹었니?', t: now - 3600000 }, { id: 9002, who: 'me', text: '응 먹었어. 걱정 마', t: now - 3500000 }] },
-    { id: 'r-family-dad', name: '아빠', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9003, who: '아빠', text: '차 조심하고 늦으면 연락해라', t: now - 86400000 }] },
-    { id: 'r-bro', name: '형', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: [{ id: 9004, who: '형', text: '집에 택배 왔던데 네 거냐', t: now - 7200000 }] },
+    { id: 'r-family-mom', name: '엄마', group: false, members: 2, pinned: true, muted: false, unread: 0, msgs: DM([['2026-10-12 21:30','엄마','성화 밥은 챙겨 먹고 다니지?'],['2026-10-12 22:05','me','네'],['2026-10-30 20:18','엄마','춥다 따뜻하게 입고 다녀~']], 9201) },
+    { id: 'r-family-dad', name: '아빠', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: DM([['2026-10-17 23:40','아빠','엄마한테 말 좀 잘 해봐라'],['2026-10-17 23:52','me','저 그런 거 몰라요'],['2026-10-18 00:05','아빠','그래']], 9211) },
+    { id: 'r-bro', name: '형', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: DM([['2026-10-21 14:03','me','형 그 택배 뭐였어요'],['2026-10-21 14:20','형','엄마 주문한 거'],['2026-10-21 14:21','me','ㅇㅇ 알았어요']], 9221) },
     { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: HJ_MSGS },
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
     { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: WY_MSGS },
     { id: 'r-family-group', name: '가족 단톡', group: true, members: 4, pinned: false, muted: false, unread: 0, msgs: FAMILY_MSGS() },
-    { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
   ], openRooms: seedOpen(), collapsed: false }
 }
 function load(): Store {
