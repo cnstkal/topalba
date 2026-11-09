@@ -96,7 +96,7 @@ function AccountAvatar({ id, size = 32 }) {
   const acc = SNS_ACCOUNTS[id]
   const initial = id === ME_ID ? ME_INITIAL : (id || '?').slice(0, 1).toUpperCase()
   return (
-    <span className="sns-av" style={{ width: size, height: size }}>
+    <span className="sns-av" data-uid={id} style={{ width: size, height: size }}>
       <Photo
         photo={acc?.photo}
         tint="linear-gradient(#ddd,#bbb)"
@@ -423,7 +423,7 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
           )}
           <div className="prof-stats">
             <div>
-              <b>{list.length}</b>게시물
+              <b>{mine ? list.length : (acc.posts ?? list.length)}</b>게시물
             </div>
             <div>
               <b>{followers.toLocaleString()}</b>팔로워
@@ -634,7 +634,17 @@ export default function Sns({ params }) {
   const recommended = Object.keys(SNS_ACCOUNTS).filter((id) => !state.follows[id]).slice(0, 5)
 
   return (
-    <div className="page sns">
+    <div
+      className="page sns"
+      onClickCapture={(e) => {
+        const el = e.target.closest ? e.target.closest('[data-uid]') : null
+        if (el && el.dataset.uid) {
+          e.stopPropagation()
+          e.preventDefault()
+          setUserId(el.dataset.uid)
+        }
+      }}
+    >
       {tab === 'feed' && (
         <>
           <div className="ig-top">

@@ -289,9 +289,9 @@ export const INITIAL_POSTS = [
 // 계정 프로필 (사진 키 / 소개 / 팔로워·팔로잉 수)
 export const SNS_ACCOUNTS = {
   '_starhwa_': { name: '박성화', photo: '/images/instagram/My/Profile/IMG_1562.jpeg', bio: '', followers: 572, following: 54 },
-  'no1likeme8_8': { name: '김홍중', photo: '/images/instagram/profile/no1likeme8_8/IMG_0198.jpeg', bio: '아이돌', followers: 0, following: 0 },
-  'wooyounggg__': { name: '정우영', photo: '/images/instagram/profile/wooyounggg__/IMG_0199.jpeg', bio: '', followers: 0, following: 0 },
-  'yunou._.u': { name: '정윤호', photo: '/images/instagram/profile/yunou._.u/IMG_5868.jpeg', bio: '', followers: 0, following: 0 },
+  'no1likeme8_8': { name: '홍중 (HONGJOONG)', photo: '/images/instagram/profile/no1likeme8_8/IMG_0198.jpeg', bio: 'Captain of ATEEZ', followers: 9580000, following: 8, posts: 117 },
+  'wooyounggg__': { name: '정어영', photo: '/images/instagram/profile/wooyounggg__/IMG_0199.jpeg', bio: '', followers: 672, following: 629, posts: 1 },
+  'yunou._.u': { name: '정윤호', photo: '/images/instagram/profile/yunou._.u/IMG_5868.jpeg', bio: '', followers: 528, following: 489, posts: 2 },
   'oldschool_friend': { name: '고등학교 동창', photo: 'daily', bio: '', followers: 0, following: 0 },
   'afterwork_friend': { name: '회사에서 알게 된 사람', photo: 'cafe', bio: '', followers: 0, following: 0 },
   'samevibe_daily': { name: '일상 기록', photo: 'land', bio: '', followers: 0, following: 0 },
