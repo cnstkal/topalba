@@ -6,7 +6,7 @@
 export const ME = 'sh'
 
 export const CHARACTERS = {
-  sh: { name: '박성화', tint: '#5ac8fa', birth: '1998-09-14', job: '탑알바' }, // 주인공 (임시 생일)
+  sh: { name: '박성화', tint: '#5ac8fa', birth: '1998-09-14', job: '아르바이트생' }, // 주인공 (임시 생일)
 
   hj: { name: '김홍중', tint: '#ff9f0a', birth: '1998-05-02', job: '아이돌 (활동 중)', bio: '탑알바에서 성화를 처음 만났을 당시에는 아직 이름이 알려지지 않은 무명 아이돌이었다. 성화는 그를 평범한 일반인으로 알았고, 유명해진 뒤에도 종종 연락을 이어가는 중. 입이 무거운 성화를 믿고 사적인 이야기도 편하게 털어놓는다.' }, // 임시 생일
   wy: { name: '정우영', tint: '#bf5af2', birth: '1999-07-19' }, // 임시 생일
@@ -18,7 +18,6 @@ export const CHARACTERS = {
   friend: { name: '친구', tint: '#30d158' },
 
   // 주변 인물 (현실감용 조연. 비중을 키우지 않음)
-  boss: { name: '사장님', tint: '#64d2ff' }, // 탑알바 가게 사장님
 
   unknown: { name: '알 수 없음', tint: '#aeaeb2' },
 }
@@ -33,7 +32,6 @@ export const CONTACTS = [
   { id: 'hj', phone: '010-0000-0001' },
   { id: 'yh', phone: '010-0000-0003' },
   { id: 'wy', phone: '010-0000-0002' },
-  { id: 'boss', phone: '010-0000-0005' },
   { id: 'regular', phone: '010-0000-0013' },
   { id: 'friend', phone: '010-0000-0014' },
 ]
@@ -46,7 +44,6 @@ export const THREAD_META = {
   'msg:dad': { app: 'messages', title: '아빠', members: ['dad'] },
   'msg:ads': { app: 'messages', title: '광고 알림', members: ['unknown'] },
   'msg:regular': { app: 'messages', title: '단골손님', members: ['regular'] },
-  'msg:boss': { app: 'messages', title: '사장님', members: ['boss'] },
   'msg:wrong1': { app: 'messages', title: '010-3921-7745', members: ['unknown'] },
   'msg:wrong2': { app: 'messages', title: '010-5530-2148', members: ['unknown'] },
   'msg:spam1': { app: 'messages', title: '010-8812-0034', members: ['unknown'] },
