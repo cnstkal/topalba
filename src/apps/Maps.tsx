@@ -196,6 +196,7 @@ export default function Maps({ close }) {
   const [toast, setToast] = useState('')
 
   const box = useRef(null)
+  const mapGroupRef = useRef(null)
   const vref = useRef(view)
   const anim = useRef(0)
   const ptrs = useRef(new Map())
@@ -237,9 +238,18 @@ export default function Maps({ close }) {
   useEffect(() => () => { clearTimeout(toastT.current); cancelAnimationFrame(anim.current) }, [])
 
   /* ----- 뷰 제어 ----- */
-  const setV = (v) => {
+  const applyView = (v) => {
     const c = { x: clamp(v.x, 0, W), y: clamp(v.y, 0, H), k: clamp(v.k, KMIN, KMAX) }
     vref.current = c
+    // 드래그 중에는 거대한 SVG 전체를 React로 다시 렌더링하지 않고
+    // 지도 그룹의 transform만 직접 갱신해 프레임 드랍을 줄입니다.
+    if (mapGroupRef.current) {
+      mapGroupRef.current.setAttribute('transform', `translate(${w / 2 - c.x * c.k} ${h / 2 - c.y * c.k}) scale(${c.k})`)
+    }
+    return c
+  }
+  const setV = (v) => {
+    const c = applyView(v)
     setView(c)
   }
   const stopAnim = () => cancelAnimationFrame(anim.current)
@@ -298,14 +308,14 @@ export default function Maps({ close }) {
       const m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
       const k = clamp(g.v0.k * (d / g.d0), KMIN, KMAX)
       const wx = g.v0.x + (g.m0.x - w / 2) / g.v0.k, wy = g.v0.y + (g.m0.y - h / 2) / g.v0.k
-      setV({ x: wx - (m.x - w / 2) / k, y: wy - (m.y - h / 2) / k, k })
+      applyView({ x: wx - (m.x - w / 2) / k, y: wy - (m.y - h / 2) / k, k })
     } else if (g.type === 'pan') {
       const dx = p.x - g.sx, dy = p.y - g.sy
       if (!g.moved && Math.hypot(dx, dy) > 5) {
         g.moved = true
         try { box.current.setPointerCapture(e.pointerId) } catch {}
       }
-      if (g.moved) setV({ x: g.v0.x - dx / g.v0.k, y: g.v0.y - dy / g.v0.k, k: g.v0.k })
+      if (g.moved) applyView({ x: g.v0.x - dx / g.v0.k, y: g.v0.y - dy / g.v0.k, k: g.v0.k })
     }
   }
   const onMapClick = () => {
@@ -319,6 +329,7 @@ export default function Maps({ close }) {
     if (!had) return
     if (ptrs.current.size === 0) {
       gest.current = null
+      setView({ ...vref.current })
       moved.current = !!(g && g.moved)
     } else if (ptrs.current.size === 1) {
       const [only] = [...ptrs.current.entries()]
@@ -489,7 +500,7 @@ export default function Maps({ close }) {
       {/* 지도 */}
       <div className="mp-map" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} onClick={onMapClick}>
         <svg width={w} height={h} role="img" aria-label="신림동을 배경으로 한 가상 벡터 지도">
-          <g transform={`translate(${w / 2 - vx * k} ${h / 2 - vy * k}) scale(${k})`}>
+          <g ref={mapGroupRef} transform={`translate(${w / 2 - vx * k} ${h / 2 - vy * k}) scale(${k})`}>
             <MapLayer />
             <Labels k={k} />
             {route && nav && (
