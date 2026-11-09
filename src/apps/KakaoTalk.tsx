@@ -146,14 +146,38 @@ function seed(): Store {
 function load(): Store {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || 'null')
-    if (saved && typeof saved === 'object' && Array.isArray(saved.rooms) && saved.me && typeof saved.me === 'object' && saved.rooms.every((r: any) => r && Array.isArray(r.msgs))) {
+    if (saved && typeof saved === 'object' && Array.isArray(saved.rooms)) {
       const seeded = seed()
+      // 이전 버전이나 중간 저장 과정에서 일부 필드가 빠진 채팅 데이터도 안전한 기본값으로 보정
+      const normalizedRooms: Room[] = saved.rooms
+        .filter((r: any) => r && typeof r === 'object')
+        .map((r: any, i: number) => ({
+          id: typeof r.id === 'string' ? r.id : `restored-${i}`,
+          name: typeof r.name === 'string' ? r.name : '이름 없는 채팅방',
+          group: !!r.group,
+          members: Number.isFinite(Number(r.members)) ? Number(r.members) : 2,
+          pinned: !!r.pinned,
+          muted: !!r.muted,
+          unread: Number.isFinite(Number(r.unread)) ? Math.max(0, Number(r.unread)) : 0,
+          msgs: Array.isArray(r.msgs) ? r.msgs
+            .filter((m: any) => m && typeof m === 'object')
+            .map((m: any, j: number) => ({
+              id: Number.isFinite(Number(m.id)) ? Number(m.id) : i * 100000 + j,
+              who: typeof m.who === 'string' ? m.who : '알 수 없음',
+              text: typeof m.text === 'string' ? m.text : undefined,
+              img: typeof m.img === 'string' ? m.img : undefined,
+              t: Number.isFinite(Number(m.t)) ? Number(m.t) : Date.now(),
+              reply: typeof m.reply === 'string' ? m.reply : undefined,
+            })) : [],
+          open: !!r.open,
+          img: typeof r.img === 'string' ? r.img : undefined,
+          desc: typeof r.desc === 'string' ? r.desc : undefined,
+          tags: Array.isArray(r.tags) ? r.tags.filter((tag: any) => typeof tag === 'string') : undefined,
+        }))
       // 대본으로 관리하는 채팅방은 저장된 과거 메시지를 병합하지 않고 seed 대본으로 완전히 교체
-      // 이전 대본이 남아 중복되거나 삭제한 문장이 다시 나타나는 문제 방지
       const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh', 'r-family-group', 'r-family-mom', 'r-family-dad', 'r-bro'])
-      // 삭제한 방(탑알바 연락처)은 저장본에서도 제거
       const removedRoomIds = new Set(['r-casual'])
-      const rooms = saved.rooms.filter((room: Room) => !removedRoomIds.has(room.id)).map((room: Room) => {
+      const rooms = normalizedRooms.filter((room: Room) => !removedRoomIds.has(room.id)).map((room: Room) => {
         if (!scriptedRoomIds.has(room.id)) return room
         const currentScript = seeded.rooms.find(r => r.id === room.id)
         return currentScript ? { ...room, msgs: [...currentScript.msgs] } : room
@@ -161,7 +185,14 @@ function load(): Store {
       // 저장본에 아직 없는 대본 방(가족 단톡 등)은 seed에서 추가
       const savedIds = new Set(rooms.map((r: Room) => r.id))
       seeded.rooms.forEach(r => { if (scriptedRoomIds.has(r.id) && !savedIds.has(r.id)) rooms.push(r) })
-      return { ...saved, rooms, openRooms: seeded.openRooms } // 오픈채팅 시드 대본/방 구조 업데이트를 기존 저장 데이터에도 적용
+      const me = saved.me && typeof saved.me === 'object' ? {
+        name: typeof saved.me.name === 'string' ? saved.me.name : '박성화',
+        status: typeof saved.me.status === 'string' ? saved.me.status : '',
+        music: typeof saved.me.music === 'string' ? saved.me.music : '',
+        photo: typeof saved.me.photo === 'string' ? saved.me.photo : undefined,
+        bg: typeof saved.me.bg === 'string' ? saved.me.bg : undefined,
+      } : seeded.me
+      return { ...seeded, ...saved, me, rooms, openRooms: seeded.openRooms, collapsed: !!saved.collapsed }
     }
   } catch { /* 손상된 데이터는 새로 시작 */ }
   return seed()
