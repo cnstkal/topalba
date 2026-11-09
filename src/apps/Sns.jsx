@@ -426,7 +426,7 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
               <b>{mine ? list.length : (acc.posts ?? list.length)}</b>게시물
             </div>
             <div>
-              <b>{followers.toLocaleString()}</b>팔로워
+              <b>{followers >= 10000 ? `${Math.floor(followers / 10000).toLocaleString()}만` : followers.toLocaleString()}</b>팔로워
             </div>
             <div>
               <b>{followingCount}</b>팔로잉
@@ -637,6 +637,7 @@ export default function Sns({ params }) {
     <div
       className="page sns"
       onClickCapture={(e) => {
+        if (e.target.closest && e.target.closest('[data-nopro]')) return
         const el = e.target.closest ? e.target.closest('[data-uid]') : null
         if (el && el.dataset.uid) {
           e.stopPropagation()
@@ -658,7 +659,7 @@ export default function Sns({ params }) {
             </button>
           </div>
           <div className="scroll">
-            <div className="stories">
+            <div className="stories" data-nopro="1">
               {STORY_TRAY.map((s) => {
                 const id = s.mine ? ME_ID : s.key
                 const seen = !!state.storySeen[s.key]
@@ -1003,8 +1004,8 @@ export default function Sns({ params }) {
         </div>
       )}
 
-      {story && <StoryViewer key="story-viewer" title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} />}
-      {hl && <StoryViewer title={hl.title} owner={ME_ID} when={hl.date || ""} slides={hl.items} onClose={() => setHl(null)} onToast={flash} />}
+      {story && <div data-nopro="1" className="sns-story-wrap"><StoryViewer key="story-viewer" title={story.title} owner={story.owner} when={story.when} slides={story.slides} onClose={closeStory} onDone={finishStory} onToast={flash} /></div>}
+      {hl && <div data-nopro="1"><StoryViewer title={hl.title} owner={ME_ID} when={hl.date || ""} slides={hl.items} onClose={() => setHl(null)} onToast={flash} /></div>}
 
       {toast && <div className="sns-toast">{toast}</div>}
     </div>
