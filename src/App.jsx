@@ -26,6 +26,7 @@ import Netflix from './apps/Netflix'
 import KakaoTalk from './apps/KakaoTalk'
 import Twitter from './apps/Twitter.tsx'
 import Stub from './apps/Stub'
+import Tetris from './apps/Tetris'
 
 const COMPONENTS = {
   messages: Messages,
@@ -47,6 +48,7 @@ const COMPONENTS = {
   netflix: Netflix,
   kakao: KakaoTalk,
   twitter: Twitter,
+  tetris: Tetris,
 }
 
 // 한 앱이 오류로 멈춰도 전체 화면이 아니라 그 앱만 닫히도록 격리

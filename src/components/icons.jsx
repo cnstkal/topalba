@@ -7,9 +7,25 @@ const EXTRA_APPS = {
   kakao: { label: '카카오톡', bg: '#fee500' },
   twitter: { label: 'X', bg: '#000' },
   maps: { label: '지도', bg: 'linear-gradient(160deg,#6fe3a0,#16a050)' },
+  tetris: { label: '테트리스', bg: 'linear-gradient(160deg,#2a2a36,#111116)' },
 }
 
 const EXTRA_GLYPHS = {
+  tetris: (
+    <svg viewBox="0 0 60 60" width="60" height="60">
+      <g>
+        <rect x="8" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
+        <rect x="18" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
+        <rect x="28" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
+        <rect x="38" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
+        <rect x="18" y="24" width="9" height="9" rx="2" fill="#a66cff" />
+        <rect x="28" y="24" width="9" height="9" rx="2" fill="#a66cff" />
+        <rect x="38" y="14" width="9" height="9" rx="2" fill="#ff9f43" />
+        <rect x="38" y="24" width="9" height="9" rx="2" fill="#ff9f43" />
+        <rect x="8" y="24" width="9" height="9" rx="2" fill="#5bd17a" />
+      </g>
+    </svg>
+  ),
   maps: (
     <svg viewBox="0 0 60 60" width="60" height="60">
       <defs><linearGradient id="gbp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff6b6b" /><stop offset="1" stopColor="#e11d2e" /></linearGradient></defs>

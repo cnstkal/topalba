@@ -7,7 +7,7 @@ const FOLDERS = {
   sns: { name: 'SNS', apps: ['sns', 'twitter'] },
   tools: { name: '도구', apps: ['settings', 'clock', 'appstore', 'calendar', 'maps'] },
 }
-const ITEMS = ['photos', 'notes', 'weather', 'someone', 'moabank', 'dating', 'netflix', 'kakao', 'sns', 'twitter', 'settings', 'clock', 'appstore', 'calendar', 'maps']
+const ITEMS = ['photos', 'notes', 'weather', 'someone', 'moabank', 'dating', 'netflix', 'kakao', 'sns', 'twitter', 'settings', 'clock', 'appstore', 'calendar', 'maps', 'tetris']
 const DOCK = ['phone', 'messages', 'safari', 'music']
 
 export default function HomeScreen({ openApp, dimmed }) {
