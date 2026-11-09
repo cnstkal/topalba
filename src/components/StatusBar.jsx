@@ -9,7 +9,7 @@ const coverColors = (i) => {
   return [c[0] || '#fa233b', c[1] || c[0] || '#5bc0be', c[2] || c[0] || '#ffd166']
 }
 
-export default function StatusBar({ onOpenCC }) {
+export default function StatusBar({ onOpenCC, onLock }) {
   const d = useDevice()
   const [t, setT] = useState(fmtStatus())
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function StatusBar({ onOpenCC }) {
   return (
     <>
       <div className="statusbar">
-        <span className={`sb-time ${d.rec ? 'rec' : ''}`}>
+        <span className={`sb-time ${d.rec ? 'rec' : ''}`} onClick={onLock}>
           {t}
           {d.focus !== null && (
             <svg className="sb-moon" width="12" height="12" viewBox="0 0 24 24"><path d="M20.5 14.8A8.7 8.7 0 1 1 9.2 3.500a7.2 7.2 0 0 0 11.3 11.300z" /></svg>

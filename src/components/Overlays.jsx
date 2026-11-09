@@ -14,19 +14,30 @@ export function Avatar({ id, size = 40 }) {
   )
 }
 
-export function LockScreen({ onUnlock, leaving }) {
+export function LockScreen({ onUnlock, leaving, drop }) {
   const d = new Date()
   const h = d.getHours() % 12 || 12
   const m = String(d.getMinutes()).padStart(2, '0')
+  const y0 = useRef(null)
   return (
-    <div className={`lock ${leaving ? 'lock-out' : ''}`} onClick={onUnlock}>
+    <div
+      className={`lock ${leaving ? 'lock-out' : ''} ${drop ? 'lock-in' : ''}`}
+      onClick={onUnlock}
+      onPointerDown={(e) => { y0.current = e.clientY }}
+      onPointerUp={(e) => { if (y0.current !== null && y0.current - e.clientY > 50) onUnlock() }}
+    >
       <div className="lock-date">
-        {d.getMonth() + 1}월 {d.getDate()}일 {DAYS[d.getDay()]}요일
+        {d.getMonth() + 1}월 {d.getDate()}일 ({DAYS[d.getDay()]})
       </div>
       <div className="lock-time">
         {h}:{m}
       </div>
-      <div className="lock-hint">위로 쓸어 올리거나 화면을 눌러 잠금 해제</div>
+      <button className="lock-btn l" aria-label="손전등" onClick={(e) => e.stopPropagation()}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 2h8v4l-1.500 2v11a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8L8 6V2zm4 8a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1z" /></svg>
+      </button>
+      <button className="lock-btn r" aria-label="카메라" onClick={(e) => e.stopPropagation()}>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h3l1.500-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zm8 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" /></svg>
+      </button>
     </div>
   )
 }

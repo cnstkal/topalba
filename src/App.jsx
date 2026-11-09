@@ -75,6 +75,7 @@ function Phone() {
   const phoneRef = useRef(null)
   const [cur, setCur] = useState(null) // { id, origin, params, closing }
   const [leaving, setLeaving] = useState(false)
+  const [drop, setDrop] = useState(false)
   const [cc, setCc] = useState(false)
   const dev = useDevice()
   const edge = useRef(null)
@@ -101,7 +102,14 @@ function Phone() {
 
   const unlock = () => {
     setLeaving(true)
-    setTimeout(() => actions.unlockPhone(), 350)
+    setTimeout(() => { actions.unlockPhone(); setDrop(false) }, 350)
+  }
+  // 홈 화면에서 상단바 시간을 누르면 잠금화면이 위에서 내려옴
+  const pullLock = () => {
+    if (cur || !state.unlocked) return
+    setLeaving(false)
+    setDrop(true)
+    actions.lockPhone()
   }
 
   const App = cur ? COMPONENTS[cur.id] : null
@@ -120,7 +128,7 @@ function Phone() {
         </div>
       )}
 
-      <StatusBar onOpenCC={() => setCc(true)} />
+      <StatusBar onOpenCC={() => setCc(true)} onLock={pullLock} />
       {/* 오른쪽 상단에서 아래로 스와이프(또는 탭)하면 제어센터 열기 */}
       <div
         className="cc-edge"
@@ -132,7 +140,7 @@ function Phone() {
       <ControlCenter open={cc} onClose={() => setCc(false)} onOpenApp={(id) => openApp(id, null)} />
       <Banner onOpen={(id, params) => openApp(id, null, params)} />
       <IncomingCall />
-      {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} />}
+      {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} drop={drop} />}
       <EndingScreen />
       <DeviceFX />
       <div className="home-bar-zone" onClick={closeApp}>

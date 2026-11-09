@@ -40,7 +40,7 @@ html, body { position: fixed; inset: 0; width: 100%; overflow: hidden; }
 .home-bar-zone { position: absolute; bottom: 0; left: 0; right: 0; height: 28px; z-index: 200; display: flex; justify-content: center; align-items: flex-end; }
 .home-bar { width: 140px; height: 5px; border-radius: 3px; background: #000; margin-bottom: 8px; }
 /* ── 홈 화면 ── */
-.home { position: absolute; inset: 0; padding: 62px 0 0; display: flex; flex-direction: column; background: linear-gradient(170deg, #fdf3f7 0%, #eef3ff 50%, #e8f7f3 100%); transition: transform .3s ease, filter .3s ease; --glass: rgba(255,255,255,.42); --glass-line: rgba(255,255,255,.75); --glass-sh: 0 8px 24px rgba(40,50,90,.10), 0 1px 3px rgba(40,50,90,.08); isolation: isolate; }
+.home { position: absolute; inset: 0; padding: 62px 0 0; display: flex; flex-direction: column; background: #2a6ac4 url(/wallpaper.svg) center / cover no-repeat; transition: transform .3s ease, filter .3s ease; --glass: rgba(255,255,255,.42); --glass-line: rgba(255,255,255,.75); --glass-sh: 0 8px 24px rgba(40,50,90,.10), 0 1px 3px rgba(40,50,90,.08); isolation: isolate; }
 .home::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
 background: radial-gradient(220px 220px at 12% 14%, rgba(255,170,200,.55), transparent 70%), radial-gradient(260px 260px at 92% 40%, rgba(150,190,255,.55), transparent 70%), radial-gradient(240px 240px at 30% 82%, rgba(150,235,205,.5), transparent 70%); }
 .home-dim { transform: scale(.94); filter: brightness(.95); }
@@ -1847,3 +1847,23 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 
 /* iOS Safari가 글자 크기를 자동으로 키우거나 줄이지 않도록 고정 (새로고침마다 달라지는 현상 방지) */
 .sns, .sns * { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+/* 통일 배경화면 (홈·잠금화면 공통) */
+.home::before { display: none; }
+.home .app-label { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.45); }
+.phone:not(:has(.app)) .statusbar { color: #fff; }
+.phone:not(:has(.app)) .sb-right svg { fill: #fff; }
+.phone:not(:has(.app)) .sb-right svg rect[stroke] { stroke: #fff; }
+.phone:not(:has(.app)) .home-bar { background: #fff; }
+.sb-time { pointer-events: auto; cursor: pointer; }
+
+/* 잠금화면 */
+.lock { background: #2a6ac4 url(/wallpaper.svg) center / cover no-repeat; padding-top: 104px; color: #fff; }
+.lock-in { animation: lockDrop .38s ease both; }
+@keyframes lockDrop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+.lock-date { font-size: 22px; font-weight: 600; color: #bfeae6; letter-spacing: -.2px; }
+.lock-time { font-size: 122px; font-weight: 700; letter-spacing: -3px; line-height: 1.02; margin-top: 2px; background: linear-gradient(180deg, #b9ddff 0%, #8fe3d2 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; filter: drop-shadow(0 2px 10px rgba(255,255,255,.25)); opacity: .92; }
+.lock-btn { position: absolute; bottom: 56px; width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.28); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: #000; }
+.lock-btn.l { left: 46px; }
+.lock-btn.r { right: 46px; }
+.lock-hint { display: none; }
