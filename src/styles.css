@@ -1842,7 +1842,7 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .sns .post .post-cm, .post .post-cm { font-size: 16px !important; }
 
 /* 인스타 공통: 본문·시간 글씨 축소 */
-.sns .post .post-cap, .post .post-cap { font-size: 11.5px !important; }
+.sns .post .post-cap, .post .post-cap { font-size: 14px !important; }
 .sns .post .post-time, .post .post-time, .post.detail .post-time { font-size: 16px !important; }
 
 /* iOS Safari가 글자 크기를 자동으로 키우거나 줄이지 않도록 고정 (새로고침마다 달라지는 현상 방지) */
@@ -1870,11 +1870,12 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 
 /* 홈 간격 축소 + 폴더 */
 .grid { row-gap: 12px; }
-.folder-tile { position: relative; width: 60px; height: 60px; border-radius: 13.5px; padding: 5px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; justify-items: center; align-content: start; background: rgba(255,255,255,.4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 6px 14px rgba(40,50,90,.18), inset 0 0 0 .5px rgba(255,255,255,.7); }
-.folder-mini { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1; }
-.folder-mini .app-icon-art { width: 17px !important; height: 17px !important; border-radius: 4px !important; }
-.folder-mini .app-icon-art > div { transform: none !important; width: 17px !important; height: 17px !important; }
-.folder-mini svg { width: 17px; height: 17px; }
+.folder-tile { position: relative; width: 60px; height: 60px; border-radius: 13.5px; padding: 6px; overflow: hidden; display: grid; grid-template-columns: repeat(3, 14px); gap: 3px; justify-content: center; align-content: center; justify-items: center; align-content: start; background: rgba(255,255,255,.4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 6px 14px rgba(40,50,90,.18), inset 0 0 0 .5px rgba(255,255,255,.7); }
+.folder-mini { display: block; width: 14px; height: 14px; overflow: hidden; border-radius: 3.5px; }
+.folder-mini .app-icon { width: 14px !important; gap: 0; }
+.folder-mini .app-icon-art { width: 14px !important; height: 14px !important; border-radius: 3.5px !important; }
+.folder-mini .app-icon-art > div { transform: none !important; width: 14px !important; height: 14px !important; }
+.folder-mini svg { width: 14px; height: 14px; }
 .folder-tile .badge { position: absolute; top: -6px; right: -6px; }
 .folder-open { position: absolute; inset: 0; z-index: 150; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: fadeIn .2s ease both; }
 .folder-panel { width: 300px; padding: 22px 18px 26px; border-radius: 30px; background: rgba(120,128,140,.55); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6); box-shadow: 0 20px 40px rgba(0,0,0,.25), inset 0 0 0 .5px rgba(255,255,255,.35); }

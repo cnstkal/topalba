@@ -4,10 +4,10 @@ import { useGame, unreadCount } from '../engine/store'
 
 // 홈 배치: 개별 앱 + 폴더
 const FOLDERS = {
-  sns: { name: 'SNS', apps: ['sns', 'twitter'] },
+  sns: { name: 'SNS', apps: ['sns', 'twitter', 'dating'] },
   tools: { name: '도구', apps: ['settings', 'clock', 'appstore', 'calendar', 'maps'] },
 }
-const ITEMS = ['photos', 'notes', 'weather', 'someone', 'moabank', 'dating', 'netflix', 'kakao', 'folder:sns', 'folder:tools']
+const ITEMS = ['photos', 'notes', 'weather', 'someone', 'moabank', 'netflix', 'kakao', 'folder:sns', 'folder:tools']
 const DOCK = ['phone', 'messages', 'safari', 'music']
 
 export default function HomeScreen({ openApp, dimmed }) {
