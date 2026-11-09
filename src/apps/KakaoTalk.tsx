@@ -273,22 +273,30 @@ function seedOpen(): Room[] {
   })
 }
 
-/* 가족 단톡: 엄마·형 위주로 대화, 아빠는 가끔 짧게, 성화는 단답 또는 읽씹 */
-const FAMILY_MSGS = (now: number): Msg[] => ([
-  ['엄마', '다들 이 방에서 얘기하자~ 📢', 60 * 24 * 21],
-  ['형', 'ㅇㅇ', 60 * 24 * 21 - 5],
-  ['엄마', '성화야 밥 먹었어?', 60 * 24 * 3],
-  ['me', '응 먹었어', 60 * 24 * 3 - 2],
-  ['엄마', '아빠 오늘 야근이래 저녁 나 혼자 먹어야겠다 ㅠ', 60 * 24 * 2],
-  ['아빠', '고생했네', 60 * 24 * 2 - 40],
-  ['엄마', '성화 오늘 알바 몇 시에 끝나?', 60 * 24],
-  ['형', '엄마 그거 오늘 아니고 내일임', 60 * 24 - 3],
-  ['엄마', '아 그래? 고마워 아들', 60 * 24 - 6],
-  ['형', '엄마 택배 왔어 엄마 주문한거', 9 * 60],
-  ['엄마', '성화야 감기 조심해', 5 * 60],
-  ['me', '넵', 5 * 60 - 1],
-  ['아빠', '차 조심해라', 4 * 60],
-] as [string, string, number][]).map(([who, text, mAgo], k) => ({ id: 9100 + k, who: who as string, text, t: now - mAgo * 60e3 }))
+/* 가족 단톡: 모임 날짜, 명절 내려오는지, 김치 필요한지 등 집안 얘기 위주. 알바 얘기는 없음. 마지막 대화 11월 2일 */
+const FAMILY_MSGS = (): Msg[] => ([
+  ['2026-10-20 09:10', '엄마', '다들 이 방에서 얘기하자~ 📢'],
+  ['2026-10-20 09:12', '형', 'ㅇㅇ'],
+  ['2026-10-23 19:30', '엄마', '이번 명절에 다들 내려오는 거지?'],
+  ['2026-10-23 19:44', '형', '일단 가볼게요'],
+  ['2026-10-23 19:45', '엄마', '그래 ㅎㅎ 성화는?'],
+  ['2026-10-23 21:02', 'me', '잘 모르겠어요'],
+  ['2026-10-25 08:40', '아빠', '명절 때 차 막힌다 일찍 출발해라'],
+  ['2026-10-25 08:55', '엄마', '그건 그렇고 김치 떨어졌는데 필요한 사람 있어?'],
+  ['2026-10-25 09:01', '형', '저는 조금만 주세요'],
+  ['2026-10-25 09:20', '엄마', '성화는 필요해?'],
+  ['2026-10-28 20:15', '엄마', '11월 중에 다 같이 모일까? 날짜 정해보자'],
+  ['2026-10-28 20:31', '형', '주말이 좋을 것 같아요'],
+  ['2026-10-29 07:50', '아빠', 'ㅇㅇ'],
+  ['2026-11-02 22:10', '엄마', '성화는 소식 없어~?'],
+  ['2026-11-02 22:10', '엄마', 'ㅎㅎ'],
+  ['2026-11-02 22:14', 'me', '멀요'],
+  ['2026-11-02 22:14', '엄마', '알잖아~'],
+  ['2026-11-02 22:15', '엄마', '니 형도 갔고~'],
+  ['2026-11-02 22:21', 'me', '멀라요'],
+  ['2026-11-02 22:21', 'me', '있으면 얘기할게요'],
+  ['2026-11-02 22:30', '엄마', '그래 기대할게~'],
+] as [string, string, string][]).map(([at, who, text], k) => ({ id: 9100 + k, who, text, t: new Date(at.replace(' ', 'T') + ':00+09:00').getTime() }))
 
 function seed(): Store {
   const now = Date.now()
@@ -304,7 +312,7 @@ function seed(): Store {
     { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: HJ_MSGS },
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
     { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: WY_MSGS },
-    { id: 'r-family-group', name: '가족 단톡', group: true, members: 4, pinned: false, muted: false, unread: 0, msgs: FAMILY_MSGS(now) },
+    { id: 'r-family-group', name: '가족 단톡', group: true, members: 4, pinned: false, muted: false, unread: 0, msgs: FAMILY_MSGS() },
     { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
   ], openRooms: seedOpen(), collapsed: false }
 }
