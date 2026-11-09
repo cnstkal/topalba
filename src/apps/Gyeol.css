@@ -193,6 +193,9 @@
 .gyeol-sheet{padding-bottom:24px}
 .gyeol-sheet .gyeol-btn{flex:1;min-height:52px;font-size:16px}
 .gyeol-sheet .gyeol-btn-row{display:flex;gap:10px}
+/* 차단 확인 팝업: 화면 가운데에 띄움 */
+.gyeol-dialogbg{align-items:center;justify-content:center;padding:24px}
+.gyeol-sheet.gyeol-dialog{width:100%;max-width:340px;border-radius:18px;padding:22px 18px 18px}
 
 /* ── 틴더 스타일 테마 (다크): 플레임 그라데이션 포인트 컬러, 원형 액션 버튼, 둥근 카드 ── */
 .gyeol-app{--lime:#fe3c72;--grad:linear-gradient(45deg,#fd267a,#ff6036);--like:#21d07a;--nope:#fd5068;--super:#1ba5f9;--gold:#f5b72f;--bg:#0f1012;--panel:#1b1c20}
