@@ -25,10 +25,10 @@ function seedCalEvents() {
   const at = (n) => calKey(new Date(t.getFullYear(), t.getMonth(), t.getDate() + n))
   const base = { alert: '10', note: '' }
   return [
-    { ...base, id: 'ev1', title: '마케팅팀 내일 회의 준비', startDate: at(0), endDate: at(0), startTime: '09:00', endTime: '10:00', allDay: true, place: '회사', note: '회의 자료 최종 확인', color: '#ff9500' },
-    { ...base, id: 'ev2', title: '저녁 약속', startDate: at(0), endDate: at(0), startTime: '20:00', endTime: '21:00', allDay: false, place: '집', color: '#007aff' },
-    { ...base, id: 'ev3', title: '치과 예약', startDate: at(3), endDate: at(3), startTime: '18:30', endTime: '19:30', allDay: false, place: '서울 치과', note: '정기 검진', color: '#34c759', alert: '60' },
-    { ...base, id: 'ev4', title: '월간 보고', startDate: at(9), endDate: at(9), startTime: '10:00', endTime: '11:00', allDay: false, place: '회의실 B', color: '#af52de', alert: '30' },
+    { ...base, id: 'ev1', title: '탑알바 오후 근무', startDate: at(0), endDate: at(0), startTime: '14:00', endTime: '21:00', allDay: false, place: '탑알바', note: '출근 전 필요한 것 챙기기', color: '#ff9500' },
+    { ...base, id: 'ev2', title: '홍중이랑 저녁 약속', startDate: at(1), endDate: at(1), startTime: '19:00', endTime: '21:00', allDay: false, place: '가게 근처', color: '#007aff' },
+    { ...base, id: 'ev3', title: '엄마랑 장보기', startDate: at(3), endDate: at(3), startTime: '16:00', endTime: '17:00', allDay: false, place: '동네 마트', note: '집에 필요한 것 사기', color: '#34c759', alert: '60' },
+    { ...base, id: 'ev4', title: '휴대폰 사진 정리', startDate: at(9), endDate: at(9), startTime: '20:00', endTime: '21:00', allDay: false, place: '집', color: '#af52de', alert: '30' },
   ]
 }
 
@@ -80,6 +80,12 @@ function load() {
       const extra = old.filter((p) => !initIds.has(p.id))
       const merged = { ...freshState(), ...saved, notes: [...(saved.notes || []), ...INITIAL_NOTES.filter((n) => n.id === 'n3' && !(saved.notes || []).some((old) => old.id === n.id))], follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
       if (!Array.isArray(merged.calEvents)) merged.calEvents = seedCalEvents()
+      else {
+        // 기존 버전에서 자동 생성된 직장인 콘셉트 기본 일정만 새 생활 설정으로 교체
+        const refreshed = seedCalEvents()
+        const defaults = new Set(['ev1', 'ev2', 'ev3', 'ev4'])
+        merged.calEvents = [...merged.calEvents.filter((e) => !defaults.has(e.id)), ...refreshed]
+      }
       return merged
     }
   } catch (e) {
