@@ -12,12 +12,12 @@ const usePersist = (k, init) => sharedPersist(k, init, 'phone-app:v2:')
 // [연락처, 종류(in|out|missed), 몇 분 전, 통화 시간(초)]
 const SEED_CALLS = [
   // 저장된 사람들 (여러 명이 고르게)
-  ['mom', 'in', 40, 402], ['nae', 'out', 75, 130], ['yh', 'in', 95, 72], ['regular', 'missed', 140, 0],
+  ['mom', 'in', 40, 402], ['yh', 'in', 95, 72], ['regular', 'missed', 140, 0],
   ['bro', 'in', 210, 46], ['hj', 'in', 300, 312], ['friend', 'out', 360, 210], ['boss', 'missed', 420, 0],
-  ['wy', 'in', 600, 58], ['mom', 'out', 780, 180], ['dad', 'missed', 900, 0], ['nae', 'in', 1020, 94],
+  ['wy', 'in', 600, 58], ['mom', 'out', 780, 180], ['dad', 'missed', 900, 0],
   ['yh', 'out', 1300, 61], ['regular', 'in', 1500, 135], ['hj', 'out', 1800, 960], ['friend', 'in', 2100, 26],
   ['boss', 'out', 2400, 88], ['bro', 'missed', 2700, 0], ['wy', 'out', 3000, 83], ['mom', 'in', 3300, 65],
-  ['dad', 'out', 3900, 74], ['yh', 'in', 4500, 95], ['nae', 'missed', 5100, 0], ['regular', 'out', 5600, 40],
+  ['dad', 'out', 3900, 74], ['yh', 'in', 4500, 95], ['regular', 'out', 5600, 40],
   ['friend', 'missed', 6200, 0], ['hj', 'in', 7000, 1840], ['boss', 'in', 7800, 52], ['mom', 'missed', 8500, 0],
   // 저장 안 된 번호 (뒷 4자리 가림)
   [null, 'in', 55, 38, '01027381946'], [null, 'missed', 260, 0, '01066204519'], [null, 'in', 510, 121, '01027381946'],

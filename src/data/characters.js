@@ -18,7 +18,6 @@ export const CHARACTERS = {
   friend: { name: '친구', tint: '#30d158' },
 
   // 주변 인물 (현실감용 조연. 비중을 키우지 않음)
-  nae: { name: '서나은', tint: '#30d158' }, // 탑알바 동료
   boss: { name: '사장님', tint: '#64d2ff' }, // 탑알바 가게 사장님
 
   unknown: { name: '알 수 없음', tint: '#aeaeb2' },
@@ -34,7 +33,6 @@ export const CONTACTS = [
   { id: 'hj', phone: '010-0000-0001' },
   { id: 'yh', phone: '010-0000-0003' },
   { id: 'wy', phone: '010-0000-0002' },
-  { id: 'nae', phone: '010-0000-0004' },
   { id: 'boss', phone: '010-0000-0005' },
   { id: 'regular', phone: '010-0000-0013' },
   { id: 'friend', phone: '010-0000-0014' },
@@ -48,6 +46,5 @@ export const THREAD_META = {
   'msg:dad': { app: 'messages', title: '아빠', members: ['dad'] },
   'msg:ads': { app: 'messages', title: '광고 알림', members: ['unknown'] },
   'msg:regular': { app: 'messages', title: '단골손님', members: ['regular'] },
-  'msg:nae': { app: 'messages', title: '서나은', members: ['nae'] },
   'msg:boss': { app: 'messages', title: '사장님', members: ['boss'] },
 }

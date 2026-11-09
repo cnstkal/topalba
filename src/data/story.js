@@ -37,15 +37,6 @@ export const EVENTS = [
   },
 
   {
-    id: 'e_nae',
-    delay: 13000,
-    effects: [
-      { t: 'msg', thread: 'msg:nae', from: 'nae', text: '성화 씨, 내일 오전 근무 혹시 바꿔줄 수 있어요?' },
-      { t: 'notify', app: 'messages', title: '서나은', body: '성화 씨, 내일 오전 근무 혹시 바꿔줄 수 있어요?', thread: 'msg:nae' },
-    ],
-  },
-
-  {
     id: 'e_hj2',
     delay: 24000,
     after: ['e_hj1'],
@@ -354,6 +345,5 @@ export const INITIAL_PROFILE = { bio: '', name: '박성화', username: '_starhwa
 export const EXPLORE_TAGS = ['카페', '한강', '맛집', '여행', '일상', '서울']
 
 export const INITIAL_RECENTS = [
-  { id: 'c1', from: 'nae', missed: false, ts: Date.now() - 2 * 86400000 },
   { id: 'c2', from: 'hj', missed: false, ts: Date.now() - 86400000 },
 ]

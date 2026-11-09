@@ -136,7 +136,7 @@ export default function Settings() {
               <p className="bt-note">제어 센터에서 새로운 Bluetooth에 연결하는 기능이 꺼져 있습니다.</p>
               <div className="bt-h">나의 기기</div>
               <div className="st-group">
-                {['AirPods', 'Bluetooth Keyboard'].map((n) => (
+                {['AirPods', 'WY의 AirPods', 'Bluetooth Keyboard'].map((n) => (
                   <div key={n} className="st-row plain"><span className="st-lb">{n}</span><em className="st-val">연결 안 됨</em><i className="bt-info">i</i></div>
                 ))}
               </div>
