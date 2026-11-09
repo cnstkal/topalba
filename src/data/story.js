@@ -305,6 +305,9 @@ export const SNS_ACCOUNTS = {
   mint_tea: { photo: 'daily', bio: '', followers: 130, following: 240 },
 }
 
+// 인스타 DM에서 안 읽은 상대 (앱 아이콘 배지 계산용)
+export const SNS_DM_UNREAD_IDS = ['yunou._.u', 'no1likeme8_8']
+
 export const SNS_FOLLOWING = {
   no1likeme8_8: true,
   wooyounggg__: true,

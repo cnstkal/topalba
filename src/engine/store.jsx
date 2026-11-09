@@ -8,8 +8,7 @@ import {
   INITIAL_POSTS,
   INITIAL_RECENTS,
   INITIAL_PROFILE,
-  SNS_FOLLOWING,
-} from '../data/story'
+  SNS_FOLLOWING, SNS_DM_UNREAD_IDS } from '../data/story'
 import { judgeEnding } from '../data/endings'
 import { dev } from './device'
 import { ME } from '../data/characters'
@@ -362,8 +361,21 @@ export function GameProvider({ children }) {
 export function unreadCount(state, app) {
   if (app === 'messages')
     return Object.entries(state.threads).filter(([id]) => id.startsWith('msg:')).reduce((n, [, l]) => n + l.filter((m) => m.unread).length, 0)
-  if (app === 'sns')
-    return Object.entries(state.threads).filter(([id]) => id.startsWith('dm:')).reduce((n, [, l]) => n + l.filter((m) => m.unread).length, 0)
+  if (app === 'sns') {
+    // 같은 사람이 여러 번 보내도 1로 센다 (알림·안 읽은 DM 보낸 사람 수)
+    const people = new Set([...state.snsNotifs.map((n) => n.user), ...SNS_DM_UNREAD_IDS])
+    return people.size
+  }
+  if (app === 'kakao') {
+    // 카톡은 안 읽은 메시지 개수를 모두 더함 (음소거 방 제외)
+    try {
+      const saved = JSON.parse(localStorage.getItem('kakaotalk-v2') || 'null')
+      if (!saved || !Array.isArray(saved.rooms)) return 0
+      return saved.rooms.reduce((n, r) => n + (r.muted ? 0 : r.unread || 0), 0)
+    } catch (e) {
+      return 0
+    }
+  }
   if (app === 'phone') return state.recents.filter((c) => c.missed && !c.seen).length
   return 0
 }
