@@ -47,4 +47,8 @@ export const THREAD_META = {
   'msg:ads': { app: 'messages', title: '광고 알림', members: ['unknown'] },
   'msg:regular': { app: 'messages', title: '단골손님', members: ['regular'] },
   'msg:boss': { app: 'messages', title: '사장님', members: ['boss'] },
+  'msg:wrong1': { app: 'messages', title: '010-3921-7745', members: ['unknown'] },
+  'msg:wrong2': { app: 'messages', title: '010-5530-2148', members: ['unknown'] },
+  'msg:spam1': { app: 'messages', title: '010-8812-0034', members: ['unknown'] },
+  'msg:spam2': { app: 'messages', title: '070-4417-0093', members: ['unknown'] },
 }
