@@ -260,6 +260,7 @@ export const INITIAL_THREADS = {
 export const INITIAL_NOTES = [
   { id: 'n1', title: '장볼 것', body: '우유\n계란\n식빵\n두부', ts: Date.now() - 3 * 86400000 },
   { id: 'n2', title: '알바 시간표', body: '- 화/목 오후 근무\n- 금 저녁 근무 가능 여부 확인\n- 주말 오픈 조', ts: Date.now() - 86400000 },
+  { id: 'n3', title: '블랙리스트', body: '010-8293-****\n유부남 (아내가 찾아옴;)\n\n010-2757-***\n애새끼 (ㄹㅇ고딩)\n\n010-9816-***\n먹튀\n\n010-0113-****\n먹튀', ts: Date.now() },
 ]
 
 export const INITIAL_SENT = [
