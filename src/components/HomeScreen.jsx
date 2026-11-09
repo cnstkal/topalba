@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { AppIcon, APPS as APP_META } from './icons'
+import { AppIcon } from './icons'
 import { useGame, unreadCount } from '../engine/store'
 
 // 홈 배치: 개별 앱 + 폴더
@@ -27,15 +27,15 @@ export default function HomeScreen({ openApp, dimmed }) {
     const f = FOLDERS[key]
     const mini = f.apps.slice(0, 9)
     return (
-      <button key={key} className="app-icon folder-btn" aria-label={f.name} onClick={() => setFolder(key)} ref={(el) => (refs.current[key] = el)}>
+      <div key={key} className="app-icon folder-btn" role="button" aria-label={f.name} onClick={() => setFolder(key)} ref={(el) => (refs.current[key] = el)}>
         <div className="folder-tile">
           {mini.map((a) => (
-            <i key={a} style={{ background: APP_META[a]?.bg || '#999' }} />
+            <span key={a} className="folder-mini"><AppIcon id={a} size={17} noLabel onClick={() => {}} /></span>
           ))}
           {folderBadge(key) > 0 && <span className="badge">{folderBadge(key)}</span>}
         </div>
         <span className="app-label">{f.name}</span>
-      </button>
+      </div>
     )
   }
 
