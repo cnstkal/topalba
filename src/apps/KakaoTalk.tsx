@@ -270,6 +270,23 @@ function seedOpen(): Room[] {
   })
 }
 
+/* 가족 단톡: 엄마·형 위주로 대화, 아빠는 가끔 짧게, 성화는 단답 또는 읽씹 */
+const FAMILY_MSGS = (now: number): Msg[] => ([
+  ['엄마', '다들 이 방에서 얘기하자~ 📢', 60 * 24 * 21],
+  ['형', 'ㅇㅇ', 60 * 24 * 21 - 5],
+  ['엄마', '성화야 밥 먹었어?', 60 * 24 * 3],
+  ['me', '응 먹었어', 60 * 24 * 3 - 2],
+  ['엄마', '아빠 오늘 야근이래 저녁 나 혼자 먹어야겠다 ㅠ', 60 * 24 * 2],
+  ['아빠', '고생했네', 60 * 24 * 2 - 40],
+  ['엄마', '성화 오늘 알바 몇 시에 끝나?', 60 * 24],
+  ['형', '엄마 그거 오늘 아니고 내일임', 60 * 24 - 3],
+  ['엄마', '아 그래? 고마워 아들', 60 * 24 - 6],
+  ['형', '엄마 택배 왔어 엄마 주문한거', 9 * 60],
+  ['엄마', '성화야 감기 조심해', 5 * 60],
+  ['me', '넵', 5 * 60 - 1],
+  ['아빠', '차 조심해라', 4 * 60],
+] as [string, string, number][]).map(([who, text, mAgo], k) => ({ id: 9100 + k, who: who as string, text, t: now - mAgo * 60e3 }))
+
 function seed(): Store {
   const now = Date.now()
   const rooms: Room[] = ROOMS.map((r, i) => {
@@ -284,6 +301,7 @@ function seed(): Store {
     { id: 'r-hj', name: '김홍중', group: false, members: 2, pinned: true, muted: false, unread: 1, msgs: HJ_MSGS },
     { id: 'r-yh', name: '정윤호', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: YH_MSGS },
     { id: 'r-wy', name: '정우영', group: false, members: 2, pinned: false, muted: false, unread: 2, msgs: WY_MSGS },
+    { id: 'r-family-group', name: '가족 단톡', group: true, members: 4, pinned: false, muted: false, unread: 0, msgs: FAMILY_MSGS(now) },
     { id: 'r-casual', name: '탑알바 연락처', group: true, members: 5, pinned: false, muted: true, unread: 0, msgs: [{ id: 9008, who: '도윤', text: '오늘 방 주소 여기 맞죠?', t: now - 172800000 }, { id: 9009, who: 'me', text: 'ㅇㅇ 맞아요', t: now - 172700000 }] },
   ], openRooms: seedOpen(), collapsed: false }
 }
@@ -294,12 +312,15 @@ function load(): Store {
       const seeded = seed()
       // 대본으로 관리하는 채팅방은 저장된 과거 메시지를 병합하지 않고 seed 대본으로 완전히 교체
       // 이전 대본이 남아 중복되거나 삭제한 문장이 다시 나타나는 문제 방지
-      const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh'])
+      const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh', 'r-family-group'])
       const rooms = saved.rooms.map((room: Room) => {
         if (!scriptedRoomIds.has(room.id)) return room
         const currentScript = seeded.rooms.find(r => r.id === room.id)
         return currentScript ? { ...room, msgs: [...currentScript.msgs] } : room
       })
+      // 저장본에 아직 없는 대본 방(가족 단톡 등)은 seed에서 추가
+      const savedIds = new Set(rooms.map((r: Room) => r.id))
+      seeded.rooms.forEach(r => { if (scriptedRoomIds.has(r.id) && !savedIds.has(r.id)) rooms.push(r) })
       return { ...saved, rooms, openRooms: Array.isArray(saved.openRooms) && saved.openRooms.every((r: any) => r && Array.isArray(r.msgs)) ? saved.openRooms : seeded.openRooms }
     }
   } catch { /* 손상된 데이터는 새로 시작 */ }
