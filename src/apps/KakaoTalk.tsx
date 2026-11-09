@@ -22,14 +22,6 @@ const MUSIC: Record<string, string> = {
   한소희: 'Ditto - NewJeans', 신예린: 'Drama - aespa', 문가은: 'Magnetic - ILLIT', 강현우: 'Run - BTS',
 }
 
-/* 사람마다 서로 다른 실사 프로필 사진 (randomuser.me). 로드 실패 시 벡터 실루엣으로 대체 */
-const PHOTO: Record<string, string> = {
-  김민준: 'men/32', 박지호: 'men/12', 강현우: 'men/45', 윤재민: 'men/22', 오승준: 'men/67', 권태양: 'men/54', 안도윤: 'men/8',
-  류시우: 'men/75', 배준서: 'men/36', 남지후: 'men/61', 아빠: 'men/71', 동생: 'men/18',
-  이서연: 'women/44', 최유진: 'women/26', 정다은: 'women/65', 조수빈: 'women/33', 임하늘: 'women/12', 한소희: 'women/90',
-  서지안: 'women/5', 신예린: 'women/68', 황나연: 'women/21', 송채원: 'women/79', 문가은: 'women/52', 노은서: 'women/14',
-  홍유나: 'women/38', 전민재: 'women/85', 고서윤: 'women/57', 엄마: 'women/82',
-}
 const hash = (s: string) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
 /* 로컬 프로필 사진 (public/images/kakaotalk/profile_pic/<이름>/). 파일이 없는 사람은 아래 기본 사진 사용 */
 const LOCAL_PHOTO: Record<string, string> = {
@@ -38,14 +30,13 @@ const LOCAL_PHOTO: Record<string, string> = {
   '정우영': '정우영/IMG_0254.jpeg',
   '정윤호': '정윤호/profile.jpg',
   '형': '김홍중/IMG_0252.jpeg', // 형 프사는 홍중 프사와 동일
+  '엄마': '엄마/FB20C89C-691B-47BE-BB5A-83CBC87D0435.png',
+  '아빠': '아빠/E965B11F-636D-432B-8315-D243D4EA1B24.png',
 }
 const localPhotoOf = (name: string) => {
-  const f = LOCAL_PHOTO[name]
+  // 폴더가 없는 사람은 모두 김홍중 프로필 사진으로 통일
+  const f = LOCAL_PHOTO[name] ?? LOCAL_PHOTO['김홍중']
   return f ? `${import.meta.env.BASE_URL}images/kakaotalk/profile_pic/${f.split('/').map(encodeURIComponent).join('/')}` : undefined
-}
-const photoOf = (name: string) => {
-  const p = PHOTO[name] ?? `${hash(name) % 2 ? 'men' : 'women'}/${(hash(name + 'x') % 40) + 50}`
-  return `https://randomuser.me/api/portraits/${p}.jpg`
 }
 
 const OPEN: readonly [string, string, number, string, string[]][] = [
@@ -421,7 +412,7 @@ const Silhouette = () => (
   <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true"><rect width="40" height="40" fill="#d8dce2" /><circle cx="20" cy="16" r="7" fill="#fff" /><path d="M6 40c1-9 7-13 14-13s13 4 14 13z" fill="#fff" /></svg>
 )
 function Avatar({ name, src, size = 44, me = false }: { name: string; src?: string; size?: number; me?: boolean }) {
-  const url = src ?? localPhotoOf(name) ?? (me ? undefined : photoOf(name))
+  const url = src ?? localPhotoOf(name)
   const [bad, setBad] = useState(false)
   useEffect(() => setBad(false), [url])
   return (
