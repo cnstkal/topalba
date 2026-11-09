@@ -326,8 +326,10 @@ function load(): Store {
       const seeded = seed()
       // 대본으로 관리하는 채팅방은 저장된 과거 메시지를 병합하지 않고 seed 대본으로 완전히 교체
       // 이전 대본이 남아 중복되거나 삭제한 문장이 다시 나타나는 문제 방지
-      const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh', 'r-family-group'])
-      const rooms = saved.rooms.map((room: Room) => {
+      const scriptedRoomIds = new Set(['r-hj', 'r-wy', 'r-yh', 'r-family-group', 'r-family-mom', 'r-family-dad', 'r-bro'])
+      // 삭제한 방(탑알바 연락처)은 저장본에서도 제거
+      const removedRoomIds = new Set(['r-casual'])
+      const rooms = saved.rooms.filter((room: Room) => !removedRoomIds.has(room.id)).map((room: Room) => {
         if (!scriptedRoomIds.has(room.id)) return room
         const currentScript = seeded.rooms.find(r => r.id === room.id)
         return currentScript ? { ...room, msgs: [...currentScript.msgs] } : room
