@@ -1842,7 +1842,7 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .sns .post .post-cm, .post .post-cm { font-size: 16px !important; }
 
 /* 인스타 공통: 본문·시간 글씨 축소 */
-.sns .post .post-cap, .post .post-cap { font-size: 14px !important; }
+.sns .post .post-cap, .post .post-cap { font-size: 16px !important; }
 .sns .post .post-time, .post .post-time, .post.detail .post-time { font-size: 16px !important; }
 
 /* iOS Safari가 글자 크기를 자동으로 키우거나 줄이지 않도록 고정 (새로고침마다 달라지는 현상 방지) */
