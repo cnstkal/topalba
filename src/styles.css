@@ -1867,3 +1867,15 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 .lock-btn.l { left: 46px; }
 .lock-btn.r { right: 46px; }
 .lock-hint { display: none; }
+
+/* 홈 간격 축소 + 폴더 */
+.grid { row-gap: 12px; }
+.folder-tile { position: relative; width: 60px; height: 60px; border-radius: 13.5px; padding: 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; align-content: start; background: rgba(255,255,255,.4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 6px 14px rgba(40,50,90,.18), inset 0 0 0 .5px rgba(255,255,255,.7); }
+.folder-tile i { display: block; width: 100%; aspect-ratio: 1; border-radius: 3px; }
+.folder-tile .badge { position: absolute; top: -6px; right: -6px; }
+.folder-open { position: absolute; inset: 0; z-index: 150; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: fadeIn .2s ease both; }
+.folder-panel { width: 300px; padding: 22px 18px 26px; border-radius: 30px; background: rgba(120,128,140,.55); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6); box-shadow: 0 20px 40px rgba(0,0,0,.25), inset 0 0 0 .5px rgba(255,255,255,.35); }
+.folder-title { color: #fff; font-size: 20px; font-weight: 600; text-align: center; margin-bottom: 18px; text-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.folder-grid { display: grid; grid-template-columns: repeat(3, 60px); justify-content: space-between; row-gap: 16px; }
+.folder-grid .app-label { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.45); }
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
