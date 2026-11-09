@@ -31,6 +31,17 @@ const PHOTO: Record<string, string> = {
   홍유나: 'women/38', 전민재: 'women/85', 고서윤: 'women/57', 엄마: 'women/82',
 }
 const hash = (s: string) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
+/* 로컬 프로필 사진 (public/images/kakaotalk/profile_pic/<이름>/). 파일이 없는 사람은 아래 기본 사진 사용 */
+const LOCAL_PHOTO: Record<string, string> = {
+  '박성화': '박성화/IMG_0253.jpeg',
+  '김홍중': '김홍중/IMG_0252.jpeg',
+  '정우영': '정우영/IMG_0254.jpeg',
+  '형': '김홍중/IMG_0252.jpeg', // 형 프사는 홍중 프사와 동일
+}
+const localPhotoOf = (name: string) => {
+  const f = LOCAL_PHOTO[name]
+  return f ? `${import.meta.env.BASE_URL}images/kakaotalk/profile_pic/${f.split('/').map(encodeURIComponent).join('/')}` : undefined
+}
 const photoOf = (name: string) => {
   const p = PHOTO[name] ?? `${hash(name) % 2 ? 'men' : 'women'}/${(hash(name + 'x') % 40) + 50}`
   return `https://randomuser.me/api/portraits/${p}.jpg`
@@ -409,7 +420,7 @@ const Silhouette = () => (
   <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true"><rect width="40" height="40" fill="#d8dce2" /><circle cx="20" cy="16" r="7" fill="#fff" /><path d="M6 40c1-9 7-13 14-13s13 4 14 13z" fill="#fff" /></svg>
 )
 function Avatar({ name, src, size = 44, me = false }: { name: string; src?: string; size?: number; me?: boolean }) {
-  const url = src ?? (me ? undefined : photoOf(name))
+  const url = src ?? localPhotoOf(name) ?? (me ? undefined : photoOf(name))
   const [bad, setBad] = useState(false)
   useEffect(() => setBad(false), [url])
   return (
