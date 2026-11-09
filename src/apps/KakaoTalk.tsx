@@ -440,6 +440,7 @@ function Pic({ src, className }: { src: string; className: string }) {
   return bad ? <div className={`${className} kakaotalk-picfb`} /> : <img className={className} src={src} alt="" loading="lazy" draggable={false} onError={() => setBad(true)} />
 }
 const roomMembers = (r: Room) => {
+  if (r.id === 'r-family-group') return ['엄마', '형', '아빠', '박성화']
   const set = [...new Set(r.msgs.map(m => m.who).filter(w => w !== 'me'))]
   const off = hash(r.name) % FRIENDS.length
   for (let i = 0; i < FRIENDS.length && set.length < 4; i++) { const n = FRIENDS[(off + i) % FRIENDS.length][0]; if (!set.includes(n)) set.push(n) }
