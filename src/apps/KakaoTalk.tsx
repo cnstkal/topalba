@@ -581,15 +581,28 @@ export default function KakaoTalk({ close }: { params?: unknown; close?: () => v
                 <button aria-label="더보기" onClick={soon}><Ic n="dots" s={24} /></button>
               </div>
             </div>
-            <div className="kakaotalk-pcenter">
-              <Avatar name={f[0]} size={96} />
-              <h2>{f[0]}</h2>
-              {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
-            </div>
-            <div className="kakaotalk-pactions">
-              <button onClick={() => openDM(f[0])}><span><Ic n="chat" s={22} /></span>채팅</button>
-              <button onClick={soon}><span><Ic n="phone" s={22} /></span>통화</button>
-              <button onClick={soon}><span><Ic n="video" s={24} /></span>페이스톡</button>
+            <div className="kakaotalk-scroll kakaotalk-pscroll">
+              <div className="kakaotalk-phero">
+                <Avatar name={f[0]} size={72} />
+                <h2>{f[0]}</h2>
+                {MUSIC[f[0]] && <MusicChip text={MUSIC[f[0]]} />}
+                <div className="kakaotalk-pbar">
+                  <button onClick={soon}><Ic n="phone" s={22} />통화</button>
+                  <button onClick={soon}><Ic n="video" s={24} />페이스톡</button>
+                </div>
+              </div>
+              <div className="kakaotalk-pgrid">
+                <div className="kakaotalk-pin">
+                  <div className="kakaotalk-pinhead"><PinSolid /></div>
+                  <div className="kakaotalk-pinbody">
+                    <div className="kakaotalk-pinrow">
+                      <Avatar name={f[0]} size={16} />
+                      <div><b>{f[0]}<i>3일</i></b><span className="kakaotalk-pinline" /><span className="kakaotalk-pinline s" /></div>
+                    </div>
+                  </div>
+                </div>
+                {Array.from({ length: 8 }, (_, k) => <Pic key={k} src={`https://picsum.photos/seed/kp${hash(f[0])}${k}/400/533`} className="kakaotalk-pcell" />)}
+              </div>
             </div>
           </div>
         )

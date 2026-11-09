@@ -390,7 +390,7 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare, de
 }
 
 // 프로필 화면 (본인 / 다른 계정 공용)
-function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, onEdit, onShare }) {
+function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, onEdit, onShare, onMessage }) {
   const acc = SNS_ACCOUNTS[uid]
   const list = state.posts.filter((p) => p.user === uid)
   const following = !!state.follows[uid]
@@ -458,7 +458,7 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
               <span className={following ? '' : 'primary'} onClick={() => actions.follow(uid)}>
                 {following ? '팔로잉' : '팔로우'}
               </span>
-              <span onClick={onShare}>공유</span>
+              <span onClick={onMessage}>메시지</span>
             </>
           )}
         </div>
@@ -881,6 +881,12 @@ export default function Sns({ params }) {
             onBack={() => setUserId(null)}
             onPost={(id) => setPostId(id)}
             onShare={() => flash('프로필 링크를 복사했습니다')}
+            onMessage={() => {
+              const idx = DM_ROWS.findIndex((r) => r.id === userId)
+              if (idx < 0) return flash('이 계정에는 메시지를 보낼 수 없습니다')
+              setUserId(null)
+              setChat({ ...DM_ROWS[idx], idx })
+            }}
           />
         </div>
       )}
