@@ -79,7 +79,7 @@ function load() {
         return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
       })
       const extra = old.filter((p) => !initIds.has(p.id))
-      const merged = { ...freshState(), ...saved, follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
+      const merged = { ...freshState(), ...saved, notes: [...(saved.notes || []), ...INITIAL_NOTES.filter((n) => n.id === 'n3' && !(saved.notes || []).some((old) => old.id === n.id))], follows: { ...SNS_FOLLOWING, ...(saved.follows || {}) }, posts: [...extra, ...initial], banner: null }
       if (!Array.isArray(merged.calEvents)) merged.calEvents = seedCalEvents()
       return merged
     }
