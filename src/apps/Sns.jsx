@@ -788,7 +788,7 @@ export default function Sns({ params }) {
             <div className="dm-sec"><b>메시지</b><span>요청</span></div>
             {DM_ROWS.map((r, idx) => (
               <button key={idx} className="dm-row" onClick={() => setChat({ ...r, idx })}>
-                <span className={`dm-ring ${r.ring ? 'on' : ''}`}>
+                <span className={`dm-ring ${r.ring ? 'on' : ''}`} onClick={(e) => { e.stopPropagation(); setUserId(r.id) }}>
                   <AccountAvatar id={r.id} size={r.ring ? 66 : 64} />
                 </span>
                 <div className="dm-main">

@@ -74,6 +74,8 @@ function load() {
       const initIds = new Set(INITIAL_POSTS.map((p) => p.id))
       const initial = INITIAL_POSTS.map((ip) => {
         const prev = old.find((p) => p.id === ip.id)
+        // 성화 게시물은 데이터에 적어 둔 좋아요·댓글을 항상 우선 적용
+        if (ip.id.startsWith('ps')) return ip
         return prev ? { ...ip, likes: prev.likes, comments: prev.comments } : ip
       })
       const extra = old.filter((p) => !initIds.has(p.id))
