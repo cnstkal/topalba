@@ -8,7 +8,7 @@ type Room = { id: string; name: string; group: boolean; members: number; pinned:
 type Me = { name: string; status: string; music: string; photo?: string; bg?: string }
 type Store = { me: Me; rooms: Room[]; openRooms: Room[]; collapsed: boolean }
 
-const KEY = 'kakaotalk-v2'
+const KEY = 'kakaotalk-v3' // 데이터 구조/대본 변경 시 버전을 올려 이전 저장 데이터를 버리고 새 데이터로 시작
 
 const FRIENDS: [string, string][] = [
   ['엄마', ''], ['아빠', ''], ['형', ''],
