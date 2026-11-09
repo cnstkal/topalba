@@ -1842,4 +1842,4 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 
 /* 인스타 공통: 본문·시간 글씨 축소 */
 .sns .post .post-cap, .post .post-cap { font-size: 11.5px !important; }
-.sns .post .post-time, .post .post-time, .post.detail .post-time { font-size: 9px !important; }
+.sns .post .post-time, .post .post-time, .post.detail .post-time { font-size: 16px !important; }
