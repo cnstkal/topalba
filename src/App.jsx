@@ -76,6 +76,7 @@ function Phone() {
   const [cur, setCur] = useState(null) // { id, origin, params, closing }
   const [leaving, setLeaving] = useState(false)
   const [drop, setDrop] = useState(false)
+  const barY = useRef(null)
   const [cc, setCc] = useState(false)
   const dev = useDevice()
   const edge = useRef(null)
@@ -143,7 +144,16 @@ function Phone() {
       {!state.unlocked && <LockScreen onUnlock={unlock} leaving={leaving} drop={drop} />}
       <EndingScreen />
       <DeviceFX />
-      <div className="home-bar-zone" onClick={closeApp}>
+      <div
+        className="home-bar-zone"
+        onClick={closeApp}
+        onPointerDown={(e) => { barY.current = e.clientY }}
+        onPointerUp={(e) => {
+          // 하단 인디케이터를 위로 올리면 잠금 해제(홈 화면으로)
+          if (barY.current !== null && barY.current - e.clientY > 40 && !state.unlocked) unlock()
+          barY.current = null
+        }}
+      >
         <div className="home-bar" />
       </div>
     </div>
