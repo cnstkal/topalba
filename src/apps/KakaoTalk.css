@@ -91,7 +91,7 @@
 .kakaotalk-msg{display:flex;align-items:flex-start;margin-top:3px}
 .kakaotalk-msg.head{margin-top:12px}
 .kakaotalk-msg.me{justify-content:flex-end}
-.kakaotalk-side{width:40px;margin-right:8px;flex:none}
+.kakaotalk-side{width:40px;margin-right:14px;flex:none}
 .kakaotalk-body{min-width:0;max-width:calc(100% - 48px)}
 .kakaotalk-msg.me .kakaotalk-body{max-width:100%}
 .kakaotalk-who{display:block;font-size:12.5px;color:#333;margin:0 0 4px 2px}
