@@ -21,11 +21,37 @@ const calKey = (d) =>
 
 // 기존 임시 일정 4건: 최초 로드 시점의 오늘을 기준으로 실제 날짜로 고정해 저장
 function seedCalEvents() {
-  const t = new Date()
-  const at = (n) => calKey(new Date(t.getFullYear(), t.getMonth(), t.getDate() + n))
+  const today = new Date()
+  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
+  const at = (offset) => calKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + offset))
   const base = { alert: '10', note: '' }
+
+  // 주마다 1~2회, 요일이 고정되지 않도록 불규칙하게 배치한 알바 일정
+  // 이번 주부터 12주간 생성하며 한 주에 최대 2회만 등록
+  const weeklyDays = [
+    [3, 5], [1], [2, 6], [0, 4], [1, 5], [3],
+    [0, 2], [4, 6], [1], [2, 5], [0, 3], [4],
+  ]
+  const workEvents = weeklyDays.flatMap((days, week) => days
+    .map((day, index) => {
+      const date = at(week * 7 + day)
+      return {
+        ...base,
+        id: `work-${date}`,
+        title: '알바',
+        startDate: date,
+        endDate: date,
+        startTime: '14:00',
+        endTime: '21:00',
+        allDay: false,
+        place: '탑알바',
+        color: '#ff9500',
+      }
+    }))
+
   return [
-    { ...base, id: 'ev1', title: '탑알바 오후 근무', startDate: at(0), endDate: at(0), startTime: '14:00', endTime: '21:00', allDay: false, place: '탑알바', note: '출근 전 필요한 것 챙기기', color: '#ff9500' },
+    ...workEvents,
     { ...base, id: 'ev2', title: '홍중이랑 저녁 약속', startDate: at(1), endDate: at(1), startTime: '19:00', endTime: '21:00', allDay: false, place: '가게 근처', color: '#007aff' },
     { ...base, id: 'ev3', title: '엄마랑 장보기', startDate: at(3), endDate: at(3), startTime: '16:00', endTime: '17:00', allDay: false, place: '동네 마트', note: '집에 필요한 것 사기', color: '#34c759', alert: '60' },
     { ...base, id: 'ev4', title: '휴대폰 사진 정리', startDate: at(9), endDate: at(9), startTime: '20:00', endTime: '21:00', allDay: false, place: '집', color: '#af52de', alert: '30' },
@@ -84,7 +110,7 @@ function load() {
         // 기존 버전에서 자동 생성된 직장인 콘셉트 기본 일정만 새 생활 설정으로 교체
         const refreshed = seedCalEvents()
         const defaults = new Set(['ev1', 'ev2', 'ev3', 'ev4'])
-        merged.calEvents = [...merged.calEvents.filter((e) => !defaults.has(e.id)), ...refreshed]
+        merged.calEvents = [...merged.calEvents.filter((e) => !defaults.has(e.id) && !String(e.id).startsWith('work-')), ...refreshed]
       }
       return merged
     }
