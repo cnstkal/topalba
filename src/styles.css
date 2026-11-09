@@ -1839,3 +1839,7 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 
 /* 인스타 공통: "댓글 N개 모두 보기"는 캡션보다 크게 */
 .post-cm { font-size: 14.5px !important; }
+
+/* 인스타 공통: 본문·시간 글씨 축소 */
+.post-cap { font-size: 11.5px !important; }
+.post-time { font-size: 10.5px !important; }

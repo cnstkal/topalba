@@ -371,14 +371,9 @@ function PostCard({ post, state, actions, onUser, onComment, onMore, onShare, de
           <span><b>{likers[0]}</b>님 외 <b>여러 명</b>이 좋아합니다</span>
         </div>
       )}
-      <div className={`post-cap ${longCaption && !expanded ? 'clip' : ''}`}>
+      <div className="post-cap">
         <b>{post.user}</b> {post.text}
       </div>
-      {longCaption && !expanded && (
-        <button className="post-more-txt" onClick={() => setExpanded(true)}>
-          더 보기
-        </button>
-      )}
       {post.comments.length > 0 && (
         <button className="post-cm" onClick={onComment}>
           댓글 {post.comments.length}개 모두 보기
