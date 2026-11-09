@@ -82,9 +82,13 @@ const QS = [
   ['추억', '사진첩에서 가장 자주 다시 보는 사진은?', '특별한 날보다 친구들이랑 장난치며 찍은 사진이야.'],
   ['연애', '서로 바쁜 날에는 어떻게 연락하는 게 좋아?', '짧게라도 지금 뭐 하는지만 알려 주면 마음이 놓여.'],
   ['일상', '오늘 하루를 색깔로 표현하면 무슨 색이야?', '조금 흐린 회색인데 저녁엔 괜찮아진 느낌이야.'],
+  ['연애', '요즘 나에 대해 새롭게 알게 된 게 있어?', '말이 많지 않아도 다 보고 있다는 거.'],
 ]
+/* 마지막 항목(Q125): 앱을 열면 항상 125일째 질문이 도착해 있음 */
+const Q125_QI = QS.length - 1
 
 /* ───────── 날짜 유틸 (로컬 날짜 키: YYYY-MM-DD) ───────── */
+const APP_TODAY = '2026-11-09' // 앱 기준일: 항상 125일째
 const dk = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 const parse = (k) => {
   const [y, m, d] = k.split('-').map(Number)
@@ -139,7 +143,7 @@ const load = () => {
 
 /* ───────── 시뮬레이션: 상대방 답변 여부 (날짜 기반 고정값) ───────── */
 const hash = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
-const PT_DONE_DATES = new Set(['2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23', '2026-10-24', '2026-10-25', '2026-10-26', '2026-10-28', '2026-10-29', '2026-10-30', '2026-10-31', '2026-11-01', '2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-07', '2026-11-08'])
+const PT_DONE_DATES = new Set(['2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23', '2026-10-24', '2026-10-25', '2026-10-26', '2026-10-28', '2026-10-29', '2026-10-30', '2026-10-31', '2026-11-01', '2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-07', '2026-11-08', '2026-11-09'])
 const ptDone = (date, today) => PT_DONE_DATES.has(date) || (date === today ? hash(date) % 3 !== 0 : hash(date) % 5 !== 0)
 
 /* ───────── 반려몽 성장 단계 ───────── */
@@ -211,7 +215,7 @@ function Avatar({ img, who, size = 52 }) {
 /* ───────── 메인 ───────── */
 export default function Someone() {
   const [s, setS] = useState(load)
-  const [today, setToday] = useState(() => dk(new Date()))
+  const today = APP_TODAY
   const [tab, setTab] = useState('home')
   const [view, setView] = useState(null) // {t:'edit'|'detail', date}
   const [toast, setToast] = useState('')
@@ -226,10 +230,6 @@ export default function Someone() {
     }
   }, [s])
   useEffect(() => {
-    const id = setInterval(() => setToday(dk(new Date())), 30000)
-    return () => clearInterval(id)
-  }, [])
-  useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0
   }, [tab, view])
   useEffect(() => {
@@ -242,18 +242,19 @@ export default function Someone() {
   const qOf = (date) => {
     const saved = s.ans[date]
     const n = diff(date, s.first) + 104
-    if (date > today || n < 104 || n > 124) return null
+    if (date > today || n < 104 || n > 125) return null
     // Q124는 첫인상 질문으로 고정해 저장된 qi나 질문 배열 순서와 무관하게 유지
     if (n === 124) return { n, qi: 20 }
+    if (n === 125) return { n, qi: Q125_QI }
     if (saved) return { n, qi: saved.qi }
     return { n, qi: (n - 104) % QS.length }
   }
   const mine = (date) => (s.ans[date] && s.ans[date].text ? s.ans[date] : null)
-  const days = Array.from({ length: Math.max(0, Math.min(21, diff(today, s.first) + 1)) }, (_, i) => addDays(s.first, i))
+  const days = Array.from({ length: Math.max(0, Math.min(22, diff(today, s.first) + 1)) }, (_, i) => addDays(s.first, i))
   const allDates = [...new Set([...days, ...Object.keys(s.ans)])].filter((d) => d <= today).sort()
   const count = Object.keys(s.ans).filter((d) => s.ans[d].text).length
   const stage = STEPS.filter((n) => count >= n).length
-  const dday = 124
+  const dday = 125
 
   const save = (date, text) => {
     const q = qOf(date)
