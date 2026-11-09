@@ -500,10 +500,8 @@ function ProfileView({ uid, mine, state, actions, onBack, onPost, onHighlight, o
 
 const DM_ROWS = [
   { id: 'yunou._.u', name: '정윤호', text: '새 메시지 3개+', ago: '1일', unread: true, ring: true },
-  { id: 'wooyounggg__', name: '정우영', text: '야 뭐함 ㅋㅋ', ago: '3일' },
   { id: 'no1likeme8_8', name: '김홍중', text: '이거 봐 ㅋㅋㅋㅋ', ago: '5일', unread: true },
-  { id: 'wooyounggg__', name: '정윤호, 정우영', text: '정우영님이 릴스를 보냈습니다', ago: '1주', group: true },
-  { id: 'no1likeme8_8', name: '김홍중', text: '전송됨', ago: '2주', ring: true },
+  { id: 'wooyounggg__', name: '정우영', text: '야 뭐함 ㅋㅋ', ago: '3일' },
 ]
 
 // DM 대화 내용 (t=시간 구분선, m=내 메시지, o=상대 메시지)
@@ -791,7 +789,7 @@ export default function Sns({ params }) {
             {DM_ROWS.map((r, idx) => (
               <button key={idx} className="dm-row" onClick={() => setChat({ ...r, idx })}>
                 <span className={`dm-ring ${r.ring ? 'on' : ''}`}>
-                  <AccountAvatar id={r.id} size={r.ring ? 60 : 64} />
+                  <AccountAvatar id={r.id} size={r.ring ? 66 : 64} />
                 </span>
                 <div className="dm-main">
                   <b className={r.unread ? 'u' : ''}>{r.name}</b>
