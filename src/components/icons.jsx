@@ -7,23 +7,13 @@ const EXTRA_APPS = {
   kakao: { label: '카카오톡', bg: '#fee500' },
   twitter: { label: 'X', bg: '#000' },
   maps: { label: '지도', bg: 'linear-gradient(160deg,#6fe3a0,#16a050)' },
-  tetris: { label: '테트리스', bg: 'linear-gradient(160deg,#2a2a36,#111116)' },
+  tetris: { label: '테트리스', bg: 'linear-gradient(160deg,#6a3df0 0%,#2a1a8c 55%,#120a3a 100%)' },
 }
 
 const EXTRA_GLYPHS = {
   tetris: (
     <svg viewBox="0 0 60 60" width="60" height="60">
-      <g>
-        <rect x="8" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
-        <rect x="18" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
-        <rect x="28" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
-        <rect x="38" y="34" width="9" height="9" rx="2" fill="#2ec4d6" />
-        <rect x="18" y="24" width="9" height="9" rx="2" fill="#a66cff" />
-        <rect x="28" y="24" width="9" height="9" rx="2" fill="#a66cff" />
-        <rect x="38" y="14" width="9" height="9" rx="2" fill="#ff9f43" />
-        <rect x="38" y="24" width="9" height="9" rx="2" fill="#ff9f43" />
-        <rect x="8" y="24" width="9" height="9" rx="2" fill="#5bd17a" />
-      </g>
+      <g><rect x="6" y="43" width="11" height="11" rx="2.5" fill="#22d3ee" /><rect x="7.2" y="44.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="17.5" y="43" width="11" height="11" rx="2.5" fill="#22d3ee" /><rect x="18.7" y="44.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="29" y="43" width="11" height="11" rx="2.5" fill="#22d3ee" /><rect x="30.2" y="44.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="40.5" y="43" width="11" height="11" rx="2.5" fill="#22d3ee" /><rect x="41.7" y="44.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="6" y="31.5" width="11" height="11" rx="2.5" fill="#4ade80" /><rect x="7.2" y="32.7" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="17.5" y="31.5" width="11" height="11" rx="2.5" fill="#fb7185" /><rect x="18.7" y="32.7" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="40.5" y="31.5" width="11" height="11" rx="2.5" fill="#facc15" /><rect x="41.7" y="32.7" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="40.5" y="20" width="11" height="11" rx="2.5" fill="#facc15" /><rect x="41.7" y="21.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="23" y="8" width="11" height="11" rx="2.5" fill="#c084fc" /><rect x="24.2" y="9.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="11.5" y="8" width="11" height="11" rx="2.5" fill="#c084fc" /><rect x="12.7" y="9.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="34.5" y="8" width="11" height="11" rx="2.5" fill="#c084fc" /><rect x="35.7" y="9.2" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /><rect x="23" y="-3.5" width="11" height="11" rx="2.5" fill="#c084fc" /><rect x="24.2" y="-2.3" width="8.6" height="3.6" rx="1.6" fill="#fff" opacity=".4" /></g>
     </svg>
   ),
   maps: (
