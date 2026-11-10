@@ -66,6 +66,7 @@ class AppBoundary extends Component {
       <div style={{ position: 'absolute', inset: 0, background: '#fff', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, padding: 32, textAlign: 'center' }}>
         <b style={{ fontSize: 18 }}>앱을 불러오지 못했어요</b>
         <span style={{ fontSize: 13, color: '#666' }}>일시적인 오류예요. 닫고 다시 열어 주세요.</span>
+        <span style={{ fontSize: 11, color: '#999', wordBreak: 'break-all' }}>{String(this.state.error?.message || this.state.error)}</span>
         <button onClick={this.props.onClose} style={{ padding: '12px 22px', borderRadius: 12, background: '#007aff', color: '#fff', fontSize: 16 }}>닫기</button>
       </div>
     )
