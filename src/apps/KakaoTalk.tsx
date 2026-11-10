@@ -127,12 +127,6 @@ const DM = (rows: [string, string, string][], base: number): Msg[] =>
   rows.map(([at, who, text], k) => ({ id: base + k, who, text, t: new Date(at.replace(' ', 'T') + ':00+09:00').getTime() }))
 
 function seed(): Store {
-  const now = Date.now()
-  const rooms: Room[] = ROOMS.map((r, i) => {
-    let t = now - (i * 3 + 1) * 3600e3 * 5 - r.m.length * 25 * 60e3
-    const msgs = r.m.map(([who, text], k) => { t += (8 + ((i * 7 + k * 13) % 40)) * 60e3; return { id: i * 100 + k, who, text, t } })
-    return { id: 'r' + i, name: r.n, group: r.g > 0, members: r.g || 2, pinned: i < 2, muted: false, unread: i % 4 === 1 ? (i % 3) + 1 : 0, msgs }
-  })
   return { me: { name: '박성화', status: '', music: '' }, rooms: [
     { id: 'r-family-mom', name: '엄마', group: false, members: 2, pinned: true, muted: false, unread: 0, msgs: DM([['2026-10-12 21:30','엄마','성화 밥은 챙겨 먹고 다니지?'],['2026-10-12 22:05','me','네'],['2026-10-30 20:18','엄마','춥다 따뜻하게 입고 다녀~']], 9201) },
     { id: 'r-family-dad', name: '아빠', group: false, members: 2, pinned: false, muted: false, unread: 0, msgs: DM([['2026-10-17 23:40','아빠','엄마한테 말 좀 잘 해봐라'],['2026-10-17 23:52','me','저 그런 거 몰라요'],['2026-10-18 00:05','아빠','그래']], 9211) },
