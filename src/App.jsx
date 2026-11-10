@@ -53,12 +53,17 @@ const COMPONENTS = {
 
 // 한 앱이 오류로 멈춰도 전체 화면이 아니라 그 앱만 닫히도록 격리
 class AppBoundary extends Component {
-  state = { error: null }
+  state = { error: null, retried: false }
   static getDerivedStateFromError(error) {
     return { error }
   }
   componentDidCatch(error, info) {
     console.error('앱 오류:', error, info)
+    // 카카오톡: 저장된 채팅 데이터 때문에 열리지 않는 경우를 위해, 저장본을 지우고 한 번 자동으로 다시 연다
+    if (this.props.appId === 'kakao' && !this.state.retried) {
+      try { localStorage.removeItem('kakaotalk-v3') } catch { /* ignore */ }
+      this.setState({ error: null, retried: true })
+    }
   }
   render() {
     if (!this.state.error) return this.props.children
@@ -125,7 +130,7 @@ function Phone() {
       {cur && (
         <div key={cur.key} className={`app ${cur.closing ? 'app-closing' : ''}`} style={{ transformOrigin: cur.origin }}>
           <div className="app-inner">
-            <AppBoundary onClose={closeApp}>
+            <AppBoundary appId={cur.id} onClose={closeApp}>
               {App ? <App params={cur.params} close={closeApp} /> : null}
             </AppBoundary>
           </div>
