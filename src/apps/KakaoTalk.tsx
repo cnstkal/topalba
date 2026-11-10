@@ -97,6 +97,25 @@ function seedOpen(): Room[] {
   })
 }
 
+/* ───────── 시간 표시 (한국 시간 기준) ───────── */
+const KST = 9 * 3600e3
+const ymd = (t: number) => { const d = new Date(t + KST); return [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()] as const }
+const dayKey = (t: number) => ymd(t).join('-')
+const WEEK = ['일', '월', '화', '수', '목', '금', '토']
+const dayLabel = (t: number) => { const [y, m, d] = ymd(t); return `${y}년 ${m}월 ${d}일 ${WEEK[new Date(t + KST).getUTCDay()]}요일` }
+const fmtT = (t: number) => { const d = new Date(t + KST); const h = d.getUTCHours(), m = d.getUTCMinutes(); return `${h < 12 ? '오전' : '오후'} ${h % 12 || 12}:${String(m).padStart(2, '0')}` }
+const listT = (t: number) => {
+  const now = Date.now(), [y, m, d] = ymd(t), [ny] = ymd(now)
+  if (dayKey(t) === dayKey(now)) return fmtT(t)
+  if (dayKey(t) === dayKey(now - 86400e3)) return '어제'
+  return y === ny ? `${m}월 ${d}일` : `${y}. ${m}. ${d}.`
+}
+
+/* TODO: 원본 대본(김홍중·정윤호·정우영 1:1 대화)이 저장소에서 빠져 있어 빈 대화로 둠 */
+const HJ_MSGS: Msg[] = []
+const YH_MSGS: Msg[] = []
+const WY_MSGS: Msg[] = []
+
 /* 가족 단톡: 모임 날짜, 명절 내려오는지, 김치 필요한지 등 집안 얘기 위주. 알바 얘기는 없음. 마지막 대화 11월 2일 */
 const FAMILY_MSGS = (): Msg[] => ([
   ['2026-10-20 09:10', '엄마', '다들 이 방에서 얘기하자~ 📢'],
