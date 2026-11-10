@@ -1841,6 +1841,10 @@ button.cc-t:active,.cc-c:active{transform:scale(.94)}
 /* 인스타 공통: "댓글 N개 모두 보기"는 캡션보다 크게 */
 .sns .post .post-cm, .post .post-cm { font-size: 16px !important; }
 
+/* 인스타 댓글 미리보기·댓글 시트: 본문 글자 크기와 동일하게 */
+.sns .post .post-prev, .post .post-prev,
+.sns .cm, .sns .cm b, .cm, .cm b { font-size: 16px !important; }
+
 /* 인스타 공통: 본문·시간 글씨 축소 */
 .sns .post .post-cap, .post .post-cap { font-size: 16px !important; }
 .sns .post .post-time, .post .post-time, .post.detail .post-time { font-size: 16px !important; }
